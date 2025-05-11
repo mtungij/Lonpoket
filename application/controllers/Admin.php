@@ -2048,6 +2048,7 @@ public function create_sponser($customer_id, $comp_id) {
     	$this->load->view('admin/view_loan_customer',['customer_data'=>$customer_data,'sponser_detail'=>$sponser_detail,'loan_form'=>$loan_form,'collateral'=>$collateral,'local_oficer'=>$local_oficer,'inc_history'=>$inc_history]);
     }
 
+	
 
     public function download_attach($attach_id){
         if(!empty($attach_id)){
@@ -2170,6 +2171,8 @@ public function get_loan_aproved(){
 	$this->load->view('admin/loan_aproved',['loan_aproved'=>$loan_aproved]);
 
 }
+
+
 
 
 
@@ -2406,7 +2409,7 @@ public function disburse($loan_id){
       $remain_balance = $balance - $sms_data;
         
      
-    //    $massage = 'Taasisi ya '.$comp_name.' Imeingiza Mkopo Kiasi cha Tsh.'.$remain_balance.' kwenye Acc Yako ' . $loan_codeID .' Namba yasiri ya kutolea mkopo ni '.$code;
+       $massage = 'Taasisi ya '.$comp_name.' Imeingiza Mkopo Kiasi cha Tsh.'.$remain_balance.' kwenye Acc Yako ' . $loan_codeID .' Namba yasiri ya kutolea mkopo ni '.$code;
 
 	  
 
@@ -2601,7 +2604,7 @@ public function disburse($loan_id){
         $remain_balance = $loan_aproved - $sms_data;
        }
 
-        //  $massage= $comp_name.' Imeingiza Mkopo Kiasi cha Tsh.'.$remain_balance.' kwenye Acc Yako ' . $loan_codeID .' Kwa msaada zaidi piga simu Namba '.$comp_phone;
+         $massage= $comp_name.' Imeingiza Mkopo Kiasi cha Tsh.'.$remain_balance.' kwenye Acc Yako ' . $loan_codeID .' Kwa msaada zaidi piga simu Namba '.$comp_phone;
 		
       
             //   echo "<pre>";
@@ -2610,8 +2613,8 @@ public function disburse($loan_id){
             //   exit();
            //send sms function
          
-               // print_r($massage);
-               //     exit();
+               print_r($massage);
+                   exit();
             //Pass user data to model
            $this->load->model('queries'); 
             $data = $this->queries->update_status($loan_id,$data);
@@ -2626,7 +2629,7 @@ public function disburse($loan_id){
           	 $sms_number = 1;
              $this->insert_count_sms($comp_id,$sms_number);
              }
-            	//$this->sendsms($phone,$massage);
+            	$this->sendsms($phone,$massage);
                 $this->session->set_flashdata('massage','Loan disbarsed successfully');
             }else{
                 $this->session->set_flashdata('error','Data failed!!');

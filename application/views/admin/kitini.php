@@ -277,33 +277,7 @@ include_once APPPATH . "views/partials/header.php";
       <div class="p-4 overflow-y-auto">
         <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
           
-          <!-- Total Withdraw -->
-    
-
-          <!-- Payment Method -->
-          <div class="sm:col-span-6">
-            <label for="method" class="block text-sm font-medium mb-2 dark:text-gray-300">
-              * Chagua Tawi:
-            </label>
-            <select id="blanch" name="blanch_id"
-              class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
-                 <?php foreach ($blanch as $blanchs): ?>
-                                <option value="<?php echo $blanchs->blanch_id; ?>"><?php echo $blanchs->blanch_name; ?> </option>
-                                    <?php endforeach; ?>
-            </select>
-          </div>
-
-
-          <div class="sm:col-span-6">
-            <label for="method" class="block text-sm font-medium mb-2 dark:text-gray-300">
-              * Chagua Staff:
-            </label>
-            <select name="empl_id" id="empl"
-              class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
-              <option value="">Select Employee</option>
-              <option value="all">ALL</option>
-            </select>
-          </div>
+  
 
           <!-- Date -->
           <?php $date = date("Y-m-d"); ?>

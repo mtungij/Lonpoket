@@ -838,7 +838,22 @@ public function get_monthly_received_loan($comp_id)
        	return $this->db->where('loan_id',$loan_id)->update('tbl_loans',$data);
        }
 
-
+	   public function get_loanAproved_customer($comp_id, $customer_id){
+		$loan = $this->db->query("
+			SELECT * 
+			FROM tbl_loans l 
+			LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id 
+			LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id 
+			LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id 
+			LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  
+			WHERE l.comp_id = '$comp_id' 
+			AND l.customer_id = '$customer_id'
+			AND l.loan_status = 'aproved' 
+			ORDER BY l.loan_id DESC
+		");
+		return $loan->result();
+	}
+	
        
        public function get_loanAproved($comp_id){
 		$loan = $this->db->query("SELECT * FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.comp_id = '$comp_id' AND l.loan_status = 'aproved' ORDER BY l.loan_id DESC ");
@@ -979,7 +994,6 @@ public function get_monthly_received_loan($comp_id)
 				$data = $this->db->query("
 					SELECT * 
 					FROM tbl_customer c 
-					LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id 
 					LEFT JOIN tbl_sponser s ON s.customer_id = c.customer_id
 					WHERE c.customer_id = '$customer_id'
 				");
@@ -6177,6 +6191,9 @@ public function get_remain_amount($loan_id) {
 		 $this->db->where('p.comp_id', $comp_id);
 	 }
  
+	 // Filter for today
+	 $this->db->where('DATE(p.date_data)', date('Y-m-d'));
+ 
 	 $this->db->where('p.emply !=', 'SYSTEM WITHDRAWAL');
 	 $this->db->where('p.depost !=', 0);
 	 $this->db->where('t.account_name IS NOT NULL', null, false);
@@ -6247,6 +6264,7 @@ public function get_remain_amount($loan_id) {
  
 	 return $final_output;
  }
+ 
  
  
  
