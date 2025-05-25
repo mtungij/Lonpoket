@@ -145,31 +145,78 @@ include_once APPPATH . "views/partials/header.php";
         <!-- Page Title / Subheader -->
        
 
-<div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
-            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-red-500 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#">
-                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                  Delete (2)
-                </a>
+        <div>
+    <div >
+        <div class="flex justify-end items-center gap-2">
+            <!-- Delete Button -->
+            <a class="py-2 px-3 inline-flex items-center  text-sm font-medium rounded-lg border border-gray-200 bg-white text-red-500 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#">
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"/>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                    <line x1="10" x2="10" y1="11" y2="17"/>
+                    <line x1="14" x2="14" y1="11" y2="17"/>
+                </svg>
+                Delete (2)
+            </a>
 
-               
+            <!-- Withdraw Button -->
+            <a class="py-2 px-3 inline-flex items-center  text-sm font-medium rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/>
+                    <path d="M12 5v14"/>
+                </svg>
+                Withdraw
+            </a>
+        </div>
+    </div>
+    <div>
+        <!-- Your content here -->
+    </div>
+</div>
 
-                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
-                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                  withdraw
-                </a>
-            </div>
-			   <div>
               
 
             
-                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                    <div class="relative max-w-xs w-full">
-                        <label for="shareholder-table-search" class="sr-only">Search</label>
-                        <input type="text" name="shareholder-table-search" id="shareholder-table-search" class="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" placeholder="Search share holders..." data-hs-datatable-search="#shareholder_table">
-                        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3"><svg class="size-4 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></div>
-                    </div>
-                </div>
+               
+                  <div class="p-4 md:p-6">
+                  <?php echo form_open("admin/search_customerData", [
+    'novalidate' => true,
+    'id' => 'customerSearchForm'
+]); ?>
+
+    <div class="w-full flex flex-col md:flex-row items-center ">
+        <!-- Search Dropdown -->
+        <div class="w-full">
+            <label for="branchSelect" class="block text-sm font-medium mb-1 dark:text-gray-300">* Search Customer:</label>
+            <select id="branchSelect" required name="customer_id"
+                class="py-2 px-3 block w-full bg-cyan-600 border border-gray-300 rounded-md text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300 dark:placeholder-gray-500 select2">
+                <option value="">Search Customer</option>
+                <?php foreach ($customery as $customers): ?>
+                    <option value="<?= $customers->customer_id ?>">
+                        <?= strtoupper($customers->f_name . " " . $customers->m_name . " " . $customers->l_name); ?> /
+                        <?= strtoupper($customers->customer_code); ?> /
+                        <?= strtoupper($customers->blanch_name); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <!-- Search Button -->
+        <div class="w-full md:w-auto">
+            <label class="block text-sm font-medium mb-1 invisible">Button</label> <!-- for spacing -->
+            <!-- <button type="submit" class="w-full md:w-auto py-2 px-4 bg-cyan-800 hover:bg-cyan-700 text-white rounded-md">
+                Search
+            </button> -->
+        </div>
+    </div>
+
+    <input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
+
+    <?php echo form_close(); ?>
+</div>
+
+       
 
                 <div class="overflow-x-auto">
                     <div class="min-w-full inline-block align-middle">
@@ -320,3 +367,116 @@ include_once APPPATH . "views/partials/header.php";
 <?php
 include_once APPPATH . "views/partials/footer.php";
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Include Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<style>
+.select2-container--default .select2-selection--single {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    height: auto;
+    color: #06b6d4; 
+    font-size: 0.875rem;
+    position: relative;
+}
+.select2-selection__rendered,
+.select2-selection__clear,
+.select2-selection__arrow {
+    color: #d1d5db;
+}
+.select2-selection__arrow {
+    right: 1rem;
+    top: 0;
+    width: 1.5rem;
+    position: absolute;
+}
+.select2-selection__clear {
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+}
+.custom-select2-dropdown {
+    background-color: #1f2937;
+    color: #d1d5db;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #ffffff !important; /* Force white text */
+}
+.custom-select2-dropdown .select2-results__option--highlighted {
+    background-color: #06b6d4 !important; /* Tailwind cyan-400 */
+    color: #ffffff !important;
+}
+
+/* White text in the dropdown input if searchable */
+.select2-search__field {
+    color: #ffffff !important;
+    background-color: #1f2937 !important; /* match dark bg */
+    border: 1px solid #374151;
+}
+.custom-select2-dropdown .select2-results__option--highlighted {
+    background-color: #06b6d4;
+    color: #ffffff;
+}
+.custom-select2-container { margin: 0; }
+</style> 
+
+<script>
+$(document).ready(function () {
+    const selectConfig = {
+        placeholder: "Select",
+        allowClear: true,
+        width: '100%',
+        dropdownCssClass: 'custom-select2-dropdown',
+        containerCssClass: 'custom-select2-container'
+    };
+
+    // Customer Search Select
+    $('#branchSelect').select2({...selectConfig, placeholder: "Tafuta Mteja"});
+
+    // Auto-submit when customer is selected
+    $('#branchSelect').on('select2:select', function () {
+        const selected = $(this).val();
+        if (selected) {
+            $('#customerSearchForm').submit();
+        }
+    });
+
+    // Employee Select (loaded dynamically based on branch)
+    $('#employeeSelect').select2({...selectConfig, placeholder: "Select Employee"});
+
+    $('#branchSelect').on('change', function () {
+        const branchId = $(this).val();
+
+        $.post('fetch_employee_blanch', { blanch_id: branchId }, function (data) {
+            const employeeSelect = $('#employeeSelect');
+            employeeSelect.html(data).select2({...selectConfig, placeholder: "Select Employee"});
+
+            // Optional: If using Preline's hsSelect
+            const customSelect = $('[data-hs-select]');
+            if (customSelect.length) {
+                customSelect.html(data);
+                customSelect.hsSelect();
+            }
+        }).fail(function (xhr, status, error) {
+            console.error('AJAX error:', status, error);
+        });
+    });
+});
+
+// Age Calculation
+function getAge(dob) {
+    const age = new Date().getFullYear() - new Date(dob).getFullYear();
+    document.getElementById('age').value = isNaN(age) ? '' : age;
+}
+</script>

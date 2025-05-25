@@ -2570,6 +2570,11 @@
       display: flex;
     }
   }
+  .md\:w-3\/4 {
+    @media (width >= 48rem) {
+      width: calc(3/4 * 100%);
+    }
+  }
   .md\:w-3\/12 {
     @media (width >= 48rem) {
       width: calc(3/12 * 100%);
@@ -2578,6 +2583,11 @@
   .md\:w-9\/12 {
     @media (width >= 48rem) {
       width: calc(9/12 * 100%);
+    }
+  }
+  .md\:w-auto {
+    @media (width >= 48rem) {
+      width: auto;
     }
   }
   .md\:grid-cols-2 {
