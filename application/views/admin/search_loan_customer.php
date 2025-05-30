@@ -1,7 +1,6 @@
 <?php
 include_once APPPATH . "views/partials/header.php";
 ?>
-
 <!-- ========== MAIN CONTENT BODY ========== -->
 <div class="w-full lg:ps-64">
     <div class="p-4 sm:p-6 space-y-6">
@@ -21,7 +20,7 @@ include_once APPPATH . "views/partials/header.php";
         <div class="flex flex-col max-w-screen-xl px-4 mx-auto md:flex-row md:justify-between md:px-6 lg:px-8">
             <div class="p-4 flex flex-row items-center justify-between">
                 <a href="#" class="text-lg font-semibold tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline">
-                    Teller Dashboard
+                Dashibodi Ya Malipo
                 </a>
             </div>
         </div>
@@ -45,7 +44,15 @@ include_once APPPATH . "views/partials/header.php";
                     <h1 class="text-center  font-bold"><?= $customer->phone_no ;?></h1>
                     <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                     <?php
-                         $customer_loan = $this->queries->get_loan_active_customer($customer->customer_id);
+                         if (!empty($customer->customer_id)) {
+                            $customer_loan = $this->queries->get_loan_active_customer($customer->customer_id);
+
+    //   echo "<pre>";
+    //   print_r( $customer_loan);
+    //  echo "</pre>";
+    //   exit();
+                        }
+                        
                          $total_deposit = $this->queries->get_total_amount_paid_loan($customer_loan->loan_id ?? 0);
                          $out_stand = $this->queries->get_outstand_loan_customer($customer_loan->loan_id ?? 0);
                      ?>
@@ -54,7 +61,7 @@ include_once APPPATH . "views/partials/header.php";
                             <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
                         </li>
                         <li class="flex items-center py-3">
-                               <span class="font-bold">withdraw Date</span>
+                               <span class="font-bold">Gawa</span>
                             <?php if (!empty($customer_loan->loan_stat_date)) : ?>
                                 <span class="ml-auto"><?= $customer_loan->loan_stat_date; ?></span>  
                             <?php else : ?>
@@ -63,7 +70,7 @@ include_once APPPATH . "views/partials/header.php";
                             
                         </li>
                         <li class="flex items-center py-3">
-                               <span class="font-bold">End Date</span>
+                               <span class="font-bold">Mwisho</span>
                             <?php if (!empty($customer_loan->loan_end_date)) : ?>
                                 <span class="ml-auto"><?= substr($customer_loan->loan_end_date, 0, 10); ?></span>
                            <?php else : ?>
@@ -72,15 +79,15 @@ include_once APPPATH . "views/partials/header.php";
                            
                         </li>
                         <li class="flex items-center py-3">
-                            <span class="font-bold">Loan Amount</span>
-                            <span class="ml-auto"><?= number_format($customer_loan->loan_int ?? 0); ?></span>
+                            <span class="font-bold">Mkopo</span>
+                            <span class="ml-auto"><?= safe_number_format($customer_loan->loan_int ?? 0); ?></span>
                         </li>
                         <li class="flex items-center py-3">
-                            <span class="font-bold">Collection</span>
-                            <span class="ml-auto"><?= number_format($customer_loan->restration ?? 0); ?></span>
+                            <span class="font-bold">Rejesho</span>
+                            <span class="ml-auto"><?= safe_number_format($customer_loan->restration ?? 0); ?></span>
                         </li>
                         <li class="flex items-center py-3">
-    <span class="font-bold">Paid Amount</span>
+    <span class="font-bold">Lipwa</span>
 
     <?php
     $loan_int = $customer_loan->loan_int ?? 0;
@@ -89,16 +96,16 @@ include_once APPPATH . "views/partials/header.php";
 
     <span class="ml-auto">
         <?php if ($deposit > $loan_int): ?>
-            <?= number_format($deposit - $loan_int) ?>
+            <?= safe_number_format($deposit - $loan_int) ?>
         <?php else: ?>
-            <?= number_format($deposit) ?>
+            <?= safe_number_format($deposit) ?>
         <?php endif; ?>
     </span>
 </li>
 
                         <li class="flex items-center py-3">
-                            <span class="font-bold">Remain Debt</span>
-                            <span class="ml-auto"><?= number_format(max(0, $loan_int - $deposit)); ?></span>
+                            <span class="font-bold">Deni</span>
+                            <span class="ml-auto"><?= safe_number_format(max(0, $loan_int - $deposit)); ?></span>
                         </li>
                         
                     </ul>
@@ -107,15 +114,15 @@ include_once APPPATH . "views/partials/header.php";
 
             <!-- Right Side -->
             <div class="w-full md:w-9/12 md:mx-2 mt-4 md:mt-0">
-                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">Guarantor information</h2>
+                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">Taarifa Za Mdhamini</h2>
 
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-200">
                         <thead class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
                             <tr>
-                                <th class="py-3 px-6 text-left">Guarantor Name</th>
-                                <th class="py-3 px-6 text-left">Phone Number</th>
-                                <th class="py-3 px-6 text-left">Relationship</th>
+                                <th class="py-3 px-6 text-left">Jina Mdhamini</th>
+                                <th class="py-3 px-6 text-left">Number Ya Simu</th>
+                                <th class="py-3 px-6 text-left">Mahusiano</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700 text-sm">
@@ -140,44 +147,49 @@ include_once APPPATH . "views/partials/header.php";
 </div>
 <!-- Table Section -->
 <!-- Table Section -->
-
-
-        <!-- Page Title / Subheader -->
-       
-
         <div>
-    <div >
-        <div class="flex justify-end items-center gap-2">
-            <!-- Delete Button -->
-            <a class="py-2 px-3 inline-flex items-center  text-sm font-medium rounded-lg border border-gray-200 bg-white text-red-500 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#">
-                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 6h18"/>
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-                    <line x1="10" x2="10" y1="11" y2="17"/>
-                    <line x1="14" x2="14" y1="11" y2="17"/>
-                </svg>
-                Delete (2)
-            </a>
 
-            <!-- Withdraw Button -->
-            <a class="py-2 px-3 inline-flex items-center  text-sm font-medium rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
-                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14"/>
-                    <path d="M12 5v14"/>
-                </svg>
-                Withdraw
-            </a>
+        
+    <div >
+        <div class="flex justify-end  items-center gap-2">
+        <?php if (!empty($customer_loan->loan_status)) {
+    $status = $customer_loan->loan_status;
+
+    if ($status === 'withdrawal' || $status === 'out') { ?>
+          <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal" data-hs-overlay="#hs-edit-deposit-modal">
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"/>
+          </svg>
+      Weka
+    </button>
+    <?php } elseif ($status === 'disbarsed') { ?>
+        <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">
+        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"/>
+          </svg>
+        Toa
+      </button>
+    <?php } elseif ($status === 'done') { ?>
+        <a href="#" class="btn btn-info" data-toggle="modal" data-target="#addcontact3">
+            <i class="icon-pencil"></i> Faini
+        </a>
+<?php }
+} ?>
         </div>
     </div>
     <div>
-        <!-- Your content here -->
+
+
+   
     </div>
 </div>
 
-              
 
-            
+
                
                   <div class="p-4 md:p-6">
                   <?php echo form_open("admin/search_customerData", [
@@ -185,7 +197,7 @@ include_once APPPATH . "views/partials/header.php";
     'id' => 'customerSearchForm'
 ]); ?>
 
-    <div class="w-full flex flex-col md:flex-row items-center ">
+    <div class="w-full  md:flex-row items-center ">
         <!-- Search Dropdown -->
         <div class="w-full">
             <label for="branchSelect" class="block text-sm font-medium mb-1 dark:text-gray-300">* Search Customer:</label>
@@ -203,12 +215,7 @@ include_once APPPATH . "views/partials/header.php";
         </div>
 
         <!-- Search Button -->
-        <div class="w-full md:w-auto">
-            <label class="block text-sm font-medium mb-1 invisible">Button</label> <!-- for spacing -->
-            <!-- <button type="submit" class="w-full md:w-auto py-2 px-4 bg-cyan-800 hover:bg-cyan-700 text-white rounded-md">
-                Search
-            </button> -->
-        </div>
+
     </div>
 
     <input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
@@ -224,11 +231,11 @@ include_once APPPATH . "views/partials/header.php";
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" id="shareholder_table">
                                 <thead class="bg-cyan-600 dark:bg-cyan-600">
                                     <tr>
-                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Date</span></div></th>
-                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Description</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
-                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Deposit</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
-                                         <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">withdraw</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
-                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Balance</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Tarehe</span></div></th>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Maelezo</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Lipwa</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
+                                         <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Toka</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Salio</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
 
                                     </tr>
                                 </thead>
@@ -241,12 +248,9 @@ include_once APPPATH . "views/partials/header.php";
                                       @$total_deposit_penart =  $this->queries->get_total_paypenart($customer_loan->loan_id);
                                       @$end_deposit = $this->queries->get_end_deposit_time($customer_loan->loan_id);
                                        ?>
-                                    
-                               
                                     <?php if (isset($loan_desc ) && is_array($loan_desc ) && !empty($loan_desc )): ?>
                                         <?php foreach ($loan_desc  as $payisnulls): ?>
                                             <tr>
-
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo $payisnulls->date_data; ?></td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
     <?= $payisnulls->emply ? $payisnulls->emply . ' / ' : ''; ?>
@@ -272,8 +276,6 @@ include_once APPPATH . "views/partials/header.php";
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?= ($payisnulls->withdrow) ? round($payisnulls->withdrow, 2) : '0.00'; ?></td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?= ($payisnulls->balance) ? round($payisnulls->balance, 2) : '0.00'; ?></td>
     
-   
-   
 </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
@@ -291,74 +293,197 @@ include_once APPPATH . "views/partials/header.php";
 
 
         
-            <div id="hs-edit-shareholder-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
-                <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-3xl lg:w-full m-3 lg:mx-auto"> <?php // Wider modal for more fields ?>
-                    <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700">
-                        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
-                            <h3 class="font-bold text-gray-800 dark:text-white">Edit Staff</h3>
-                            <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" ><span class="sr-only">Close</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-                        </div>
-                        <div class="p-4 sm:p-6 overflow-y-auto">
-						<?php echo form_open("admin/filter_customer_status"); ?>
-                        <div class="sm:col-span-4">
-                            <label for="blanch_id" class="block text-sm font-medium mb-2 dark:text-gray-300">*Branch Name:</label>
-                            <select id="blanch_id" name="blanch_id" 
-                                    data-hs-select='{
-									"hasSearch": true,
-                                        "placeholder": "Select branch",
-                                        "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 dark:text-gray-200\" data-title></span></button>",
-                                        "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600",
-                                        "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-50 w-full bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto dark:bg-gray-800 dark:border-gray-700",
-                                        "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:focus:bg-gray-700",
-                                        "optionTemplate": "<div><div class=\"flex items-center\"><div class=\"me-2\" data-icon></div><div class=\"text-gray-800 dark:text-gray-200\" data-title></div></div></div>",
-                                        "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-gray-500\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
-                                      }'>
-								<option value="">Select Branch</option>
-								<?php foreach ($blanch as $blanchs): ?>
-                                    <option value="<?php echo $blanchs->blanch_id; ?>"><?php echo $blanchs->blanch_name; ?> </option>
-                               <?php endforeach; ?>
-							
+        <div id="hs-edit-shareholder-modal-<?= $customer->customer_id; ?>" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-3xl lg:w-full m-3 lg:mx-auto">
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+        <h3 class="font-bold text-gray-800 dark:text-white">Jina La Mteja: <?= htmlspecialchars($customer->f_name, ENT_QUOTES, 'UTF-8'); ?></h3>
+        <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">
+          <span class="sr-only">Close</span>
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
 
-                            </select>
-                            
-                        </div>
+      <?php echo form_open("admin/create_withdrow_balance/{$customer->customer_id}"); ?>
 
-                        <div classol-span-4">
-                            <label for="empl_sex" class="block text-sm font-medium mb-2 dark:text-gray-300">* Gender:</label>
-                            <select id="empl_sex" name="customer_status" required
-                                    data-hs-select='{
-                                        "placeholder": "Select gender",
-                                        "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 dark:text-gray-200\" data-title></span></button>",
-                                        "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600",
-                                        "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-50 w-full bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto dark:bg-gray-800 dark:border-gray-700",
-                                        "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:focus:bg-gray-700",
-                                        "optionTemplate": "<div><div class=\"flex items-center\"><div class=\"me-2\" data-icon></div><div class=\"text-gray-800 dark:text-gray-200\" data-title></div></div></div>",
-                                        "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-gray-500\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
-                                      }'>
-                                <option value="">Select gender</option>
-                                <option value="pending" <?php echo set_select('empl_sex', 'pending'); ?>>PENDING</option>
-                                <option value="open" <?php echo set_select('empl_sex', 'open'); ?>>ACTIVE</option>
-                                <option value="close" <?php echo set_select('empl_sex', 'close'); ?>>CLOSED</option>
-                            </select>
+<!-- Modal Body -->
+<div class="p-4 sm:p-6">
+  <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
+
+    <!-- Total Withdraw -->
+    <div class="sm:col-span-6">
+      <label for="withdrow_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Kiasi cha Kugawa:
+      </label>
+      <input type="text" id="withdrow_<?php echo $customer->customer_id; ?>" name="withdrow"
+  value="<?= htmlspecialchars(!empty($remain_balance->balance) ? $remain_balance->balance : 0, ENT_QUOTES, 'UTF-8'); ?>"
+  class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+  required>
+
+    </div>
+
+    <!-- Payment Method -->
+    <div class="sm:col-span-6">
+      <label for="method_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Njia Za Malipo:
+      </label>
+      <select id="method_<?php echo $customer->customer_id; ?>" name="method"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
+        <option value="">Chagua Malipo</option>
+        <?php foreach ($acount as $acounts): ?>
+          <option value="<?= $acounts->trans_id; ?>"><?= $acounts->account_name; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+    <!-- Date -->
+    <div class="sm:col-span-6">
+      <label for="with_date_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Tarehe:
+      </label>
+      <input type="date" id="with_date_<?php echo $customer->customer_id; ?>" name="with_date"
+        value="<?= date('Y-m-d'); ?>"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
+    </div>
+
+    <!-- Code -->
+    <div class="sm:col-span-6">
+      <label for="code_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Code Number:
+      </label>
+      <input type="number" placeholder="andika code ya Mteja" id="code_<?php echo $customer->customer_id; ?>" name="code"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
+    </div>
+
+  </div>
+
+  <!-- Hidden Inputs -->
+  <input type="hidden" value="CASH WITHDRAWALS" name="description">
+  <input type="hidden" value="withdrawal" name="loan_status">
+  <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+  <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
+  <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
+  <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
+
+  <!-- Action Buttons -->
+  <div class="mt-6 flex justify-end items-center gap-x-2">
+    <button type="button" class="py-2 px-3 btn-secondary-sm"
+      data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">Funga</button>
+
+    <a href="<?php echo base_url("admin/get_loan_code_resend/{$customer->customer_id}"); ?>"
+      class="py-2 px-3 btn-primary-sm bg-green-600 hover:bg-cyan-700 text-white">
+      Tuma Code
+    </a>
+
+    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Gawa</button>
+  </div>
+</div>
+
+<?php echo form_close(); ?>
+
+    </div>
+  </div>
+</div>
+
+  
+
+<!-- here put data -->
+
+<div id="hs-edit-deposit-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-3xl lg:w-full m-3 lg:mx-auto">
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+        <h3 class="font-bold text-gray-800 dark:text-white">Jina La Mteja: <?= htmlspecialchars($customer->f_name, ENT_QUOTES, 'UTF-8'); ?></h3>
+        <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-deposit-modal">
+          <span class="sr-only">Close</span>
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <?php echo form_open("admin/deposit_loan/{$customer_loan->customer_id}"); ?>
+<!-- Modal Body -->
+<div class="p-4 sm:p-6">
+  <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
+
+    <!-- Total Withdraw -->
+    <div class="sm:col-span-6">
+      <label for=depost" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Weka:
+      </label>
+      <input type="text" id=depost" name=depost"
+  class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+  required>
+
+    </div>
+
+    <!-- Payment Method -->
+    <div class="sm:col-span-6">
+      <label for="p_method" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Njia Za Malipo:
+      </label>
+      <select id="p_method" name="p_method"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
+        <option value="">Chagua Malipo</option>
+        <?php foreach ($acount as $acounts): ?>
+          <option value="<?= $acounts->trans_id; ?>"><?= $acounts->account_name; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+    <div class="sm:col-span-6">
+      <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Lazo Kiasi:
+      </label>
+      <input type="number" id="pending" 
+       value="<?= htmlspecialchars(!empty($total_recovery->pending) ? $total_recovery->pending : 0, ENT_QUOTES, 'UTF-8'); ?>"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
+    </div>
+
+
+    <!-- Date -->
+    <div class="sm:col-span-6">
+      <label for="deposit_date" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Tarehe:
+      </label>
+      <input type="date" id="deposit_date" name="deposit_date"
+        value="<?= date('Y-m-d'); ?>"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
+    </div>
+
+    <!-- Code -->
    
-                        </div>
 
-                        <input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
+  </div>
 
-					
-                                <div class="mt-6 flex justify-end items-center gap-x-2 py-3">
-                                    <button type="button" class="py-2 px-3 btn-secondary-sm" data-hs-overlay="#hs-edit-shareholder-modal">Close</button>
-                                    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Update</button>
-                                </div>
-                            <?php echo form_close(); ?>
-                      
-                    
-                </div>
-            </div>
-         
-<!-- End Table Section -->
-<!-- End Table Section -->
+  <!-- Hidden Inputs -->
+                    <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
+                    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
+                    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
+                    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+                     <input type="hidden" value="LOAN RETURN" name="description">
 
+  <!-- Action Buttons -->
+  <div class="mt-6 flex justify-end items-center gap-x-2">
+    <button type="button" class="py-2 px-3 btn-secondary-sm"
+      data-hs-overlay="#hs-edit-deposit-modal">Funga</button>
+
+    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Weka</button>
+  </div>
+</div>
+
+<?php echo form_close(); ?>
+
+    </div>
+  </div>
+</div>
 
 </div>
 </div>

@@ -37,7 +37,7 @@
                     <i class="la la-gear"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        COLATERAL ATTACHMENT
+                        Taarifa Ya Dhamana
 
                     </h3>
                 </div>
@@ -52,37 +52,32 @@
         <div class="row">
     <div class="col-lg-6">
     <div class="form-group">
-      <label class="control-label">Name:</label>
+      <label class="control-label">Jina La Dhamana:</label>
         <input type="text" class="form-control" id="description" placeholder="Description" name="description" autocomplete="off">
     </div>
     </div>
       <div class="col-lg-6">
     <div class="form-group">
-      <label class="control-label">Condition:</label>
+      <label class="control-label">Hali Ya Dhamana:</label>
         <input type="text" class="form-control" id="description" placeholder="Condition" name="co_condition" autocomplete="off">
     </div>
     </div>
      <div class="col-lg-6">
     <div class="form-group">
-      <label class="control-label">Cullent colateral Value:</label>
+      <label class="control-label">Thamani Ya Sasa Ya Dhamana:</label>
         <input type="number" class="form-control" id="" placeholder="Enter value" name="value" autocomplete="off">
     </div>
     </div>
 
-    <div class="col-lg-6">
-    <div class="form-group">
-      <label>Attachment/picture:</label>
-        <input type="file" class="form-control" id="attach" placeholder="Enter Middle name" name="file_name" autocomplete="off">
-    </div>
-    </div>
+  
 
     <input type="hidden" name="loan_id"  id="loan_id" value="<?php echo $loan_attach->loan_id; ?>">
     </div> 
     </div>
     <div class="form-group">        
        <div class="text-center">
-    <button type="submit" class="btn btn-primary">Upload</button>
-    <a href="<?php echo base_url("oficer/local_government/{$loan_attach->loan_id}"); ?>" class="btn btn-brand">Next</a>
+    <button type="submit" class="btn btn-primary">Hifadhi</button>
+    <a href="<?php echo base_url("oficer/local_government/{$loan_attach->loan_id}"); ?>" class="btn btn-brand">Mbele</a>
     </div>
      </div>
   <?php echo form_close(); ?>
@@ -123,7 +118,6 @@
                                                 <th>Colateral Name</th>
                                                 <th>Colateral Condition</th>
                                                 <th>Curent colateral Value:</th>
-                                                <th>Image/Document</th>
                                                 <th>Action</th>
                                                     
                                                     
@@ -138,7 +132,7 @@
                                     <td><?php echo $collaterals->description; ?></td>
                                     <td><?php echo $collaterals->co_condition; ?></td>
                                     <td><?php echo number_format($collaterals->value); ?></td>
-                                    <td><img src="<?php echo base_url().'assets/img/'.$collaterals->file_name; ?>" class="img-thumbnail" style="width: 100px; height:100px;"></td>
+                                   
                                 <td>    
                             <div class="dropdown dropdown-inline">
             <button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

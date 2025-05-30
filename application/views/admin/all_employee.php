@@ -386,7 +386,7 @@ $colour = $isOpen ? 'amber' : 'green';  // Tailwind colour family
             <path d="M2 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>
             <rect x="14" y="11" width="8" height="8" rx="1.5"/>
             <path d="M16 11v-2a3 3 0 0 1 6 0v2"/>
-            <circle cx="18" cy="15" r="1"/>
+            <circle cx="18" cy="15" r="1"/>f
           </svg>
           Delete
         </a>

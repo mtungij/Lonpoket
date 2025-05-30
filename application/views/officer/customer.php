@@ -57,97 +57,51 @@
 						<div class="kt-section__content">
 							<div class="form-group form-group-last row">
 								<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*First Name:</label>
+									<label class="form-control-label">*Jina La Kwanza:</label>
 							<input type="text" name="f_name" placeholder="First name" autocomplete="off" class="form-control input-sm" required>
 								</div>
 								<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Middle name:</label>
+									<label class="form-control-label">*Jina La Pili:</label>
 									<input type="text" name="m_name" placeholder="Middle name" autocomplete="off" class="form-control input-sm" required>
 								</div>
 								<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
 								
 								<input type="hidden" name="empl_id" value="<?php echo $empl_data->empl_id; ?>">
 								<div class="col-lg-4 form-group-sub">
-									<label  class="form-control-label">*Last name:</label>
+									<label  class="form-control-label">*Jina La Mwisho:</label>
 									<input type="text" name="l_name" placeholder="Last name" autocomplete="off" class="form-control input-sm" required>
 								</div>
 
 								
 						
 								<div class="col-lg-3 form-group-sub">
-									<label  class="form-control-label">*Gender:</label>
+									<label  class="form-control-label">*Jinsia:</label>
 								<select type="text" name="gender" class="form-control kt-selectpicker"  required data-live-search="true">
-								<option value="">Select Gender</option>
-								<option value="male">Male</option>
-								<option value="female">Female</option>
+								<option value="">Chagua Jinsia</option>
+								<option value="male">me</option>
+								<option value="female">ke</option>
 							</select>
 								</div>
+								
+
+
+<!-- Hidden input to actually submit the value -->
+<input type="hidden" name="empl_id" value="<?php echo $empl_data->empl_id; ?>">
+<input type="hidden" name="blanch_id" value="<?php echo $empl_data->blanch_id; ?>">
+
+								
 								<div class="col-lg-3 form-group-sub">
-									<label  class="form-control-label">*Employee:</label>
-								<select type="text" name="empl_id" class="form-control kt-selectpicker"  required data-live-search="true">
-								<option value="<?php echo $empl_data->empl_id; ?>"><?php echo $empl_data->empl_name; ?></option>
-								<?php foreach ($employee as $employees): ?>
-								<option value="<?php echo $employees->empl_id; ?>"><?php echo $employees->empl_name; ?></option>
-								<?php endforeach; ?>
-							</select>
+									<label  class="form-control-label">*Tarehe Ya Kuzaliwa:</label>
+							<input type="date" name="date_birth" onchange="getDate(this.value)" placeholder="Date of Birth" autocomplete="off" class="form-control input-sm" required>
 								</div>
 								<div class="col-lg-3 form-group-sub">
-									<label  class="form-control-label">*Date of Birth:</label>
-							<input type="text" name="date_birth" onchange="getDate(this.value)" placeholder="Date of Birth" autocomplete="off" class="form-control input-sm" required>
-								</div>
-								<div class="col-lg-3 form-group-sub">
-									<label  class="form-control-label">*Year:</label>
+									<label  class="form-control-label">*Miaka Ya Mteja:</label>
 							<input type="" id="age" name="" readonly class="form-control input-sm" value="">
 								</div>
 									<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Phone Number:</label>
+									<label class="form-control-label">*Number Ya Simu:</label>
 							<input type="number" name="phone_no" placeholder="Eg,7538, 6283" autocomplete="off" class="form-control input-sm" required >
 								</div>
-									<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Region:</label>
-							<select type="number" name="region_id" class="form-control kt-selectpicker" required data-live-search="true">
-								<option value="">Select Region</option>
-                                <?php foreach ($region as $regions): ?>
-								<option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
-								<?php endforeach;?>
-							</select>
-								</div>
-									<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*District:</label>
-							<input type="text" name="district" placeholder="district" autocomplete="off" class="form-control input-sm" required>
-								</div>
-							
-								<?php if ($manager->position_id == '21'){
-								 ?>
-								 <div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Ward:</label>
-							<input type="text" name="ward" placeholder="Ward" autocomplete="off" class="form-control input-sm" required>
-								</div>
-										<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Street:</label>
-							<input type="text" name="street" placeholder="street" autocomplete="off" class="form-control input-sm" required>
-								</div>
-
-							 <div class="col-lg-4 form-group-sub">
-							<label class="form-control-label">*Branch:</label>
-							<select type="number" name="blanch_id" class="form-control kt-selectpicker" required data-live-search="true">
-								<option value="">Select Branch</option>
-                                <?php foreach ($blanch as $blanchs): ?>
-								<option value="<?php echo $blanchs->blanch_id; ?>"><?php echo $blanchs->blanch_name; ?></option>
-								<?php endforeach;?>
-							</select>
-					       </div>
-					   <?php }else{ ?>
-						<input type="hidden" name="blanch_id" value="<?php echo $empl_data->blanch_id; ?>">
-								<div class="col-lg-6 form-group-sub">
-									<label class="form-control-label">*Ward:</label>
-							<input type="text" name="ward" placeholder="Ward" autocomplete="off" class="form-control input-sm" required>
-								</div>
-										<div class="col-lg-6 form-group-sub">
-									<label class="form-control-label">*Street:</label>
-							<input type="text" name="street" placeholder="street" autocomplete="off" class="form-control input-sm" required>
-								</div>
-						<?php } ?>
 							</div>
 						</div>
 					</div>
@@ -157,8 +111,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="text-center">
-								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Next</button>
-								<button type="reset" class="btn btn-danger btn-elevate btn-pill btn-sm">Cancel</button>
+								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Mbele</button>
 								</div>
 							</div>
 						</div>

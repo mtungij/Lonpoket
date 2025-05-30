@@ -71,16 +71,15 @@
 		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_">
 									     <thead>
 			  						           <tr>
-				  							    <th>Officer Name</th>
-				  							    <th>Group Name</th>
+				  							    <th>JINA LA AFISA</th>
 				  							    <th>S/No.</th>
-												<th>Customer Name</th>
-												<th>Phone Number</th>
-												<th>Duration</th>
-												<th>Receivable</th>
-												<th>Received</th>
+												<th>JINA LA MTEJA</th>
+												<th>NAMBA YA SIMU</th>
+												<th>MUDA</th>
+												<th>KUSANYO</th>
+												<th>LIPWA</th>
 												<th>Account</th>
-												<th>Withdrawal</th>
+												<th>TOLEWA</th>
 												<th>Account</th>
 				  						       </tr>
 						                  </thead>
@@ -92,8 +91,7 @@
 				  					<td>
 				  						<b><?php echo $oficer_datas->empl_name; ?></b>	
 				  						</td>
-				  						<td></td>
-				  					<td style="border: none;">INDIVIDUAL LOAN </td>
+				  					<td style="border: none;"> </td>
 				  					<td style="border: none;"></td>
 				  					<td style="border: none;"></td>
 				  					<td style="border: none;"></td>
@@ -106,14 +104,14 @@
                                  
                                <?php
                                $empl_loan = $this->queries->get_loan_empl_data($oficer_datas->empl_id);
-                               // echo "<pre>";
-                               // print_r($empl_loan);
-                               //       exit();
+                            //    echo "<pre>";
+                            //    print_r($empl_loan);
+                            //          exit();
                                 ?>
                                 <?php $no = 1; ?>
                                 <?php foreach ($empl_loan as $empl_loans): ?>
 									 <tr>
-				  					<td></td>
+				  					
 				  					<td></td>
 				  					<td class="c"><?php echo $no++; ?>. </td>
 				  					<td class="c">
@@ -124,12 +122,12 @@
 				  					</td>
 				  					<td>
 				  						<?php if($empl_loans->day == '1'){ ?>
-				  							<?php echo "Daily"; ?>
+				  							<?php echo "Siku"; ?>
 				  						<?php }elseif ($empl_loans->day == '7'){
-				  							echo "Weekly";
+				  							echo "Week";
 				  						 ?>
 				  						 <?php }elseif ($empl_loans->day == '30' || $empl_loans->day == '31' || $empl_loans->day == '28' || $empl_loans->day == '29') {
-				  						 	echo "Monthly";
+				  						 	echo "Mwezi";
 				  						  ?>
 				  						  <?php } ?>
 				  					</td>
@@ -169,30 +167,7 @@
 				  					<td></td>	
                                     </tr>
                                   <?php endforeach; ?>
-                                   <tr>
-                                    <td></td>
-				  					<td></td>
-				  					<td class="c">GROUP LOANS</td>
-				  					<td class="c"></td>
-				  					<td></td>
-				  						
-				  					<td>
-				  						<?php //if($empl_loans->day == '1'){ ?>
-				  							<?php //echo "Daily"; ?>
-				  						<?php //}elseif ($empl_loans->day == '7'){
-				  							//echo "Weekly";
-				  						 ?>
-				  						 <?php //}elseif ($empl_loans->day == '30' || $empl_loans->day == '31' || $empl_loans->day == '28' || $empl_loans->day == '29') {
-				  						 	//echo "Monthly";
-				  						  ?>
-				  						  <?php //} ?>
-				  					</td>
-				  					<td></td> 
-				  					<td><b><?php //echo number_format($total_work_individuals->total_depost_individual); ?></b></td>
-				  					<td></td> 
-				  					<td><b><?php //echo number_format($total_work_individuals->total_withdrawal_individual); ?></b></td> 
-				  					<td></td>	
-                                    </tr>
+                                 
                                     <?php $group_empl = $this->queries->get_empl_group_depost($oficer_datas->empl_id);?>
                                  <?php foreach ($group_empl as $group_empls): ?>
                                      <tr>
@@ -220,41 +195,13 @@
 				  					<td></td>	
                                     </tr>
 
-                               <?php $member_group = $this->queries->member_group($group_empls->group_id); ?>
-                               <?php $nos = 1; ?>
-                                     <?php foreach ($member_group as $member_groups): ?>
-                                      <tr>
-                                    <td></td>
-				  					<td><?php //echo $group_empls->group_name; ?></td>
-				  					<td class="c"><?php echo $nos++; ?>.</td>
-				  					<td class="c"><?php echo $member_groups->f_name; ?> <?php echo $member_groups->m_name; ?> <?php echo $member_groups->l_name; ?></td>
-                                  	
-				  					<td>
-				  						<?php echo $member_groups->phone_no; ?>
-				  					</td>
-				  					<td><?php if($member_groups->day == '1'){ ?>
-				  							<?php echo "Daily"; ?>
-				  						<?php }elseif ($member_groups->day == '7'){
-				  							echo "Weekly";
-				  						 ?>
-				  						 <?php }elseif ($member_groups->day == '30' || $member_groups->day == '31' || $member_groups->day == '28' || $member_groups->day == '29') {
-				  						 	echo "Monthly";
-				  						  ?>
-				  						  <?php } ?></td> 
-				  					<td><?php echo $member_groups->restration; ?>
-				  						  </td>
-				  					<td><?php echo number_format($member_groups->total_received); ?></td> 
-				  					<td><?php echo $member_groups->depost_account; ?></td> 
-				  					<td><?php echo number_format($member_groups->total_withdrawal); ?></td>	
-				  					<td><?php echo $member_groups->with_account; ?></td>	
-                                    </tr>
-                                <?php endforeach; ?>
+                            
                                 
                                 <?php $total_work_group = $this->queries->get_total_group_depost($group_empls->group_id); ?>
                                 <?php foreach ($total_work_group as $total_work_groups): ?>
                                 <tr>
                                     <td></td>
-				  					<td><b>TOTAL</b></td>
+				  					<td><b>JUMLA</b></td>
 				  					<td class="c"></td>
 				  					<td class="c"></td>
                                   	
@@ -285,7 +232,7 @@
 
                                   <?php foreach ($ofice_repayment as $ofice_repayments): ?>
                                   <tr>
-                                  	<td style="color:green;"><b>OFFICER TOTAL REPAYMENT:</b></td>
+                                  	<td style="color:green;"><b>JUMLA YA MALIPO YA AFISA:</b></td>
 				  					<td><b></b></td>
 				  					<td class="c"></td>
 				  					<td class="c"></td>
@@ -323,7 +270,7 @@
 				<i class="kt-font-brand flaticon-list-2"></i>
 			</span>
 			<h3 class="kt-portlet__head-title">
-			SUMMARY
+			MUHTASARI
 			</h3>
 		</div>		<div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
@@ -338,11 +285,11 @@
 		            <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_">
 									      <thead>
 			  						          <tr>
-												<th><b>Withdrawal</b></th>
+												<th><b>TOLEWA JUMLA </b></th>
 												<th><b><?php echo number_format($total_withdrawal->total_withdrawal_comp); ?></b></th>
 				  						      </tr>
 				  						      <tr>
-												<th><b>Deposit</b></th>
+												<th><b>LIPWA JUMLA</b></th>
 												<th><b><?php echo number_format($total_deposit->total_depost_comp); ?><b></th>
 				  						      </tr>
 						                  </thead>
@@ -366,7 +313,7 @@
 				<i class="kt-font-brand flaticon-list-2"></i>
 			</span>
 			<h3 class="kt-portlet__head-title">
-			Deposit Account Transaction Summary
+			MUHTASARI WA ACCOUNT ZA MALIPO
 			</h3>
 		</div>		<div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
@@ -381,9 +328,9 @@
 		            <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_">
 									      <thead>
 			  						          <tr>
-												<th>Account Name</th>
-												<th>Amount</th>
-												<th>Number of Receipt</th>
+												<th>JINA LA ACCOUNT</th>
+												<th>KIASI</th>
+												<th>IDADI YA RISITI</th>
 						                  </thead>
 								      <tbody>
                                           <?php //$no = 1; ?>

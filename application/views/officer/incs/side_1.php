@@ -36,7 +36,7 @@
           <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
               <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                      <i class="kt-menu__link-icon flaticon-layer"></i>
-                     <span class="kt-menu__link-text">Expenses & Income</span>
+                     <span class="kt-menu__link-text">Matumizi & Ada</span>
                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
               </a>
               <div class="kt-menu__submenu ">
@@ -558,7 +558,7 @@
                       <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
               <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                      <i class="kt-menu__link-icon flaticon-layer"></i>
-                     <span class="kt-menu__link-text">Expenses & Income</span>
+                     <span class="kt-menu__link-text">Matumizi & Ada</span>
                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
               </a>
               <div class="kt-menu__submenu ">
@@ -566,7 +566,7 @@
                      <ul class="kt-menu__subnav">
                             <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true" >
                                    <span class="kt-menu__link">
-                                          <span class="kt-menu__link-text">Expenses & Income</span>
+                                          <span class="kt-menu__link-text">Matumizi & Ada</span>
                                    </span>
                             </li>
                             
@@ -578,7 +578,7 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Expenses</span>
+                                          <span class="kt-menu__link-text">Matumizi</span>
                                    </a>
                             </li>
                             
@@ -608,9 +608,9 @@
                      <?php if ($privillages->position_id == '1'): ?>
                      
                
-                    <li class="kt-menu__item " aria-haspopup="true" >
-                            <a  href="<?php echo base_url("oficer/group"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Register Groups Name</span></a>
-                     </li>
+                    <!-- <li class="kt-menu__item " aria-haspopup="true" >
+                            <a  href="</?php echo base_url("oficer/group"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Register Groups Name</span></a>
+                     </li> -->
 
         
        <!--   <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
@@ -846,7 +846,7 @@
         </li>
 
          <li class="kt-menu__item " aria-haspopup="true" >
-                            <a  href="<?php echo base_url("oficer/teller_dashboard"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Teller Dashboard</span></a>
+                            <a  href="<?php echo base_url("oficer/teller_dashboard"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Malipo</span></a>
           </li>
 
             <li class="kt-menu__item " aria-haspopup="true" >
@@ -861,14 +861,14 @@
                <?php endif; ?>
                <?php if ($privillages->position_id == '6') {
                ?>
-               <li class="kt-menu__item " aria-haspopup="true" >
+               <!-- <li class="kt-menu__item " aria-haspopup="true" >
                             <a  href="<?php echo base_url("oficer/group"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Register Groups Name</span></a>
-                     </li>
+                     </li> -->
 
          <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
               <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                      <i class="kt-menu__link-icon flaticon-layer"></i>
-                     <span class="kt-menu__link-text">Customer</span>
+                     <span class="kt-menu__link-text">Mteja</span>
                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
               </a>
               <div class="kt-menu__submenu ">
@@ -884,24 +884,24 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Register Customer</span>
+                                          <span class="kt-menu__link-text">Sajili Mteja</span>
                                    </a>
                             </li>
 
-                              <li class="kt-menu__item " aria-haspopup="true" >
-                                   <a  href="<?php echo base_url("oficer/customer_update"); ?>" class="kt-menu__link ">
+                              <!-- <li class="kt-menu__item " aria-haspopup="true" > -->
+                                   <!-- <a  href="</?php echo base_url("oficer/customer_update"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
                                           <span class="kt-menu__link-text">Update Customer Information</span>
                                    </a>
-                            </li>
+                            </li> -->
                             <li class="kt-menu__item " aria-haspopup="true" >
                                    <a  href="<?php echo base_url("oficer/all_customer"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">All Customer</span>
+                                          <span class="kt-menu__link-text">Wateja wote</span>
                                    </a>
                             </li>
                             
@@ -913,7 +913,7 @@
         <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
               <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                      <i class="kt-menu__link-icon flaticon-layer"></i>
-                     <span class="kt-menu__link-text">Loan</span>
+                     <span class="kt-menu__link-text">Mikopo</span>
                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
               </a>
 
@@ -931,7 +931,7 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Loan Application</span>
+                                          <span class="kt-menu__link-text">Omba Mkopo</span>
                                    </a>
                             </li>
                             <li class="kt-menu__item " aria-haspopup="true" >
@@ -939,7 +939,7 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Loan Approved</span>
+                                          <span class="kt-menu__link-text">Mikopo iliyoidhinishwa</span>
                                    </a>
                             </li>
                            
@@ -948,7 +948,7 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Loan Disbursed</span>
+                                          <span class="kt-menu__link-text">Mikopo iliyopitishwa</span>
                                    </a>
                             </li>
 
@@ -957,36 +957,36 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Loan Withdrawal</span>
+                                          <span class="kt-menu__link-text"> Mikopo iliyopitolewa</span>
                                    </a>
                             </li>
 
-                            <li class="kt-menu__item " aria-haspopup="true" >
-                                   <a  href="<?php echo base_url("oficer/all_loan_lejected"); ?>" class="kt-menu__link ">
+                            <!-- <li class="kt-menu__item " aria-haspopup="true" >
+                                   <a  href="</?php echo base_url("oficer/all_loan_lejected"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
                                           <span class="kt-menu__link-text">Loan Rejected</span>
                                    </a>
-                            </li>
+                            </li> -->
 
                      
-                            <li class="kt-menu__item " aria-haspopup="true" >
-                                   <a  href="<?php echo base_url("oficer/loanpending_groups") ?>" class="kt-menu__link ">
+                            <!-- <li class="kt-menu__item " aria-haspopup="true" >
+                                   <a  href="</?php echo base_url("oficer/loanpending_groups") ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
                                           <span class="kt-menu__link-text">Loan Group</span>
                                    </a>
-                            </li>
-                            <li class="kt-menu__item " aria-haspopup="true" >
-                                   <a  href="<?php echo base_url("oficer/parsonal_pending_loan"); ?>" class="kt-menu__link ">
+                            </li> -->
+                            <!-- <li class="kt-menu__item " aria-haspopup="true" >
+                                   <a  href="</?php echo base_url("oficer/parsonal_pending_loan"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
                                           <span class="kt-menu__link-text">Personal loan</span>
                                    </a>
-                            </li>
+                            </li> -->
                             
                      </ul>
               </div>
@@ -995,7 +995,7 @@
         </li>
 
 
-
+<!-- 
          <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
               <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                      <i class="kt-menu__link-icon flaticon-layer"></i>
@@ -1014,7 +1014,7 @@
                             
 
                             <li class="kt-menu__item " aria-haspopup="true" >
-                                   <a  href="<?php echo base_url("oficer/loanpending_groups") ?>" class="kt-menu__link ">
+                                   <a  href="</?php echo base_url("oficer/loanpending_groups") ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
@@ -1023,7 +1023,7 @@
                             </li>
 
                              <li class="kt-menu__item " aria-haspopup="true">
-                                   <a  href="<?php echo base_url("oficer/general_operation"); ?>" class="kt-menu__link ">
+                                   <a  href="</?php echo base_url("oficer/general_operation"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
@@ -1031,7 +1031,7 @@
                                    </a>
                             </li>
                              <li class="kt-menu__item " aria-haspopup="true">
-                                   <a  href="<?php echo base_url("oficer/group_list"); ?>" class="kt-menu__link ">
+                                   <a  href="</?php echo base_url("oficer/group_list"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
@@ -1044,22 +1044,22 @@
               </div>
 
               
-        </li>
+        </li> -->
     
                   <?php  }elseif ($privillages->position_id == '2') {
                   ?>
                    <li class="kt-menu__item " aria-haspopup="true" >
-                            <a  href="<?php echo base_url("oficer/teller_dashboard"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Teller Dashboard</span></a>
+                            <a  href="<?php echo base_url("oficer/teller_dashboard"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Dashboard Malipo</span></a>
                  </li>
-                  <li class="kt-menu__item " aria-haspopup="true" >
-                            <a  href="<?php echo base_url("oficer/interest_principal_transfor"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Cash flow</span></a>
-                  </li>
+                  <!-- <li class="kt-menu__item " aria-haspopup="true" >
+                            <a  href="</?php echo base_url("oficer/interest_principal_transfor"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Cash flow</span></a>
+                  </li> -->
                   <li class="kt-menu__item " aria-haspopup="true" >
                             <a  href="<?php echo base_url("oficer/saving_deposit"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Saving Deposit</span></a>
-          </li>
+          <!-- </li>
                   <li class="kt-menu__item " aria-haspopup="true" >
-                            <a  href="<?php echo base_url("oficer/today_cashinhand"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Today Cash In Hand Depost</span></a>
-          </li>
+                            <a  href="</?php echo base_url("oficer/today_cashinhand"); ?>" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-layer"></i><span class="kt-menu__link-text">Today Cash In Hand Depost</span></a>
+          </li> -->
                   <?php  }elseif ($privillages->position_id == '20') {
                    ?>
 
@@ -1148,7 +1148,7 @@
        <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
               <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                      <i class="kt-menu__link-icon flaticon-layer"></i>
-                     <span class="kt-menu__link-text">Report</span>
+                     <span class="kt-menu__link-text">Reports</span>
                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
               </a>
 
@@ -1166,25 +1166,25 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Cash Transaction</span>
+                                          <span class="kt-menu__link-text">Malipo</span>
                                    </a>
                             </li>
 
-                            <li class="kt-menu__item " aria-haspopup="true" >
-                                   <a  href="<?php echo base_url("oficer/blanchiwise_report"); ?>" class="kt-menu__link ">
+                            <!-- <li class="kt-menu__item " aria-haspopup="true" >
+                                   <a  href="</?php echo base_url("oficer/blanchiwise_report"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
                                           <span class="kt-menu__link-text">Branch Wise Loan Summary</span>
                                    </a>
-                            </li>
+                            </li> -->
 
                             <li class="kt-menu__item " aria-haspopup="true">
                                    <a  href="<?php echo base_url("oficer/loan_pending_time"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Loan pending</span>
+                                          <span class="kt-menu__link-text">Malazo</span>
                                    </a>
                             </li>
 
@@ -1193,25 +1193,25 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Loan Repayments</span>
+                                          <span class="kt-menu__link-text">Malipo yaliyokamilika</span>
                                    </a>
                             </li>
 
-                            <li class="kt-menu__item " aria-haspopup="true">
-                                   <a  href="<?php echo base_url("oficer/search_customer_loan_report"); ?>" class="kt-menu__link ">
+                            <!-- <li class="kt-menu__item " aria-haspopup="true">
+                                   <a  href="</?php echo base_url("oficer/search_customer_loan_report"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
                                           <span class="kt-menu__link-text">Customer Loan Report</span>
                                    </a>
-                            </li>
+                            </li> -->
 
                             <li class="kt-menu__item " aria-haspopup="true">
                                    <a  href="<?php echo base_url("oficer/customer_account_statement"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Customer Account Statement</span>
+                                          <span class="kt-menu__link-text">Statement Ya Mteja</span>
                                    </a>
                             </li>
 
@@ -1229,7 +1229,7 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Today Receivable</span>
+                                          <span class="kt-menu__link-text">Makusanyo ya Leo</span>
                                    </a>
                             </li>
 
@@ -1238,7 +1238,7 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Today Received</span>
+                                          <span class="kt-menu__link-text">Malipo Ya Leo</span>
                                    </a>
                             </li>
 
@@ -1248,7 +1248,7 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Outstanding loan</span>
+                                          <span class="kt-menu__link-text">Madeni Sugu</span>
                                    </a>
                             </li>
 
@@ -1257,20 +1257,20 @@
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Teller Officer Cash Transaction</span>
+                                          <span class="kt-menu__link-text">Report ya Maafisa      </span>
                                    </a>
                             </li>
 
                            
 
-                            <li class="kt-menu__item " aria-haspopup="true">
-                                   <a  href="<?php echo base_url("oficer/next_expectation"); ?>" class="kt-menu__link ">
+                            <!-- <li class="kt-menu__item " aria-haspopup="true">
+                                   <a  href="</?php echo base_url("oficer/next_expectation"); ?>" class="kt-menu__link ">
                                           <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                  <span></span>
                                           </i>
-                                          <span class="kt-menu__link-text">Expectation Receivable</span>
+                                          <span class="kt-menu__link-text">Makusanyo Ya Mbele</span>
                                    </a>
-                            </li>   
+                            </li>    -->
                             
                      </ul>
               </div>

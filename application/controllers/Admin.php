@@ -1123,11 +1123,18 @@ public function create_customer()
 
     if ($this->form_validation->run()) {
         $data = $this->input->post();
-
+		
         // Phone number formatting: remove leading 0 and prepend 255
         $raw_phone = $this->input->post('phone_no');
         $clean_phone = preg_replace('/^0/', '', $raw_phone); // Remove leading 0
-        $data['phone_no'] = '255' . $clean_phone;
+      
+
+		$phone = '255' . $clean_phone;  // Hii ndio tutatumia kutuma sms
+//    echo "<pre>";
+// 		  print_r($phone);
+// 		  echo "</pre>";
+// 		       exit();
+        $data['phone_no'] = $phone;
 
         $f_name = $data['f_name'];
         $m_name = $data['m_name'];
@@ -1145,11 +1152,24 @@ public function create_customer()
             $customer_id = $this->queries->insert_customer($data);
 
             if ($customer_id > 0) {
+				$this->load->model('queries');
+				$compdata = $this->queries->get_companyData($comp_id);
+				// echo "<pre>";
+				// 		  print_r($compdata);
+				// 		  echo "</pre>";
+				// 		       exit();
+				$full_name = $f_name . ' ' . $m_name . ' ' . $l_name;
+				$massage = "Habari $full_name! Karibu sana katika familia ya " . $compdata->comp_name . ". " .
+				"Tunathamini uamuzi wako wa kujiunga nasi. Kwa maswali, ushauri au msaada wowote, " .
+				"tupigie simu kupitia namba: " . $compdata->comp_number . ". Tuko tayari kukuhudumia kwa moyo wote!";
+                // Tuma SMS ukitumia sendsms()
+                $this->sendsms($phone, $massage);
+				
                 $this->session->set_flashdata('message', 'Customer created successfully');
             } else {
                 $this->session->set_flashdata('error', 'Failed to create customer');
             }
-
+			
             return redirect('admin/customer_details/' . $customer_id);
         }
     }
@@ -1197,8 +1217,10 @@ public function create_customer()
              }else{
                 $this->session->set_flashdata('error','Data failed!!');
             }
+
+			return redirect('admin/loan_application');
             
-            return redirect('admin/customer_profile/'.$customer_id);
+            // return redirect('admin/customer_profile/'.$customer_id);
 	     }
 
 	public function view_customer_Id($customer_id){
@@ -1290,10 +1312,10 @@ public function create_customer()
 			public function customer_profile($customer_id){
 				$this->load->model('queries');
 				$customer_profile = $this->queries->get_customer_profileData($customer_id);
-				   //   echo "<pre>";
-				   // print_r($customer_profile);
-				   // echo "</pre>";
-				   //             exit();
+				//      echo "<pre>";
+				//    print_r($customer_profile);
+				//    echo "</pre>";
+				//                exit();
 	           $this->load->view('admin/customer_profile',['customer_profile'=>$customer_profile]);
 }
 
@@ -1494,7 +1516,7 @@ public function loan_application(){
 	$comp_id = $this->session->userdata('comp_id');
 	$customer = $this->queries->get_allcustomerData($comp_id);
 	//     echo "<pre>";
-	//   print_r($customer);
+	//   print_r($customer);customer_details
 	//        exit();
 	$this->load->view('admin/loan_application',['customer'=>$customer]);
 }
@@ -1509,6 +1531,10 @@ $customer = $this->queries->search_CustomerID($customer_id,$comp_id);
 @$sponser = $this->queries->get_sponser($customer_id);
 @$sponsers_data = $this->queries->get_sponserCustomer($customer_id);
 
+	//     echo "<pre>";
+	//   print_r($customer);
+	//        exit();
+	
  
 $this->load->view('admin/search_customer',['customer'=>$customer,'sponser'=>$sponser,'sponsers_data'=>$sponsers_data]);
 }
@@ -1549,19 +1575,41 @@ public function create_sponser($customer_id, $comp_id) {
             'customer_id'  => $customer_id,
         ];
 
-        if ($existing_guarantor) {
-            // Update existing guarantor using correct primary key
-            $this->db->where('sp_id', $existing_guarantor->sp_id);
-            $this->db->update('tbl_sponser', $data);
-            $this->session->set_flashdata('message', 'Guarantor updated successfully');
-        } else {
-            // Insert new guarantor
-            $this->db->insert('tbl_sponser', $data);
-            $this->session->set_flashdata('message', 'Guarantor saved successfully');
-        }
-
-       
+		if ($existing_guarantor) {
+			// Update existing guarantor
+			$this->db->where('sp_id', $existing_guarantor->sp_id);
+			$this->db->update('tbl_sponser', $data);
+			$this->session->set_flashdata('message', 'Guarantor updated successfully');
+		} else {
+			// Insert new guarantor
+			$this->db->insert('tbl_sponser', $data);
+			$this->session->set_flashdata('message', 'Guarantor saved successfully');
+		}
+		
+		// 💬 Tuma SMS kwa mdhamini
+		$sp_fullname = $data['sp_name'] . ' ' . $data['sp_mname'] . ' ' . $data['sp_lname'];
+		$sp_phone = $data['sp_phone_no'];
+		if (preg_match('/^0/', $sp_phone)) {
+			$phone = '255' . substr($sp_phone, 1); // geuza 0xxx xxx xxx -> 255xxx xxx xxx
+		}
+		
+		// Pata taarifa za kampuni
+		$compdata = $this->queries->get_companyData($comp_id);
+		$comp_name = $compdata->comp_name;
+		$comp_number = $compdata->comp_number;
+		
+		// Pata jina kamili la mteja
+		$customer_name = $customer->f_name . ' ' . $customer->m_name . ' ' . $customer->l_name;
+		
+		// Ujumbe wa SMS
+		$massage = "Habari $sp_fullname, umetajwa kama mdhamini wa $customer_name katika taasisi ya kifedha $comp_name. "
+		. "Iwapo hukubaliani kuwa mdhamini wake, tafadhali wasiliana nasi kupitia $comp_number. Tunathamini ushirikiano wako.";
+		
+		// Tuma SMS
+		$this->sendsms($phone, $massage);
+		
 		redirect("admin/loan_applicationForm/$customer_id");
+		
     }
 
     // Show form for creating or editing guarantor
@@ -2588,7 +2636,7 @@ public function disburse($loan_id){
 		$total_interest_loan = $this->queries->get_sum_loanDisburse_interest($comp_id);
 
 		    // echo "<pre>";
-		    // print_r($total_interest_loan);
+		    // print_r($disburse);
 		    // echo "</pre>";
 		    //     exit();
 		$this->load->view('admin/disburse_loan',['disburse'=>$disburse,'total_loanDis'=>$total_loanDis,'total_interest_loan'=>$total_interest_loan]);
@@ -3033,6 +3081,7 @@ public function disburse($loan_id){
 
 
 	public function search_customerData(){
+	$this->load->helper('custom');
     $this->load->model('queries');
     $comp_id = $this->session->userdata('comp_id');
     $customery = $this->queries->get_allcustomerDatagroup($comp_id);
@@ -3092,6 +3141,9 @@ public function create_withdrow_balance($customer_id){
 		  $data = $this->input->post();
           $this->load->model('queries');
 		  $withdrow_newbalance = $data['withdrow'];
+		//               echo "<pre>";
+		//   print_r( $withdrow_newbalance);
+		//            exit();
 		  $loan_id = $data['loan_id'];
 		  $customer_id = $data['customer_id'];
 		  $blanch_id = $data['blanch_id'];
@@ -3107,8 +3159,8 @@ public function create_withdrow_balance($customer_id){
 		  $payment_method = $method;
 		  $trans_id = $method;
 
-		  // print_r($with_date);
-		  //        exit();
+		//   print_r($new_balance);
+		//          exit();
 		 
 		  $day_loan = $this->queries->get_loan_day($loan_id);
 		  $empl_id = $day_loan->empl_id;
@@ -3116,7 +3168,15 @@ public function create_withdrow_balance($customer_id){
 		//   print_r($day_loan);
 		//            exit();
 		  $admin_data = $this->queries->get_admin_role($comp_id);
+		  $empl_id = $this->session->userdata('empl_id');
+        $empl_data = $this->queries->get_employee_data($empl_id);
+		//            echo "<pre>";
+		//   print_r( $empl_data);
+		//            exit();
 		  $company_data = $this->queries->get_companyData($comp_id);
+		//              echo "<pre>";
+		//   print_r( $company_data);
+		//            exit();
           $day = $day_loan->day;
           $disburse_day = $day_loan->disburse_day;
           $dis_day = $day_loan->dis_date;
@@ -3173,18 +3233,27 @@ public function create_withdrow_balance($customer_id){
 		  @$blanch_account = $this->queries->get_amount_remainAmountBlanch($blanch_id,$payment_method);
 		  $blanch_capital = @$blanch_account->blanch_capital;
 		  $withMoney = ($blanch_capital) - ($new_balance + $sum_total_loanFee);
-           
+		//   print_r( $blanch_capital);
+		//   exit();
           //admin role
-          $role = $admin_data->role;
+          $role = $empl_data->empl_name;
              
 		  $datas_balance = $this->queries->get_remainbalance($customer_id);
 		  $customer_data = $this->queries->get_customerData($customer_id);
+		//   	  print_r(  $customer_data);
+		//   exit();
 		  $phone = $customer_data->phone_no;
+		  $first_name= $customer_data->f_name;
+		  $middle_name =$customer_data->m_name;
+		  $last_name= $customer_data->l_name;
+
+
+		  $full_name = ucwords(trim("{$first_name} {$middle_name} {$last_name}"));
 		  $old_balance = $datas_balance->balance;
 		 
 		  $balance = $old_balance;
 		  $with_balance = $balance - $new_balance; 
-
+		
 		  $up_balance = $this->queries->get_upBalance_Data($customer_id);
 		  $balance = $up_balance->balance;
 		  $customer_id = $up_balance->customer_id;
@@ -3193,9 +3262,11 @@ public function create_withdrow_balance($customer_id){
 		  //$today_float = $this->queries->get_today_cash($blanch_id);
           //$float = $today_float->blanch_capital;
           $remain_balance = $balance;
-          $today = date("Y-m-d H:i");
-
-		  $massage  = 'Tsh.'.$remain_balance.' Imetolewa kwenye Acc Yako ' . $loan_codeID .' Tarehe '.$today;
+		  $company_name = $company_data->comp_name;
+		  $amount       = number_format($remain_balance, 0);
+		  $today        = date('Y-m-d');
+		  
+		  $massage = "Habari $full_name, umepokea Tsh $amount kutoka $company_name tarehe $today. Tunakutakia urejeshaji mwema wa mkopo. Asante kwa kutumia huduma zetu.";
          
           $this->sendsms($phone,$massage);
 
@@ -3210,9 +3281,9 @@ public function create_withdrow_balance($customer_id){
            
            $new_deducted = $deducted + $sum_total_loanFee;
 
-          //    if($new_code != $code){
-		 	// $this->session->set_flashdata('error','Loan Code is Invalid Please Try Again');
-		   //     	}else
+             if($new_code != $code){
+		 	$this->session->set_flashdata('error','Loan Code is Invalid Please Try Again');
+		       	}else
 		      	if ($blanch_capital < $withdrow_newbalance) {
 		      	$this->session->set_flashdata('error','Branch Account balance Is Not Enough to withdraw');
 		      	}elseif($input_balance <= $balance){
@@ -4584,6 +4655,7 @@ $sqldata="UPDATE `tbl_depost` SET `depost`= '$remain_oldDepost',`sche_principal`
 
 
  public function transfar_amount(){
+	$this->load->helper('custom');
  	$this->load->model('queries');
  	$comp_id = $this->session->userdata('comp_id');
  	$blanch = $this->queries->get_blanch($comp_id);
@@ -9012,24 +9084,34 @@ public function update_customer_details($customer_id){
 
 
  public function sendsms($phone,$massage){
-	//public function sendsms(){f
-	//$phone = '255628323760';
-	//$massage = 'mapenzi yanauwa';
-	$api_key = 'Jm208bBtQsCkl2H0';
-	//$api_key = 'qFzd89PXu1e/DuwbwxOE5uUBn6';
-	//$curl = curl_init();
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL,"https://galadove.loan-pocket.com/api/v1/receive/action/send/sms");
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS,
-            'apiKey='.$api_key.'&phoneNumber='.$phone.'&messageContent='.$massage);
+    //public function sendsms(){f
+    //$phone = '255628323760';
+    //$massage = 'mapenzi yanauwa';
+    // $api_key = '';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    //$api_key = 'qFzd89PXu1e/DuwbwxOE5uUBn6';
+    //$curl = curl_init();
+    $url = "https://sms-api.kadolab.com/api/send-sms";
+    $token = getenv('SMS_TOKEN');
 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$server_output = curl_exec($ch);
-curl_close ($ch);
-
-//print_r($server_output);
-}
+  
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+      'Authorization: Bearer '. $token,
+      'Content-Type: application/json',
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+      "phoneNumbers" => ["+$phone"],
+      "message" => $massage
+    ]));
+  
+  $server_output = curl_exec($ch);
+  curl_close ($ch);
+  
+  //print_r($server_output);
+  }
+  
 
 
 

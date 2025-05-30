@@ -20,10 +20,10 @@ include_once APPPATH . "views/partials/header.php";
         <!-- Page Title / Subheader -->
         <div class="mb-6">
             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-200">
-                Manage Share Holders
+                Loan Pending Approve
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Register, edit, and view company share holders.
+                Maombi ya mikopo ya kupitisha
             </p>
         </div>
         <!-- End Page Title / Subheader -->
@@ -103,14 +103,19 @@ include_once APPPATH . "views/partials/header.php";
 										
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"><?php echo $no++; ?>.</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php
-echo htmlspecialchars($loan_pendings->f_name, ENT_QUOTES, 'UTF-8') . ' ' .
-     htmlspecialchars(substr($loan_pendings->m_name, 0, 1), ENT_QUOTES, 'UTF-8') . '. ' .
-     htmlspecialchars($loan_pendings->l_name, ENT_QUOTES, 'UTF-8');
-?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+  <?php
+    echo strtoupper(
+      htmlspecialchars($loan_pendings->f_name, ENT_QUOTES, 'UTF-8') . ' ' .
+      htmlspecialchars($loan_pendings->m_name, ENT_QUOTES, 'UTF-8') . ' ' .
+      htmlspecialchars($loan_pendings->l_name, ENT_QUOTES, 'UTF-8')
+    );
+  ?>
+</td>
+
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($loan_pendings->phone_no, ENT_QUOTES, 'UTF-8'); ?></td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($loan_pendings->blanch_name, ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo ucfirst(htmlspecialchars($loan_pendings->how_loan, ENT_QUOTES, 'UTF-8')); ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo number_format(htmlspecialchars($loan_pendings->how_loan, ENT_QUOTES, 'UTF-8')); ?></td>
 <td>
     <?php if ($loan_pendings->day == 1): ?>
         <span class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">Daily</span>

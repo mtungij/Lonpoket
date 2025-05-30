@@ -61,16 +61,7 @@
                             <i class=""></i>                       
                         </a>
 
-                        <div class="kt-widget__action">
-                         <div class="">
-                         	<?php if ($customer_profiles->signature == TRUE) {
-                         	 ?>
-                    <img src="<?php echo base_url().'assets/img/'.$customer_profiles->signature; ?>" alt="Signature"style="width: 300px; height: 180px;">
-                <?php }else{ ?>
-                	 <img src="<?php echo base_url();?>assets/img/sig.jpg" alt="passport" style="width: 300px; height: 180px;">
-                	<?php } ?>
-                        </div>
-                        </div>
+                       
                     </div>
 
                    <!--  <div class="kt-widget__subhead">
@@ -108,32 +99,27 @@
 		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_">
 									     <thead>
 			  						          <tr>
-		  							    <th><b></button>CustomerID</b></th>
-		  							    <th><b>Full name</b></th>
-										<th><b>Date of Birth</b></th>
-										<th><b>Address</b></th>
-										<th><b>Branch</b></th>
-										<th><b>Sex</b></th>
-										<th><b>Martial Status</b></th>
-										<th><b>Phone Number</b></th>
-										<th><b>Nick Name</b></th>
-										<th><b>Account Type</b></th>
+		  							    <th><b>Jina Kamili</b></th>
+										<th><b>Tarehe Ya Kuzaliwa</b></th>
+										<th><b>Tawi</b></th>
+										<th><b>Jinsia</b></th>
+										<th><b>Namba Ya Simu</b></th>
+										
+										
 				  									
 				  						         </tr>
 						                  </thead>
 			
 								    <tbody>
 									          <tr>
-				  					<td><?php echo $customer_profiles->code; ?></td>
+				  					
 				  					<td><?php echo $customer_profiles->f_name ?> <?php echo $customer_profiles->m_name ?> <?php echo $customer_profiles->l_name ?></td>
 				  					<td><?php echo $customer_profiles->date_birth; ?></td>
-				  					<td><?php echo $customer_profiles->region_name; ?>, <?php echo $customer_profiles->district; ?>,<?php echo $customer_profiles->ward; ?>,<?php echo $customer_profiles->street; ?></td>
 				  					<td><?php echo $customer_profiles->blanch_name; ?></td>
 				  					<td><?php echo $customer_profiles->gender; ?></td>
-				  						<td><?php echo $customer_profiles->martial_status ?></td>
 				  						<td><?php echo $customer_profiles->phone_no; ?></td>
-				  						<td><?php echo $customer_profiles->famous_area; ?></td>
-				  						<td><?php echo $customer_profiles->account_name; ?></td>
+				  						
+				  						
 				  															  							
                                         </tr>
 	                                </tbody>

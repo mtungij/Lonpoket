@@ -106,13 +106,13 @@
                                               <tr>
                                         
                                         
-                                        <th><b>Phone Number</b></th>
-                                        <th><b>Withdrawal Date</b></th>
-                                        <th><b>End Date</b></th>
-                                        <th><b>Loan Amount</b></th>
-                                        <th><b>Restoration</b></th>
-                                        <th><b>Amount Paid</b></th>
-                                        <th><b>Remaining debt</b></th>  
+                                        <th><b>Namba Ya Simu</b></th>
+                                        <th><b>Tarehe Kugawa</b></th>
+                                        <th><b>Tarehe Ya Mwisho</b></th>
+                                        <th><b>Mkopo</b></th>
+                                        <th><b>Rejesho</b></th>
+                                        <th><b>Lipwa</b></th>
+                                        <th><b>Deni</b></th>  
                                         </tr>
                                           </thead>
             
@@ -172,49 +172,18 @@
                                     </tbody>
                           </table>
 
-                          <div class="row">
-                            <div class="col-lg-6">
-                          <table class="table table-striped- table-bordered table-hover table-checkable"id="kt_table_1">
-                                         <thead>
-                                 <tr style="background-color: #2c77f4;color: white;">
-                                        
-                                        <th><b>Opening</b></th>
-                                        <th><b>Deposit</b></th>
-                                        <th><b>Withdrawal</b></th>
-                                        <th><b>Closing</b></th>  
-                                        </tr>
-                                          </thead>
-            
-                                    <tbody>
-                                       <tr>
-                                    
-                                    <td>
-                                      <?php echo number_format($blanch_amount_balance->total_blanch_capital); ?>  
-                                    </td>
-                                    <td><?php echo number_format(@$depost->total_depost); ?></td>
-                                    <td><?php echo number_format(@$withdraw->total_withdraw); ?></td>
-                                    <td>
-                                       <?php echo number_format($blanch_amount_balance->total_blanch_capital); ?>
-                                            
-                                        </td>
-                                                              
-                                        </tr>
-                                    </tbody>
-                          </table>
-                          </div>
-                          <div class="col-lg-6"></div>
-                       </div>
+                       
 
 
                          </div>
                        <div class="text-right">
                          <?php if (@$customer_loan->loan_status == 'withdrawal' || @$customer_loan->loan_status == 'out') {
                                  ?>
-                        <a href="" class="btn btn-success" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_<?php //echo $blanchs->blanch_id; ?>"><i class="kt-menu__link-icon flaticon2-add"></i>Deposit</a>
+                        <a href="" class="btn btn-success" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_<?php //echo $blanchs->blanch_id; ?>"><i class="kt-menu__link-icon flaticon2-add"></i>Weka</a>
                         <?php }elseif (@$customer_loan->loan_status == 'disbarsed') {
                           ?>
 
-                        <a href="" class="btn btn-brand" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_2"><i class="kt-menu__link-icon flaticon2-files-and-folders"></i>Withdrawal</a>
+                        <a href="" class="btn btn-brand" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_2"><i class="kt-menu__link-icon flaticon2-files-and-folders"></i>Toa</a>
 
                         <?php }else{ ?>
                              <?php } ?> 
@@ -222,7 +191,7 @@
                      <!--    <a href="" class="btn btn-primary" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_3"><i class="kt-menu__link-icon flaticon-edit"></i>Adjustiment</a> -->
                          <!-- <a href="<?php //echo base_url("admin/teller_dashboard"); ?>" class="btn btn-info"><i class="kt-menu__link-icon flaticon2-search-1"></i>Search</a> -->
 
-                         <a href="" class="btn btn-info" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_4"><i class="kt-menu__link-icon flaticon2-search-1"></i>Search</a>
+                         <a href="" class="btn btn-info" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_4"><i class="kt-menu__link-icon flaticon2-search-1"></i>Tafuta Mteja</a>
                        </div>
                         </div>
 
@@ -239,11 +208,11 @@
         <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
                                          <thead>
                                               <tr style="background-color: #2c77f4;color:white;">
-                                                <th>Date</th>
-                                                <th>Description</th>
-                                                <th>Deposit</th>
-                                                <th>Withdrawal</th>
-                                                <th>Balance</th>    
+                                                <th>Tarehe</th>
+                                                <th>Maelezo</th>
+                                                <th>Wekwa</th>
+                                                <th>Tolewa</th>
+                                                <th>salio</th>    
                                                  </tr>
                                           </thead>
 
@@ -473,7 +442,7 @@ OOPS!  There no customer with that name</h1>
                                 <div class="text-center">
                         <label for="recipient-name" class="form-control-label"><b>Total Amount</b></label>
                         </div>
-                        <input type="number" name="withdrow" min="1" id="jumlaa" autocomplete="off" required class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
+                        <input type="number" name="withdrow" min="1" id="jumlaa" autocomplete="off" value="<?php echo $remain_balance->balance; ?>" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
                         </div>
                              <div class="col-lg-4">
                        
@@ -506,171 +475,53 @@ OOPS!  There no customer with that name</h1>
                 </button>
             </div>
             <div class="modal-body">
-                <?php echo form_open("oficer/create_withdrow_balance/{$customer->customer_id}"); ?>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label"><b>Amount</b></label>
-                        <input type="" name=""id="amount_1s" min="1" readonly value="10000" class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label">*Quantity</label>
-                        <input type="number" name="" id="qnty_1s" min="1"  class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label">Total Amount</label>
-                        <input type="" name="" autocomplete="off" min="1" value="" id="jumla_1s" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
+            <?php echo form_open("oficer/create_withdrow_balance/{$customer->customer_id}"); ?>
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col-lg-4">
+            <label for="jumlas">Toa</label>
+            <input type="number" name="withdrow" min="1" id="jumlas" autocomplete="off" value="<?php echo $remain_balance->balance; ?>" class="form-control" style="border-radius: 8px;">
+        </div>
 
+        <div class="col-lg-4">
+            <label for="method">Njia Ya Malipo</label>
+            <select name="method" id="method" class="form-control" required style="border-radius: 8px;">
+                <option value="">Chagua Malipo</option>
+                <?php foreach ($acount as $acounts): ?>
+                    <option value="<?php echo $acounts->trans_id; ?>"><?php echo $acounts->account_name; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
+        <div class="col-lg-4">
+            <label for="with_date">Tarehe</label>
+            <?php $date = date("Y-m-d"); ?>
+            <input type="date" name="with_date" id="with_date" readonly value="<?php echo $date; ?>" autocomplete="off" required class="form-control" style="border-radius: 8px;">
+        </div>
+    </div>
 
-                             <div class="col-lg-4">
-                        <input type="" name="" value="5000" id="amount_2s" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_2s" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name=""  id="jumla_2s" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-                                   
-                           <input type="hidden" value="CASH WITHDRAWALS" name="description">
-                    <input type="hidden" value="withdrawal" name="loan_status">
-                    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+    <div class="col-lg-4">
+            <label for="jumlas">Pin Number</label>
+            <input type="number" name="code"  autocomplete="off" required class="form-control" style="border-radius: 8px;">
+        </div>
 
-                    <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
-                    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
-                    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
-                           
-                               
-                            
-                            
+    <!-- Hidden Fields -->
+    <input type="hidden" value="CASH WITHDRAWALS" name="description">
+    <input type="hidden" value="withdrawal" name="loan_status">
+    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+    <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
+    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
+    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
+    <input type="hidden" name="code" value="1">
 
-                             <div class="col-lg-4">
-                        <input type="" name="" value="2000" id="amount_3s" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_3s" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name=""  id="jumla_3s" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="1000" id="amount_4s" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_4s" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" autocomplete="off" min="1" id="jumla_4s" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="500" id="amount_5s" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_5s" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" autocomplete="off" min="1" id="jumla_5s" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="200" id="amount_6s" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_6s" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" autocomplete="off" min="1" id="jumla_6s" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-                          
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="100" id="amount_7s" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        
-                        <input type="number" name="" id="qnty_7s" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                       
-                        <input type="" name="" value="" min="1" autocomplete="off" id="jumla_7s" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="50" id="amount_8s" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_8s" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" id="jumla_8s" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                       
-                        </div>
-                             <div class="col-lg-4">
-                                <div class="text-center">
-                        <label for="recipient-name" class="form-control-label"><b>Total Amount</b></label>
-                        </div>
-                        <input type="number" name="withdrow" min="1" id="jumlas" autocomplete="off" required class="form-control"style="width: 130px; height:30px;border-radius: 8px;">
-                        </div>
-                             <div class="col-lg-4">
-                           </div>
-
-                         <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                        <br>
-                           <b>Withdrawal method  & Date</b>
-                        </div>
-                             <div class="col-lg-">
-                                <div class="text-center">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                        </div>
-                       <!--  <input type="number" name="withdrow" id="jumlas" autocomplete="off" required class="form-control"style="width: 130px; height:30px;border-radius: 8px;"> -->
-                        <select type="text" name="method" class="form-control" required style="border-radius: 8px;">
-                            <option value="">Select Withdrawal Method</option>
-                            <?php foreach ($acount as $acounts): ?>
-                            <option value="<?php echo $acounts->trans_id; ?>"><?php echo $acounts->account_name; ?></option>
-                            <?php endforeach; ?>
-                            
-                        </select>
-                        </div>
-
-                             <div class="col-lg-1">
-                                <div class="text-center">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                        </div>
-                        <?php $date = date("Y-m-d"); ?>
-                        <input type="hidden" name="code" value="1" placeholder="CODE" autocomplete="off" required class="form-control"style="width: 130px; height:40px;border-radius: 8px;">
-                        <input type="date" name="with_date" value="<?php echo $date; ?>"  autocomplete="off" required class="form-control"style="width: 130px; height:40px;border-radius: 8px;">
-                        
-                        </div>
-                         
-                          
-                    </div>  
-                 </div>
-            <div class="modal-footer">
-               
-                <button type="submit" class="btn btn-primary">Withdraw</button>
-                <button type="reset" class="btn btn-danger">Reset</button>
-
-                <!-- <a onclick="SendSmSButton()" href="<?php //echo base_url("admin/get_loan_code_resend/{$customer->customer_id}") ?>"  class="btn btn-info" id="resend">Resend Code</a> -->
-
-            </div>
-            <?php echo form_close(); ?>
+    <!-- Buttons -->
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Toa</button>
+        <a   href="<?php echo base_url("oficer/get_loan_code_resend/{$customer->customer_id}") ?>" class="btn btn-warning">Tuma Pin</a>
+        <button type="reset" class="btn btn-danger">Ghairi</button>
+    </div>
+</div>
+<?php echo form_close(); ?>
         </div>
     </div>
 </div>
@@ -687,173 +538,63 @@ OOPS!  There no customer with that name</h1>
                 </button>
             </div>
             <div class="modal-body">
-                <?php echo form_open("oficer/deposit_loan/{$customer->customer_id}"); ?>
+            <?php echo form_open("oficer/deposit_loan/{$customer->customer_id}"); ?>
 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label"><b>Amount</b></label>
-                        <input type="" name=""id="amount_1" min="1" readonly value="10000" class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label">*Quantity</label>
-                        <input type="number" name="" min="1" id="qnty_1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label">Total Amount</label>
-                        <input type="" name="" value="" min="1" autocomplete="off" id="jumla_1" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
+<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
+<input type="hidden" name="comp_id" value="<?php echo $customer->comp_id; ?>">
+<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
+<input type="hidden" name="loan_id" value="<?php echo $customer_loan->loan_id; ?>">
+<input type="hidden" name="description" value="LOAN RETURN">
 
+<div class="container">
+    <div class="row mb-3">
+        <!-- Total Amount -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-control-label"><b>Weka</b></label>
+            <input type="number" name="depost" min="1" id="jumla" autocomplete="off" required class="form-control" style="border-radius: 5px;">
+        </div>
 
+        <!-- Deposit Method -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-control-label"><b>Njia Ya Malipo</b></label>
+            <select name="p_method" class="form-control" required style="border-radius: 8px;">
+                <option value="">Chagua Njia Ya Malipo</option>
+                <?php foreach ($acount as $acounts): ?>
+                    <option value="<?php echo $acounts->trans_id; ?>"><?php echo $acounts->account_name; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-                             <div class="col-lg-4">
-                        <input type="" name="" value="5000" min="1" id="amount_2" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_2" min="1" class="form-control"style="width: 130px; height:30px;border: radius;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name=""  id="jumla_2" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
+        <!-- Recovery or Default Amount -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <?php if ($customer_loan->loan_status == 'withdrawal') { ?>
+                <label class="form-control-label"><b>Lazo</b></label>
+                <input type="text" class="form-control" value="<?php echo number_format($total_recovery->total_pending); ?>.00" readonly style="color:red">
+            <?php } elseif ($customer_loan->loan_status == 'out') { ?>
+                <label class="form-control-label" style="color:red;"><b>Deni Sugu</b></label>
+                <input type="text" class="form-control" value="<?php echo number_format($out_stand->total_out); ?>.00" readonly style="color:red">
+            <?php } else { ?>
+                <label class="form-control-label"><b>Lazo</b></label>
+                <input type="text" class="form-control" value="0.00" readonly style="color:red">
+            <?php } ?>
+        </div>
+    </div>
 
+    <!-- Deposit Date -->
+    <div class="row mb-3">
+        <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-control-label"><b>Tarehe</b></label>
+            <input type="date" class="form-control" readonly name="deposit_date" value="<?php echo date("Y-m-d"); ?>" style="border-radius: 8px;">
+        </div>
+    </div>
+</div>
 
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Weka</button>
+    <button type="reset" class="btn btn-danger">Ghairi</button>
+</div>
 
-                             <div class="col-lg-4">
-                        <input type="" name="" value="2000" id="amount_3" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_3" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name=""  id="jumla_3" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="1000" id="amount_4" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_4" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" id="jumla_4" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="500" id="amount_5" min="1" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" id="qnty_5" min="1" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" min="1" id="jumla_5" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" min="1" value="200" id="amount_6" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_6" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" min="1" id="jumla_6" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-                          
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="100" min="1" id="amount_7" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        
-                        <input type="number" name="" min="1" id="qnty_7" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                       
-                        <input type="" name="" value="" min="1" id="jumla_7" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="50" min="1" id="amount_8" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_8" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" min="1" id="jumla_8" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                       
-                        </div>
-
-                        <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
-                    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
-                    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
-                    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
-                     <input type="hidden" value="LOAN RETURN" name="description">
-                             <div class="col-lg-4">
-                                <div class="text-center">
-                        <label for="recipient-name" class="form-control-label"><b>Total Amount</b></label>
-                        </div>
-                        <input type="number" name="depost" min="1" id="jumla" autocomplete="off" required class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                       
-                        </div>
-                        <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                        <br>
-                           <b>Deposit method & Date</b>
-                        </div>
-                             <div class="col-lg-3">
-                                <div class="text-center">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                        </div>
-                       <!--  <input type="number" name="withdrow" id="jumlas" autocomplete="off" required class="form-control"style="width: 130px; height:30px;border-radius: 8px;"> -->
-                        <select type="text" name="p_method" class="form-control" required style="border-radius: 8px;">
-                            <option value="">Select Deposit Method</option>
-                            <?php foreach ($acount as $acounts): ?>
-                            <option value="<?php echo $acounts->trans_id; ?>"><?php echo $acounts->account_name; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        </div>
-
-                        <div class="col-lg-3">
-                         <?php if ($customer_loan->loan_status == 'withdrawal') {
-                      ?>
-                <span>Recovery Amount</span>
-                    <input type="text" class="form-control" value="<?php echo number_format($total_recovery->total_pending); ?>.00" readonly style="color:red"> 
-                <?php }elseif ($customer_loan->loan_status == 'out') {
-                 ?>
-                  <span style="color:red;">Default Amount</span>
-                <input type="text" class="form-control" value="<?php echo number_format($out_stand->total_out); ?>.00" readonly style="color:red"> 
-                 <?php }else{ ?>
-                    <span>Recovery Amount</span>
-                    <input type="text" class="form-control" value="0.00" readonly style="color:red"> 
-                    <?php } ?> 
-                        </div>
-                        <div class="col-lg-2">
-                            <span>Deposit date</span>
-                            <?php $today = date("Y-m-d") ?>
-                            <input type="date" class="form-control" name="deposit_date" value="<?php echo $today; ?>" style="border-radius: 8px;">
-                        </div>
-                    </div>  
-                 </div>
-            <div class="modal-footer">
-               
-                <button type="submit" class="btn btn-primary">Deposit</button>
-                <button type="reset" class="btn btn-danger">Reset</button>
-
-            </div>
-            <?php echo form_close(); ?>
+<?php echo form_close(); ?>
         </div>
     </div>
 </div>

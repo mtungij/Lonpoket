@@ -306,6 +306,22 @@ public function get_allcutomer($comp_id){
         	return $data->row();
         }
 
+		public function get_loansms($loan_id) {
+			$loan = $this->db->query("
+				SELECT * 
+				FROM tbl_loans l
+				LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id
+				LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id
+				LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id
+				LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id
+				LEFT JOIN tbl_region r ON r.region_id = c.region_id
+				LEFT JOIN tbl_account_type at ON at.account_id = s.account_id
+				LEFT JOIN tbl_employee e ON e.empl_id = c.empl_id
+				WHERE l.loan_id = '$loan_id'
+				LIMIT 1
+			");
+			return $loan->row();
+		}
 
 
 	        // search customer blanch-----
@@ -413,7 +429,7 @@ public function get_allcutomer($comp_id){
 
 
         public function get_loanPendingBlanch($blanch_id){
-       	$loan = $this->db->query("SELECT * FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.loan_status = 'open'  AND l.blanch_id = '$blanch_id' AND l.group_id = '0' ORDER BY l.loan_id DESC ");
+       	$loan = $this->db->query("SELECT * FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.loan_status = 'open'  AND l.blanch_id = '$blanch_id'  ORDER BY l.loan_id DESC ");
        	   return $loan->result();
        }
 
@@ -545,12 +561,12 @@ public function get_allcutomer($comp_id){
 	}
 
        public function get_aproved_loanBlabch($blanch_id){
-       	$loan = $this->db->query("SELECT * FROM tbl_loans l JOIN tbl_customer c ON c.customer_id = l.customer_id JOIN tbl_loan_category lt ON lt.category_id = l.category_id JOIN tbl_blanch b ON b.blanch_id = l.blanch_id JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.blanch_id = '$blanch_id' AND l.loan_status = 'approved' ORDER BY l.loan_id DESC ");
+       	$loan = $this->db->query("SELECT * FROM tbl_loans l JOIN tbl_customer c ON c.customer_id = l.customer_id JOIN tbl_loan_category lt ON lt.category_id = l.category_id JOIN tbl_blanch b ON b.blanch_id = l.blanch_id JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.blanch_id = '$blanch_id' AND l.loan_status = 'aproved' ORDER BY l.loan_id DESC ");
        	   return $loan->result();
        }
 
        public function get_loanAprovedBlanch($blanch_id){
-       	$loan = $this->db->query("SELECT * FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.blanch_id = '$blanch_id' AND l.loan_status = 'approved' ORDER BY l.loan_id DESC ");
+       	$loan = $this->db->query("SELECT * FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.blanch_id = '$blanch_id' AND l.loan_status = 'aproved' ORDER BY l.loan_id DESC ");
        	   return $loan->result();
        }
 

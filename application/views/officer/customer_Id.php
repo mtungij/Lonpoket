@@ -33,7 +33,7 @@
 			<div class="kt-portlet__head">
 				<div class="kt-portlet__head-label">
 					<h3 class="kt-portlet__head-title">
-						Customer Passport & Signature
+					Passport Ya Mteja
 					</h3>
 				</div>
 			</div>
@@ -45,13 +45,10 @@
 						<div class="kt-section__content">
 							<div class="form-group form-group-last row">
 							<div class="col-lg-6 form-group-sub">
-									<label class="form-control-label">*Photo ID:</label>
+									<label class="form-control-label">*Passport Ya Mteja:</label>
 							<input type="file"  name="passport" placeholder="Monthly Income" class="form-control input-sm" data-required="true">
 								</div>
-									<div class="col-lg-6 form-group-sub">
-									<label class="form-control-label">*Signature:</label>
-							<input type="file"  name="signature"  class="form-control input-sm" data-required="true">
-								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -61,8 +58,8 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="text-center">
-								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Save</button>
-								<a href="<?php echo base_url("oficer/customer_profile/{$data_customer->customer_id}") ?>" class="btn btn-info btn-elevate btn-pill btn-sm">Finish</a>
+								<!-- <button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Save</button> -->
+								<a href="<?php echo base_url("oficer/customer_profile/{$data_customer->customer_id}") ?>" class="btn btn-info btn-elevate btn-pill btn-sm">Hifadhi</a>
 								</div>
 							</div>
 						</div>

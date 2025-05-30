@@ -60,16 +60,7 @@
                             <i class=""></i>                       
                         </a>
 
-                        <div class="kt-widget__action">
-                         <div class="">
-                         	<?php if ($customer->signature == TRUE) {
-                         	 ?>
-                   <img src="<?php echo base_url();?>assets/img/sig.jpg" alt="passport" style="width: 300px; height: 180px;">
-                <?php }else{ ?>
-                	 <img src="<?php echo base_url();?>assets/img/sig.jpg" alt="passport" style="width: 200px; height: 180px;">
-                	<?php } ?>
-                        </div>
-                        </div>
+                     
                     </div>
 
                    <!--  <div class="kt-widget__subhead">
@@ -94,10 +85,10 @@
 		  							    <th><b>Full name</b></th>
                                         <th><b>Phone Number</b></th>
 										<th><b>Date of Birth</b></th>
-										<th><b>Monthly Income</b></th>
+										
 										<th><b>Branch</b></th>
-                                        <th><b>Work Status</b></th>
-										<th><b>Bussines name</b></th>	
+                         
+									
 				  						</tr>
 						                  </thead>
 			
@@ -107,19 +98,10 @@
 				  					<td><?php echo $customer->f_name ?> <?php echo $customer->m_name ?> <?php echo $customer->l_name ?></td>
 				  					<td><?php echo $customer->phone_no; ?></td>
 				  					<td><?php echo $customer->date_birth; ?></td>
-				  					<td>
-                                        <?php if ($customer->month_income == TRUE) {
-                                         ?>
-                                        <?php echo $customer->month_income; ?>
-                                    <?php }elseif ($customer->month_income == FALSE) {
-                                         ?>
-                                         -
-                                         <?php } ?>
-                                            
-                                        </td>
+				  				
 				  					<td><?php echo $customer->blanch_name; ?></td>
-                                    <td><?php echo $customer->work_status; ?></td>
-				  						<td><?php echo $customer->bussiness_type; ?></td>									  							
+                       
+				  															  							
                                         </tr>
 	                                </tbody>
                           </table>
@@ -167,13 +149,10 @@
                                     <th>S/No.</th>
                                     <th>Full Name </th>
                                     <th>Phone number</th>
-                                    <th>Nature of Settlement</th>
-                                    <th>Relationship</th>
-                                     <th>Identites</th>
-                                    <th>Region</th>
-                                    <th>District</th>
-                                    <th>Ward</th>
-                                    <th>Street</th>                               
+                                   
+                                  
+                                   
+                                              
                                     <th>Action</th>                               
                                     </tr>
                                  </thead>
@@ -185,14 +164,11 @@
                                     <td><?php echo $no++; ?>.</td>
                                     <td><?php echo $sponsers_datas->sp_name; ?> <?php echo $sponsers_datas->sp_mname; ?> <?php echo $sponsers_datas->sp_lname; ?></td>
                                     <td><?php echo $sponsers_datas->sp_phone_no; ?></td>
-                                    <td><?php echo $sponsers_datas->nature; ?></td>
+                                  
                                     
-                                    <td><?php echo $sponsers_datas->sp_relation; ?></td>
-                                    <td><?php echo $sponsers_datas->sp_nation; ?></td>
-                                    <td><?php echo $sponsers_datas->region_name; ?></td>
-                                    <td><?php echo $sponsers_datas->sp_district; ?></td>
-                                    <td><?php echo $sponsers_datas->sp_ward; ?></td>
-                                    <td><?php echo $sponsers_datas->sp_street; ?></td>
+                                  
+                                  
+
                                 <td>    
                             <div class="dropdown dropdown-inline">
             <button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -266,16 +242,7 @@
                                 </select>   
                                 </div>
 
-                                <div class="col-lg-4 form-group-sub">
-                                    <label  class="form-control-label">*Region:</label>
-                                <select type="text" name="sp_region" class="form-control">
-                                    <option value="<?php echo $sponsers_datas->region_id; ?>"><?php echo $sponsers_datas->region_name; ?></option>
-                                    <?php foreach ($region as $regions): ?>
-                                    <option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
-                                     <?php endforeach; ?>
-                                 
-                                </select>   
-                                </div>
+                               
 
                                 <div class="col-lg-4 form-group-sub">
                                     <label  class="form-control-label">*District:</label>
@@ -326,7 +293,7 @@
                     <i class="la la-gear"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        GUARANTORS INFORMATIONS
+                        Taarifa Za Mdhamini
 
                     </h3>
                 </div>
@@ -340,14 +307,14 @@
         <div class="row">
             <div class="col-lg-4">
     <div class="form-group">
-      <label class="control-label">First Name:</label>
-        <input type="text" class="form-control" id="sp_name" placeholder="First name" name="sp_name[]" autocomplete="off">
+      <label class="control-label">Jina La Kwanza:</label>
+        <input type="text" class="form-control" id="sp_name" placeholder="First name" name="sp_name[]" required autocomplete="off">
     </div>
     </div>
 
     <div class="col-lg-4">
     <div class="form-group">
-      <label>Middle name:</label>
+      <label>Jina La Kati:</label>
         <input type="text" class="form-control" id="sp_mname" placeholder="Enter Middle name" name="sp_mname[]" autocomplete="off">
     </div>
     </div>
@@ -357,77 +324,31 @@
 
     <div class="col-lg-4">
     <div class="form-group">
-      <label>Last name:</label>
+      <label>Jina La mwisho:</label>
         <input type="text" class="form-control" id="sp_lname" placeholder="Enter Last name" name="sp_lname[]" autocomplete="off">
     </div>
     </div>
     <div class="col-lg-3">
     <div class="form-group">
-      <label>Phone number:</label>  
-        <input type="number" class="form-control" id="sp_phone_no" placeholder="Enter Phone number" name="sp_phone_no[]" autocomplete="off">
+      <label>Namba Ya Simu:</label>  
+        <input type="number" class="form-control" id="sp_phone_no" placeholder="Enter Phone number" name="sp_phone_no[]" required autocomplete="off">
     </div>
     </div>
-    <div class="col-lg-3">
-    <div class="form-group">
-      <label>Natinal ID/Vote ID/Driver Lisence:</label>  
-        <input type="number" class="form-control" id="sp_phone_no" placeholder="Enter Natinal ID/Vote ID/Driver Lisence" name="sp_nation[]" autocomplete="off">
-    </div>
-    </div> 
+    
      <div class="col-lg-3">
     <div class="form-group">
-      <label>Reationship With Customer:</label>  
+      <label>Uhusiano Na Mkopaji:</label>  
         <input type="text" class="form-control" id="sp_relation" placeholder="Enter Reationship With Customer" name="sp_relation[]" autocomplete="off">
     </div>
     </div>
-     <div class="col-lg-3">
-    <div class="form-group">
-      <label>Nature of Settlement:</label>  
-        <select type="text" name="nature[]" id="nature" class="form-control">
-            <option value="">Select Nature of Settlement</option>
-            <option value="Permanenty Settlement">Permanenty Settlement</option>
-            <option value="Temporary Settlement">Temporary Settlement</option>
-        </select>
-    </div>
-    </div>
+  
 
-     <div class="col-lg-3">
-    <div class="form-group">
-      <label>Region:</label>  
-        <select type="text" name="sp_region[]" id="nature" class="form-control kt-selectpicker" data-live-search="true">
-            <option value="">Select region</option>
-            <?php foreach ($region as $regions): ?>
-            <option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    </div>
-     <div class="col-lg-3">
-    <div class="form-group">
-      <label>District:</label>  
-        <input type="text" class="form-control" id="sp_district" placeholder="Enter District" name="sp_district[]" autocomplete="off">
-    </div>
-    </div>
-     <div class="col-lg-3">
-    <div class="form-group">
-      <label>Ward:</label>  
-        <input type="text" class="form-control" id="sp_ward" placeholder="Enter Ward" name="sp_ward[]" autocomplete="off">
-    </div>
-    </div>
-     <div class="col-lg-3">
-    <div class="form-group">
-      <label>Street:</label>  
-        <input type="text" class="form-control" id="sp_street" placeholder="Enter Street" name="sp_street[]" autocomplete="off">
-    </div>
-    </div>
-
+   
+ 
+    
     </div> 
     </div>
-    <div class="form-group">        
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="button" name="add" id="add" class="btn btn-success"><i class="
-kt-menu__link-icon flaticon-add"></i>Add More</button>
-      </div>
-    </div>
+ 
     <div class="text-center">
      <input type="submit" name="submit" id="submit" class="btn btn-info btn-sm" value="Submit" />
      <?php if(@$sponser->customer_id == TRUE){ ?> 
@@ -464,26 +385,7 @@ OOPS!  There no customer with that number</h1>
 				 <?php //endforeach; ?>			
 				
 <?php include('incs/footer_1.php') ?>
-<script type="text/javascript">
-    $(document).ready(function(){      
-      var i=1;  
-   
-      $('#add').click(function(){  
-           i++;             
-           $('#dynamic_field').append('<div id="row'+i+'">                                            <hr>                                                                                     <div class="row">                                                                    <div class="col-lg-4"><div class="form-group">                                                                 <label>First Name:</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter First name" name="sp_name[]" id="sp_name" autocomplete="off" required>                                                                                                                                                                    </div></div> <div class="col-lg-4"><div class="form-group">                                                                 <label>Middle name:</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter Middle name" name="sp_mname[]" id="sp_mname" autocomplete="off" required>                                                                                                                                                                    </div></div><input type="hidden" name="customer_id[]" id="customer_id" value="<?php echo $customer->customer_id; ?>">                                                   <input type="hidden" name="comp_id[]" id="comp_id" value="<?php echo $customer->comp_id; ?>">                                                                               <div class="col-lg-4"><div class="form-group">                                                                 <label>Last name</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter Last name" name="sp_lname[]" id="sp_lname" autocomplete="off" required>                                                                                                                                                                    </div></div>     <div class="col-lg-3"><div class="form-group">                                                                 <label>Phone number:</label>                                                                                                                                                         <input type="number" class="form-control" placeholder="Enter Phone number" name="sp_phone_no[]" id="sp_phone_no" autocomplete="off" required>                                                                                                                                                                    </div></div><div class="col-lg-3"><div class="form-group">                                                                 <label>Natinal ID/Vote ID/Driver Lisence:</label>                                                                                                                                                         <input type="number" class="form-control" placeholder="Enter Natinal ID/Vote ID/Driver Lisence:" name="sp_nation[]" id="sp_nation" autocomplete="off" required>                                                                                                                                                                    </div></div>   <div class="col-lg-3"><div class="form-group">                                                                 <label>Reationship With Customer:</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter Reationship With Customer" name="sp_relation[]" id="sp_relation" autocomplete="off" required>                                                                                                                                                                    </div></div>   <div class="col-lg-3"><div class="form-group">                                                                 <label>Nature of Settlement:</label>                                                                                                                                                      <select type="text" class="form-control" name="nature[]" id="nature" required><option value="">Select Nature of Settlement</option><option value="Permanenty Settlement">Permanenty Settlement</option><option value="Temporary Settlement">Temporary Settlement</option></select>                                                                                                                                                                    </div></div>  <div class="col-lg-3"><div class="form-group">                                                                 <label>Region:</label>                                                                                                                                                      <select type="text" class="form-control kt-selectpicker" data-live-search="true" name="sp_region[]" id="sp_region" required ><option value="">Select Region</option> <?php foreach ($region as $regions): ?>
-                <option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option> <?php endforeach; ?>     </select>                                                                                                                                                                    </div></div>         <div class="col-lg-3">                                                                                                                                    <div                                                   class="form-group">                                                                <label>District:</label>                                                                     <input type="text" class="form-control" id="sp_district" placeholder="Enter District" name="sp_district[]" autocomplete="off" required>                                                                 </div></div>                                                                                   <div class="col-lg-2"><div class="form-group">                                                                 <label>Ward:</label>                                                                       <input type="text" class="form-control" id="sp_ward" placeholder="Enter Ward" name="sp_ward[]" autocomplete="off" required>                                                                  </div></div> <div class="col-lg-3">                                                                                                                                                                                                                                                                     <div class="form-group">                                                                <label>Street:</label>                                                                                                                                               <input type="text" class="form-control" id="sp_street" placeholder="Enter Street" name="sp_street[]" autocomplete="off" required> </div></div>                                                               <div class="col-lg-1"> <br>                                                                 <button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">Remove</button></div></div></div></div>');
-     });
-     
-     $(document).on('click', '.btn_remove', function(){  
-           var button_id = $(this).attr("id"); 
-           var res = confirm('Are You Sure You Want To Remove This?');
-           if(res==true){
-           $('#row'+button_id+'').remove();  
-           $('#'+button_id+'').remove();  
-           }
-      });  
-  
-    });  
+
 </script>
 
 

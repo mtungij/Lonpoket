@@ -41,14 +41,14 @@ include_once APPPATH . "views/partials/guest_header.php";
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"> <?php // Placeholder Key Icon ?>
                   <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v2.586l-2.293-2.293a1 1 0 00-1.414 1.414L7.586 7H5a1 1 0 000 2h2.586l-2.293 2.293a1 1 0 101.414 1.414L9 10.414V13a1 1 0 102 0v-2.586l2.293 2.293a1 1 0 001.414-1.414L12.414 9H15a1 1 0 100-2h-2.586l2.293-2.293a1 1 0 00-1.414-1.414L11 4.586V3a1 1 0 00-1-1zm0 8a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                 </svg>
-                <b>Admin</b>
+             
               </a>
               <span class="mx-2 text-gray-400 dark:text-gray-500">|</span>
               <a href="<?php echo base_url("welcome/employee_login"); ?>" class="inline-flex items-center gap-x-1 text-sm text-orange-500 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-orange-400">
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"> <?php // Placeholder Key Icon ?>
                    <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v2.586l-2.293-2.293a1 1 0 00-1.414 1.414L7.586 7H5a1 1 0 000 2h2.586l-2.293 2.293a1 1 0 101.414 1.414L9 10.414V13a1 1 0 102 0v-2.586l2.293 2.293a1 1 0 001.414-1.414L12.414 9H15a1 1 0 100-2h-2.586l2.293-2.293a1 1 0 00-1.414-1.414L11 4.586V3a1 1 0 00-1-1zm0 8a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                 </svg>
-                <b>Employee</b>
+               
               </a>
             </div>
           </div>

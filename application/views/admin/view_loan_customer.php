@@ -95,10 +95,6 @@ include_once APPPATH . "views/partials/header.php";
                                         <td class="py-3 px-6">890000</td>
                                     </tr>
                               
-                                <tr>
-                                    <td colspan="6" class="text-center py-4 text-gray-500">No shareholder data found.</td>
-                                </tr>
-                           
                         </tbody>
                     </table>
                 </div>
@@ -292,7 +288,7 @@ include_once APPPATH . "views/partials/header.php";
                     
                         <div class="sm:col-span-4">
                             <label for="f_name" class="block text-sm font-medium mb-2 dark:text-gray-300">* Aina Ya Mkopo:</label>                                                                                                                                                                                                           
-                            <input type="text" id="f_name" name="" placeholder="Full name" autocomplete="off" 
+                            <input type="text" id="f_name" name="" readonly autocomplete="off" 
                                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"  
                                    value="<?php echo set_value('loan_name', isset($loan_form->loan_name) ? strtoupper(preg_replace('/[^a-zA-Z]/', '  ', $loan_form->loan_name)) : ''); ?>">
 
@@ -300,7 +296,7 @@ include_once APPPATH . "views/partials/header.php";
 
 						<div class="sm:col-span-4">
                             <label for="how_loan" class="block text-sm font-medium mb-2 dark:text-gray-300">* Kiasi Kilichoombwa:</label>
-                            <input type="text" id="how_loan" name="" placeholder="Full name" autocomplete="off" 
+                            <input type="text" id="how_loan" name="" readonly autocomplete="off" 
                                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" 
                                    value="<?php echo set_value('sp_lname', isset($loan_form->how_loan) ? number_format((float)$loan_form->how_loan, 0) : ''); ?>">
                         </div>
@@ -318,7 +314,7 @@ include_once APPPATH . "views/partials/header.php";
 
                         <div class="sm:col-span-4">
     <label for="l_name" class="block text-sm font-medium mb-2 dark:text-gray-300">* Marejesho Ya:</label>
-    <input type="text" id="l_name" name="" placeholder="Full name" autocomplete="off" 
+    <input type="text" id="l_name" name="" readonly autocomplete="off" 
         class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" 
         value="<?php
             if (isset($loan_form->day)) {
@@ -338,7 +334,7 @@ include_once APPPATH . "views/partials/header.php";
 
                         <div class="sm:col-span-4">
                             <label for="phone_no" class="block text-sm font-medium mb-2 dark:text-gray-300">* Idadi Jumla Ya Marejesho:</label>
-                            <input type="number" id="phone_no" name="" placeholder="Mobile no" autocomplete="off" required
+                            <input type="number" id="phone_no" name="" readonly autocomplete="off" required
                                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" 
                                    value="<?php echo set_value('session', isset($loan_form->session) ? $loan_form->session : ''); ?>">
                            
@@ -346,7 +342,7 @@ include_once APPPATH . "views/partials/header.php";
 
                         <div class="sm:col-span-4">
                             <label for="reason" class="block text-sm font-medium mb-2 dark:text-gray-300">* Biashara Ya Mkopaji:</label>
-                            <input type="text" id="reason" name="" placeholder="Mobile no" autocomplete="off" required
+                            <input type="text" id="reason" name="" readonly autocomplete="off" required
                                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" 
                                    value="<?php echo set_value('reason', isset($loan_form->reason) ? $loan_form->reason : ''); ?>">
                            
@@ -387,3 +383,9 @@ include_once APPPATH . "views/partials/header.php";
 <?php
 include_once APPPATH . "views/partials/footer.php";
 ?>
+
+
+
+
+
+

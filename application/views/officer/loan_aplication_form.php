@@ -57,7 +57,7 @@
 			<div class="kt-portlet__head">
 				<div class="kt-portlet__head-label">
 					<h3 class="kt-portlet__head-title">
-					Loan Application Form
+					Maombi Ya Mikopo
 					</h3>
 				</div>
 			</div>
@@ -69,9 +69,9 @@
 						<div class="kt-section__content">
 							<div class="form-group form-group-last row">
 									<div class="col-lg-3 form-group-sub">
-										<label class="form-control-label">*Loan category:</label>
+										<label class="form-control-label">*	Aina Ya Mkopo:</label>
 								      <select type="number" name="category_id" class="form-control select2" required>
-								      	<option value="">Select Loan Category</option>
+								      	<option value="">Chagua Aina Ya Mkopo</option>
 								      	<?php foreach ($loan_category as $loan_categorys): ?>
 								      	<option value="<?php echo $loan_categorys->category_id; ?>"><?php echo $loan_categorys->loan_name; ?> / <?php echo $loan_categorys->loan_price; ?> - <?php echo $loan_categorys->loan_perday; ?></option>
 								      	<?php endforeach; ?>
@@ -79,15 +79,7 @@
 									</div>
 
 									
-									<div class="col-lg-2 form-group-sub">
-										<label class="form-control-label">*Group:</label>
-										<select type="number" name="group_id" class="form-control select2">
-											<option value="">Select Group</option>
-											<?php foreach ($group as $groups): ?>
-											<option value="<?php echo $groups->group_id; ?>"><?php echo $groups->group_name; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
+
 									 <div class="col-lg-2 form-group-sub">
 										<label class="form-control-label">*Employee:</label>
 										<select type="number" name="empl_id" class="form-control select2" required>
@@ -98,26 +90,27 @@
 										</select>
 									</div> 
 									<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
+									<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
 									<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
 									<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
 
 									<div class="col-lg-2 form-group-sub">
-										<label  class="form-control-label">*Loan Amount Applied:</label>
+										<label  class="form-control-label">*Kiasi Cha Mkopo:</label>
 										<input type="number" name="how_loan" placeholder="Loan Amount Applied" autocomplete="off" class="form-control input-sm" required>
 									</div>
 
 									<div class="col-lg-3 form-group-sub">
-										<label  class="form-control-label">*Loan Duration:</label>
+										<label  class="form-control-label">*Marejesho Ya:</label>
 									<select type="number" name="day" class="form-control select2 input-sm" required>
-									<option value="">Select Duration</option>
-									<option value="1">Daily</option>
-									<option value="7">Weekely</option>
+									<option value="">Chagua Marejesho</option>
+									<option value="1">Siku</option>
+									<option value="7">Week</option>
 									<?php 
 									 $month = date("m");
                                      $year = date("Y");
                                      $d=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 									 ?>
-									<option value="30">Monthly</option>
+									<option value="30">Mwezi</option>
 									
 								</select>
 									</div>
@@ -210,9 +203,9 @@
 						<div class="kt-section__content">
 							<div class="form-group form-group-last row">
 									<div class="col-lg-3 form-group-sub">
-										<label class="form-control-label">*Loan category:</label>
+										<label class="form-control-label">*Aina Ya Mkopo:</label>
 								      <select type="number" name="category_id" class="form-control select2" required>
-								      	<option value="">Select Loan Category</option>
+								      	<option value="">Chagua Mkopo</option>
 								      	<?php foreach ($loan_category as $loan_categorys): ?>
 								      	<option value="<?php echo $loan_categorys->category_id; ?>"><?php echo $loan_categorys->loan_name; ?> / <?php echo $loan_categorys->loan_price; ?> - <?php echo $loan_categorys->loan_perday; ?></option>
 								      	<?php endforeach; ?>
@@ -220,85 +213,57 @@
 									</div>
 
 									
-									<div class="col-lg-2 form-group-sub">
-										<label class="form-control-label">*Group:</label>
-										<select type="number" name="group_id" class="form-control select2">
-											<option value="">Select Group</option>
-											<?php foreach ($group as $groups): ?>
-											<option value="<?php echo $groups->group_id; ?>"><?php echo $groups->group_name; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-									 <div class="col-lg-2 form-group-sub">
-										<label class="form-control-label">*Employee:</label>
-										<select type="number" name="empl_id" class="form-control select2" required>
-											<option value="<?php echo $customer->empl_id; ?>"><?php echo $customer->empl_name; ?></option>
-											<?php foreach ($empl_blanch as $empl_blanchs): ?>
-											<option value="<?php echo $empl_blanchs->empl_id; ?>"><?php echo $empl_blanchs->empl_name; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-
+								
+	
+                                   <input type="hidden" name="empl_id" value="<?php echo $customer->empl_id; ?>">
 									<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
 									<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
 									<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
 									<div class="col-lg-2 form-group-sub">
-										<label  class="form-control-label">*Loan Amount Applied:</label>
+										<label  class="form-control-label">*Kiasi Cha Mkopo:</label>
 										<input type="number" name="how_loan" placeholder="Loan Amount Applied" autocomplete="off" class="form-control input-sm" required>
 									</div>
 
 									<div class="col-lg-3 form-group-sub">
-										<label  class="form-control-label">*Loan Duration:</label>
+										<label  class="form-control-label">*Aina Ya Marejesho:</label>
 									<select type="number" name="day" class="form-control select2 input-sm" required>
-									<option value="">Select Duration</option>
-									<option value="1">Daily</option>
-									<option value="7">Weekely</option>
+									<option value="">Chagua Aina Ya Marejesho</option>
+									<option value="1">Siku</option>
+									<option value="7">Week</option>
 									<?php 
 									 $month = date("m");
                                      $year = date("Y");
                                      $d = cal_days_in_month(CAL_GREGORIAN,$month,$year);
 									 ?>
-									<option value="30">Monthly</option>
+									<option value="30">Mwezi</option>
 									
 								</select>
 									</div>
 
 									<div class="col-lg-3 form-group-sub">
-										<label  class="form-control-label">*Number of Repayments:</label>
+										<label  class="form-control-label">*Muda Wa Marejesho:</label>
 								<input type="number" name="session" placeholder="Enter Number of Repayments" autocomplete="off" class="form-control input-sm" required>
 									</div>
 
-									  <div class="col-lg-3 form-group-sub">
+									<div class="col-lg-3 form-group-sub" hidden>
 										<label class="form-control-label"><b>*Interest Formular:</b></label>
-										<select type="number" name="rate" class="form-control select2" required>
-											<option value="">Select interest Formular</option>
-											<?php foreach ($formular as $formulars): ?>	
-											<option value="<?php echo $formulars->formular_name; ?>"><?php if ($formulars->formular_name == 'SIMPLE') {
-												 ?>
-												 SIMPLE FORMULAR
-												<?php }elseif($formulars->formular_name == 'FLAT RATE'){ ?>
-                                                 FLAT RATE FORMULAR
-													<?php }elseif ($formulars->formular_name == 'REDUCING') {
-													 ?>
-													 REDUCING FORMULAR
-													 <?php } ?>
-													 	
-													 </option>
-											<?php endforeach; ?>
+										<select name="rate" class="form-control select2" required>
+											<option value="SIMPLE" selected>SIMPLE FORMULAR</option>
 										</select>
 									</div>
+
 									<div class="col-lg-3 form-group-sub">
-										<label class="form-control-label"><b>*Does Loan is Deducted From Loan Fee?:</b></label>
+										<label class="form-control-label"><b>*Je gharama ya ada ya mkopo ikatwe kwenye mkopo?:</b></label>
 										<select type="number" name="fee_status" class="form-control select2" required>
-											<option value="">Select</option>
+											<option value="">Chagua</option>
 											
 											<?php if ($loan_fee_category->fee_category == 'GENERAL') {
 											 ?>
-											<option value="YES">YES</option>
-											<option value="NO">NO</option>
+											<option value="YES">Ndio</option>
+											<option value="NO">Hapana</option>
 											<?php }elseif ($loan_fee_category->fee_category == 'LOAN PRODUCT') {
 											 ?>
-											 <option value="NO">YES</option>
+											 <option value="NO">Ndio</option>
 											 <?php }else{ ?>
 											 	<?php } ?>
 											
@@ -306,7 +271,7 @@
 									</div>
 
 									<div class="col-lg-3 form-group-sub">
-										<label  class="form-control-label">*Reason of Applying Loan:</label>
+										<label  class="form-control-label">*Biashara Ya Mkopaji:</label>
 								<input type="text" name="reason" autocomplete="off"  class="form-control input-sm" placeholder="Reason of Applying Loan:" required>
 									</div> 
 						
@@ -319,7 +284,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="text-center">
-								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Next</button>
+								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">hifadhi</button>
 								<button type="reset" class="btn btn-danger btn-elevate btn-pill btn-sm">Cancel</button>
 								</div>
 							</div>
@@ -341,7 +306,7 @@
 			<div class="kt-portlet__head">
 				<div class="kt-portlet__head-label">
 					<h3 class="kt-portlet__head-title">
-					Loan Application Form
+					Maombi Ya mkopo
 					</h3>
 				</div>
 			</div>
@@ -363,15 +328,7 @@
 									</div>
 
 									
-									<div class="col-lg-2 form-group-sub">
-										<label class="form-control-label">*Group:</label>
-										<select type="number" name="group_id" class="form-control select2">
-											<option value="">Select Group</option>
-											<?php foreach ($group as $groups): ?>
-											<option value="<?php echo $groups->group_id; ?>"><?php echo $groups->group_name; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
+								
 									 <div class="col-lg-2 form-group-sub">
 										<label class="form-control-label">*Employee:</label>
 										<select type="number" name="empl_id" class="form-control select2" required>
@@ -666,7 +623,7 @@
  <div class="text-center">
     <h1>
         <br><br><br>
-OOPS!  Loan Account is Claimed</h1>
+OOPS!  Mteja mkopo bado hajamaliza Kulipa</h1>
       <a href="<?php echo base_url("oficer/loan_application"); ?>" class="btn btn-info">Back</a>
     </div>
 		<?php } ?>

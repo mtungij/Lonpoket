@@ -100,7 +100,7 @@ include_once APPPATH . "views/partials/header.php";
 <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
             <div class="p-4 md:p-6">
                 <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
-                    Register Guarantors
+                  Sajili Taarifa Mdhamini
 
                 </h3>
                 <?php

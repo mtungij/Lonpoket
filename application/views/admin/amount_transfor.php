@@ -213,10 +213,10 @@ include_once APPPATH . "views/partials/header.php";
                             <?php if (isset($float) && !empty($float)): foreach ($float as $fl_item): ?>
                             <tr>
                                 <td class="td-dt"><?php echo htmlspecialchars($fl_item->from_account); ?></td>
-                                <td class="td-dt"><?php echo number_format($fl_item->blanch_amount); ?></td>
+                                <td class="td-dt"><?php echo safe_number_format($fl_item->blanch_amount); ?></td>
                                 <td class="td-dt"><?php echo htmlspecialchars($fl_item->blanch_name); ?></td>
                                 <td class="td-dt"><?php echo htmlspecialchars($fl_item->to_account); ?></td>
-                                <td class="td-dt"><?php echo number_format($fl_item->charger); ?></td>
+                                <td class="td-dt"><?php echo safe_number_format($fl_item->charger); ?></td>
                                 <td class="td-dt"><?php echo htmlspecialchars(date('d M, Y', strtotime($fl_item->trans_day))); ?></td>
                                 <?php /*
                                 <td class="td-dt text-end">
@@ -229,9 +229,16 @@ include_once APPPATH . "views/partials/header.php";
                         <tfoot>
                             <tr>
                                 <td class="px-6 py-3 text-sm font-semibold text-gray-800 dark:text-gray-200">TOTAL</td>
-                                <td class="px-6 py-3 text-sm font-semibold text-gray-800 dark:text-gray-200"><?php echo number_format($sum_froat->cashFloat ?? 0); ?></td>
-                                <td class="px-6 py-3" colspan="2"></td>
-                                <td class="px-6 py-3 text-sm font-semibold text-gray-800 dark:text-gray-200"><?php echo number_format($sum_chargers->total_chargers ?? 0); ?></td>
+                                <td class="px-6 py-3 text-sm font-semibold text-gray-800 dark:text-gray-200">
+    <?php echo number_format(floatval(str_replace(',', '', $sum_froat->cashFloat ?? 0))); ?>
+</td>
+
+<td class="px-6 py-3" colspan="2"></td>
+
+<td class="px-6 py-3 text-sm font-semibold text-gray-800 dark:text-gray-200">
+    <?php echo number_format(floatval(str_replace(',', '', $sum_chargers->total_chargers ?? 0))); ?>
+</td>
+
                                 <td class="px-6 py-3"></td>
                                 <?php /* if actions column exists <td class="px-6 py-3"></td> */ ?>
                             </tr>

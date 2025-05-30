@@ -158,7 +158,7 @@ if (!isset($account_capital)) {
                             <tr>
                                 <td class="td-dt"><?php echo $no_cap++; ?>.</td>
                                 <td class="td-dt"><?php echo htmlspecialchars($cap_item->share_name); ?></td>
-                                <td class="td-dt"><?php echo number_format($cap_item->amount); ?>/=</td>
+                                <td class="td-dt"><?php echo number_format(floatval(str_replace(',', '', $cap_item->amount))); ?>/=</td>
                                 <td class="td-dt"><?php echo htmlspecialchars($cap_item->account_name); ?></td>
                                 <td class="td-dt"><?php echo $cap_item->recept ? htmlspecialchars($cap_item->recept) : '-'; ?></td>
                                 <td class="td-dt"><?php echo $cap_item->chaque_no ? htmlspecialchars($cap_item->chaque_no) : '-'; ?></td>
@@ -204,7 +204,7 @@ if (!isset($account_capital)) {
                             <tr>
                                 <td class="td-dt"><?php echo $no_as++; ?>.</td>
                                 <td class="td-dt"><?php echo htmlspecialchars($ac_item->account_name); ?></td>
-                                <td class="td-dt"><?php echo number_format($ac_item->comp_balance); ?></td>
+                                <td class="td-dt"><?php echo safe_number_format ($ac_item->comp_balance); ?></td>
                             </tr>
                             <?php endforeach; endif; ?>
                         </tbody>

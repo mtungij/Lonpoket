@@ -42,7 +42,7 @@
 				<i class="kt-font-brand flaticon-list-2"></i>
 			</span>
 			<h3 class="kt-portlet__head-title">
-				Today Cash Transaction
+			MIAMALA YA LEO
 			</h3>
 		</div>
 		<div class="kt-portlet__head-toolbar">
@@ -76,10 +76,10 @@
 									     <thead>
 			  						          <tr>
 				  							    <th>S/No.</th>
-												<th>Customer Name</th>
-												<th>Deposit</th>
-												<th>Withdrawal</th>
-												<th>Date</th>
+												<th>JINA LA MTEJA</th>
+												<th>LIPWA</th>
+												<th>TOLEWA</th>
+												<th>TAREHE</th>
 				  									
 				  									
 				  						         </tr>
@@ -117,7 +117,7 @@
 	                </tbody>
 	                <tfoot>
                     <tr>
-                    <th>TOTAL</th>
+                    <th>JUMLA</th>
 					<th></th>
 					<th><?php echo number_format($sum_depost->cash_depost); ?></th>
 					<th><?php echo number_format($sum_withdrawls->cash_withdrowal); ?></th>

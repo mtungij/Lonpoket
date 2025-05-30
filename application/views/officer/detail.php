@@ -45,7 +45,7 @@
 			<div class="kt-portlet__head">
 				<div class="kt-portlet__head-label">
 					<h3 class="kt-portlet__head-title">
-					Customer Detail
+					Taarifa za Mteja
 					</h3>
 				</div>
 			</div>
@@ -57,77 +57,18 @@
 						<div class="kt-section__content">
 							<div class="form-group form-group-last row">
 								<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Nick name:</label>
+									<label class="form-control-label">*Jina Maarufu:</label>
 							<input type="text" name="famous_area" autocomplete="off" class="form-control input-sm" placeholder="Eg.Mama James, Baba Samwel" required>
 								</div>
+					
 								<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Martial Status:</label>
-							<select type="text" name="martial_status" class="form-control kt-selectpicker" required required data-live-search="true">
-								<option value="">Select</option>
-								<option value="Married">Married</option>
-								<option value="Single">Single</option>
-								<option value="Widow">Widow</option>
-								<option value="Separated">Separated</option>
-								<option value="Devorced">Devorced</option>
-								
-							</select>
-								</div>
-									<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Account Type:</label>
-							<select type="number" name="account_id" class="form-control input-sm" required>
-								<option value="">Select</option>
-								<?php foreach ($account as $accounts): ?>
-								<option value="<?php echo $accounts->account_id; ?>"><?php echo $accounts->account_name; ?></option>
-								<?php endforeach; ?>
-								
-							</select>
-								</div>
-								
-								<div class="col-lg-4 form-group-sub">
-									<label  class="form-control-label">*National Identity Number:</label>
-									<input type="number" name="natinal_identity" placeholder="Natinal Identity Number" autocomplete="off" class="form-control input-sm" required >
-								</div>
-							<div class="col-lg-4 form-group-sub">
-									<label  class="form-control-label">*Working status:</label>
-							
-							<select type="text" name="work_status" class="form-control kt-selectpicker" required data-live-search="true" required>
-								<option value="">Select Work status</option>
-								<option value="Employee">Employee</option>
-								<option value="Government Employee">Government Employee</option>
-								<option value="Private Sector Employee">Private Sector Employee</option>
-								<option value="Bussines Owner">Bussines Owner</option>
-								<option>Student</option>
-								<option value="Overseas Worker">Overseas Worker</option>
-								<option value="Pensioner">Pensioner</option>
-								<option value="Unemployed">Unemployed</option>
-								<option value="Self Employed">Self Employed</option>
-							</select>
-								</div>
-
-								<div class="col-lg-4 form-group-sub">
-									<label  class="form-control-label">*Bussiness Type:</label>
-							<input type="text" name="bussiness_type" placeholder="Bussiness Type" autocomplete="off" class="form-control input-sm" required>
-								</div>
-							
-							
-								<div class="col-lg-4 form-group-sub">
-									<label  class="form-control-label">*Place Employment/Business:</label>
+									<label  class="form-control-label">*Eneo Biashara/Kazi:</label>
 							<input type="text" name="place_imployment" placeholder="Place Imployment" autocomplete="off" class="form-control input-sm" required>
-								</div>
-									<div class="col-lg-4 form-group-sub">
-									<label  class="form-control-label">*Number of Dependents:</label>
-							<input type="number" name="number_dependents" placeholder="Number of Dependents" autocomplete="off" class="form-control input-sm" required>
-								</div>
 						
-								<div class="col-lg-4 form-group-sub">
-									<label  class="form-control-label">*Monthly Income:</label>
-							<input type="number"  name="month_income" autocomplete="off" placeholder="Monthly Income" class="form-control input-sm" required>
-								</div>
-							
-								
 							</div>
 						</div>
 					</div>
+					 <input type="hidden" name="account_id" value="1">
 					<input type="hidden" name="code" value="C<?php echo substr($customer->customer_day ,0, 4)?><?php echo substr($customer->customer_day ,5, 2)?><?php echo $customer->customer_id; ?>">
                      <input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
 				</div>

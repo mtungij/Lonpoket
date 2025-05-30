@@ -1661,8 +1661,6 @@ public function customer(){
       $this->form_validation->set_rules('gender', 'gender', 'required');
       $this->form_validation->set_rules('date_birth', 'date_birth', 'required');
       $this->form_validation->set_rules('phone_no', 'phone number', 'required');
-      $this->form_validation->set_rules('ward', 'ward', 'required');
-      $this->form_validation->set_rules('street', 'street', 'required');
       $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
   
       if ($this->form_validation->run()) {
@@ -1754,45 +1752,37 @@ public function customer(){
 
 
 
-        public function create_lastDetail($customer_id){
-            //Prepare array of user data
+        public function create_lastDetail($customer_id)
+        {
+            // Prepare array of user data
             $data = array(
-            'customer_id'=> $this->input->post('customer_id'),
-            'famous_area'=> $this->input->post('famous_area'),
-            'martial_status'=> $this->input->post('martial_status'),
-            'natinal_identity'=> $this->input->post('natinal_identity'),
-            'bussiness_type'=> $this->input->post('bussiness_type'),
-            'work_status'=> $this->input->post('work_status'),
-            'number_dependents'=> $this->input->post('number_dependents'),
-            'place_imployment'=> $this->input->post('place_imployment'),
-            'month_income'=> $this->input->post('month_income'),
-            'code'=> $this->input->post('code'),
-            'account_id'=> $this->input->post('account_id'),
+                'customer_id'       => $this->input->post('customer_id'),
+                'famous_area'       => $this->input->post('famous_area'),
+                'place_imployment'  => $this->input->post('place_imployment'),
+                'code'              => $this->input->post('code'),
+                'account_id'        => $this->input->post('account_id'),
+                // 'natinal_identity' => $this->input->post('natinal_identity'), // Remove if not needed
             );
-
-            //Pass user data to model
+        
             $customer_code = $data['code'];
             $customer_id = $data['customer_id'];
-            $natinal_identity = $data['natinal_identity'];
-                  
-           $this->load->model('queries'); 
-           $check_nation_id = $this->queries->check_national_Id($natinal_identity);
-             if ($check_nation_id == TRUE) {
-            $this->session->set_flashdata('error','National Identity Number Already Registered'); 
-            return redirect('oficer/customer_details/'.$customer_id);
-            }elseif ($check_nation_id == FALSE) {
-            $data = $this->queries->insert_customerData($data);
-            //Storing insertion status message.
-            if($data){
-                $this->update_code($customer_id,$customer_code);
+        
+            $this->load->model('queries'); 
+        
+            // Skip national ID check
+            $result = $this->queries->insert_customerData($data);
+        
+            if ($result) {
+                $this->update_code($customer_id, $customer_code);
                 $this->update_customer_pendData($customer_id);
-                $this->session->set_flashdata('','');
-             }else{
-                $this->session->set_flashdata('error','Data failed!!');
+                $this->session->set_flashdata('success', 'Customer details saved successfully.');
+            } else {
+                $this->session->set_flashdata('error', 'Data failed to save!');
             }
-            }
-            return redirect('oficer/viw_ID_sig/'.$customer_id);
-          }
+        
+            return redirect('oficer/viw_ID_sig/' . $customer_id);
+        }
+        
 
     public function update_customer_pendData($customer_id){
       $sqldata="UPDATE `tbl_customer` SET `customer_status`= 'pending' WHERE `customer_id`= '$customer_id'";
@@ -2085,21 +2075,17 @@ public function create_sponser($customer_id,$comp_id){
                     $sp_mname =  $_POST['sp_mname']; 
                     $sp_lname =  $_POST['sp_lname']; 
                     $sp_phone_no =  $_POST['sp_phone_no']; 
-                    $sp_nation =  $_POST['sp_nation']; 
+                   
                     $nature =  $_POST['nature']; 
-                    $sp_region =  $_POST['sp_region']; 
-                    $sp_relation =  $_POST['sp_relation']; 
-                    $sp_district =  $_POST['sp_district']; 
-                    $sp_ward =  $_POST['sp_ward']; 
-                    $sp_street =  $_POST['sp_street']; 
+                    $sp_relation =  $_POST['sp_relation'];  
                     $comp_id =  $_POST['comp_id']; 
                     $customer_id =  $_POST['customer_id'];
 
 
                    
           for($i=0; $i<count($sp_name);$i++) {
-        $this->db->query("INSERT INTO  tbl_sponser (`sp_name`,`sp_mname`,`sp_lname`,`sp_phone_no`,`sp_nation`,`nature`,`sp_region`,`sp_relation`,`sp_district`,`sp_ward`,`sp_street`,`comp_id`,`customer_id`) 
-      VALUES ('".$sp_name[$i]."','".$sp_mname[$i]."','".$sp_lname[$i]."','".$sp_phone_no[$i]."','".$sp_nation[$i]."','".$nature[$i]."','".$sp_region[$i]."','".$sp_relation[$i]."','".$sp_district[$i]."','".$sp_ward[$i]."','".$sp_street[$i]."','".$comp_id[$i]."','".$customer_id[$i]."')");
+        $this->db->query("INSERT INTO  tbl_sponser (`sp_name`,`sp_mname`,`sp_lname`,`sp_phone_no`,`sp_relation`,`comp_id`,`customer_id`) 
+      VALUES ('".$sp_name[$i]."','".$sp_mname[$i]."','".$sp_lname[$i]."','".$sp_phone_no[$i]."','".$sp_relation[$i]."','".$comp_id[$i]."','".$customer_id[$i]."')");
          
              }
                        
@@ -2156,7 +2142,6 @@ public function create_sponser($customer_id,$comp_id){
       $this->form_validation->set_rules('blanch_id', 'Blanch', 'required');
       $this->form_validation->set_rules('customer_id', 'Customer', 'required');
       $this->form_validation->set_rules('category_id', 'Category', 'required');
-      $this->form_validation->set_rules('group_id', 'Group');
       $this->form_validation->set_rules('how_loan', 'How Loan', 'required');
       $this->form_validation->set_rules('day', 'Day', 'required');
       $this->form_validation->set_rules('session', 'Session', 'required');
@@ -2605,7 +2590,7 @@ $this->loan_application();
             //     echo "<pre>";
             // print_r($loan_pending);
             //     echo "<pre>";
-                   // exit();
+            //        exit();
         $this->load->view('officer/loan_pending',['loan_pending'=>$loan_pending,'empl_data'=>$empl_data,'privillage'=>$privillage,'total_request'=>$total_request]);
     }
 
@@ -2795,10 +2780,10 @@ $this->loan_application();
     $loan_aproved = $this->queries->get_loanAprovedBlanch($blanch_id);
     $privillage = $this->queries->get_position_empl($empl_id);
     $manager = $this->queries->get_position_manager($empl_id);
-       //   echo "<pre>";
-       // print_r($loan_aproved);
-       //   echo "</pre>";
-       //          exit();
+      //    echo "<pre>";
+      //  print_r($loan_aproved);
+      //    echo "</pre>";
+      //           exit();
     $this->load->view('officer/loan_aproved',['loan_aproved'=>$loan_aproved,'empl_data'=>$empl_data,'privillage'=>$privillage,'manager'=>$manager]);
 
 }
@@ -4335,32 +4320,28 @@ public function insert_blanch_principal($comp_id,$blanch_id,$trans_id,$princ_sta
    return true;
   } 
 
-        public function get_loan_code_resend($customer_id){
+      
+
+      public function get_loan_code_resend($customer_id){
         $this->load->model('queries');
+
         $loan_code = $this->queries->get_loanCustomerCode($customer_id);
         $code = $loan_code->code;
-        $phones = $loan_code->phone_no;
+        $phone = $loan_code->phone_no;
         $comp_id = $loan_code->comp_id;
-         
-        $sms = 'Namba ya Siri Ya Mkopo Wako ni ' .$code;
-        $massage = $sms;
-        $phone = $phones;
-        //sms count function
-          @$smscount = $this->queries->get_smsCountDate($comp_id);
-          $sms_number = @$smscount->sms_number;
-          $sms_id = @$smscount->sms_id;
+        $compdata = $this->queries->get_companyData($comp_id);
+        $comp_name=$compdata->comp_name;
+        $massage = 'Habari, namba yako ya siri kwa ajili ya kutolewa mkopo ni ' . $code . '. Asante kwa kuchagua huduma zetu. - ' . $comp_name;
 
-            if (@$smscount->sms_number == TRUE) {
-                $new_sms = 1;
-                $total_sms = @$sms_number + $new_sms;
-                $this->update_count_sms($comp_id,$total_sms,$sms_id);
-              }elseif (@$smscount->sms_number == FALSE) {
-             $sms_number = 1;
-             $this->insert_count_sms($comp_id,$sms_number);
-             }
-         $this->sendsms($phone,$massage);
-         $this->session->set_flashdata('massage','Loan code sent please Wait');
-         return redirect('oficer/data_with_depost/'.$customer_id);
+         
+       
+       
+        // print_r(  $code);
+        //      exit();
+       
+        $this->sendsms($phone,$massage);
+        $this->session->set_flashdata('massage','Nambari ya mkopo imetumwa kwa mteja. Ikiwa haijafika, tafadhali unaweza kuituma tena.');
+        return redirect('oficer/data_with_depost/'.$customer_id);
       }
 
 
@@ -4503,7 +4484,7 @@ public function create_withdrow_balance($customer_id){
     $company_data = $this->queries->get_companyData($comp_id);
     $blanch_data = $this->queries->get_blanchData($blanch_id);
     $empl_data = $this->queries->get_employee_data($empl_id);
-
+   
     $this->form_validation->set_rules('customer_id','Customer','required');
     $this->form_validation->set_rules('comp_id','Company','required');
     $this->form_validation->set_rules('blanch_id','blanch','required');
@@ -4634,11 +4615,11 @@ public function create_withdrow_balance($customer_id){
            
             $new_deducted = $deducted + $sum_total_loanFee;
 
-               // if($new_code != $code){
-               //   $this->session->set_flashdata('error','Loan Code is Invalid Please Try Again!!');
-               // }else
+               if($new_code != $code){
+                 $this->session->set_flashdata('error','Pin ya mteja Uliyojaza Haipo Sahihi!!');
+               }else
                if($blanch_capital < $withdrow_newbalance){
-            $this->session->set_flashdata('error','You don`t have Float Balance Please Contact with Company Manager');
+            $this->session->set_flashdata('error','Huna salio la fedha kwenye mfumo kuweza kutoa mkopo. Tafadhali wasiliana na Meneja wa Kampuni.');
              }elseif($input_balance <= $balance){
               //$day_loandata = $this->queries->get_loan_day($loan_id);
                $this->witdrow_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_balance,$with_balance,$description,$role,$method,$group_id);
@@ -7071,7 +7052,7 @@ $sqldata="UPDATE `tbl_depost` SET `depost`= '$remain_oldDepost' WHERE `pay_id`= 
         $total_withdrawal = $this->queries->get_total_withdrawal_blanch($blanch_id);
         $cash_account = $this->queries->get_totalaccount_transaction_blanch($blanch_id);
         // echo "<pre>";
-        //  print_r($cash_account);
+        //  print_r($empl_oficer);
         //           exit();
         $this->load->view('officer/teller_oficer',['empl_oficer'=>$empl_oficer,'total_deposit'=>$total_deposit,'total_withdrawal'=>$total_withdrawal,'cash_account'=>$cash_account,'privillage'=>$privillage]);
     }
