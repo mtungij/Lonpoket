@@ -8,7 +8,7 @@ docker run -it -d \
   --network web \
   --restart always \
   --expose 80 \
-  emasanga/mikoposoft:may13
+  mikoposoft/mikoposoft2025:cdc
 
 
 

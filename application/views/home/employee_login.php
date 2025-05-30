@@ -11,7 +11,7 @@ include_once APPPATH . "views/partials/guest_header.php";
       e.g., class="bg-[url('<?php echo base_url(); ?>assets/img/mikoposoft.PNG')] bg-no-repeat bg-fixed bg-cover" (or bg-fill)
     */
     body {
-      background-image: url('<?php echo base_url(); ?>assets/img/mikoposoft.PNG');
+      background-image: url('<?php echo base_url(); ?>assets/img/cdc.jpeg');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%; /* Stretches image, may distort */
@@ -21,12 +21,12 @@ include_once APPPATH . "views/partials/guest_header.php";
   <div class="font-poppins min-h-screen flex flex-col items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
     <?php // Centering wrapper ?>
 
-    <div class="mb-6 text-center">
+    <!-- <div class="mb-6 text-center">
       <?php // Main title for the page ?>
       <h2 class="text-3xl sm:text-4xl font-bold text-cyan-600 dark:text-cyan-500">
         Employee Login
       </h2>
-    </div>
+    </div> -->
 
     <?php // Main Login Card ?>
     <div class="w-full max-w-md">
@@ -143,10 +143,10 @@ include_once APPPATH . "views/partials/guest_header.php";
             <!-- Checkbox  -->
             <div class="flex items-center">
               <div class="flex">
-                <input id="remember-me" name="remember-me" type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-cyan-600 focus:ring-cyan-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-cyan-500 dark:checked:border-cyan-500 dark:focus:ring-offset-gray-900">
+              
               </div>
               <div class="ms-3">
-                <label for="remember-me" class="text-sm dark:text-white">Remember me</label>
+               
               </div>
             </div>
             <!-- End Checkbox -->
