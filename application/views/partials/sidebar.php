@@ -399,7 +399,7 @@ $communication_submenu_active = is_submenu_active(['send_email']); // Assuming S
               <svg class="hs-accordion-active:rotate-180 shrink-0 ms-auto size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div id="report-accordion-child" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 <?php echo $report_submenu_active ? '' : 'hidden'; ?>">
-              <div class="pt-2 ps-2">
+              <ul class="pt-2 ps-2">
               <?php if (has_permission('Report ya Malipo Ya Wateja Kampuni nzima')): ?>
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/cash_transaction') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/cash_transaction"); ?>">Cash Transaction</a></li>
                     <?php endif; ?> 
@@ -445,7 +445,7 @@ $communication_submenu_active = is_submenu_active(['send_email']); // Assuming S
                   <?php if (has_permission('Makusanyo tarajiwa Tarehe za Mbele')): ?>
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/next_expectation') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/next_expectation"); ?>">Expected Receivable</a></li> 
                   <?php endif; ?>
-              </div>
+                  </ul>
           </div>
       </li>
       <!-- End Report Accordion -->
