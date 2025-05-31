@@ -207,47 +207,79 @@ include_once APPPATH . "views/partials/header.php";
                             <input type="password" id="passconf" name="passconf" placeholder="System passconf" autocomplete="off" required
                                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('passconf'); ?>">
                             <?php echo form_error("passconf", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
+                            
+                            <p id="password-match-msg" class="text-xs mt-2"></p>
+
                         </div>
 
                     </div>
 
-				
+			
+<!-- Table Section -->
+<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  <!-- Card -->
+  <div class="flex flex-col">
+    <div class="-m-1.5 overflow-x-auto">
+      <div class="p-1.5 min-w-full inline-block align-middle">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-2xs overflow-hidden dark:bg-gray-800 dark:border-gray-700">
+          <!-- Header -->
+          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
+            <div>
+              
+              <p class="text-sm text-gray-600 uppercase font-bold dark:text-white">
+              Management System Access
+              </p>
+            </div>
 
-						
-
-  
-
-
-                    <h2 class="text-2xl sm:text-3xl mt-3 font-bold text-gray-800 dark:text-gray-200">
-    Admin System Access
-</h2>
-
-<div class="grid sm:grid-cols-2 mt-5 gap-2">
-    <?php foreach ($system_links as $link): ?>
-        <label for="link_<?= $link->id ?>" class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus-within:border-blue-500 focus-within:ring-blue-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
-            <input
-                type="checkbox"
-                id="link_<?= $link->id ?>"
-                name="permissions[]"
-                value="<?= $link->id ?>"
-                class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-            >
-            <span class="text-sm text-gray-700 ms-3 dark:text-gray-400">
-                <?= htmlspecialchars($link->link_name, ENT_QUOTES, 'UTF-8') ?>
-            </span>
-        </label>
-    <?php endforeach; ?>
-</div>
-
-
-
-
-					
-
-
-	
+            <div>
+              <div class="inline-flex gap-x-2">
                
 
+    <button class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" type="button"
+    onclick="toggleCheckboxes(this)"
+    class="mb-3 px-4 py-2 bg-cyan-600 dark:bg-cyan-700 dark:text-cyan-700 text-white rounded hover:bg-cyan-700">
+    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+    Chagua Zote
+</button>
+                
+              </div>
+            </div>
+          </div>
+          <!-- End Header -->
+
+          <!-- Table -->
+        
+          <!-- End Footer -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Card -->
+</div>
+<!-- End Table Section -->
+
+<?php foreach ($grouped_links as $group => $links): ?>
+    <h2 class="text-lg font-semibold mt-6 mb-2 text-gray-800 dark:text-gray-200">
+        <?= htmlspecialchars($group) ?>
+    </h2>
+
+    <div class="grid sm:grid-cols-2 mt-1 gap-2">
+        <?php foreach ($links as $link): ?>
+            <label for="link_<?= $link->id ?>" class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus-within:border-blue-500 focus-within:ring-blue-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
+                <input
+                    type="checkbox"
+                    id="link_<?= $link->id ?>"
+                    name="permissions[]"
+                    value="<?= $link->id ?>"
+                    class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500"
+                >
+                <span class="text-sm text-gray-700 ms-3 dark:text-gray-400">
+                    <?= htmlspecialchars($link->link_name, ENT_QUOTES, 'UTF-8') ?>
+                </span>
+            </label>
+        <?php endforeach; ?>
+    </div>
+<?php endforeach; ?>
                     <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                         <div class="flex justify-center gap-x-2">
                             <button type="submit" class="py-2 px-4 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Save</button>
@@ -309,11 +341,6 @@ include_once APPPATH . "views/partials/header.php";
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo ucfirst(htmlspecialchars($employees->blanch_name, ENT_QUOTES, 'UTF-8')); ?></td>
 										
-
-
-
-
-
 											<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">											<?php
 $status = strtolower($employees->empl_status);   // e.g. "open" or "close"
 
@@ -518,12 +545,6 @@ if ($status === 'open') { ?>
                             <?php echo form_error("account_no", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
                         </div>
 
-
-						
-
-
-						
-
                     </div>
 
 
@@ -554,6 +575,34 @@ include_once APPPATH . "views/partials/footer.php";
 
 <?php // Script for cmd+a fix for DataTables search input (if used) ?>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('passconf');
+    const message = document.getElementById('password-match-msg');
+
+    function validatePasswords() {
+        if (confirmInput.value.length === 0) {
+            message.textContent = '';
+            return;
+        }
+
+        if (passwordInput.value === confirmInput.value) {
+            message.textContent = 'Nywila zimefanana ✅';
+            message.classList.remove('text-red-600');
+            message.classList.add('text-green-600');
+        } else {
+            message.textContent = 'Nywila hazijafanana ❌';
+            message.classList.remove('text-green-600');
+            message.classList.add('text-red-600');
+        }
+    }
+
+    passwordInput.addEventListener('input', validatePasswords);
+    confirmInput.addEventListener('input', validatePasswords);
+});
+</script>
+
 
 
 <script>
@@ -570,4 +619,15 @@ window.addEventListener('load', () => {
     // HSStaticMethods.autoInit(['select']); // If Preline selects need explicit init
   }, 500);
 });
+</script>
+
+<script>
+function toggleCheckboxes(button) {
+    const checkboxes = document.querySelectorAll('input[name="permissions[]"]');
+    const allChecked = [...checkboxes].every(cb => cb.checked);
+
+    checkboxes.forEach(cb => cb.checked = !allChecked);
+
+    button.textContent = allChecked ? 'Chagua Zote' : 'Ondoa Zote';
+}
 </script>

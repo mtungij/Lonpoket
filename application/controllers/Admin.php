@@ -609,20 +609,29 @@ $sqldata="UPDATE `tbl_ac_company` SET `comp_balance`= '$total_remain' WHERE  `tr
 	public function employee(){
 		$this->load->model('queries');
 		$comp_id = $this->session->userdata('comp_id');
+	
 		$blanch = $this->queries->get_blanch($comp_id);
 		$position = $this->queries->get_position();
 		$employee = $this->queries->get_employee($comp_id);
-		$system_links =$this->queries->get_all_links();
-	// 	echo "<pre>";
-	//    print_r( $system_links );
-	//    echo "</pre>";
-	// 	 exit();
-		 //  echo "<pre>";
-		 // print_r($employee);
-		 // echo "</pre>";
-		 //   exit();
-		$this->load->view('admin/employee',['blanch'=>$blanch,'position'=>$position,'system_links'=>$system_links,'employee'=>$employee]);
+	
+		// Let all links
+		$system_links = $this->queries->get_all_links();
+	
+		// Group system_links by group_name
+		$grouped_links = [];
+		foreach ($system_links as $link) {
+			$group = $link->group_name ?? 'Mengine';
+			$grouped_links[$group][] = $link;
+		}
+	
+		$this->load->view('admin/employee', [
+			'blanch' => $blanch,
+			'position' => $position,
+			'employee' => $employee,
+			'grouped_links' => $grouped_links
+		]);
 	}
+	
 
 	
 
@@ -727,6 +736,11 @@ $sqldata="UPDATE `tbl_ac_company` SET `comp_balance`= '$total_remain' WHERE  `tr
 
     $employee_id = $this->queries->insert_employee($empData);
 
+	//   echo "<pre>";
+	// 	 print_r($employee_id);
+	// 	 echo "</pre>";
+	// 	   exit();
+
     foreach ($permissions as $link_id) {
         $this->queries->insert_permission([
             'employee_id' => $employee_id,
@@ -754,12 +768,14 @@ public function store_link()
 {
     $this->form_validation->set_rules('link_name', 'Link Name', 'required');
     $this->form_validation->set_rules('url', 'URL', 'required');
+	$this->form_validation->set_rules('group_name', 'group name', 'required');
     $this->form_validation->set_rules('controller', 'Controller', 'required');
     $this->form_validation->set_rules('action', 'Action', 'required');
 
     if ($this->form_validation->run()) {
         $data = [
             'link_name'  => $this->input->post('link_name'),
+			'group_name'  => $this->input->post('group_name'),
             'url'        => $this->input->post('url'),
             'controller' => $this->input->post('controller'),
             'action'     => $this->input->post('action'),
@@ -6984,9 +7000,9 @@ return true;
 		$position = $this->queries->get_position();
 		$emply = $this->queries->view_employee($empl_id);
 		$my_priv = $this->queries->get_myprivillage($empl_id);
-		  //  echo "<pre>";
-		  // print_r($my_priv);
-		  //   exit();
+		//    echo "<pre>";
+		//   print_r($my_priv);
+		//     exit();
 		$this->load->view('admin/privillage',['position'=>$position,'emply'=>$emply,'my_priv'=>$my_priv]);
 	}
 

@@ -5413,9 +5413,9 @@ return $data->row();
     }
 	
 	public function get_all_links() {
-		// Return the result from the 'system_links' table
-		return $this->db->get('system_links')->result();
+		return $this->db->order_by('group_name')->order_by('link_name')->get('system_links')->result();
 	}
+	
 	public function insert_permission($data)
 {
     return $this->db->insert('tbl_permission', $data);

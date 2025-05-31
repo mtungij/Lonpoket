@@ -80,6 +80,13 @@ include_once APPPATH . "views/partials/header.php";
                             <?php echo form_error("url", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
                         </div>
 
+                        <div class="sm:col-span-3">
+                            <label for="url" class="block text-sm font-medium mb-2 dark:text-gray-300">* Group Name:</label>
+                            <input type="text" id="url" name="group_name" placeholder="e.g., 1000" autocomplete="off" required
+                                   class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('url'); ?>">
+                            <?php echo form_error("url", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
+                        </div>
+
                         <input type="hidden" name="controller" value="Admin">
 
 
