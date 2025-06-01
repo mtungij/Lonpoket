@@ -37,7 +37,7 @@ include_once APPPATH . "views/partials/header.php";
                         <img class="h-auto w-full mx-auto" src="<?= base_url('assets/img/customer21.png') ?>" alt="Customer Image">
                     </div>
                     <h1 class="text-green-500 font-bold text-xl leading-8 my-1 dark:text-neutral-900 text-center">
-                        <?= strtoupper($customer->f_name) . " " . strtoupper(substr($customer->m_name, 0, 1)) . " " . strtoupper($customer->l_name) ?>
+                        <?= strtoupper($customer->f_name) . " " . strtoupper($customer->m_name) . " " . strtoupper($customer->l_name) ?>
                     </h1>
                     <h1 class="text-center text-green-500 font-bold">(<?= $customer->famous_area ;?>)</h1>
                     <br>
@@ -56,10 +56,38 @@ include_once APPPATH . "views/partials/header.php";
                          $total_deposit = $this->queries->get_total_amount_paid_loan($customer_loan->loan_id ?? 0);
                          $out_stand = $this->queries->get_outstand_loan_customer($customer_loan->loan_id ?? 0);
                      ?>
-                        <li class="flex items-center py-3">
-                            <span class="font-bold">Status</span>
-                            <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
-                        </li>
+                                           <?php
+$customer_loan_status = $this->queries->get_loan_active_customer($customer->customer_id);
+
+$status_label = 'Not Active';
+$status_class = 'bg-blue-600 text-white dark:bg-blue-500';
+
+if (!empty($customer_loan_status)) {
+    switch ($customer_loan_status->loan_status) {
+        case 'withdrawal':
+            $status_label = 'Active';
+            $status_class = 'bg-teal-500 text-white';
+            break;
+        case 'done':
+            $status_label = 'Kumaliza';
+            $status_class = 'bg-yellow-500 text-white';
+            break;
+        case 'default':
+            $status_label = 'Deni Sugu';
+            $status_class = 'bg-red-500 text-white';
+            break;
+    }
+}
+?>
+
+<li class="flex items-center py-3">
+    <span class="font-bold">Status</span>
+    <span class="ml-auto">
+        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium <?php echo $status_class; ?>">
+            <?php echo $status_label; ?>
+        </span>
+    </span>
+</li>
                         <li class="flex items-center py-3">
                                <span class="font-bold">Gawa</span>
                             <?php if (!empty($customer_loan->loan_stat_date)) : ?>
@@ -181,11 +209,7 @@ include_once APPPATH . "views/partials/header.php";
 } ?>
         </div>
     </div>
-    <div>
-
-
-   
-    </div>
+  
 </div>
 
 
@@ -376,7 +400,7 @@ include_once APPPATH . "views/partials/header.php";
 
     <a href="<?php echo base_url("admin/get_loan_code_resend/{$customer->customer_id}"); ?>"
       class="py-2 px-3 btn-primary-sm bg-green-600 hover:bg-cyan-700 text-white">
-      Tuma Code
+      Resend Code
     </a>
 
     <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Gawa</button>
@@ -416,7 +440,7 @@ include_once APPPATH . "views/partials/header.php";
       <label for=depost" class="block text-sm font-medium mb-2 dark:text-gray-300">
         * Weka:
       </label>
-      <input type="text" id=depost" name=depost"
+      <input type="text" id=depost" name="depost"
   class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
   required>
 
@@ -436,15 +460,31 @@ include_once APPPATH . "views/partials/header.php";
       </select>
     </div>
 
+
     <div class="sm:col-span-6">
-      <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">
-        * Lazo Kiasi:
-      </label>
-      <input type="number" id="pending" 
-       value="<?= htmlspecialchars(!empty($total_recovery->pending) ? $total_recovery->pending : 0, ENT_QUOTES, 'UTF-8'); ?>"
-        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-        required>
-    </div>
+    <?php if ($customer_loan->loan_status == 'withdrawal') { ?>
+        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               value="<?php echo number_format($total_recovery->total_pending, 2); ?>" 
+               readonly style="color:red"> 
+
+    <?php } elseif ($customer_loan->loan_status == 'out') { ?>
+        <span style="color:red;">Default Amount</span>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               value="<?php echo number_format($out_stand->total_out, 2); ?>" 
+               readonly style="color:red"> 
+
+    <?php } else { ?>
+        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+                value="<?php echo number_format($total_recovery->pending, 2); ?>"
+               readonly style="color:red"> 
+    <?php } ?>
+</div>
+
+
+
+ 
 
 
     <!-- Date -->
@@ -464,7 +504,7 @@ include_once APPPATH . "views/partials/header.php";
   </div>
 
   <!-- Hidden Inputs -->
-                    <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
+  <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
                     <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
                     <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
                     <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">

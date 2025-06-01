@@ -52,19 +52,17 @@
 	
 		&nbsp;
 		
-		<?php if ($manager->position_id == '21') {
-		 ?>
 		<a href="<?php echo base_url("oficer/manager_prevTransaction"); ?>" class="btn btn-brand btn-elevate btn-icon-sm">
 			<i class="flaticon-event-calendar-symbol"></i>
 			Previous
 		</a>
 	<a href="<?php echo base_url("oficer/manager_printCash"); ?>" class="btn btn-brand btn-elevate btn-icon-sm" target="_blank">
 			<i class="flaticon-technology"></i></a>
-		<?php }else{ ?>
+		
 	<a href="" class="btn btn-info" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_4"><i class="kt-menu__link-icon flaticon2-search-1"></i>Filter</a>
 	<a href="<?php echo base_url("oficer/print_cash"); ?>" class="btn btn-brand btn-elevate btn-icon-sm" target="_blank">
 			<i class="flaticon-technology"></i></a>
-			<?php } ?>
+			
 		
 	</div>	
 </div>		</div>
@@ -120,7 +118,7 @@
                     <th>JUMLA</th>
 					<th></th>
 					<th><?php echo number_format($sum_depost->cash_depost); ?></th>
-					<th><?php echo number_format($sum_withdrawls->cash_withdrowal); ?></th>
+					<th><?php echo number_format($sum_withdrawls->cash_withdrawal); ?></th>
 					<th></th>
                     </tr>
                    </tfoot>

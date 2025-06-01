@@ -1,129 +1,223 @@
-<?php include('incs/header_1.php'); ?>
-<?php include('incs/side_1.php'); ?>
-<?php include('incs/subheader.php'); ?>
+<?php
+include_once APPPATH . "views/partials/header.php";
+?>
+<!-- ========== MAIN CONTENT BODY ========== -->
+<div class="w-full lg:ps-64">
+    <div class="p-4 sm:p-6 space-y-6"></div>
 
+<!-- Table Section -->
+<div class="w-full">
+  <!-- Card -->
+  <div class="flex flex-col">
+    <div class="-m-1.5 overflow-x-auto">
+      <div class="p-1.5 min-w-full inline-block align-middle">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-2xs overflow-hidden dark:bg-gray-900 dark:border-gray-700">
+          <!-- Header -->
+          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
+            <div>
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                Sales
+              </h2>
+            </div>
 
-                   <style>
-                	    .c {
-               text-transform: uppercase;
-                 }
-                
-                </style>	
+            <div>
+              <div class="inline-flex gap-x-2">
+                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-red-500 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 dark:focus:bg-gray-800" href="#">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                  Delete (2)
+                </a>
 
+                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700" href="#">
+                  View all
+                </a>
 
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">					
-<!-- begin:: Subheader -->
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-   
-</div>
-<!-- end:: Subheader -->										
-<!-- begin:: Content -->
-<!-- begin:: Content -->
+                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                  Create
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Header -->
 
+          <!-- Table -->
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-900">
+              <tr>
+             
 
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-	<!--begin::Portlet-->
-	<?php if ($das = $this->session->flashdata('massage')): ?>
-	  <div class="alert alert-success fade show alert-success" role="alert">
-                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
-                            <div class="alert-text"><?php echo $das;?></div>
-                            <div class="alert-close">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="la la-close"></i></span>
-                                </button>
-                            </div>
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+					  Officer Name
+                    </span>
                   </div>
-         <?php endif; ?>
+                </th>
 
-<div class="kt-portlet kt-portlet--mobile">
-     <?php //echo form_open("admin/prev_pendingLoan"); ?>
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-			Teller Officer Cash Transaction
-			</h3>
-			
-		</div>
-		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+					S/No
+                    </span>
+                  </div>
+                </th>
 
-	
-		&nbsp;
-		<!-- <a href="<?php //echo base_url("admin/prev_cashtransaction"); ?>" class="btn btn-brand btn-elevate btn-icon-sm">
-			<i class="flaticon-event-calendar-symbol"></i>
-			Previous
-		</a> -->
-		<a href="<?php //echo base_url("admin/print_pending_report"); ?>" class="btn btn-brand btn-elevate btn-icon-sm">
-			<i class="flaticon-technology"></i>
-			Print
-		</a>
-	</div>	
-</div>		</div>
-	</div>
-	<?php echo form_close(); ?>
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Customer Name
+                    </span>
+                  </div>
+                </th>
 
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_">
-									     <thead>
-			  						           <tr>
-				  							    <th>Officer Name</th>
-				  							    <th>Group Name</th>
-				  							    <th>S/No.</th>
-												<th>Customer Name</th>
-												<th>Phone Number</th>
-												<th>Duration</th>
-												<th>Receivable</th>
-												<th>Received</th>
-												<th>Account</th>
-												<th>Withdrawal</th>
-												<th>Account</th>
-				  						       </tr>
-						                  </thead>
-			
-								    <tbody>
-                                          <?php $no = 1; ?>
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Phone Number
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Duration
+                    </span>
+                  </div>
+                </th>
+
+				<th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Receivable
+                    </span>
+                  </div>
+                </th>
+
+				<th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Received
+                    </span>
+                  </div>
+                </th>
+
+				<th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Account
+                    </span>
+                  </div>
+                </th>
+
+				<th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Withdrawal
+                    </span>
+                  </div>
+                </th>
+
+				<th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Account
+                    </span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+
+			<?php $no = 1; ?>
 								<?php foreach ($empl_oficer as $oficer_datas): ?>
 									 <tr>
 				  					<td>
 				  						<b><?php echo $oficer_datas->empl_name; ?></b>	
-				  						</td>
-				  						<td></td>
-				  					<td style="border: none;">INDIVIDUAL LOAN </td>
-				  					<td style="border: none;"></td>
-				  					<td style="border: none;"></td>
-				  					<td style="border: none;"></td>
-				  					<td style="border: none;"></td> 
-				  					<td style="border: none;"></td>
-				  					<td style="border: none;"></td> 
-				  					<td style="border: none;"></td> 
-				  					<td style="border: none;"></td> 		
-                                   </tr>
-                                 
-                               <?php
-                               $empl_loan = $this->queries->get_loan_empl_data($oficer_datas->empl_id);
+
+              <tr>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <div class="flex items-center gap-x-2">
+                    
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-200"></span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200"></span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200"></span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200">
+                      
+                    </span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+              </tr>
+
+			  <tr>
+			 <?php $empl_loan = $this->queries->get_loan_empl_data($oficer_datas->empl_id);
                                // echo "<pre>";
                                // print_r($empl_loan);
                                //       exit();
                                 ?>
                                 <?php $no = 1; ?>
                                 <?php foreach ($empl_loan as $empl_loans): ?>
-									 <tr>
-				  					<td></td>
-				  					<td></td>
-				  					<td class="c"><?php echo $no++; ?>. </td>
-				  					<td class="c">
-				  					   <?php echo $empl_loans->f_name; ?> <?php echo $empl_loans->m_name; ?> <?php echo $empl_loans->l_name; ?>
-				  					</td>
-				  					<td>
-				  						<?php echo $empl_loans->phone_no; ?>
-				  					</td>
-				  					<td>
-				  						<?php if($empl_loans->day == '1'){ ?>
+				 <td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $no++; ?>.</span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-200 dark:text-gray-200"> <?php echo $empl_loans->f_name; ?> <?php echo $empl_loans->m_name; ?> <?php echo $empl_loans->l_name; ?></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $empl_loans->phone_no; ?></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200">
+					<?php if($empl_loans->day == '1'){ ?>
 				  							<?php echo "Daily"; ?>
 				  						<?php }elseif ($empl_loans->day == '7'){
 				  							echo "Weekly";
@@ -132,277 +226,257 @@
 				  						 	echo "Monthly";
 				  						  ?>
 				  						  <?php } ?>
-				  					</td>
-				  					<td><?php echo number_format($empl_loans->restration); ?></td> 
-				  					<td><?php echo number_format($empl_loans->total_received); ?></td>
-				  					<td><?php echo $empl_loans->depost_account; ?></td> 
-				  					<td><?php echo number_format($empl_loans->total_withdrawal); ?></td> 
-				  					<td><?php echo $empl_loans->with_account; ?></td> 						
-                                   </tr>
-                                    <?php endforeach; ?>
-                                    <?php $total_work_individual = $this->queries->get_total_depost_individual($oficer_datas->empl_id); ?>
-                                    <?php foreach ($total_work_individual as $total_work_individuals): ?>
-                                    	
-                                   
-                                    <tr>
-                                    <td></td>
-				  					<td></td>
-				  					<td class="c"><b>TOTAL</b> </td>
-				  					<td class="c"></td>
-				  					<td></td>
-				  						
-				  					<td>
-				  						<?php //if($empl_loans->day == '1'){ ?>
-				  							<?php //echo "Daily"; ?>
-				  						<?php //}elseif ($empl_loans->day == '7'){
-				  							//echo "Weekly";
-				  						 ?>
-				  						 <?php //}elseif ($empl_loans->day == '30' || $empl_loans->day == '31' || $empl_loans->day == '28' || $empl_loans->day == '29') {
-				  						 	//echo "Monthly";
-				  						  ?>
-				  						  <?php //} ?>
-				  					</td>
-				  					<td></td> 
-				  					<td><b><?php echo number_format($total_work_individuals->total_depost_individual); ?></b></td>
-				  					<td></td> 
-				  					<td><b><?php echo number_format($total_work_individuals->total_withdrawal_individual); ?></b></td> 
-				  					<td></td>	
-                                    </tr>
-                                  <?php endforeach; ?>
-                                   <tr>
-                                    <td></td>
-				  					<td></td>
-				  					<td class="c">GROUP LOANS</td>
-				  					<td class="c"></td>
-				  					<td></td>
-				  						
-				  					<td>
-				  						<?php //if($empl_loans->day == '1'){ ?>
-				  							<?php //echo "Daily"; ?>
-				  						<?php //}elseif ($empl_loans->day == '7'){
-				  							//echo "Weekly";
-				  						 ?>
-				  						 <?php //}elseif ($empl_loans->day == '30' || $empl_loans->day == '31' || $empl_loans->day == '28' || $empl_loans->day == '29') {
-				  						 	//echo "Monthly";
-				  						  ?>
-				  						  <?php //} ?>
-				  					</td>
-				  					<td></td> 
-				  					<td><b><?php //echo number_format($total_work_individuals->total_depost_individual); ?></b></td>
-				  					<td></td> 
-				  					<td><b><?php //echo number_format($total_work_individuals->total_withdrawal_individual); ?></b></td> 
-				  					<td></td>	
-                                    </tr>
-                                    <?php $group_empl = $this->queries->get_empl_group_depost($oficer_datas->empl_id);?>
-                                 <?php foreach ($group_empl as $group_empls): ?>
-                                     <tr>
-                                    <td></td>
-				  					<td><?php echo $group_empls->group_name; ?></td>
-				  					<td class="c"></td>
-				  					<td class="c"></td>
-                                  	
-				  					<td>
-				  						<?php //if($empl_loans->day == '1'){ ?>
-				  							<?php //echo "Daily"; ?>
-				  						<?php //}elseif ($empl_loans->day == '7'){
-				  							//echo "Weekly";
-				  						 ?>
-				  						 <?php //}elseif ($empl_loans->day == '30' || $empl_loans->day == '31' || $empl_loans->day == '28' || $empl_loans->day == '29') {
-				  						 	//echo "Monthly";
-				  						  ?>
-				  						  <?php //} ?>
-				  					</td>
-				  					<td></td> 
-				  					<td><b><?php //echo number_format($total_work_individuals->total_depost_individual); ?></b></td>
-				  					<td></td> 
-				  					<td><b><?php //echo number_format($total_work_individuals->total_withdrawal_individual); ?></b></td> 
-				  					<td></td>	
-				  					<td></td>	
-                                    </tr>
-
-                               <?php $member_group = $this->queries->member_group($group_empls->group_id); ?>
-                               <?php $nos = 1; ?>
-                                     <?php foreach ($member_group as $member_groups): ?>
-                                      <tr>
-                                    <td></td>
-				  					<td><?php //echo $group_empls->group_name; ?></td>
-				  					<td class="c"><?php echo $nos++; ?>.</td>
-				  					<td class="c"><?php echo $member_groups->f_name; ?> <?php echo $member_groups->m_name; ?> <?php echo $member_groups->l_name; ?></td>
-                                  	
-				  					<td>
-				  						<?php echo $member_groups->phone_no; ?>
-				  					</td>
-				  					<td><?php if($member_groups->day == '1'){ ?>
-				  							<?php echo "Daily"; ?>
-				  						<?php }elseif ($member_groups->day == '7'){
-				  							echo "Weekly";
-				  						 ?>
-				  						 <?php }elseif ($member_groups->day == '30' || $member_groups->day == '31' || $member_groups->day == '28' || $member_groups->day == '29') {
-				  						 	echo "Monthly";
-				  						  ?>
-				  						  <?php } ?></td> 
-				  					<td><?php echo $member_groups->restration; ?>
-				  						  </td>
-				  					<td><?php echo number_format($member_groups->total_received); ?></td> 
-				  					<td><?php echo $member_groups->depost_account; ?></td> 
-				  					<td><?php echo number_format($member_groups->total_withdrawal); ?></td>	
-				  					<td><?php echo $member_groups->with_account; ?></td>	
-                                    </tr>
-                                <?php endforeach; ?>
-                                
-                                <?php $total_work_group = $this->queries->get_total_group_depost($group_empls->group_id); ?>
-                                <?php foreach ($total_work_group as $total_work_groups): ?>
-                                <tr>
-                                    <td></td>
-				  					<td><b>TOTAL</b></td>
-				  					<td class="c"></td>
-				  					<td class="c"></td>
-                                  	
-				  					<td></td>
-				  					<td><?php //if($member_groups->day == '1'){ ?>
-				  							<?php //echo "Daily"; ?>
-				  						<?php //}elseif ($member_groups->day == '7'){
-				  							//echo "Weekly";
-				  						 ?>
-				  						 <?php //}elseif ($member_groups->day == '30' || $member_groups->day == '31' || $member_groups->day == '28' || $member_groups->day == '29') {
-				  						 	//echo "Monthly";
-				  						  ?>
-				  						  <?php //} ?></td> 
-				  					<td><?php //echo $member_groups->restration; ?>
-				  						  </td>
-				  					<td><b><?php echo number_format($total_work_groups->total_depost_group); ?></b></td> 
-				  					<td><?php //echo $member_groups->depost_account; ?></td> 
-				  					<td><b><?php echo number_format($total_work_groups->total_withdrawal_group); ?></b></td>	
-				  					<td><?php //echo $member_groups->with_account; ?></td>	
-                                    </tr>
-                                 <?php endforeach; ?>
-                                  <?php endforeach; ?>
-                                  <?php $ofice_repayment = $this->queries->get_total_empl_depost_data($oficer_datas->empl_id);
-                                //   echo "<pre>";
-                                // print_r($ofice_repayment);
-                                //          exit();
-                                   ?>
-
-                                  <?php foreach ($ofice_repayment as $ofice_repayments): ?>
-                                  <tr>
-                                  	<td style="color:green;"><b>OFFICER TOTAL REPAYMENT:</b></td>
-				  					<td><b></b></td>
-				  					<td class="c"></td>
-				  					<td class="c"></td>
-                                  	
-				  					<td></td>
-				  					<td><?php //if($member_groups->day == '1'){ ?>
-				  							<?php //echo "Daily"; ?>
-				  						<?php //}elseif ($member_groups->day == '7'){
-				  							//echo "Weekly";
-				  						 ?>
-				  						 <?php //}elseif ($member_groups->day == '30' || $member_groups->day == '31' || $member_groups->day == '28' || $member_groups->day == '29') {
-				  						 	//echo "Monthly";
-				  						  ?>
-				  						  <?php //} ?></td> 
-				  					<td><?php //echo $member_groups->restration; ?>
-				  						  </td>
-				  					<td style="color:green;"><b><?php echo number_format($ofice_repayments->total_depost_oficer); ?></b></td> 
-				  					<td><?php //echo $member_groups->depost_account; ?></td> 
-				  					<td style="color:green;"><b><?php echo number_format($ofice_repayments->total_withdrawal_oficer); ?></b></td>	
-				  					<td><?php //echo $member_groups->with_account; ?></td>
-                                  </tr>
-                               <?php endforeach; ?>
-                            <?php endforeach; ?>
-                       </tbody>
-                   </table>
-		<!--end: Datatable -->
-	</div>
-</div>
-
-<div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-			SUMMARY
-			</h3>
-		</div>		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
-	</div>	
-</div>
-</div>
-	</div>
-
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		            <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_">
-									      <thead>
-			  						          <tr>
-												<th><b>Withdrawal</b></th>
-												<th><b><?php echo number_format($total_withdrawal->total_withdrawal_comp); ?></b></th>
-				  						      </tr>
-				  						      <tr>
-												<th><b>Deposit</b></th>
-												<th><b><?php echo number_format($total_deposit->total_depost_comp); ?><b></th>
-				  						      </tr>
-						                  </thead>
-								      <tbody>
-                                          <?php //$no = 1; ?>
-									<?php //foreach ($float as $floats): ?>
-									<!--   <tr>
-				  					<td><b>GRAND TOTAL</b></td>
-				  					<td><b><?php //echo number_format($total_withdrawal->total_withdrawal_comp + $total_deposit->total_depost_comp); ?></b></td>  					
-                                </tr> -->
-                             </tbody>
-                    </table>
-	                         </div>
-                            </div>
-
-    <div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-			Deposit Account Transaction Summary
-			</h3>
-		</div>		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
-	</div>	
-</div>
-</div>
-	</div>
-
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		            <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_">
-									      <thead>
-			  						          <tr>
-												<th>Account Name</th>
-												<th>Amount</th>
-												<th>Number of Receipt</th>
-						                  </thead>
-								      <tbody>
-                                          <?php //$no = 1; ?>
-									<?php foreach ($cash_account as $cash_accounts): ?>
-									 <tr>
-				  					<td><?php echo $cash_accounts->account_name; ?></td>
-				  					<td><?php echo $cash_accounts->total_depost_account ?></td>  					
-				  					<td><?php echo $cash_accounts->recept; ?></td>  					
-                                    </tr> 
-                            <?php endforeach; ?>
-                             </tbody>
-                    </table>
-	                         </div>
-                            </div>
-                          </div>
-
-
-<!-- end:: Content -->
-<!-- end:: Content -->
-				</div>				
+					</span>
+				  </div>
+				</td>
 				
-<?php include('incs/footer_1.php') ?>
+
+				  						
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo number_format($empl_loans->restration); ?> </span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo number_format($empl_loans->total_received); ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $empl_loans->depost_account; ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo number_format($empl_loans->total_withdrawal); ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $empl_loans->with_account; ?></span>
+				  </div>
+				</td>
+
+			  </tr>
+			  <?php endforeach; ?>
+
+			
+              
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <div class="flex items-center gap-x-2">
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-200"></span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200"></span>
+                  </div>
+                </td>
+				
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200"><b>TOTAL</b></span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200">
+                    </span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>		
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo number_format($total_work_individuals->total_depost_individual); ?></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo number_format($total_work_individuals->total_withdrawal_individual); ?></span>
+				  </div>
+				</td>				
+              </tr>
+			  <?php endforeach; ?>
+
+              <tr>
+               
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <div class="flex items-center gap-x-2">
+                     
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-200">Apple</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200">Wednesday 06:45 pm</span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200">In 3 days</span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200">
+                      jackob@site.com
+                    </span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2 flex gap-x-1">
+                   
+                  </div>
+                </td>
+              </tr>
+			  <tr>
+                              
+                                  
+
+
+			  <tr>
+                <td class="size-px whitespace-nowrap">
+                  <div class="px-6 py-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-200">
+                    
+                    </span>
+                  </div>
+                </td>
+                <td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"></span>
+				  </div>
+
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->empl_name; ?></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->day; ?></span>
+				  </div>
+				</td>
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->day; ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->day; ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->day; ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->day; ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->day; ?></span>
+				  </div>
+				</td>
+
+				<td class="size-px whitespace-nowrap">
+				  <div class="px-6 py-2">
+					<span class="text-sm text-gray-600 dark:text-gray-200"><?php echo $group_empls->day; ?></span>
+				  </div>
+				</td>
+				
+              </tr>
+
+         
+            </tbody>
+          </table>
+          <!-- End Table -->
+
+          <!-- Footer -->
+          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+            <div class="inline-flex items-center gap-x-2">
+              <p class="text-sm text-gray-600 dark:text-gray-200">
+                Showing:
+              </p>
+              <div class="max-w-sm space-y-3">
+                <select class="py-2 px-3 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option selected>9</option>
+                  <option>20</option>
+                </select>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-200">
+                of 20
+              </p>
+            </div>
+
+            <div>
+              <div class="inline-flex gap-x-2">
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  Prev
+                </button>
+
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+                  Next
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- End Footer -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Card -->
+</div>
+<!-- End Table Section -->
+
+<?php
+include_once APPPATH . "views/partials/footer.php";
+?>

@@ -102,7 +102,7 @@
 							$active = $this->db->query("SELECT * FROM tbl_customer WHERE blanch_id = '$blanch_id' AND customer_status = 'open'");
 							 ?>
                            <img src="<?php echo base_url() ?>assets/img/users.png" style="width: 50px;height: 50px;">
-						 	WATEJA(<?php echo $customer->num_rows(); ?>) <!-- / Male(<?php //echo $male->num_rows(); ?>) --> <!-- / Female(<?php //echo $female->num_rows(); ?>) --> <b style="color:green;">HAI(<?php echo $active->num_rows(); ?>)</b>
+						 	WATEJA(<?= $total_customers ?>) <!-- / Male(<?php //echo $male->num_rows(); ?>) --> <!-- / Female(<?php //echo $female->num_rows(); ?>) --> <b style="color:green;">HAI(<?= $total_active ?>)</b>
 						</span> 
 						  
 						</div>
@@ -115,7 +115,7 @@
 						<a href="<?php echo base_url("oficer/loan_pending"); ?>"><span class="kt-widget17__subtitle">
 					
 						<img src="<?php echo base_url() ?>assets/img/hukumu.png" style="width: 50px;height: 50px;">
-							<b style="color: red;">Maombi Ya Mikopo(<?php echo $new_loan->num_rows();  ?>)</b>
+							<b style="color: red;">Maombi Ya Mikopo(<?= $new_loans ?>)</b>
 						</span>  
 					</a>
 						</div>

@@ -63,7 +63,6 @@
 									<th>Date of Birth</th>
 									<th>Sex</th>
 									<th>Phone number</th>
-									<th>Region</th>
 									<th>Date</th>
 									<th>Status</th>
 									<th>Action</th>
@@ -82,7 +81,6 @@
 				  					<td><?php echo $customers->date_birth; ?></td>
 				  					<td><?php echo $customers->gender; ?></td>
 				  					<td><?php echo $customers->phone_no; ?></td>
-				  						<td><?php echo $customers->region_name; ?></td>
 				  						<td><?php echo substr($customers->customer_day, 0,10); ?></td>
 				  						<td>
 				 	<?php if ($customers->customer_status == 'open') {

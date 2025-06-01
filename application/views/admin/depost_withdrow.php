@@ -45,13 +45,46 @@ include_once APPPATH . "views/partials/header.php";
                     <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                     <?php
                          $customer_loan = $this->queries->get_loan_active_customer($customer->customer_id);
+                //           echo "<pre>";
+				//  print_r( $customer_loan );
+				//  echo "</pre>";
+				//  exit();
                          $total_deposit = $this->queries->get_total_amount_paid_loan($customer_loan->loan_id ?? 0);
                          $out_stand = $this->queries->get_outstand_loan_customer($customer_loan->loan_id ?? 0);
                      ?>
-                        <li class="flex items-center py-3">
-                            <span class="font-bold">Status</span>
-                            <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
-                        </li>
+                       <?php
+$customer_loan_status = $this->queries->get_loan_active_customer($customer->customer_id);
+
+$status_label = 'Not Active';
+$status_class = 'bg-blue-600 text-white dark:bg-blue-500';
+
+if (!empty($customer_loan_status)) {
+    switch ($customer_loan_status->loan_status) {
+        case 'withdrawal':
+            $status_label = 'Active';
+            $status_class = 'bg-teal-500 text-white';
+            break;
+        case 'done':
+            $status_label = 'Kumaliza';
+            $status_class = 'bg-yellow-500 text-white';
+            break;
+        case 'default':
+            $status_label = 'Deni Sugu';
+            $status_class = 'bg-red-500 text-white';
+            break;
+    }
+}
+?>
+
+<li class="flex items-center py-3">
+    <span class="font-bold">Status</span>
+    <span class="ml-auto">
+        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium <?php echo $status_class; ?>">
+            <?php echo $status_label; ?>
+        </span>
+    </span>
+</li>
+
                         <li class="flex items-center py-3">
                                <span class="font-bold">withdraw Date</span>
                             <?php if (!empty($customer_loan->loan_stat_date)) : ?>
@@ -145,31 +178,40 @@ include_once APPPATH . "views/partials/header.php";
        
 
         <div>
-    <div >
-        <div class="flex justify-end  items-center gap-2">
-            <!-- Delete Button -->
-            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-cyan-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-           href="#"
-           data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">
-          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"/>
-          </svg>
-          Deposit
-        </a>
-        <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">
-      withdraw
-    </button>
-            <!-- Withdraw Button -->
-           <br><br>
-        </div>
-    </div>
-    <div>
 
+        
+<div >
+    <div class="flex justify-end  items-center gap-2">
+    <?php if (!empty($customer_loan->loan_status)) {
+$status = $customer_loan->loan_status;
 
-   
+if ($status === 'withdrawal' || $status === 'out') { ?>
+      <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal" data-hs-overlay="#hs-edit-deposit-modal">
+        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"/>
+      </svg>
+  Deposit
+</button>
+<?php } elseif ($status === 'disbarsed') { ?>
+    <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">
+    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"/>
+      </svg>
+    Withdraw
+  </button>
+<?php } elseif ($status === 'done') { ?>
+    <a href="#" class="btn btn-info" data-toggle="modal" data-target="#addcontact3">
+        <i class="icon-pencil"></i> Faini
+    </a>
+<?php }
+} ?>
     </div>
+</div>
+
 </div>
 
 

@@ -141,16 +141,16 @@
                                     <div class="form-group row">
                                         <div class="col-lg-4 form-group-sub">
 									<label class="form-control-label">*First Name:</label>
-							<input type="text" name="f_name" placeholder="First name" value="<?php echo $customer_profile->f_name; ?>" autocomplete="off" class="form-control input-sm" required>
+							<input type="text" name="f_name"  readonly  placeholder="First name" value="<?php echo $customer_profile->f_name; ?>" autocomplete="off" class="form-control input-sm" required>
 								</div>
 								<div class="col-lg-4 form-group-sub">
 									<label class="form-control-label">*Middle name:</label>
-									<input type="text" name="m_name" placeholder="Middle name" value="<?php echo $customer_profile->m_name; ?>" autocomplete="off" class="form-control input-sm" required>
+									<input type="text"readonly name="m_name" placeholder="Middle name" value="<?php echo $customer_profile->m_name; ?>" autocomplete="off" class="form-control input-sm" required>
 								</div>
 								
 								<div class="col-lg-4 form-group-sub">
 									<label  class="form-control-label">*Last name:</label>
-									<input type="text" name="l_name" value="<?php echo $customer_profile->l_name; ?>" placeholder="Last name" autocomplete="off" class="form-control input-sm" required>
+									<input type="text"  readonly name="l_name" value="<?php echo $customer_profile->l_name; ?>" placeholder="Last name" autocomplete="off" class="form-control input-sm" required>
 								</div>
 
 								<!-- <div class="col-lg-3 form-group-sub">
@@ -165,40 +165,31 @@
 
 								<div class="col-lg-4 form-group-sub">
 									<label  class="form-control-label">*Employee:</label>
-								<input type="tetx" name="" class="form-control" value="<?php echo $customer_profile->empl_name; ?>" readonly>
+								<input type="tetx" readonly  name="" class="form-control" value="<?php echo $customer_profile->empl_name; ?>" readonly>
 								
 							</select>
 								</div>
 						
 								<div class="col-lg-4 form-group-sub">
 									<label  class="form-control-label">*Gender:</label>
-								<select type="text" name="gender" class="form-control select2 input-sm" required class="form-control input-sm">
+								<select type="text"  name="gender" class="form-control select2 input-sm" required class="form-control input-sm">
 								<option value="<?php echo $customer_profile->gender; ?>"><?php echo $customer_profile->gender; ?></option>
-								<option value="male">Male</option>
-								<option value="female">Female</option>
+
 							</select>
 								</div>
 								<div class="col-lg-4 form-group-sub">
 									<label  class="form-control-label">*Date of Birth:</label>
-							<input type="text" name="date_birth" onchange="getDate(this.value)" placeholder="Date of Birth" autocomplete="off" class="form-control input-sm" value="<?php echo $customer_profile->date_birth; ?>" required>
+							<input type="text" readonly name="date_birth" onchange="getDate(this.value)" placeholder="Date of Birth" autocomplete="off" class="form-control input-sm" value="<?php echo $customer_profile->date_birth; ?>" required>
 								</div>
 								<div class="col-lg-4 form-group-sub">
 									<label  class="form-control-label">*Year:</label>
-							<input type="" id="age" name="age" readonly class="form-control input-sm" value="<?php echo $customer_profile->age; ?>">
+							<input type="" id="age"  name="age" readonly class="form-control input-sm" value="<?php echo $customer_profile->age; ?>">
 								</div>
 									<div class="col-lg-4 form-group-sub">
 									<label class="form-control-label">*Phone Number:</label>
-							<input type="number" name="phone_no" value="<?php echo $customer_profile->phone_no; ?>" placeholder="Eg,7538, 6283" autocomplete="off" class="form-control input-sm" required >
+							<input type="number" readonly name="phone_no" value="<?php echo $customer_profile->phone_no; ?>" placeholder="Eg,7538, 6283" autocomplete="off" class="form-control input-sm" required >
 								</div>
-									<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Region:</label>
-							<select type="number" name="region_id" class="form-control select2 input-sm" required>
-								<option value="<?php echo $customer_profile->region_id; ?>"><?php echo $customer_profile->region_name; ?></option>
-                                <?php foreach ($region as $regions): ?>
-								<option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
-								<?php endforeach;?>
-							</select>
-								</div>
+									
 									<div class="col-lg-4 form-group-sub">
 									<label class="form-control-label">*District:</label>
 							<input type="text" name="district" placeholder="district" value="<?php echo $customer_profile->district; ?>" autocomplete="off" class="form-control input-sm" required>

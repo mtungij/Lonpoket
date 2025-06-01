@@ -219,6 +219,76 @@ public function get_allcutomer($comp_id){
 	  return $customer->result(); 
 	}
 
+	public function get_customers_by_officer($empl_id) {
+		return $this->db->query("
+			SELECT * FROM tbl_customer c
+			LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id
+			LEFT JOIN tbl_account_type at ON at.account_id = sc.account_id
+			LEFT JOIN tbl_blanch b ON b.blanch_id = c.blanch_id
+			WHERE c.empl_id = ?
+			ORDER BY c.customer_id DESC
+		", [$empl_id])->result();
+	}
+	
+	public function count_customers_by_officer($empl_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_customers
+			FROM tbl_customer
+			WHERE empl_id = ?
+		", [$empl_id]);
+	
+		return $query->row()->total_customers;
+	}
+
+	public function count_customers_by_branch($blanch_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_customers
+			FROM tbl_customer
+			WHERE blanch_id = ?
+		", [$blanch_id]);
+	
+		return $query->row()->total_customers;
+	}
+
+	public function count_active_by_officer($empl_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_active 
+			FROM tbl_customer 
+			WHERE empl_id = ? AND customer_status = 'open'
+		", [$empl_id]);
+		return $query->row()->total_active;
+	}
+	
+	public function count_active_by_branch($blanch_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_active 
+			FROM tbl_customer 
+			WHERE blanch_id = ? AND customer_status = 'open'
+		", [$blanch_id]);
+		return $query->row()->total_active;
+	}
+
+	
+	public function count_open_loans_by_officer($empl_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_open_loans
+			FROM tbl_loans
+			WHERE empl_id = ? AND loan_status = 'open'
+		", [$empl_id]);
+		return $query->row()->total_open_loans;
+	}
+	
+	public function count_open_loans_by_branch($blanch_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_open_loans
+			FROM tbl_loans
+			WHERE blanch_id = ? AND loan_status = 'open'
+		", [$blanch_id]);
+		return $query->row()->total_open_loans;
+	}
+	
+
+
 	public function get_allcutomerblanchData($blanch_id){
 	$customer = $this->db->query("SELECT * FROM tbl_customer c  LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id LEFT JOIN tbl_account_type at ON at.account_id = sc.account_id LEFT JOIN tbl_blanch b ON b.blanch_id = c.blanch_id WHERE c.blanch_id = '$blanch_id' ORDER BY c.customer_id DESC"); 
 	return $customer->result(); 
@@ -433,6 +503,22 @@ public function get_allcutomer($comp_id){
        	   return $loan->result();
        }
 
+	   public function get_loanPendingByOfficer($empl_id) {
+		$loan = $this->db->query("
+			SELECT *
+			FROM tbl_loans l
+			LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id
+			LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id
+			LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id
+			LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id
+			WHERE l.loan_status = 'open' AND c.empl_id = ?
+			ORDER BY l.loan_id DESC
+		", [$empl_id]);
+	
+		return $loan->result();
+	}
+	
+
         public function get_total_loanPendingBlanch($blanch_id){
        	$loan = $this->db->query("SELECT SUM(how_loan) AS total_loan_request FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.loan_status = 'open'  AND l.blanch_id = '$blanch_id' AND l.group_id = '0' ORDER BY l.loan_id DESC ");
        	   return $loan->row();
@@ -628,10 +714,43 @@ public function get_allcutomer($comp_id){
        	   return $loan->result();
        }
 
+	   public function get_withdrawal_LoanByOfficer($empl_id) {
+		$this->db->select('*');
+		$this->db->from('tbl_loans l');
+		$this->db->join('tbl_customer c', 'c.customer_id = l.customer_id');
+		$this->db->join('tbl_loan_category lt', 'lt.category_id = l.category_id');
+		$this->db->join('tbl_blanch b', 'b.blanch_id = l.blanch_id');
+		$this->db->join('tbl_sub_customer s', 's.customer_id = l.customer_id');
+		$this->db->join('tbl_outstand ot', 'ot.loan_id = l.loan_id');
+		$this->db->where('l.loan_status', 'withdrawal');
+		$this->db->where('l.empl_id', $empl_id);  // Filter by loan officer
+		$this->db->order_by('l.loan_id', 'DESC');
+	
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+
            public function get_DisbarsedLoanBlanch($blanch_id){
        	$loan = $this->db->query("SELECT * FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.blanch_id = '$blanch_id' AND l.loan_status = 'disbarsed'  ORDER BY l.loan_id DESC ");
        	   return $loan->result();
        }
+
+	   public function get_DisbarsedLoanByOfficer($empl_id) {
+		$loan = $this->db->query("
+			SELECT *
+			FROM tbl_loans l
+			LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id
+			LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id
+			LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id
+			LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id
+			WHERE l.loan_status = 'disbarsed' AND c.empl_id = ?
+			ORDER BY l.loan_id DESC
+		", [$empl_id]);
+	
+		return $loan->result();
+	}
+	
 
 
 
@@ -834,13 +953,41 @@ public function get_totalLoanout($customer_id){
        	  return $total_loan_dis->row();
        }
 
+	   public function get_sum_withdrawal_by_officer($empl_id) {
+		$this->db->select('
+			SUM(l.loan_aprove) as total_loan,
+			SUM(l.loan_int) as total_loan_int,
+			
+		');
+		$this->db->from('tbl_loans l');
+		$this->db->join('tbl_outstand ot', 'ot.loan_id = l.loan_id');
+		$this->db->where('l.loan_status', 'withdrawal');
+		$this->db->where('l.empl_id', $empl_id);
+	
+		return $this->db->get()->row();
+	}
+	
+
 
        public function get_sum_loanwithdrawal_dataBlanch($blanch_id){
        	$date = date("Y-m-d");
        	$total_loan_dis = $this->db->query("SELECT SUM(loan_aprove) AS total_loan FROM tbl_loans WHERE blanch_id = '$blanch_id' AND loan_status = 'withdrawal'");
        	  return $total_loan_dis->row();
        }
-
+	   public function get_sum_withdrawal_by_branch($blanch_id) {
+		$this->db->select('
+			SUM(l.loan_aprove) as total_loan,
+			SUM(l.loan_int) as total_loan_int,
+			
+		');
+		$this->db->from('tbl_loans l');
+		$this->db->join('tbl_outstand ot', 'ot.loan_id = l.loan_id');
+		$this->db->where('l.loan_status', 'withdrawal');
+		$this->db->where('l.blanch_id', $blanch_id);
+	
+		return $this->db->get()->row();
+	}
+	
         public function get_sum_loanwithdrawal($comp_id){
        	$date = date("Y-m-d");
        	$total_loan_dis = $this->db->query("SELECT SUM(loan_aprove) AS total_loan FROM tbl_loans WHERE comp_id = '$comp_id' AND loan_status = 'withdrawal'  AND loan_day >= '$date'");
@@ -864,6 +1011,20 @@ public function get_totalLoanout($customer_id){
        	$total_loan_dis = $this->db->query("SELECT SUM(l.loan_int) AS total_loan_int FROM tbl_loans l LEFT JOIN tbl_outstand ot ON ot.loan_id = l.loan_id WHERE l.comp_id = '$comp_id' AND l.loan_status = 'withdrawal' AND ot.loan_stat_date = '$date'");
        	  return $total_loan_dis->row();
        }
+
+	   public function get_sum_loanwithdrawal_interest_by_officer($empl_id) {
+		$date = date("Y-m-d");
+		$query = $this->db->query("
+			SELECT SUM(l.loan_int) AS total_loan_int 
+			FROM tbl_loans l 
+			LEFT JOIN tbl_outstand ot ON ot.loan_id = l.loan_id 
+			WHERE l.empl_id = '$empl_id' 
+			AND l.loan_status = 'withdrawal' 
+			AND ot.loan_stat_date = '$date'
+		");
+		return $query->row();
+	}
+	
 
          public function get_sum_loanwithdrawal_interestBlanch($blanch_id){
        	$total_loan_dis = $this->db->query("SELECT SUM(with_amount) AS total_loan_int FROM tbl_loans WHERE blanch_id = '$blanch_id' AND loan_status = 'withdrawal'");
@@ -963,7 +1124,19 @@ public function get_totalLoanout($customer_id){
 	$customer = $this->db->query("SELECT * FROM tbl_customer c  JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id JOIN tbl_blanch b ON b.blanch_id = c.blanch_id WHERE c.blanch_id = '$blanch_id' ORDER BY c.customer_id DESC ");
 	  return $customer->result(); 
 	}
-
+	public function get_allcustomer_by_officer($blanch_id, $empl_id){
+		$customer = $this->db->query("
+			SELECT * 
+			FROM tbl_customer c  
+			JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id 
+			JOIN tbl_blanch b ON b.blanch_id = c.blanch_id 
+			WHERE c.blanch_id = '$blanch_id' 
+			AND c.empl_id = '$empl_id'
+			ORDER BY c.customer_id DESC
+		");
+		return $customer->result(); 
+	}
+	
 	public function view_blanchDetail($blanch_id){
 	$blanch = $this->db->query("SELECT * FROM tbl_blanch WHERE blanch_id = '$blanch_id'");
 	   return $blanch->row();
@@ -1018,6 +1191,24 @@ public function get_totalLoanout($customer_id){
 	}
 
 
+	public function get_cash_transaction_by_officer($empl_id) {
+		$date = date("Y-m-d");
+	
+		$data = $this->db->query("
+			SELECT * 
+			FROM tbl_prev_lecod pr 
+			JOIN tbl_customer c ON c.customer_id = pr.customer_id 
+			JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  
+			WHERE pr.empl_id = '$empl_id' 
+			AND pr.lecod_day >= '$date' 
+			ORDER BY pr.prev_id DESC
+		");
+	
+		return $data->result();
+	}
+	
+
+
 
 	public function get_sumCashtransDepost($comp_id){
 		$date = date("Y-m-d");
@@ -1033,6 +1224,16 @@ public function get_totalLoanout($customer_id){
 		 return $cash->row();
 	}
 
+	public function get_sumCashtransDepostByOfficer($empl_id){
+		$date = date("Y-m-d");
+		$cash = $this->db->query("SELECT SUM(depost) AS cash_depost 
+								 FROM tbl_prev_lecod 
+								 WHERE empl_id = '$empl_id' 
+								 AND lecod_day >= '$date'");
+		return $cash->row();
+	}
+	
+
 	public function get_sumCashtransWithdrow($comp_id){
 		$date = date("Y-m-d");
 		$cash = $this->db->query("SELECT SUM(withdraw) AS cash_withdrowal FROM tbl_prev_lecod WHERE comp_id = '$comp_id' AND lecod_day >= '$date'");
@@ -1045,6 +1246,16 @@ public function get_totalLoanout($customer_id){
 		$cash = $this->db->query("SELECT SUM(withdraw) AS cash_withdrowal FROM tbl_prev_lecod WHERE blanch_id = '$blanch_id' AND lecod_day >= '$date'");
 		 return $cash->row();
 	}
+
+	public function get_sumCashtransWithdrowByOfficer($empl_id){
+		$date = date("Y-m-d");
+		$cash = $this->db->query("SELECT SUM(withdraw) AS cash_withdrawal 
+								 FROM tbl_prev_lecod 
+								 WHERE empl_id = '$empl_id' 
+								 AND lecod_day >= '$date'");
+		return $cash->row();
+	}
+	
 
 
 
@@ -2005,6 +2216,18 @@ public function update_password_data($comp_id, $userdata)
     	return $today_data->row();
     }
 
+	public function get_total_recevableByOfficer($empl_id) {
+		$date = date("Y-m-d");
+		$query = $this->db->query("
+			SELECT SUM(restration) AS total_rejesho
+			FROM tbl_loans
+			WHERE empl_id = ? AND loan_status = 'withdrawal' AND date_show = ?
+		", [$empl_id, $date]);
+	
+		return $query->row();
+	}
+	
+	
 
 
     public function get_today_received_loan($comp_id){
@@ -2058,6 +2281,55 @@ public function update_password_data($comp_id, $userdata)
     	$data = $this->db->query("SELECT SUM(withdrow) AS total_withdrawal FROM tbl_pay WHERE blanch_id = '$blanch_id' AND auto_date = '$date'");
     	 return $data->row();
     }
+
+	// public function get_sumReceived_byOfficer($empl_id) {
+	// 	$date = date("Y-m-d");
+	// 	$query = $this->db->query("
+	// 		SELECT SUM(withdrow) AS total_withdrawal
+	// 		FROM tbl_pay
+	// 		WHERE empl_id = ? AND auto_date = ?
+	// 	", [$empl_id, $date]);
+	
+	// 	return $query->row();
+	// }
+	
+	// Get all customers assigned to a specific loan officer
+public function get_all_customers_by_officer($empl_id)
+{
+    return $this->db
+        ->where('empl_id', $empl_id)
+        ->get('tbl_customer')
+        ->result();
+}
+
+// Get active customers assigned to a specific loan officer
+public function get_active_customers_by_officer($empl_id)
+{
+    return $this->db
+        ->where('empl_id', $empl_id)
+        ->where('customer_status', 'open')
+        ->get('tbl_customer')
+        ->result();
+}
+
+// Get all customers in a branch
+public function get_all_customers_by_branch($blanch_id)
+{
+    return $this->db
+        ->where('blanch_id', $blanch_id)
+        ->get('tbl_customer')
+        ->result();
+}
+
+// Get active customers in a branch
+public function get_active_customers_by_branch($blanch_id)
+{
+    return $this->db
+        ->where('blanch_id', $blanch_id)
+        ->where('customer_status', 'open')
+        ->get('tbl_customer')
+        ->result();
+}
 
     //reconselation report
 
@@ -4786,6 +5058,21 @@ public function get_total_loan_pending($blanch_id){
 	return $data->result();
 }
 
+public function get_total_loan_pending_by_officer($blanch_id, $empl_id){
+    $data = $this->db->query("
+        SELECT pt.*, l.*, b.*, c.* 
+        FROM tbl_pending_total pt 
+        JOIN tbl_loans l ON l.loan_id = pt.loan_id 
+        JOIN tbl_blanch b ON b.blanch_id = pt.blanch_id 
+        JOIN tbl_customer c ON c.customer_id = pt.customer_id  
+        WHERE pt.blanch_id = '$blanch_id' 
+        AND pt.total_pend > 0
+        AND l.empl_id = '$empl_id'
+    ");
+    return $data->result();
+}
+
+
 public function get_total_pend_loan($blanch_id){
 	$data = $this->db->query("SELECT SUM(total_pend) AS total_pending FROM tbl_pending_total WHERE blanch_id = '$blanch_id'");
 	return $data->row();
@@ -5500,13 +5787,15 @@ return $data->row();
 	   }
 	   
 
-
 	   public function employee_user_data($empl_no)
-{
-    return $this->db->where('empl_no', $empl_no)
-                    ->get('tbl_employee')  // replace 'employees' with your actual table name
-                    ->row();
-}
+	   {
+		   $this->db->select('e.*, p.position');
+		   $this->db->from('tbl_employee e');
+		   $this->db->join('tbl_position p', 'p.position_id = e.position_id', 'left');
+		   $this->db->where('e.empl_no', $empl_no);
+		   return $this->db->get()->row();
+	   }
+	   
 
 
 	   public function get_company_name_by_employee($comp_id) {

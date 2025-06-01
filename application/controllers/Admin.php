@@ -3134,9 +3134,13 @@ public function data_with_depost($customer_id){
 
     @$blanch_id = $customer->blanch_id;
     $acount = $this->queries->get_customer_account_verfied($blanch_id);
-
-       // print_r($total_depost_customerout);
-       //          exit();
+   
+			
+				//  echo "<pre>";
+				//  print_r( $customer);
+				//  echo "</pre>";
+				//  exit();
+     
 	$this->load->view('admin/depost_withdrow',['opening_blanch'=>$opening_blanch,'depost_blanch_account'=>$depost_blanch_account,'loan_withdrawal_blanch'=>$loan_withdrawal_blanch,'customer'=>$customer,'customery'=>$customery,'acount'=>$acount]);
 }
 

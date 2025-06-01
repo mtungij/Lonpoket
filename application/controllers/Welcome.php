@@ -120,8 +120,14 @@ class Welcome extends CI_Controller {
 					'empl_name'   => $userexit->empl_name,
 					'comp_id'     => $userexit->comp_id ?? null,
 					'position_id' => $userexit->position_id,
+					'position_name' => $userexit->position,
 					'user_id'     => $userexit->empl_id,
 				];
+
+				//    echo "<br>";
+        	    // print_r($sessionData);
+        	    // echo "<br>";
+        	    //  exit();
 				
 	
 				// 👉 Only load permission links for position 22
