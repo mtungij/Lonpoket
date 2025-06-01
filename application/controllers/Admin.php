@@ -1619,7 +1619,7 @@ public function create_sponser($customer_id, $comp_id) {
 		
 		// Ujumbe wa SMS
 		$massage = "Habari $sp_fullname, umetajwa kama mdhamini wa $customer_name katika taasisi ya kifedha $comp_name. "
-		. "Iwapo hukubaliani kuwa mdhamini wake, tafadhali wasiliana nasi kupitia $comp_number. Tunathamini ushirikiano wako.";
+		. "Iwapo hukubaliani kuwa mdhamini wake, tafadhali wasiliana nasi kupitia 0626573025/0627548192. Tunathamini ushirikiano wako.";
 		
 		// Tuma SMS
 		$this->sendsms($phone, $massage);
@@ -3803,7 +3803,7 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	     $loan_int = $loan_restoration->loan_int;
 	     $remain_loan = $loan_int - $total_depost->remain_balance_loan;
 	        //sms send
-			$massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
+			$message = 'Ndugu ' . $first_name . ' ' . $last_name . 
            ', umelipa ' . number_format($new_balance) . 
            ' ' . $comp_name . 
            '. Kiasi kilichobaki kulipwa kwa changamoto, fika ofisini.';
@@ -3879,6 +3879,10 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	     $loan_int = $loan_restoration->loan_int;
 	     $remain_loan = $loan_int - $total_depost->remain_balance_loan;
 	        //sms send
+
+			            //  echo "<br>";
+			            // print_r( $loan_int);
+			            //      exit();
 		
 			$massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
            ', umelipa ' . number_format($new_balance) . 
@@ -3921,12 +3925,13 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
            }
           $new_balance = $new_depost;
 	      if ($dep_id > 0) {
-			$this->session->set_flashdata('massage','Deposit yenyewe hii');
+			$this->session->set_flashdata('massage','Malipo Yamelipishwa kikamilifu');
 			$massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
 			', umelipa ' . number_format($new_balance) . 
-			' ' . $comp_name . 
-			'. Kiasi kilichobaki kulipwa ' . number_format($remain_loan) . 
-			' kama kuna changamoto kwenye malipo yako fika ofisini.';
+			' kwa ' . $comp_name . 
+			'. Kama kuna changamoto kwenye malipo yako, tafadhali wasiliana nasi kupitia 0626573025 / 0627548192.';
+		
+
 //   print_r($massage );
 //               echo "<br>";
 //             print_r($phone);

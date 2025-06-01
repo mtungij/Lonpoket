@@ -118,7 +118,7 @@
                     <th>JUMLA</th>
 					<th></th>
 					<th><?php echo number_format($sum_depost->cash_depost); ?></th>
-					<th><?php echo number_format($sum_withdrawls->cash_withdrawal); ?></th>
+					<th><?php echo number_format($sum_withdrawls->cash_withdrowal); ?></th>
 					<th></th>
                     </tr>
                    </tfoot>

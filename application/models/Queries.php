@@ -277,6 +277,19 @@ public function get_allcutomer($comp_id){
 		", [$empl_id]);
 		return $query->row()->total_open_loans;
 	}
+
+
+	public function get_loan_by_loan_id($loan_id) {
+		$this->db->select('tbl_customer.f_name, tbl_customer.m_name, tbl_customer.l_name, tbl_customer.phone_no, tbl_employee.empl_name, tbl_blanch.blanch_name');
+		$this->db->from('tbl_loans');
+		$this->db->join('tbl_customer', 'tbl_customer.customer_id = tbl_loans.customer_id');
+		$this->db->join('tbl_employee', 'tbl_employee.empl_id = tbl_loans.empl_id');
+		$this->db->join('tbl_blanch', 'tbl_blanch.blanch_id = tbl_loans.blanch_id');
+		$this->db->where('tbl_loans.loan_id', $loan_id);
+		$query = $this->db->get();
+		return $query->row(); // returns a single object
+	}
+	
 	
 	public function count_open_loans_by_branch($blanch_id) {
 		$query = $this->db->query("
@@ -293,6 +306,21 @@ public function get_allcutomer($comp_id){
 	$customer = $this->db->query("SELECT * FROM tbl_customer c  LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id LEFT JOIN tbl_account_type at ON at.account_id = sc.account_id LEFT JOIN tbl_blanch b ON b.blanch_id = c.blanch_id WHERE c.blanch_id = '$blanch_id' ORDER BY c.customer_id DESC"); 
 	return $customer->result(); 
 	}
+
+	public function get_allcutomerblanchData_by_officer($blanch_id, $empl_id){
+		$customer = $this->db->query("
+			SELECT * 
+			FROM tbl_customer c  
+			LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id 
+			LEFT JOIN tbl_account_type at ON at.account_id = sc.account_id 
+			LEFT JOIN tbl_blanch b ON b.blanch_id = c.blanch_id 
+			WHERE c.blanch_id = '$blanch_id' 
+			AND c.empl_id = '$empl_id'
+			ORDER BY c.customer_id DESC
+		"); 
+		return $customer->result(); 
+	}
+	
 
 	public function get_allcustomerData($comp_id){
 	$customer = $this->db->query("SELECT * FROM tbl_customer c  JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id JOIN tbl_account_type at ON at.account_id = sc.account_id JOIN tbl_blanch b ON b.blanch_id = c.blanch_id WHERE c.comp_id = '$comp_id' ORDER BY c.customer_id DESC");

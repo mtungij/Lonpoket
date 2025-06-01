@@ -1740,7 +1740,14 @@ public function customer(){
           } elseif ($check == FALSE) {
               $customer_id = $this->queries->insert_customer($data);
               if ($customer_id > 0) {
-                $massage = "Dear $f_name, Karibu sana!. Tunajivunia kuwa sehemu ya safari yako ya kifedha. Tutahakikisha unapata huduma bora na msaada unaohitajika. Asante kwa kutuchagua!";
+                $this->load->model('queries');
+				        $compdata = $this->queries->get_companyData($comp_id);
+                $full_name = $f_name . ' ' . $m_name . ' ' . $l_name;
+                
+                $massage = "Habari $full_name! Karibu sana katika familia ya " . $compdata->comp_name . ". " .
+                "Tunathamini uamuzi wako wa kujiunga nasi. Kwa maswali, ushauri au msaada wowote, " .
+                "tupigie simu kupitia namba: 0626573025 / 0627548192. Tuko tayari kukuhudumia kwa moyo wote!";
+            
                 $this->sendsms($phone_no, $massage);
                   $this->session->set_flashdata('massage', 'Customer successfully registered.');
               } else {
@@ -2251,16 +2258,32 @@ public function create_sponser($customer_id,$comp_id){
               return redirect('oficer/loan_applicationForm/' . $customer_id);
           } else {
               $loan_id = $this->queries->insert_loan($data);
-              $customer_details = $this->queries->get_customer($customer_id);
-               
-              $phone = $customer_details->phone_no;
-              $first_name = $customer_details->f_name;
+              $new_customer = $this->queries->get_loan_by_loan_id($loan_id);
+              $first_name = $new_customer->f_name;
+              $middle_name = $new_customer->m_name;
+              $last_name = $new_customer->l_name;
+              $phone_number = $new_customer->phone_no;
+              $employee_name = $new_customer->empl_name;
+              $blanch_name = $new_customer->blanch_name;
+
   
               // Prepare SMS message
               $massage = "Ndugu " . $first_name . ", maombi ya mkopo wa TZS " . number_format($how_loan, 0) . " uliyoomba yameshatumwa. Tutakujulisha kwa njia ya SMS yakishajadiliwa na kukubaliwa.";
   
+//               $massage = "Habari! Kuna maombi ya mkopo  katika tawi la $blanch_name. 
+// Jina lake ni $first_name $middle_name $last_name, nambari ya simu ni $phone_number. 
+// Afisa aliyesajili ni $employee_name. Kiasi cha mkopo kilichoombwa ni TZS " . number_format($how_loan, 0);
+
+// $phone_number = [    255629364847, 
+ 
+//             ];
+  
+//             foreach ($phone_number as  $phone) {
+//               $this->sendsms($phone, $massage);
+//             }
+
               // Send SMS
-              $this->sendsms($phone, $massage);
+              // $this->sendsms($phone, $massage);
   
               $this->session->set_flashdata('massage', 'Loan application created successfully!');
               return redirect('oficer/collelateral_session/' . $loan_id);
@@ -3856,6 +3879,7 @@ if ($position === 'LOAN OFFICER') {
 
 
     public function search_customerData(){
+    $position = strtoupper($this->session->userdata('position_name'));
     $this->load->model('queries');
     $blanch_id = $this->session->userdata('blanch_id');
     $empl_id = $this->session->userdata('empl_id');
@@ -3865,18 +3889,35 @@ if ($position === 'LOAN OFFICER') {
     $blanch_data = $this->queries->get_blanchData($blanch_id);
     $empl_data = $this->queries->get_employee_data($empl_id);
 
-    $customery = $this->queries->get_allcutomerblanchData($blanch_id);
+    
     $customer_id = $this->input->post('customer_id');
     $comp_id = $this->input->post('comp_id');
     $customer = $this->queries->search_CustomerLoan($customer_id);
     @$customer_id = $customer->customer_id;
     @$blanch_id = $customer->blanch_id;
     $acount = $this->queries->get_customer_account_verfied($blanch_id);
-      
+    
     $deposts = $this->queries->get_sumTodayDepostBlanch($blanch_id);
     $withdraw = $this->queries->get_sumTodayWithdrawalBlanch($blanch_id);
     $blanch_amount_balance = $this->queries->get_blanch_capital_data($blanch_id);
     $privillage = $this->queries->get_position_empl($empl_id);
+
+    if ($position === 'LOAN OFFICER') {
+      $customery = $this->queries->get_allcutomerblanchData_by_officer($blanch_id, $empl_id);
+      
+  
+  } elseif ($position === 'BRANCH MANAGER') {
+    
+    $customery = $this->queries->get_allcutomerblanchData($blanch_id);
+  
+  } else {
+    $customery = [];
+    
+  }
+
+    
+
+    
 
    
    $this->load->view('officer/search_loan_customer',['customer'=>$customer,'blanch_amount_balance'=>$blanch_amount_balance,'deposts'=>$deposts,'withdraw'=>$withdraw,'acount'=>$acount,'empl_data'=>$empl_data,'customery'=>$customery,'privillage'=>$privillage]);
@@ -4272,7 +4313,7 @@ if ($position === 'LOAN OFFICER') {
       $massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
 			', umelipa ' . number_format($new_balance) . 
 			' ' . $comp_name . 
-			'. Kama kuna changamoto kwenye malipo yako fika ofisini kwa marekebisho ahsante.';
+			'. Kama kuna changamoto kwenye malipo yako, tafadhali wasiliana nasi kupitia 0626573025 / 0627548192.';
 
  
 
@@ -4977,7 +5018,7 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
           $sum_depost = 0;
       }
   
-      // For debugging
+     
       // echo "<pre>";
       // print_r($sum_withdrawls);
       // exit();

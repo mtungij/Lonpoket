@@ -419,6 +419,114 @@ if ($status === 'withdrawal' || $status === 'out') { ?>
   </div>
 </div>
 
+
+<div id="hs-edit-deposit-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-3xl lg:w-full m-3 lg:mx-auto">
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+        <h3 class="font-bold text-gray-800 dark:text-white">Jina La Mteja: <?= htmlspecialchars($customer->f_name, ENT_QUOTES, 'UTF-8'); ?></h3>
+        <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-deposit-modal">
+          <span class="sr-only">Close</span>
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <?php echo form_open("admin/deposit_loan/{$customer_loan->customer_id}"); ?>
+<!-- Modal Body -->
+<div class="p-4 sm:p-6">
+  <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
+
+    <!-- Total Withdraw -->
+    <div class="sm:col-span-6">
+      <label for=depost" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Weka:
+      </label>
+      <input type="text" id=depost" name="depost"
+  class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+  required>
+
+    </div>
+
+    <!-- Payment Method -->
+    <div class="sm:col-span-6">
+      <label for="p_method" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Njia Za Malipo:
+      </label>
+      <select id="p_method" name="p_method"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
+        <option value="">Chagua Malipo</option>
+        <?php foreach ($acount as $acounts): ?>
+          <option value="<?= $acounts->trans_id; ?>"><?= $acounts->account_name; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+
+    <div class="sm:col-span-6">
+    <?php if ($customer_loan->loan_status == 'withdrawal') { ?>
+        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               value="<?php echo number_format($total_recovery->total_pending, 2); ?>" 
+               readonly style="color:red"> 
+
+    <?php } elseif ($customer_loan->loan_status == 'out') { ?>
+        <span style="color:red;">Default Amount</span>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               value="<?php echo number_format($out_stand->total_out, 2); ?>" 
+               readonly style="color:red"> 
+
+    <?php } else { ?>
+        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+                value="<?php echo number_format($total_recovery->pending, 2); ?>"
+               readonly style="color:red"> 
+    <?php } ?>
+</div>
+
+
+
+ 
+
+
+    <!-- Date -->
+    <div class="sm:col-span-6">
+      <label for="deposit_date" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Tarehe:
+      </label>
+      <input type="date" id="deposit_date" name="deposit_date"
+        value="<?= date('Y-m-d'); ?>"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
+    </div>
+
+    <!-- Code -->
+   
+
+  </div>
+
+  <!-- Hidden Inputs -->
+  <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
+                    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
+                    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
+                    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+                     <input type="hidden" value="LOAN RETURN" name="description">
+
+  <!-- Action Buttons -->
+  <div class="mt-6 flex justify-end items-center gap-x-2">
+    <button type="button" class="py-2 px-3 btn-secondary-sm"
+      data-hs-overlay="#hs-edit-deposit-modal">Funga</button>
+
+    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Weka</button>
+  </div>
+</div>
+
+<?php echo form_close(); ?>
+
+    </div>
+  </div>
+</div>
          
 <!-- End Table Section -->
 <!-- End Table Section -->
