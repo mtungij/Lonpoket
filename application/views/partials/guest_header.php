@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Comprehensive overview with charts, tables, and a streamlined dashboard layout for easy data visualization and analysis.">
 
-  <title>Mfumo wa Mikopo Tanzania</title>
+  <title>Loan Pocket</title>
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="../../favicon.ico">

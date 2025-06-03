@@ -72,7 +72,7 @@ if (!empty($customer_loan_status)) {
             $status_label = 'Kumaliza';
             $status_class = 'bg-yellow-500 text-white';
             break;
-        case 'default':
+        case 'out':
             $status_label = 'Deni Sugu';
             $status_class = 'bg-red-500 text-white';
             break;

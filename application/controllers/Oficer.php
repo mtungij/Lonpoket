@@ -1709,8 +1709,6 @@ public function customer(){
       $this->form_validation->set_rules('f_name', 'First name', 'required');
       $this->form_validation->set_rules('m_name', 'Middle name', 'required');
       $this->form_validation->set_rules('l_name', 'Last name', 'required');
-      $this->form_validation->set_rules('gender', 'gender', 'required');
-      $this->form_validation->set_rules('date_birth', 'date_birth', 'required');
       $this->form_validation->set_rules('phone_no', 'phone number', 'required');
       $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
   
@@ -2133,7 +2131,7 @@ $customer = $this->queries->search_CustomerID($customer_id,$comp_id);
 $privillage = $this->queries->get_position_empl($empl_id);
 $manager = $this->queries->get_position_manager($empl_id);
 //   echo "<pre>";
-// print_r($customer);
+// print_r($sponser);
 //  echo "</pre>";
 //    exit();
 $this->load->view('officer/search_customer',['customer'=>$customer,'sponser'=>$sponser,'sponsers_data'=>$sponsers_data,'region'=>$region,'empl_data'=>$empl_data,'privillage'=>$privillage,'manager'=>$manager]);
@@ -2205,7 +2203,7 @@ public function create_sponser($customer_id,$comp_id){
         $empl_blanch = $this->queries->get_employee_blanch($blanch_id);
        
         // echo "<pre>";
-        //     print_r($customer);
+        //     print_r( $loan_option);
         //     echo "</pre>";
         //          exit();
            
