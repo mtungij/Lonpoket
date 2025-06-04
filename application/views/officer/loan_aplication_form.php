@@ -1,299 +1,683 @@
-
-
-
- 
-<?php
-include_once APPPATH . "views/partials/header.php";
-
-// --- DUMMY DATA - REMOVE AND LOAD FROM YOUR CONTROLLER ---
-// Controller should pass $share, an array of shareholder objects.
-// Each object should have 'share_id', 'share_name', 'share_mobile', 'share_email', 'share_sex', 'share_dob'.
-// if (!isset($share)) {
-//     $share = [
-//         (object)['share_id' => 1, 'share_name' => 'Alice Wonderland', 'share_mobile' => '0712345001', 'share_email' => 'alice@example.com', 'share_sex' => 'female', 'share_dob' => '1985-06-15'],
-//         (object)['share_id' => 2, 'share_name' => 'Bob The Builder', 'share_mobile' => '0712345002', 'share_email' => 'bob@example.com', 'share_sex' => 'male', 'share_dob' => '1978-11-02'],
-//     ];
-// }
-// --- END DUMMY DATA ---header.php
-?>
-
-<!-- ========== MAIN CONTENT BODY ========== -->
-<div class="w-full lg:ps-64">
-    <div class="p-4 sm:p-6 space-y-6">
-
-        <!-- Page Title / Subheader -->
-        <div class="mb-6">
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-200">
-               Register New Customer
-            </h2>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Register only New Customer.
-            </p>
-        </div>
-        <!-- End Page Title / Subheader -->
-
-        <?php // Flash Messages ?>
-        <?php if ($das = $this->session->flashdata('massage')): ?>
-        <div class="bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert">
-            <div class="flex">
-                <div class="flex-shrink-0"><span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-500"><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span></div>
-                <div class="ms-3"><h3 class="text-gray-800 font-semibold dark:text-white">Success</h3><p class="mt-2 text-sm text-gray-700 dark:text-gray-400"><?php echo $das;?></p></div>
-                <div class="ps-3 ms-auto"><div class="-mx-1.5 -my-1.5"><button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-50 focus:ring-teal-600 dark:bg-transparent dark:hover:bg-teal-800/50 dark:text-teal-600" data-hs-remove-element="[role=alert]"><span class="sr-only">Dismiss</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div></div>
-            </div>
-        </div>
-        <?php endif; ?>
-            <!-- FALSE -->
-      
-        <!-- Card: Register Share Holder Form -->
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-4 md:p-6">
-                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
-                    Register New Customer
-                </h3>
-				<?php
-// Check if $sponser variable exists, is an object, and has the property 'sp_id'
-$hasLoan = isset($loan) && is_object($loan) && !empty($loan->loan_id);
-
-
-// If $hasSponser is true (meaning sponsor exists with 'sp_id'), set $action to update URL,
-// otherwise set $action to create URL.
-
-
-	$action = $hasLoan
-    ? "oficer/modify_loanapplication/{$customer->customer_id}"
-    : "admin/create_loanapplication/{$customer->customer_id}";
-?>
-
+<?php include('incs/header_1.php'); ?>
+<?php include('incs/side_1.php'); ?>
+<?php include('incs/subheader.php'); ?>
 	
-
-<?php echo form_open($action); ?>
-
-
-               
-
-<div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
-
-    <!-- Loan Product -->
-    <div class="sm:col-span-4">
-        <label for="branchSelect" class="block text-sm font-medium mb-2 dark:text-gray-300">* Loan Product Name:</label>
-        <select id="branchSelect" name="category_id" class="py-3 px-4 pe-9 block w-full bg-cyan-600 border-gray-200 rounded-lg text-sm select2">
-            <option value="">Select Loan Product</option>
-            <?php foreach ($loan_category as $loan_categorys): ?>
-                <option value="<?php echo $loan_categorys->category_id; ?>" <?php echo set_select('category_id', $loan_categorys->category_id); ?>>
-                    <?php echo $loan_categorys->loan_name; ?> / <?php echo $loan_categorys->loan_price; ?> - <?php echo $loan_categorys->loan_perday; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <?php echo form_error("category_id", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-
-
-    <!-- Hidden Inputs -->
-    <input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
-    <input type="hidden" name="customer_id" value="<?php echo isset($customer) && is_object($customer) ? $customer->customer_id : ''; ?>">
-
-    <input type="hidden" name="blanch_id" value="<?php echo isset($customer) && is_object($customer) ? $customer->blanch_id : ''; ?>">
-	<input type="hidden" name="empl_id" value="<?php echo $customer->empl_id; ?>">
-
-    <input type="hidden" name="fee_status" value="NO">
-
-    <!-- Loan Amount -->
-    <div class="sm:col-span-4">
-        <label for="how_loan" class="block text-sm font-medium mb-2 dark:text-gray-300">* Loan Amount:</label>
-        <input type="number" id="how_loan" name="how_loan" placeholder="Kiasi cha mkopo kinachoombwa bila riba" value="<?php echo set_value('how_loan'); ?>" autocomplete="off" required class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
-        <?php echo form_error("how_loan", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <!-- Loan Duration -->
-    <div class="sm:col-span-4">
-        <label for="durationselect" class="block text-sm font-medium mb-2 dark:text-gray-300">* Loan Duration:</label>
-        <select id="durationselect" name="day" class="py-3 px-4 pe-9 block w-full bg-cyan-600 border-gray-200 rounded-lg text-sm select2">
-            <option value="">Loan Duration</option>
-            <option value="1" <?php echo set_select('day', '1'); ?>>Siku</option>
-            <option value="7" <?php echo set_select('day', '7'); ?>>Week</option>
-            <option value="30" <?php echo set_select('day', '30'); ?>>Mwezi</option>
-        </select>
-        <?php echo form_error("day", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <div class="sm:col-span-4">
-        <label for="session" class="block text-sm font-medium mb-2 dark:text-gray-300">* Number of Repayment:</label>
-        <input type="number" id="session" name="session" placeholder="andika idadi jumla ya marejesho" value="<?php echo set_value('session'); ?>" autocomplete="off" required class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
-        <?php echo form_error("session", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <div class="sm:col-span-4">
-        <label for="reason" class="block text-sm font-medium mb-2 dark:text-gray-300">* Biashara/Kazi ya mkopoji:</label>
-        <input type="text" id="reason" name="reason" placeholder="andika idadi jumla ya marejesho" value="<?php echo set_value('reason'); ?>" autocomplete="off" required class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
-        <?php echo form_error("reason", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <!-- Interest Formular -->
-    <div class="sm:col-span-4">
-        <label for="rateSelect" class="block text-sm font-medium mb-2 dark:text-gray-300">* Select Interest Formular:</label>
-        <select id="rateSelect" name="rate" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
-            <option value="">Select interest Formular</option>
-            <?php foreach ($formular as $formulars): ?>
-                <option value="<?php echo $formulars->formular_name; ?>" <?php echo set_select('rate', $formulars->formular_name); ?>>
-                    <?php 
-                        if ($formulars->formular_name == 'SIMPLE') echo 'SIMPLE FORMULAR';
-                        elseif ($formulars->formular_name == 'FLAT RATE') echo 'FLAT RATE FORMULAR';
-                        elseif ($formulars->formular_name == 'REDUCING') echo 'REDUCING FORMULAR';
-                    ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <?php echo form_error("rate", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-</div>
-
-<div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-    <div class="flex justify-center gap-x-2">
-        <button type="submit" class="py-2 px-4 btn-primary-sm bg-cyan-800 hover:bg-cyan-700 text-white">Next</button>
-    </div>
-</div>
-<?php echo form_close(); ?>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ========== END MAIN CONTENT BODY ========== -->
-
-<?php
-include_once APPPATH . "views/partials/footer.php";
-?>
-
-<?php // Script for cmd+a fix for DataTables search input (if used) ?>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Include Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-<!-- Include Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style>
-.select2-container--default .select2-selection--single {
-    background-color: #1f2937;
-    border: 1px solid #374151;
-    border-radius: 0.5rem;
-    padding: 0.75rem 2.5rem 0.75rem 1rem;
-    height: auto;
-    color: #06b6d4; 
-    font-size: 0.875rem;
-    position: relative;
+    .select2-container .select2-selection--single{
+    height:37px !important;
 }
-.select2-selection__rendered,
-.select2-selection__clear,
-.select2-selection__arrow {
-    color: #d1d5db;
+.select2-container--default .select2-selection--single{
+         border: 1px solid #ccc !important; 
+     border-radius: 0px !important; 
 }
-.select2-selection__arrow {
-    right: 1rem;
-    top: 0;
-    width: 1.5rem;
-    position: absolute;
-}
-.select2-selection__clear {
-    right: 2.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    position: absolute;
-}
-.custom-select2-dropdown {
-    background-color: #1f2937;
-    color: #d1d5db;
-    border: 1px solid #374151;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-}
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #ffffff !important; /* Force white text */
-}
-.custom-select2-dropdown .select2-results__option--highlighted {
-    background-color: #06b6d4 !important; /* Tailwind cyan-400 */
-    color: #ffffff !important;
-}
+</style>	
 
-/* White text in the dropdown input if searchable */
-.select2-search__field {
-    color: #ffffff !important;
-    background-color: #1f2937 !important; /* match dark bg */
-    border: 1px solid #374151;
-}
-.custom-select2-dropdown .select2-results__option--highlighted {
-    background-color: #06b6d4;
-    color: #ffffff;
-}
-.custom-select2-container { margin: 0; }
-</style>
+
+<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">					
+<!-- begin:: Subheader -->
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+   
+</div>
+<!-- end:: Subheader -->										
+<!-- begin:: Content -->
+<!-- begin:: Content -->
+
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+	<!--begin::Portlet-->
+	<?php if ($das = $this->session->flashdata('massage')): ?>
+	  <div class="alert alert-success fade show alert-success" role="alert">
+                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                            <div class="alert-text"><?php echo $das;?></div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                </button>
+                            </div>
+                  </div>
+         <?php endif; ?>
+
+         <?php if ($das = $this->session->flashdata('mass')): ?>
+	  <div class="alert alert-danger fade show alert-danger" role="alert">
+                            <div class="alert-icon"><i class="flaticon2-delete"></i></div>
+                            <div class="alert-text"><?php echo $das;?></div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                </button>
+                            </div>
+                  </div>
+         <?php endif; ?>
+       
+    <?php if (@$loan_option->loan_status == 'done') {
+     ?>     
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+					Loan Application Form
+					</h3>
+				</div>
+			</div>
+			<!--begin::Form-->
+			<!-- <form method="post" action="ss" class="kt-form kt-form--label-right" id="kt_form_2"> -->
+				<?php echo form_open("oficer/create_loanapplication/{$customer->customer_id}",['class'=>'kt-form kt-form--label-right','novalidate']); ?>
+				<div class="kt-portlet__body">
+					<div class="kt-section">
+						<div class="kt-section__content">
+							<div class="form-group form-group-last row">
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label">*Loan category:</label>
+								      <select type="number" name="category_id" class="form-control select2" required>
+								      	<option value="">Select Loan Category</option>
+								      	<?php foreach ($loan_category as $loan_categorys): ?>
+								      	<option value="<?php echo $loan_categorys->category_id; ?>"><?php echo $loan_categorys->loan_name; ?> / <?php echo $loan_categorys->loan_price; ?> - <?php echo $loan_categorys->loan_perday; ?></option>
+								      	<?php endforeach; ?>
+								      </select>
+									</div>
+
+									
+									<div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Group:</label>
+										<select type="number" name="group_id" class="form-control select2">
+											<option value="">Select Group</option>
+											<?php foreach ($group as $groups): ?>
+											<option value="<?php echo $groups->group_id; ?>"><?php echo $groups->group_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									 <div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Employee:</label>
+										<select type="number" name="empl_id" class="form-control select2" required>
+											<option value="<?php echo $customer->empl_id; ?>"><?php echo $customer->empl_name; ?></option>
+											<?php foreach ($empl_blanch as $empl_blanchs): ?>
+											<option value="<?php echo $empl_blanchs->empl_id; ?>"><?php echo $empl_blanchs->empl_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div> 
+									<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
+									<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
+									<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
+
+									<div class="col-lg-2 form-group-sub">
+										<label  class="form-control-label">*Loan Amount Applied:</label>
+										<input type="number" name="how_loan" placeholder="Loan Amount Applied" autocomplete="off" class="form-control input-sm" required>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Loan Duration:</label>
+									<select type="number" name="day" class="form-control select2 input-sm" required>
+									<option value="">Select Duration</option>
+									<option value="1">Daily</option>
+									<option value="7">Weekely</option>
+									<?php 
+									 $month = date("m");
+                                     $year = date("Y");
+                                     $d=cal_days_in_month(CAL_GREGORIAN,$month,$year);
+									 ?>
+									<option value="30">Monthly</option>
+									
+								</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Number of Repayments:</label>
+								<input type="number" name="session" placeholder="Enter Number of Repayments" autocomplete="off" class="form-control input-sm" required>
+									</div>
+                                 
+                                 <div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Interest Formular:</b></label>
+										<select type="number" name="rate" class="form-control select2" required>
+											<option value="">Select interest Formular</option>
+											<?php foreach ($formular as $formulars): ?>	
+											<option value="<?php echo $formulars->formular_name; ?>"><?php if ($formulars->formular_name == 'SIMPLE') {
+												 ?>
+												 SIMPLE FORMULAR
+												<?php }elseif($formulars->formular_name == 'FLAT RATE'){ ?>
+                                                 FLAT RATE FORMULAR
+													<?php }elseif ($formulars->formular_name == 'REDUCING') {
+													 ?>
+													 REDUCING FORMULAR
+													 <?php } ?>
+													 	
+													 </option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Does Loan is Deducted From Loan Fee?:</b></label>
+										<select type="number" name="fee_status" class="form-control select2" required>
+											<option value="">Select</option>
+											<?php if ($loan_fee_category->fee_category == 'GENERAL') {
+											 ?>
+											<option value="YES">YES</option>
+											<option value="NO">NO</option>
+											<?php }elseif ($loan_fee_category->fee_category == 'LOAN PRODUCT') {
+											 ?>
+											 <option value="NO">YES</option>
+											 <?php }else{ ?>
+											 	<?php } ?>
+										 </select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Reason of Applying Loan:</label>
+								<input type="text" name="reason" autocomplete="off"  class="form-control input-sm" placeholder="Reason of Applying Loan:" required>
+									</div> 
+						
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="kt-portlet__foot">
+					<div class="kt-form__actions">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="text-center">
+								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Next</button>
+								<button type="reset" class="btn btn-danger btn-elevate btn-pill btn-sm">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php echo form_close(); ?>
+			<!--end::Form-->
+		</div>
+		<!--end::Portlet-->
+	</div>
+</div>
+<?php }elseif(@$loan_option == FALSE){ ?>
+    <div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+					Loan Application Form
+					</h3>
+				</div>
+			</div>
+			<!--begin::Form-->
+			<!-- <form method="post" action="ss" class="kt-form kt-form--label-right" id="kt_form_2"> -->
+				<?php echo form_open("oficer/create_loanapplication/{$customer->customer_id}",['class'=>'kt-form kt-form--label-right','novalidate']); ?>
+				<div class="kt-portlet__body">
+					<div class="kt-section">
+						<div class="kt-section__content">
+							<div class="form-group form-group-last row">
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label">*Loan category:</label>
+								      <select type="number" name="category_id" class="form-control select2" required>
+								      	<option value="">Select Loan Category</option>
+								      	<?php foreach ($loan_category as $loan_categorys): ?>
+								      	<option value="<?php echo $loan_categorys->category_id; ?>"><?php echo $loan_categorys->loan_name; ?> / <?php echo $loan_categorys->loan_price; ?> - <?php echo $loan_categorys->loan_perday; ?></option>
+								      	<?php endforeach; ?>
+								      </select>
+									</div>
+
+									
+									<div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Group:</label>
+										<select type="number" name="group_id" class="form-control select2">
+											<option value="">Select Group</option>
+											<?php foreach ($group as $groups): ?>
+											<option value="<?php echo $groups->group_id; ?>"><?php echo $groups->group_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									 <div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Employee:</label>
+										<select type="number" name="empl_id" class="form-control select2" required>
+											<option value="<?php echo $customer->empl_id; ?>"><?php echo $customer->empl_name; ?></option>
+											<?php foreach ($empl_blanch as $empl_blanchs): ?>
+											<option value="<?php echo $empl_blanchs->empl_id; ?>"><?php echo $empl_blanchs->empl_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+
+									<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
+									<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
+									<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
+									<div class="col-lg-2 form-group-sub">
+										<label  class="form-control-label">*Loan Amount Applied:</label>
+										<input type="number" name="how_loan" placeholder="Loan Amount Applied" autocomplete="off" class="form-control input-sm" required>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Loan Duration:</label>
+									<select type="number" name="day" class="form-control select2 input-sm" required>
+									<option value="">Select Duration</option>
+									<option value="1">Daily</option>
+									<option value="7">Weekely</option>
+									<?php 
+									 $month = date("m");
+                                     $year = date("Y");
+                                     $d = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+									 ?>
+									<option value="30">Monthly</option>
+									
+								</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Number of Repayments:</label>
+								<input type="number" name="session" placeholder="Enter Number of Repayments" autocomplete="off" class="form-control input-sm" required>
+									</div>
+
+									  <div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Interest Formular:</b></label>
+										<select type="number" name="rate" class="form-control select2" required>
+											<option value="">Select interest Formular</option>
+											<?php foreach ($formular as $formulars): ?>	
+											<option value="<?php echo $formulars->formular_name; ?>"><?php if ($formulars->formular_name == 'SIMPLE') {
+												 ?>
+												 SIMPLE FORMULAR
+												<?php }elseif($formulars->formular_name == 'FLAT RATE'){ ?>
+                                                 FLAT RATE FORMULAR
+													<?php }elseif ($formulars->formular_name == 'REDUCING') {
+													 ?>
+													 REDUCING FORMULAR
+													 <?php } ?>
+													 	
+													 </option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Does Loan is Deducted From Loan Fee?:</b></label>
+										<select type="number" name="fee_status" class="form-control select2" required>
+											<option value="">Select</option>
+											
+											<?php if ($loan_fee_category->fee_category == 'GENERAL') {
+											 ?>
+											<option value="YES">YES</option>
+											<option value="NO">NO</option>
+											<?php }elseif ($loan_fee_category->fee_category == 'LOAN PRODUCT') {
+											 ?>
+											 <option value="NO">YES</option>
+											 <?php }else{ ?>
+											 	<?php } ?>
+											
+										</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Reason of Applying Loan:</label>
+								<input type="text" name="reason" autocomplete="off"  class="form-control input-sm" placeholder="Reason of Applying Loan:" required>
+									</div> 
+						
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="kt-portlet__foot">
+					<div class="kt-form__actions">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="text-center">
+								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Next</button>
+								<button type="reset" class="btn btn-danger btn-elevate btn-pill btn-sm">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php echo form_close(); ?>
+			<!--end::Form-->
+		</div>
+		<!--end::Portlet-->
+	</div>
+</div>
+
+<?php }elseif($loan_option->loan_status == 'open'){ ?>
+
+     <div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+					Loan Application Form
+					</h3>
+				</div>
+			</div>
+			<!--begin::Form-->
+			<!-- <form method="post" action="ss" class="kt-form kt-form--label-right" id="kt_form_2"> -->
+				<?php echo form_open("oficer/modify_loanapplication/{$customer->customer_id}/{$skip_next->loan_id}",['class'=>'kt-form kt-form--label-right','novalidate']); ?>
+				<div class="kt-portlet__body">
+					<div class="kt-section">
+						<div class="kt-section__content">
+							<div class="form-group form-group-last row">
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label">*Loan category:</label>
+								      <select type="number" name="category_id" class="form-control select2" required>
+								      	<option value="<?php echo $skip_next->category_id; ?>"><?php echo $skip_next->loan_name; ?> / <?php echo $skip_next->loan_price; ?> -  <?php echo $skip_next->loan_perday; ?></option>
+								      	<?php foreach ($loan_category as $loan_categorys): ?>
+								      	<option value="<?php echo $loan_categorys->category_id; ?>"><?php echo $loan_categorys->loan_name; ?> / <?php echo $loan_categorys->loan_price; ?> - <?php echo $loan_categorys->loan_perday; ?></option>
+								      	<?php endforeach; ?>
+								      </select>
+									</div>
+
+									
+									<div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Group:</label>
+										<select type="number" name="group_id" class="form-control select2">
+											<option value="">Select Group</option>
+											<?php foreach ($group as $groups): ?>
+											<option value="<?php echo $groups->group_id; ?>"><?php echo $groups->group_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									 <div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Employee:</label>
+										<select type="number" name="empl_id" class="form-control select2" required>
+											<option value="<?php echo $customer->empl_id; ?>"><?php echo $customer->empl_name; ?></option>
+											<?php foreach ($empl_blanch as $empl_blanchs): ?>
+											<option value="<?php echo $empl_blanchs->empl_id; ?>"><?php echo $empl_blanchs->empl_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+
+									<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
+
+									<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
+									<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
+									<input type="hidden" name="loan_status" value="open">
+
+									<div class="col-lg-2 form-group-sub">
+										<label  class="form-control-label">*Loan Amount Applied:</label>
+										<input type="number" name="how_loan" value="<?php echo $skip_next->how_loan; ?>" placeholder="Loan Amount Applied" autocomplete="off" class="form-control input-sm" required>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Loan Duration:</label>
+									<select type="number" name="day" class="form-control select2 input-sm" required>
+									<option value="<?php echo $skip_next->day; ?>">
+										<?php if ($skip_next->day == '1') {
+											echo "Daily";
+										  ?>
+										<?php }elseif($skip_next->day == '7'){
+											 echo "Weekly";
+										 ?>
+										 <?php }elseif($skip_next->day == '30' || $skip_next->day == '31' || $skip_next->day == '28' || $skip_next->day == '29'){
+										 	echo "Monthly";
+										  ?>
+											<?php } ?>
+										</option>
+									<option value="1">Daily</option>
+									<option value="7">Weekly</option>
+									<?php 
+									 $month = date("m");
+                                     $year = date("Y");
+                                     $d = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+									 ?>
+									<option value="30">Monthly</option>
+									
+								</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Number of Repayments:</label>
+								<input type="number" name="session" value="<?php echo $skip_next->session; ?>" placeholder="Enter Number of Repayments" autocomplete="off" class="form-control input-sm" required>
+									</div>
+
+									  <div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Interest Formular:</b></label>
+										<select type="number" name="rate"  class="form-control select2" required>
+											<option value="<?php echo $skip_next->rate; ?>"><?php if ($skip_next->rate == 'SIMPLE') {
+												 ?>
+												<?php echo "SIMPLE FORMULAR"; ?>
+												<?php }elseif ($skip_next->rate == 'FLAT RATE') {
+													echo "FLAT RATE FORMULAR";
+												 ?>
+												 <?php }elseif($skip_next->rate == 'REDUCING'){ ?>
+												 	<?php echo "REDUCING FORMULAR"; ?>
+												 <?php } ?>
+												 </option>
+											<?php foreach ($formular as $formulars): ?>	
+											<option value="<?php echo $formulars->formular_name; ?>"><?php if ($formulars->formular_name == 'SIMPLE') {
+												 ?>
+												 SIMPLE FORMULAR
+												<?php }elseif($formulars->formular_name == 'FLAT RATE'){ ?>
+                                                 FLAT RATE FORMULAR
+													<?php }elseif ($formulars->formular_name == 'REDUCING') {
+													 ?>
+													 REDUCING FORMULAR
+													 <?php } ?>
+													 	
+													 </option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Does Loan is Deducted From Loan Fee?:</b></label>
+										<select type="number" name="fee_status" class="form-control select2" required>
+											<option value="<?php echo $skip_next->fee_status;?>"><?php echo $skip_next->fee_status;?></option>
+											
+											<?php if ($loan_fee_category->fee_category == 'GENERAL') {
+											 ?>
+											<option value="YES">YES</option>
+											<option value="NO">NO</option>
+											<?php }elseif ($loan_fee_category->fee_category == 'LOAN PRODUCT') {
+											 ?>
+											 <option value="NO">YES</option>
+											 <?php }else{ ?>
+											 	<?php } ?>
+											
+										</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Reason of Applying Loan:</label>
+								<input type="text" name="reason" value="<?php echo $skip_next->reason; ?>" autocomplete="off"  class="form-control input-sm" placeholder="Reason of Applying Loan:" required>
+									</div> 
+						
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="kt-portlet__foot">
+					<div class="kt-form__actions">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="text-center">
+								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Update</button>
+								<a href="<?php echo base_url("oficer/collelateral_session/{$skip_next->loan_id}") ?>" class="btn btn-info btn-elevate btn-pill btn-sm">Skip</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php echo form_close(); ?>
+			<!--end::Form-->
+		</div>
+		<!--end::Portlet-->
+	</div>
+</div>
+
+	<?php }elseif(@$reject_skip->loan_status == 'reject'){ ?>
+	     <div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+					Loan Application Form
+					</h3>
+				</div>
+			</div>
+			<!--begin::Form-->
+			<!-- <form method="post" action="ss" class="kt-form kt-form--label-right" id="kt_form_2"> -->
+				<?php echo form_open("oficer/modify_loanapplication/{$customer->customer_id}/{$reject_skip->loan_id}",['class'=>'kt-form kt-form--label-right','novalidate']); ?>
+				<div class="kt-portlet__body">
+					<div class="kt-section">
+						<div class="kt-section__content">
+							<div class="form-group form-group-last row">
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label">*Loan category:</label>
+								      <select type="number" name="category_id" class="form-control select2" required>
+								      	<option value="<?php echo $reject_skip->category_id; ?>"><?php echo $reject_skip->loan_name; ?> / <?php echo $reject_skip->loan_price; ?> -  <?php echo $reject_skip->loan_perday; ?></option>
+								      	<?php foreach ($loan_category as $loan_categorys): ?>
+								      	<option value="<?php echo $loan_categorys->category_id; ?>"><?php echo $loan_categorys->loan_name; ?> / <?php echo $loan_categorys->loan_price; ?> - <?php echo $loan_categorys->loan_perday; ?></option>
+								      	<?php endforeach; ?>
+								      </select>
+									</div>
+
+									
+									<div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Group:</label>
+										<select type="number" name="group_id" class="form-control select2">
+											<option value="">Select Group</option>
+											<?php foreach ($group as $groups): ?>
+											<option value="<?php echo $groups->group_id; ?>"><?php echo $groups->group_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									 <div class="col-lg-2 form-group-sub">
+										<label class="form-control-label">*Employee:</label>
+										<select type="number" name="empl_id" class="form-control select2" required>
+											<option value="<?php echo $customer->empl_id; ?>"><?php echo $customer->empl_name; ?></option>
+											<?php foreach ($empl_blanch as $empl_blanchs): ?>
+											<option value="<?php echo $empl_blanchs->empl_id; ?>"><?php echo $empl_blanchs->empl_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+
+									<input type="hidden" name="comp_id" value="<?php echo $empl_data->comp_id; ?>">
+
+									<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
+									<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
+									<input type="hidden" name="loan_status" value="open">
+
+									<div class="col-lg-2 form-group-sub">
+										<label  class="form-control-label">*Loan Amount Applied:</label>
+										<input type="number" name="how_loan" value="<?php echo $reject_skip->how_loan; ?>" placeholder="Loan Amount Applied" autocomplete="off" class="form-control input-sm" required>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Loan Duration:</label>
+									<select type="number" name="day" class="form-control select2 input-sm" required>
+									<option value="<?php echo $reject_skip->day; ?>">
+										<?php if ($reject_skip->day == '1') {
+											echo "Daily";
+										  ?>
+										<?php }elseif($reject_skip->day == '7'){
+											 echo "Weekly";
+										 ?>
+										 <?php }elseif($reject_skip->day == '30' || $reject_skip->day == '31' || $reject_skip->day == '28' || $reject_skip->day == '29'){
+										 	echo "Monthly";
+										  ?>
+											<?php } ?>
+										</option>
+									<option value="1">Daily</option>
+									<option value="7">Weekly</option>
+									<?php 
+									 $month = date("m");
+                                     $year = date("Y");
+                                     $d = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+									 ?>
+									<option value="30">Monthly</option>
+									
+								</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Number of Repayments:</label>
+								<input type="number" name="session" value="<?php echo $reject_skip->session; ?>" placeholder="Enter Number of Repayments" autocomplete="off" class="form-control input-sm" required>
+									</div>
+
+									  <div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Interest Formular:</b></label>
+										<select type="number" name="rate"  class="form-control select2" required>
+											<option value="<?php echo $reject_skip->rate; ?>"><?php if ($reject_skip->rate == 'SIMPLE') {
+												 ?>
+												<?php echo "SIMPLE FORMULAR"; ?>
+												<?php }elseif ($reject_skip->rate == 'FLAT RATE') {
+													echo "FLAT RATE FORMULAR";
+												 ?>
+												 <?php }elseif($reject_skip->rate == 'REDUCING'){ ?>
+												 	<?php echo "REDUCING FORMULAR"; ?>
+												 <?php } ?>
+												 </option>
+											<?php foreach ($formular as $formulars): ?>	
+											<option value="<?php echo $formulars->formular_name; ?>"><?php if ($formulars->formular_name == 'SIMPLE') {
+												 ?>
+												 SIMPLE FORMULAR
+												<?php }elseif($formulars->formular_name == 'FLAT RATE'){ ?>
+                                                 FLAT RATE FORMULAR
+													<?php }elseif ($formulars->formular_name == 'REDUCING') {
+													 ?>
+													 REDUCING FORMULAR
+													 <?php } ?>
+													 	
+													 </option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									<div class="col-lg-3 form-group-sub">
+										<label class="form-control-label"><b>*Does Loan is Deducted From Loan Fee?:</b></label>
+										<select type="number" name="fee_status" class="form-control" required>
+											<option value="<?php echo $reject_skip->fee_status;?>"><?php echo $reject_skip->fee_status;?></option>
+											
+											<?php if ($loan_fee_category->fee_category == 'GENERAL') {
+											 ?>
+											<option value="YES">YES</option>
+											<option value="NO">NO</option>
+											<?php }elseif ($loan_fee_category->fee_category == 'LOAN PRODUCT') {
+											 ?>
+											 <option value="NO">YES</option>
+											 <?php }else{ ?>
+											 	<?php } ?>
+											
+										</select>
+									</div>
+
+									<div class="col-lg-3 form-group-sub">
+										<label  class="form-control-label">*Reason of Applying Loan:</label>
+								<input type="text" name="reason" value="<?php echo $reject_skip->reason; ?>" autocomplete="off"  class="form-control input-sm" placeholder="Reason of Applying Loan:" required>
+									</div> 
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="kt-portlet__foot">
+					<div class="kt-form__actions">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="text-center">
+								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Update</button>
+								<a href="<?php echo base_url("oficer/collelateral_session/{$reject_skip->loan_id}") ?>" class="btn btn-info btn-elevate btn-pill btn-sm">Skip</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php echo form_close(); ?>
+			<!--end::Form-->
+		</div>
+		<!--end::Portlet-->
+	</div>
+</div>	
+	<?php }else{ ?>
+ <div class="text-center">
+    <h1>
+        <br><br><br>
+OOPS!  Loan Account is Claimed</h1>
+      <a href="<?php echo base_url("oficer/loan_application"); ?>" class="btn btn-info">Back</a>
+    </div>
+		<?php } ?>
+
+<!-- end:: Content -->
+<!-- end:: Content -->
+				</div>				
+				
+<?php include('incs/footer_1.php') ?>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        HSStaticMethods.autoInit(); // This is required to initialize all hs-select dropdowns
-    });
+    $('.select2').select2();
 </script>
-<script>
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const inputs = document.querySelectorAll('input[data-hs-datatable-search]');
-    inputs.forEach((input) => {
-      input.addEventListener('keydown', function (evt) {
-        if ((evt.metaKey || evt.ctrlKey) && (evt.key === 'a' || evt.key === 'A')) {
-          this.select();
-        }
-      });
-    });
-    // HSStaticMethods.autoInit(['select']); // If Preline selects need explicit init
-  }, 500);
-});
-</script>
-
-<script>
-$(document).ready(function () {
-    const selectConfig = {
-        placeholder: "Select",
-        allowClear: true,
-        width: '100%',
-        dropdownCssClass: 'custom-select2-dropdown',
-        containerCssClass: 'custom-select2-container'
-    };
-	
-    $('#branchSelect').select2({...selectConfig, placeholder: "Select Product Name"});
-    $('#employeeSelect').select2({...selectConfig, placeholder: "Select Group Name"});
-	$('#StaffSelect').select2({...selectConfig, placeholder: "Select Select Name"});
-    rateSelect = $('#rateSelect').select2({...selectConfig, placeholder: "Select Interest Formular"});
-
-	$('#durationselect').select2({...selectConfig, placeholder: "Chagua Aina Ya marejesho"});
-    $('#branchSelect').on('change', function () {
-        const branchId = $(this).val();
-
-        $.post('fetch_employee_blanch', { blanch_id: branchId }, function (data) {
-            const employeeSelect = $('#employeeSelect');
-            employeeSelect.html(data).select2({...selectConfig, placeholder: "Select Employee"});
-
-            // If using Preline's hsSelect
-            const customSelect = $('[data-hs-select]');
-            if (customSelect.length) {
-                customSelect.html(data);
-                customSelect.hsSelect();
-            }
-        }).fail(function (xhr, status, error) {
-            console.error('AJAX error:', status, error);
-        });
-    });
-});
-
-// Age Calculation
-
-</script>
-
-
-
-
-
-
 

@@ -1,191 +1,485 @@
+<?php include('incs/header_1.php'); ?>
+<?php include('incs/side_1.php'); ?>
+<?php include('incs/subheader.php'); ?>
+	
 
-<?php
-include_once APPPATH . "views/partials/officerheader.php";
-?>
-
-<!-- ========== MAIN CONTENT BODY ========== -->
-<div class="w-full lg:ps-64">
-    <div class="p-4 sm:p-6 space-y-6">
-
-        <?php if ($das = $this->session->flashdata('massage')): ?>
-        <div class="bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert">
-            <div class="flex">
-                <div class="flex-shrink-0"><span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-500"><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span></div>
-                <div class="ms-3"><h3 class="text-gray-800 font-semibold dark:text-white">Success</h3><p class="mt-2 text-sm text-gray-700 dark:text-gray-400"><?php echo $das;?></p></div>
-                <div class="ps-3 ms-auto"><button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-50 focus:ring-teal-600 dark:bg-transparent dark:hover:bg-teal-800/50 dark:text-teal-600" data-hs-remove-element="[role=alert]"><span class="sr-only">Dismiss</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div>
-            </div>
-        </div>
-        <?php endif; ?>
-
-        <div class="bg-gray-100">
-    <div class="w-full bg-cyan-600 text-white">
-        <div class="flex flex-col max-w-screen-xl px-4 mx-auto md:flex-row md:justify-between md:px-6 lg:px-8">
-            <div class="p-4 flex flex-row items-center justify-between">
-                <a href="#" class="text-lg font-semibold tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline">
-                    Customer profile
-                </a>
-            </div>
-        </div>
-    </div>
+<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">					
+<!-- begin:: Subheader -->
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+   
 </div>
+<!-- end:: Subheader -->										
+<!-- begin:: Content -->
+<!-- begin:: Content -->
+
+          <?php //foreach ($customer_profile as $customer_profiles): ?>
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+	<!--begin::Portlet-->
+	<?php if ($das = $this->session->flashdata('massage')): ?>
+	  <div class="alert alert-success fade show alert-success" role="alert">
+                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                            <div class="alert-text"><?php echo $das;?></div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                </button>
+                            </div>
+                  </div>
+         <?php endif; ?>
 
 
-    <div class="container mx-auto my-3 p-4">
-        <div class="md:flex no-wrap md:-mx-2">
-            <!-- Left Side -->
-            <div class="w-full md:w-3/12 md:mx-2">
-                <div class="bg-white p-3 border-t-4 border-green-400">
-                    <div class="image overflow-hidden">
-                        <img class="h-auto w-full mx-auto" src="<?= base_url('assets/img/customer21.png') ?>" alt="Customer Image">
+<?php if(@$customer->customer_code || @$customer->comp_id == TRUE){ ?>
+<div class="row">
+    <div class="col-xl-12">
+        <!--begin:: Widgets/Applications/User/Profile3-->
+<div class="kt-portlet kt-portlet--height-fluid">
+    <div class="kt-portlet__body">
+        <div class="kt-widget kt-widget--user-profile-3">
+            <div class="kt-widget__top">
+                <div class="kt-widget__media kt-hidden-">
+                	<?php if ($customer->passport == TRUE) {
+                	 ?>
+                   <img src="<?php echo base_url();?>assets/img/male.jpeg" alt="passport" style="width: 220px; height: 180px;">
+                <?php }else{ ?>
+
+                    <img src="<?php echo base_url();?>assets/img/male.jpeg" alt="passport" style="width: 220px; height: 180px;">
+                	<?php } ?>
+                </div>
+
+                <style>
+                	    .c {
+               text-transform: uppercase;
+                 }
+                
+                </style>
+                
+                <div class="kt-widget__content">
+                    <div class="kt-widget__head">
+                        <a href="javascript:;" class="kt-widget__username">
+                           <b class="a"><?php echo $customer->f_name ?> <?php echo $customer->m_name ?> <?php echo $customer->l_name ?> <?php //echo $customer->account_name; ?> </b>   
+                            <i class=""></i>                       
+                        </a>
+
+                        <div class="kt-widget__action">
+                         <div class="">
+                         	<?php if ($customer->signature == TRUE) {
+                         	 ?>
+                   <img src="<?php echo base_url();?>assets/img/sig.jpg" alt="passport" style="width: 300px; height: 180px;">
+                <?php }else{ ?>
+                	 <img src="<?php echo base_url();?>assets/img/sig.jpg" alt="passport" style="width: 200px; height: 180px;">
+                	<?php } ?>
+                        </div>
+                        </div>
                     </div>
-                    <h1 class="text-green-500 font-bold text-xl leading-8 my-1 dark:text-neutral-900 text-center">
-                        <?= strtoupper($customer->f_name) . " " . strtoupper(substr($customer->m_name, 0, 1)) . " " . strtoupper($customer->l_name) ?>
-                    </h1>
-                    <h1 class="text-center font-semibold"><?= $customer->phone_no ;?></h1>
-                    <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-                        <li class="flex items-center py-3">
-                            <span>Status</span>
-                            <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
-                        </li>
-                        <li class="flex items-center py-3">
-                            <span>Member since</span>
-                            <span class="ml-auto"><?= date('Y-m-d', strtotime($customer->customer_day)); ?></span>
-                        </li>
-                    </ul>
+
+                   <!--  <div class="kt-widget__subhead">
+                        <a href="#"><i class="flaticon2-new-email"></i>jason@siastudio.com</a>
+                        <a href="#"><i class="flaticon2-calendar-3"></i>PR Manager </a>
+                        <a href="#"><i class="flaticon2-placeholder"></i>Melbourne</a>
+                    </div> -->
+
+      
                 </div>
             </div>
+ 
 
-            <!-- Right Side -->
-            <div class="w-full md:w-9/12 md:mx-2 mt-4 md:mt-0">
-                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">Guarantors</h2>
 
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white border border-gray-200">
-                        <thead class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                            <tr>
-                                <th class="py-3 px-6 text-left">#</th>
-                                <th class="py-3 px-6 text-left">Full Name</th>
-                                <th class="py-3 px-6 text-left">Mobile</th>
-                                <th class="py-3 px-6 text-left">Email</th>
-                                <th class="py-3 px-6 text-left">Sex</th>
-                                <th class="py-3 px-6 text-left">DOB</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-gray-700 text-sm">
-                            <?php if (isset($share) && count($share) > 0): ?>
-                                <?php foreach ($share as $i => $sh): ?>
-                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                        <td class="py-3 px-6"><?= $i + 1 ?></td>
-                                        <td class="py-3 px-6">jju</td>
-                                        <td class="py-3 px-6">jju</td>
-                                        <td class="py-3 px-6">jjuuuik</td>
-                                        <td class="py-3 px-6">llkk</td>
-                                        <td class="py-3 px-6">890000</td>
+<div class="kt-portlet__body">
+		<!--begin: Datatable -->
+        </div>
+		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
+									     <thead>
+			  						          <tr>
+		  							    
+		  							    <th><b>Full name</b></th>
+                                        <th><b>Phone Number</b></th>
+										
+										
+										<th><b>Branch</b></th>
+                                      	
+				  						</tr>
+						                  </thead>
+			
+								    <tbody>
+									          <tr>
+				  					
+				  					<td><?php echo $customer->f_name ?> <?php echo $customer->m_name ?> <?php echo $customer->l_name ?></td>
+				  					<td><?php echo $customer->phone_no; ?></td>
+				  					
+				  					<td><?php echo $customer->blanch_name; ?></td>
+                                   									  							
+                                        </tr>
+	                                </tbody>
+                          </table>
+	</div>
+         
+        </div>
+
+    </div>
+</div>
+
+   </div>
+
+    <?php if(@$sponser->customer_id == TRUE){ ?>
+
+   <div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand flaticon-list-2"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                Guarantors  List
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+    <div class="kt-portlet__head-actions">
+
+    
+        <!-- &nbsp;
+        <a href="#" class="btn btn-brand btn-elevate btn-icon-sm">
+            <i class="la la-plus"></i>
+            New Record
+        </a> -->
+    </div>  
+</div>      </div>
+    </div>
+
+    <div class="kt-portlet__body">
+        <!--begin: Datatable -->
+
+        <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
+                                <thead>
+                                    <tr>
+                                    <th>S/No.</th>
+                                    <th>Full Name </th>
+                                    <th>Phone number</th>
+                                    <th>Relationship</th>
+                                                               
+                                    <th>Action</th>                               
                                     </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="6" class="text-center py-4 text-gray-500">No shareholder data found.</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                                 </thead>
+            
+                                    <tbody>
+                                          <?php $no = 1; ?>
+                                    <?php foreach($sponsers_data as $sponsers_datas): ?>
+                                              <tr>
+                                    <td><?php echo $no++; ?>.</td>
+                                    <td><?php echo $sponsers_datas->sp_name; ?> <?php echo $sponsers_datas->sp_mname; ?> <?php echo $sponsers_datas->sp_lname; ?></td>
+                                    <td><?php echo $sponsers_datas->sp_phone_no; ?></td>
+                                   
+                                    
+                                    <td><?php echo $sponsers_datas->sp_relation; ?></td>
+                                    
+                                 
+                                <td>    
+                            <div class="dropdown dropdown-inline">
+            <button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class=""></i> Action     
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <ul class="kt-nav">
+                    <li class="kt-nav__section kt-nav__section--first">
+                        <span class="kt-nav__section-text">Choose an option</span>
+                    </li>
+                    <li class="kt-nav__item">
+                        <a href="#" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_<?php echo $sponsers_datas->sp_id; ?>">
+                            <i class="kt-nav__link-icon flaticon-edit" ></i>
+                            <span class="kt-nav__link-text">Edit</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+    </div>
+</td>                                                                                   
+</tr>
+
+<div class="modal fade" id="kt_modal_<?php echo $sponsers_datas->sp_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">View Guarantors <?php echo $sponsers_datas->sp_id ?> <?php echo $sponsers_datas->customer_id ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php echo form_open("oficer/modify_sponser/{$sponsers_datas->sp_id}/{$sponsers_datas->customer_id}"); ?>
+                    <div class="kt-portlet__bod">
+                    <div class="kt-section">
+                        <div class="kt-section__content">
+                            <div class="form-group form-group-last row">
+                                <div class="col-lg-4 form-group-sub">
+                                    <label class="form-control-label">*First Name:</label>
+                                    <input type="text" name="sp_name" placeholder="" autocomplete="off" value="<?php echo $sponsers_datas->sp_name; ?>" class="form-control input-sm" required>
+                                </div>
+                                <div class="col-lg-4 form-group-sub">
+                                    <label class="form-control-label">*Middle Name:</label>
+                                    <input type="text" name="sp_mname" placeholder="Amount" autocomplete="off" value="<?php echo $sponsers_datas->sp_mname; ?>" class="form-control input-sm" required>
+                                </div>
+                                
+                             <div class="col-lg-4 form-group-sub">
+                                    <label class="form-control-label">*Last Name:</label>
+                                    <input type="text" name="sp_lname" placeholder="Amount" autocomplete="off" value="<?php echo $sponsers_datas->sp_lname; ?>" class="form-control input-sm" required>
+                                </div>
+
+                              <div class="col-lg-4 form-group-sub">
+                                    <label class="form-control-label">*Phone Number:</label>
+                                    <input type="number" name="sp_phone_no" placeholder="Amount" autocomplete="off" value="<?php echo $sponsers_datas->sp_phone_no; ?>" class="form-control input-sm" required>
+                                </div>
+                                 <div class="col-lg-4 form-group-sub">
+                                    <label class="form-control-label">*Natinal ID/Vote ID/Driver Lisence:</label>
+                                    <input type="number" name="sp_nation" placeholder="Natinal ID/Vote ID/Driver Lisence" autocomplete="off" value="<?php echo $sponsers_datas->sp_nation; ?>" class="form-control input-sm" required>
+                                </div>
+                                <div class="col-lg-4 form-group-sub">
+                                    <label  class="form-control-label">*Relationship With Customer:</label>
+                                <input type="text" name="sp_relation" placeholder="Cheque number" autocomplete="off" value="<?php echo $sponsers_datas->sp_relation; ?>" class="form-control input-sm" >
+                                </div>
+
+                                <div class="col-lg-4 form-group-sub">
+                                    <label  class="form-control-label">*Nature Of Settlement:</label>
+                                <select type="text" name="nature" class="form-control">
+                                    <option value="<?php echo $sponsers_datas->nature; ?>"><?php echo $sponsers_datas->nature; ?></option>
+                                    <option value="Permanenty Settlement">Permanenty Settlement</option>
+                                    <option value="Temporary Settlement">Temporary Settlement</option>
+                                </select>   
+                                </div>
+
+                                <div class="col-lg-4 form-group-sub">
+                                    <label  class="form-control-label">*Region:</label>
+                                <select type="text" name="sp_region" class="form-control">
+                                    <option value="<?php echo $sponsers_datas->region_id; ?>"><?php echo $sponsers_datas->region_name; ?></option>
+                                    <?php foreach ($region as $regions): ?>
+                                    <option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
+                                     <?php endforeach; ?>
+                                 
+                                </select>   
+                                </div>
+
+                                <div class="col-lg-4 form-group-sub">
+                                    <label  class="form-control-label">*District:</label>
+                                <input type="text" name="sp_district" placeholder="District" autocomplete="off" value="<?php echo $sponsers_datas->sp_district; ?>" class="form-control input-sm" >
+                                </div>
+                               <div class="col-lg-6 form-group-sub">
+                                    <label  class="form-control-label">*Ward:</label>
+                                <input type="text" name="sp_ward" placeholder="Ward" autocomplete="off" value="<?php echo $sponsers_datas->sp_ward; ?>" class="form-control input-sm" >
+                                </div>
+                               <div class="col-lg-6 form-group-sub">
+                                    <label  class="form-control-label">*Street:</label>
+                                <input type="text" name="sp_street" placeholder="Street" autocomplete="off" value="<?php echo $sponsers_datas->sp_street; ?>" class="form-control input-sm" >
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <?php echo form_close(); ?>
         </div>
     </div>
 </div>
-
-
-<div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-4 md:p-6">
-                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
-                  Sajili Taarifa Mdhamini
-
-                </h3>
-                <?php
-// Check if $sponser variable exists, is an object, and has the property 'sp_id'
-$hasSponser = isset($sponser) && is_object($sponser) && property_exists($sponser, 'sp_id');
-
-// If $hasSponser is true (meaning sponsor exists with 'sp_id'), set $action to update URL,
-// otherwise set $action to create URL.
-$action = $hasSponser
-    ? "oficer/update_sponser/{$sponser->sp_id}/{$customer->customer_id}/{$customer->comp_id}"
-    : "oficer/create_sponser/{$customer->customer_id}/{$customer->comp_id}";
-?>
-
-<?php echo form_open($action); ?>
-
-<div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
-    <div class="sm:col-span-4">
-        <label for="sp_name" class="block text-sm font-medium mb-2 dark:text-gray-300">* First Name:</label>
-        <input type="text" id="sp_name" name="sp_name" placeholder="jina la kwanza la mdhamini" autocomplete="off" required
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_name', isset($sponser->sp_name) ? $sponser->sp_name : ''); ?>">
-        <?php echo form_error("sp_name", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <div class="sm:col-span-4">
-        <label for="sp_mname" class="block text-sm font-medium mb-2 dark:text-gray-300">* Middle Name:</label>
-        <input type="text" id="sp_mname" name="sp_mname" placeholder="jina la pili la mdhamini" autocomplete="off" required
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_mname', isset($sponser->sp_mname) ? $sponser->sp_mname : ''); ?>">
-        <?php echo form_error("sp_mname", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <div class="sm:col-span-4">
-        <label for="sp_lname" class="block text-sm font-medium mb-2 dark:text-gray-300">* Last Name:</label>
-        <input type="text" id="sp_lname" name="sp_lname" placeholder="jina la mwisho la mdhamini" autocomplete="off" required
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_lname', isset($sponser->sp_lname) ? $sponser->sp_lname : ''); ?>">
-        <?php echo form_error("sp_lname", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <div class="sm:col-span-4">
-        <label for="sp_phone_no" class="block text-sm font-medium mb-2 dark:text-gray-300">* Phone no:</label>
-        <input type="number" id="sp_phone_no" name="sp_phone_no" placeholder="Namba ya simu ya mdhamini" autocomplete="off" required
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_phone_no', isset($sponser->sp_phone_no) ? $sponser->sp_phone_no : ''); ?>">
-        <?php echo form_error("sp_phone_no", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <div class="sm:col-span-4">
-        <label for="sp_relation" class="block text-sm font-medium mb-2 dark:text-gray-300">* Relationship With Customer:</label>
-        <input type="text" id="sp_relation" name="sp_relation" placeholder="mdhamini ana uhusiano gani na mkopaji..? mf mume,kaka n.k" autocomplete="off" required
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_relation', isset($sponser->sp_relation) ? $sponser->sp_relation : ''); ?>">
-        <?php echo form_error("sp_relation", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
-    </div>
-
-    <div class="sm:col-span-4">
-        <label for="nature" class="block text-sm font-medium mb-2 dark:text-gray-300">* Guarantor Business:</label>
-        <input type="text" id="nature" name="nature" placeholder="Biashara ya Mdhamini" autocomplete="off" required
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('nature', isset($sponser->nature) ? $sponser->nature : ''); ?>">
-        <?php echo form_error("nature", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
+<!--end::Modal-->
+<?php endforeach; ?>
+                                    
+                    </tbody>
+                   </table>
+        <!--end: Datatable -->
     </div>
 </div>
+<?php }else{ ?>
 
-<input type="hidden" name="comp_id" value="<?php echo htmlspecialchars($_SESSION['comp_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-<input type="hidden" name="customer_id" value="<?php echo htmlspecialchars($customer->customer_id ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+    <?php } ?>
 
-<div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-    <div class="flex justify-center gap-x-2">
-        <button type="submit" class="py-2 px-4 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Save</button>
-        <button type="reset" class="py-2 px-4 btn-secondary-sm">Cancel</button>
-    </div>
-</div>
 
-<?php echo form_close(); ?>
+  
+ <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon kt-hidden">
+                    <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        GUARANTORS INFORMATIONS
 
+                    </h3>
+                </div>
             </div>
+            <!--begin::Form-->
+            
+               <div class="container">
+  <!-- <form class="form-horizontal" action="<?php //site_url()?>create_sponser/{$customer->customer_code}" method="post"> -->
+    <?php echo form_open("oficer/create_sponser/{$customer->customer_id}/{$customer->comp_id}",['class'=>'form-horizontal']) ?>
+    <div id="dynamic_field">
+        <div class="row">
+            <div class="col-lg-4">
+    <div class="form-group">
+      <label class="control-label">First Name:</label>
+        <input type="text" class="form-control" id="sp_name" placeholder="First name" name="sp_name[]" autocomplete="off">
+    </div>
+    </div>
+
+    <div class="col-lg-4">
+    <div class="form-group">
+      <label>Middle name:</label>
+        <input type="text" class="form-control" id="sp_mname" placeholder="Enter Middle name" name="sp_mname[]" autocomplete="off">
+    </div>
+    </div>
+
+    <input type="hidden" name="customer_id[]"  id="customer_id" value="<?php echo $customer->customer_id; ?>">
+    <input type="hidden" name="comp_id[]" id="comp_id" value="<?php echo $customer->comp_id; ?>">
+
+    <div class="col-lg-4">
+    <div class="form-group">
+      <label>Last name:</label>
+        <input type="text" class="form-control" id="sp_lname" placeholder="Enter Last name" name="sp_lname[]" autocomplete="off">
+    </div>
+    </div>
+    <div class="col-lg-3">
+    <div class="form-group">
+      <label>Phone number:</label>  
+        <input type="number" class="form-control" id="sp_phone_no" placeholder="Enter Phone number" name="sp_phone_no[]" autocomplete="off">
+    </div>
+    </div>
+    <div class="col-lg-3">
+    <div class="form-group">
+      <label>Natinal ID/Vote ID/Driver Lisence:</label>  
+        <input type="number" class="form-control" id="sp_phone_no" placeholder="Enter Natinal ID/Vote ID/Driver Lisence" name="sp_nation[]" autocomplete="off">
+    </div>
+    </div> 
+     <div class="col-lg-3">
+    <div class="form-group">
+      <label>Reationship With Customer:</label>  
+        <input type="text" class="form-control" id="sp_relation" placeholder="Enter Reationship With Customer" name="sp_relation[]" autocomplete="off">
+    </div>
+    </div>
+     <div class="col-lg-3">
+    <div class="form-group">
+      <label>Nature of Settlement:</label>  
+        <select type="text" name="nature[]" id="nature" class="form-control">
+            <option value="">Select Nature of Settlement</option>
+            <option value="Permanenty Settlement">Permanenty Settlement</option>
+            <option value="Temporary Settlement">Temporary Settlement</option>
+        </select>
+    </div>
+    </div>
+
+     <div class="col-lg-3">
+    <div class="form-group">
+      <label>Region:</label>  
+        <select type="text" name="sp_region[]" id="nature" class="form-control kt-selectpicker" data-live-search="true">
+            <option value="">Select region</option>
+            <?php foreach ($region as $regions): ?>
+            <option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    </div>
+     <div class="col-lg-3">
+    <div class="form-group">
+      <label>District:</label>  
+        <input type="text" class="form-control" id="sp_district" placeholder="Enter District" name="sp_district[]" autocomplete="off">
+    </div>
+    </div>
+     <div class="col-lg-3">
+    <div class="form-group">
+      <label>Ward:</label>  
+        <input type="text" class="form-control" id="sp_ward" placeholder="Enter Ward" name="sp_ward[]" autocomplete="off">
+    </div>
+    </div>
+     <div class="col-lg-3">
+    <div class="form-group">
+      <label>Street:</label>  
+        <input type="text" class="form-control" id="sp_street" placeholder="Enter Street" name="sp_street[]" autocomplete="off">
+    </div>
+    </div>
+
+    </div> 
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" name="add" id="add" class="btn btn-success"><i class="
+kt-menu__link-icon flaticon-add"></i>Add More</button>
+      </div>
+    </div>
+    <div class="text-center">
+     <input type="submit" name="submit" id="submit" class="btn btn-info btn-sm" value="Submit" />
+     <?php if(@$sponser->customer_id == TRUE){ ?> 
+     <a href="<?php echo base_url("oficer/loan_applicationForm/{$sponser->customer_id}"); ?>" class="btn btn-primary btn-sm">Skip</a>
+ <?php }else{ ?>
+
+    <?php } ?>
+   
+     </div>
+  <?php echo form_close(); ?>
+</div>
+            <!--end::Form-->
         </div>
+    </div>
 
 </div>
-</div>
-<!-- ========== END MAIN CONTENT BODY ========== -->
+<!--End::Section--> 
+<?php }else{ ?>
 
-<?php
-include_once APPPATH . "views/partials/footer.php";
-?>
+
+ <div class="text-center">
+    <h1>
+        <br><br><br>
+OOPS!  There no customer with that number</h1>
+      <a href="<?php echo base_url("oficer/loan_application"); ?>" class="btn btn-info">Back</a>
+    </div>
+
+    <?php } ?>
+
+<!-- end:: Content -->
+<!-- end:: Content -->
+				</div>	
+
+				 <?php //endforeach; ?>			
+				
+<?php include('incs/footer_1.php') ?>
+<script type="text/javascript">
+    $(document).ready(function(){      
+      var i=1;  
+   
+      $('#add').click(function(){  
+           i++;             
+           $('#dynamic_field').append('<div id="row'+i+'">                                            <hr>                                                                                     <div class="row">                                                                    <div class="col-lg-4"><div class="form-group">                                                                 <label>First Name:</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter First name" name="sp_name[]" id="sp_name" autocomplete="off" required>                                                                                                                                                                    </div></div> <div class="col-lg-4"><div class="form-group">                                                                 <label>Middle name:</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter Middle name" name="sp_mname[]" id="sp_mname" autocomplete="off" required>                                                                                                                                                                    </div></div><input type="hidden" name="customer_id[]" id="customer_id" value="<?php echo $customer->customer_id; ?>">                                                   <input type="hidden" name="comp_id[]" id="comp_id" value="<?php echo $customer->comp_id; ?>">                                                                               <div class="col-lg-4"><div class="form-group">                                                                 <label>Last name</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter Last name" name="sp_lname[]" id="sp_lname" autocomplete="off" required>                                                                                                                                                                    </div></div>     <div class="col-lg-3"><div class="form-group">                                                                 <label>Phone number:</label>                                                                                                                                                         <input type="number" class="form-control" placeholder="Enter Phone number" name="sp_phone_no[]" id="sp_phone_no" autocomplete="off" required>                                                                                                                                                                    </div></div><div class="col-lg-3"><div class="form-group">                                                                 <label>Natinal ID/Vote ID/Driver Lisence:</label>                                                                                                                                                         <input type="number" class="form-control" placeholder="Enter Natinal ID/Vote ID/Driver Lisence:" name="sp_nation[]" id="sp_nation" autocomplete="off" required>                                                                                                                                                                    </div></div>   <div class="col-lg-3"><div class="form-group">                                                                 <label>Reationship With Customer:</label>                                                                                                                                                         <input type="text" class="form-control" placeholder="Enter Reationship With Customer" name="sp_relation[]" id="sp_relation" autocomplete="off" required>                                                                                                                                                                    </div></div>   <div class="col-lg-3"><div class="form-group">                                                                 <label>Nature of Settlement:</label>                                                                                                                                                      <select type="text" class="form-control" name="nature[]" id="nature" required><option value="">Select Nature of Settlement</option><option value="Permanenty Settlement">Permanenty Settlement</option><option value="Temporary Settlement">Temporary Settlement</option></select>                                                                                                                                                                    </div></div>  <div class="col-lg-3"><div class="form-group">                                                                 <label>Region:</label>                                                                                                                                                      <select type="text" class="form-control kt-selectpicker" data-live-search="true" name="sp_region[]" id="sp_region" required ><option value="">Select Region</option> <?php foreach ($region as $regions): ?>
+                <option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option> <?php endforeach; ?>     </select>                                                                                                                                                                    </div></div>         <div class="col-lg-3">                                                                                                                                    <div                                                   class="form-group">                                                                <label>District:</label>                                                                     <input type="text" class="form-control" id="sp_district" placeholder="Enter District" name="sp_district[]" autocomplete="off" required>                                                                 </div></div>                                                                                   <div class="col-lg-2"><div class="form-group">                                                                 <label>Ward:</label>                                                                       <input type="text" class="form-control" id="sp_ward" placeholder="Enter Ward" name="sp_ward[]" autocomplete="off" required>                                                                  </div></div> <div class="col-lg-3">                                                                                                                                                                                                                                                                     <div class="form-group">                                                                <label>Street:</label>                                                                                                                                               <input type="text" class="form-control" id="sp_street" placeholder="Enter Street" name="sp_street[]" autocomplete="off" required> </div></div>                                                               <div class="col-lg-1"> <br>                                                                 <button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">Remove</button></div></div></div></div>');
+     });
+     
+     $(document).on('click', '.btn_remove', function(){  
+           var button_id = $(this).attr("id"); 
+           var res = confirm('Are You Sure You Want To Remove This?');
+           if(res==true){
+           $('#row'+button_id+'').remove();  
+           $('#'+button_id+'').remove();  
+           }
+      });  
+  
+    });  
+</script>
+
+
+<script>
+function myFunction() {
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copied: " + copyText.value;
+}
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
+</script>

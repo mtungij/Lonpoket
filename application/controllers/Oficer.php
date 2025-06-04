@@ -4784,7 +4784,7 @@ public function create_withdrow_balance($customer_id){
            
             $new_deducted = $deducted + $sum_total_loanFee;
 
-               if($new_code != $code){
+               if($new_code === $code){
                  $this->session->set_flashdata('error','Pin ya mteja Uliyojaza Haipo Sahihi!!');
                }else
                if($blanch_capital < $withdrow_newbalance){

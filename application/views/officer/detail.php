@@ -50,21 +50,14 @@ include_once APPPATH . "views/partials/officerheader.php";
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
             <div class="p-4 md:p-6">
                 <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
-                <?php 
-// Ensure $customer_id is defined or set a default value
-$customer_id = isset($customer_id) ? $customer_id : null;
 
-// Display the appropriate heading
-echo ($customer && $customer_id && isset($customer->$customer_id)) ? 'Update Penalty Setting' : 'Customer detail'; 
-?>
 </h3>
 
-<?php
-$form_action = ($customer && isset($customer->customer_id)) 
-    ? "admin/create_lastDetail/{$customer->customer_id}" 
-    : "admin/create_lastDetail";
-echo form_open($form_action, ['novalidate' => true]);
-?>
+
+
+
+<?php echo form_open("oficer/create_lastDetail/{$customer->customer_id}", ['novalidate' => true]); ?>
+
                 
 
 				<div class="grid grid-cols-2 gap-4">
