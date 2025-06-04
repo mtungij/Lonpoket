@@ -1,684 +1,685 @@
-<?php include('incs/header_1.php'); ?>
-<?php include('incs/side_1.php'); ?>
-<?php include('incs/subheader.php'); ?>
-    
 
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">                   
-<!-- begin:: Subheader -->
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-   
+<?php
+include_once APPPATH . "views/partials/officerheader.php";
+?>
+<!-- ========== MAIN CONTENT BODY ========== -->
+<div class="w-full lg:ps-64">
+    <div class="p-4 sm:p-6 space-y-6">
+
+        <?php if ($das = $this->session->flashdata('massage')): ?>
+        <div class="bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert">
+            <div class="flex">
+                <div class="flex-shrink-0"><span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-500"><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span></div>
+                <div class="ms-3"><h3 class="text-gray-800 font-semibold dark:text-white">Success</h3><p class="mt-2 text-sm text-gray-700 dark:text-gray-400"><?php echo $das;?></p></div>
+                <div class="ps-3 ms-auto"><button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-50 focus:ring-teal-600 dark:bg-transparent dark:hover:bg-teal-800/50 dark:text-teal-600" data-hs-remove-element="[role=alert]"><span class="sr-only">Dismiss</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <div class="bg-gray-100">
+    <div class="w-full bg-cyan-600 text-white">
+        <div class="flex flex-col max-w-screen-xl px-4 mx-auto md:flex-row md:justify-between md:px-6 lg:px-8">
+            <div class="p-4 flex flex-row items-center justify-between">
+                <a href="#" class="text-lg font-semibold tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline">
+                Dashibodi Ya Malipo
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- end:: Subheader -->                                        
-<!-- begin:: Content -->
-<!-- begin:: Content -->
-
-          <?php if(@$customer->f_name == TRUE){ ?>
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-    <!--begin::Portlet-->
-    <?php if ($das = $this->session->flashdata('massage')): ?>
-      <div class="alert alert-success fade show alert-success" role="alert">
-                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
-                            <div class="alert-text"><?php echo $das;?></div>
-                            <div class="alert-close">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="la la-close"></i></span>
-                                </button>
-                            </div>
-                  </div>
-         <?php endif; ?>
 
 
-
-<div class="row">
-    <div class="col-xl-12">
-        <!--begin:: Widgets/Applications/User/Profile3-->
-<div class="kt-portlet kt-portlet--height-fluid">
-    <div class="kt-portlet__body">
-        <div class="kt-widget kt-widget--user-profile-3">
-            <div class="kt-widget__top">
-                <div class="kt-widget__media kt-hidden-">
-                    <?php if ($customer->passport == TRUE) {
-                     ?>
-                    <!-- <img src="<?php //echo base_url().'assets/img/'.$customer->passport; ?>" alt="passport" style="width: 220px; height: 180px;"> -->
-                    <img src="<?php echo base_url();?>assets/img/male.jpeg" alt="passport" style="width: 220px; height: 180px;">
-                <?php }else{ ?>
-
-                     <img src="<?php echo base_url();?>assets/img/male.jpeg" alt="passport" style="width: 220px; height: 180px;">
-                    <?php } ?>
-                </div>
-
-                <style>
-                        .c {
-               text-transform: uppercase;
-                 }
-                
-                </style>
-                
-                <div class="kt-widget__content">
-                    <div class="kt-widget__head">
-                        <a href="javascript:;" class="kt-widget__username">
-                           <b class="c"><?php echo $customer->f_name; ?> <?php echo $customer->m_name; ?> <?php echo $customer->l_name; ?> </b>   
-                            <i class=""></i>                       
-                        </a>
-
-                        <div class="kt-widget__action">
-                         <div class="">
-                            <?php if ($customer->signature == TRUE) {
-                             ?>
-                    <!-- <img src="<?php //echo base_url().'assets/img/'.$customer->signature; ?>" alt="Signature"style="width: 200px; height: 180px;"> -->
-                    <img src="<?php echo base_url();?>assets/img/sig.jpg" alt="passport" style="width: 200px; height: 180px;">
-                <?php }else{ ?>
-                     <img src="<?php echo base_url();?>assets/img/sig.jpg" alt="passport" style="width: 200px; height: 180px;">
-                    <?php } ?>
-                        </div>
-                        </div>
+    <div class="container mx-auto my-3 p-4">
+        <div class="md:flex no-wrap md:-mx-2">
+            <!-- Left Side -->
+            <div class="w-full md:w-3/12 md:mx-2">
+                <div class="bg-white p-3 border-t-4 border-green-400">
+                    <div class="image overflow-hidden">
+                        <img class="h-auto w-full mx-auto" src="<?= base_url('assets/img/customer21.png') ?>" alt="Customer Image">
                     </div>
+                    <h1 class="text-green-500 font-bold text-xl leading-8 my-1 dark:text-neutral-900 text-center">
+                        <?= strtoupper($customer->f_name) . " " . strtoupper($customer->m_name) . " " . strtoupper($customer->l_name) ?>
+                    </h1>
+                    <h1 class="text-center text-green-500 font-bold">(<?= $customer->famous_area ;?>)</h1>
+                    <br>
+                    <h1 class="text-center  font-bold"><?= $customer->phone_no ;?></h1>
+                    <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                    <?php
+                         if (!empty($customer->customer_id)) {
+                            $customer_loan = $this->queries->get_loan_active_customer($customer->customer_id);
 
-                   <!--  <div class="kt-widget__subhead">
-                        <a href="#"><i class="flaticon2-new-email"></i>jason@siastudio.com</a>
-                        <a href="#"><i class="flaticon2-calendar-3"></i>PR Manager </a>
-                        <a href="#"><i class="flaticon2-placeholder"></i>Melbourne</a>
-                    </div> -->
+    //   echo "<pre>";
+    //   print_r( $customer_loan);
+    //  echo "</pre>";
+    //   exit();
+                        }
+                        
+                         $total_deposit = $this->queries->get_total_amount_paid_loan($customer_loan->loan_id ?? 0);
+                         $out_stand = $this->queries->get_outstand_loan_customer($customer_loan->loan_id ?? 0);
+                     ?>
+                                           <?php
+$customer_loan_status = $this->queries->get_loan_active_customer($customer->customer_id);
 
-      
+$status_label = 'Not Active';
+$status_class = 'bg-blue-600 text-white dark:bg-blue-500';
+
+if (!empty($customer_loan_status)) {
+    switch ($customer_loan_status->loan_status) {
+        case 'withdrawal':
+            $status_label = 'Active';
+            $status_class = 'bg-teal-500 text-white';
+            break;
+        case 'done':
+            $status_label = 'Kumaliza';
+            $status_class = 'bg-yellow-500 text-white';
+            break;
+        case 'out':
+            $status_label = 'Deni Sugu';
+            $status_class = 'bg-red-500 text-white';
+            break;
+    }
+}
+?>
+
+<li class="flex items-center py-3">
+    <span class="font-bold">Status</span>
+    <span class="ml-auto">
+        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium <?php echo $status_class; ?>">
+            <?php echo $status_label; ?>
+        </span>
+    </span>
+</li>
+                        <li class="flex items-center py-3">
+                               <span class="font-bold">Gawa</span>
+                            <?php if (!empty($customer_loan->loan_stat_date)) : ?>
+                                <span class="ml-auto"><?= $customer_loan->loan_stat_date; ?></span>  
+                            <?php else : ?>
+                                <span class="ml-auto">YY-MM-DD</span>
+                              <?php endif; ?>
+                            
+                        </li>
+                        <li class="flex items-center py-3">
+                               <span class="font-bold">Mwisho</span>
+                            <?php if (!empty($customer_loan->loan_end_date)) : ?>
+                                <span class="ml-auto"><?= substr($customer_loan->loan_end_date, 0, 10); ?></span>
+                           <?php else : ?>
+                                <span class="ml-auto">YY-MM-DD</span>
+                           <?php endif; ?>
+                           
+                        </li>
+                        <li class="flex items-center py-3">
+                            <span class="font-bold">Mkopo</span>
+                            <span class="ml-auto"><?= safe_number_format($customer_loan->loan_int ?? 0); ?></span>
+                        </li>
+                        <li class="flex items-center py-3">
+                            <span class="font-bold">Rejesho</span>
+                            <span class="ml-auto"><?= safe_number_format($customer_loan->restration ?? 0); ?></span>
+                        </li>
+                        <li class="flex items-center py-3">
+    <span class="font-bold">Lipwa</span>
+
+    <?php
+    $loan_int = $customer_loan->loan_int ?? 0;
+    $deposit = $total_deposit->total_Deposit ?? 0;
+    ?>
+
+    <span class="ml-auto">
+        <?php if ($deposit > $loan_int): ?>
+            <?= safe_number_format($deposit - $loan_int) ?>
+        <?php else: ?>
+            <?= safe_number_format($deposit) ?>
+        <?php endif; ?>
+    </span>
+</li>
+
+                        <li class="flex items-center py-3">
+                            <span class="font-bold">Deni</span>
+                            <span class="ml-auto"><?= safe_number_format(max(0, $loan_int - $deposit)); ?></span>
+                        </li>
+                        
+                    </ul>
                 </div>
             </div>
- 
+
+            <!-- Right Side -->
+            <div class="w-full md:w-9/12 md:mx-2 mt-4 md:mt-0">
+                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">Taarifa Za Mdhamini</h2>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200">
+                        <thead class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                            <tr>
+                                <th class="py-3 px-6 text-left">Jina Mdhamini</th>
+                                <th class="py-3 px-6 text-left">Number Ya Simu</th>
+                                <th class="py-3 px-6 text-left">Mahusiano</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700 text-sm">
+   
+                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                        <td class="py-3 px-6"><?= $customer->sp_name ." ". $customer->sp_mname ." ". $customer->sp_lname?></td>
+                                        <td class="py-3 px-6"><?=$customer->sp_phone_no ?></td>
+                                        <td class="py-3 px-6"><?=$customer->sp_relation ?></td>
+                                    </tr>
+                             
+                                <!-- <tr>
+                                    <td colspan="6" class="text-center py-4 text-gray-500">No shareholder data found.</td>
+                                </tr> -->
+                           
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Table Section -->
+<!-- Table Section -->
+        <div>
+
+        
+    <div >
+        <div class="flex justify-end  items-center gap-2">
+        <?php if (!empty($customer_loan->loan_status)) {
+    $status = $customer_loan->loan_status;
+
+    if ($status === 'withdrawal' || $status === 'out') { ?>
+          <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal" data-hs-overlay="#hs-edit-deposit-modal">
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"/>
+          </svg>
+      Weka
+    </button>
+    <?php } elseif ($status === 'disbarsed') { ?>
+        <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">
+        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"/>
+          </svg>
+        Toa
+      </button>
+    <?php } elseif ($status === 'done') { ?>
+        <a href="#" class="btn btn-info" data-toggle="modal" data-target="#addcontact3">
+            <i class="icon-pencil"></i> Faini
+        </a>
+<?php }
+} ?>
+        </div>
+    </div>
+  
+</div>
 
 
-<div class="kt-portlet__body">
-        <!--begin: Datatable -->
+
+               
+                  <div class="p-4 md:p-6">
+                  <?php echo form_open("oficer/search_customerData", [
+    'novalidate' => true,
+    'id' => 'customerSearchForm'
+]); ?>
+
+    <div class="w-full  md:flex-row items-center ">
+        <!-- Search Dropdown -->
+        <div class="w-full">
+            <label for="branchSelect" class="block text-sm font-medium mb-1 dark:text-gray-300">* Search Customer:</label>
+            <select id="branchSelect" required name="customer_id"
+                class="py-2 px-3 block w-full bg-cyan-600 border border-gray-300 rounded-md text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300 dark:placeholder-gray-500 select2">
+                <option value="">Search Customer</option>
+                <?php foreach ($customery as $customers): ?>
+                    <option value="<?= $customers->customer_id ?>">
+                        <?= strtoupper($customers->f_name . " " . $customers->m_name . " " . $customers->l_name); ?> /
+                        <?= strtoupper($customers->customer_code); ?> /
+                        <?= strtoupper($customers->blanch_name); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
-        <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-                                         <thead>
-                                              <tr>
-                                        
-                                        
-                                        <th><b>Namba Ya Simu</b></th>
-                                        <th><b>Gawa Tarehe</b></th>
-                                        <th><b>Tarehe Ya Mwisho</b></th>
-                                        <th><b>Mkopo+Riba</b></th>
-                                        <th><b>Rejesho</b></th>
-                                        <th><b>Lipwa</b></th>
-                                        <th><b>Deni</b></th>  
-                                        </tr>
-                                          </thead>
-            
-                                    <tbody>
+        <!-- Search Button -->
 
-                                         <?php @$customer_loan = $this->queries->get_loan_active_customer($customer->customer_id);
-                                         @$total_deposit = $this->queries->get_total_amount_paid_loan($customer_loan->loan_id);
+    </div>
 
-                                         @$out_stand = $this->queries->get_outstand_loan_customer($customer_loan->loan_id);
-                                       ?>
-                                              <tr>
-                                    
-                                    
-                                           <td><?php echo @$customer->phone_no; ?></td>
-                                            <td>
-                                            <?php if (@$customer_loan->loan_stat_date == TRUE) {
-                                                 ?>
-                                                <?php echo @$customer_loan->loan_stat_date; ?>
-                                            <?php }elseif (@$customer_loan->loan_stat_date == FALSE) {
-                                             ?>
-                                             YY-MM-DD
-                                             <?php } ?>
-                                                    
-                                                </td>
-                                            <td>
-                                            <?php if (@$customer_loan->loan_end_date == TRUE) {
-                                                 ?>
-                                                 <?php echo substr(@$customer_loan->loan_end_date, 0,10); ?>
-                                            <?php }elseif (@$customer_loan->loan_end_date == FALSE) {
-                                             ?>
-                                             YY-MM-DD
-                                             <?php } ?>
-                                                </td>
-                                            <td><?php echo number_format(@$customer_loan->loan_int); ?></td>
-                                            <td><?php echo number_format(@$customer_loan->restration); ?></td>
-                                            <td>
-                                        <?php if (@$total_deposit->total_Deposit > @$customer_loan->loan_int) {
-                                                 ?>
-                                        <?php echo number_format(@$customer_loan->loan_int); ?>
-                                         <span style="color: red">(<?php echo number_format(@$total_deposit->total_Deposit - @$customer_loan->loan_int); ?>)<span>
-                                             <?php }else{ ?>
-                                                <?php echo number_format(@$total_deposit->total_Deposit); ?>
-                                                <?php } ?>   
-                                                </td>
-                                            <td>
-                                                <?php if (@$total_deposit->total_Deposit > @$customer_loan->loan_int) {
-                                                 ?>
-                                                 0.00
-                                                 <?php }else{ ?>
-                                                <?php echo number_format(@$customer_loan->loan_int - @$total_deposit->total_Deposit ); ?>
-                                                <?php } ?>
-                                                    
-                                                </td>
+    <input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
 
-<!--end::Modal-->                                                               
-                                        </tr>
-                                    </tbody>
-                          </table>
+    <?php echo form_close(); ?>
+</div>
 
-                          <div class="row">
-                            <div class="col-lg-6">
-                          <table class="table table-striped- table-bordered table-hover table-checkable"id="kt_table_1">
-                                         <thead>
-                                 <tr style="background-color: #2c77f4;color: white;">
-                                        
-                                        <th><b>Opening</b></th>
-                                        <th><b>Deposit</b></th>
-                                        <th><b>Withdrawal</b></th>
-                                        <th><b>Closing</b></th>  
-                                        </tr>
-                                          </thead>
-            
-                                    <tbody>
-                                       <tr>
-                                    
-                                    <td>
-                                      <?php echo number_format($blanch_amount_balance->total_blanch_capital); ?>  
-                                    </td>
-                                    <td><?php echo number_format(@$deposts->total_depost); ?></td>
-                                    <td><?php echo number_format(@$withdraw->total_withdraw); ?></td>
-                                    <td>
-                                       <?php echo number_format($blanch_amount_balance->total_blanch_capital); ?>
-                                            
-                                        </td>
-                                                              
-                                        </tr>
-                                    </tbody>
-                          </table>
-                          </div>
-                          <div class="col-lg-6"></div>
-                       </div>
+       
 
+                <div class="overflow-x-auto">
+                    <div class="min-w-full inline-block align-middle">
+                        <div class="border rounded-lg overflow-hidden dark:border-gray-700">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" id="shareholder_table">
+                                <thead class="bg-cyan-600 dark:bg-cyan-600">
+                                    <tr>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Tarehe</span></div></th>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Maelezo</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Lipwa</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
+                                         <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Toka</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
+                                        <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-white">Salio</span><svg class="size-3.5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="hs-datatable-ordering-desc:text-cyan-600 dark:hs-datatable-ordering-desc:text-cyan-500" d="m7 15 5 5 5-5"></path><path class="hs-datatable-ordering-asc:text-cyan-600 dark:hs-datatable-ordering-asc:text-cyan-500" d="m7 9 5-5 5 5"></path></svg></div></th>
 
-                         </div>
-                       <div class="text-right">
-                         <?php if (@$customer_loan->loan_status == 'withdrawal' || @$customer_loan->loan_status == 'out') {
-                                 ?>
-                        <a href="" class="btn btn-success" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_<?php //echo $blanchs->blanch_id; ?>"><i class="kt-menu__link-icon flaticon2-add"></i>Deposit</a>
-                        <?php }elseif (@$customer_loan->loan_status == 'disbarsed') {
-                          ?>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
-                        <a href="" class="btn btn-brand" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_2"><i class="kt-menu__link-icon flaticon2-files-and-folders"></i>Withdrawal</a>
-
-                        <?php }else{ ?>
-                             <?php } ?> 
-
-                     <!--    <a href="" class="btn btn-primary" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_3"><i class="kt-menu__link-icon flaticon-edit"></i>Adjustiment</a> -->
-                         <!-- <a href="<?php //echo base_url("admin/teller_dashboard"); ?>" class="btn btn-info"><i class="kt-menu__link-icon flaticon2-search-1"></i>Search</a> -->
-
-                         <a href="" class="btn btn-info" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_4"><i class="kt-menu__link-icon flaticon2-search-1"></i>Tafuta Mteja</a>
-                       </div>
-                        </div>
-
-                </div>
-               </div>
-
-   </div>
-<div class="kt-portlet kt-portlet--mobile">
-   
-     
-
-    <div class="kt-portlet__body">
-        <!--begin: Datatable -->
-        <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-                                         <thead>
-                                              <tr style="background-color: #2c77f4;color:white;">
-                                                <th>Tarehe</th>
-                                                <th>Maelezo</th>
-                                                <th>wekwa</th>
-                                                <th>Toa</th>
-                                                <th>Salio</th>    
-                                                 </tr>
-                                          </thead>
-
-                                    <?php @$loan_desc = $this->queries->get_total_pay_description($customer_loan->loan_id);
+                                <?php @$loan_desc = $this->queries->get_total_pay_description($customer_loan->loan_id);
                                       @$remain_balance = $this->queries->get_total_remain_with($customer_loan->loan_id);
                                       @$total_recovery = $this->queries->get_total_loan_pend($customer_loan->loan_id);
                                       @$total_penart =   $this->queries->get_total_penart_loan($customer_loan->loan_id);
                                       @$total_deposit_penart =  $this->queries->get_total_paypenart($customer_loan->loan_id);
                                       @$end_deposit = $this->queries->get_end_deposit_time($customer_loan->loan_id);
                                        ?>
-                                          <tbody>
-                                              
-                                            <?php foreach ($loan_desc as $payisnulls): ?>
+                                    <?php if (isset($loan_desc ) && is_array($loan_desc ) && !empty($loan_desc )): ?>
+                                        <?php foreach ($loan_desc  as $payisnulls): ?>
                                             <tr>
-                                              <td class="c"><?php echo $payisnulls->date_data; ?></td>
-                                              <td class="c">  <?php echo $payisnulls->emply; ?>
-                                              <?php if ($payisnulls->emply == TRUE) {   
-                                               ?>
-                                               /
-                                           <?php }else{ ?>
-                                            <?php } ?>
-                                               <?php echo $payisnulls->description; ?>
-                                               <?php if($payisnulls->p_method == TRUE){ ?>
-                                                /<?php echo $payisnulls->account_name; ?>
-                                                <?php }else{ ?> 
-                                                     
-                                                    <?php } ?>
-                                               <?php if ($payisnulls->fee_id == TRUE || $payisnulls->fee_id == '0' ) {
-                                              ?>
-                                              / <?php echo $payisnulls->fee_desc; ?> <?php echo $payisnulls->fee_percentage; ?> <?php echo $payisnulls->symbol; ?>
-                                          <?php }else{ ?>
-                                            <?php } ?>
-                                            <?php if($payisnulls->p_method == FALSE){ ?>
-                                            <?php }else{ ?>
-                                               / 
-                                               <?php } ?>
-                                               <?php //echo @$payisnulls->description; ?>  <?php echo @$payisnulls->loan_name ; ?>
-                                         <?php if(@$payisnulls->day == 1){
-                                           echo "Daily";
-                                    }elseif(@$payisnulls->day == 7){
-                                         echo "Weekly";
-                                    }elseif (@$payisnulls->day == 30 || @$payisnulls->day == 31 || @$payisnulls->day == 28 || @$payisnulls->day == 29) {
-                                        echo "Monthly";
-                                     ?> 
-                                    <?php } ?><?php echo $payisnulls->session; ?>  / AC/No. <?php echo @$payisnulls->loan_code; ?></td>
-                                              <td>
-                                                <?php if($payisnulls->depost == TRUE){ ?>
-                                                <?php echo round(@$payisnulls->depost,2); ?>
-                                            <?php }elseif($payisnulls->depost == FALSE){ ?>
-                                            0.00
-                                                <?php } ?>
-                                            </td>
-                                              <td>
-                                                <?php if (@$payisnulls->withdrow == TRUE) {
-                                                 ?>
-                                                <?php echo round(@$payisnulls->withdrow,2); ?>
-                                                <?php }elseif (@$payisnulls->withdrow == FALSE) {
-                                                 ?>
-                                                 0.00
-                                            <?php } ?>
-                                            </td>
-                                              <td>
-                                                <?php if (@$payisnulls->balance == TRUE) {
-                                                 ?>
-                                                <?php echo round(@$payisnulls->balance,2); ?>
-                                                <?php }elseif (@$payisnulls->balance == FALSE) {
-                                                 ?>
-                                                 0.00
-                                                 <?php } ?>
-                                            </td>
-                                              </tr>
-                                        <?php endforeach; ?>
-                                          </tbody>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo $payisnulls->date_data; ?></td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+    <?= $payisnulls->emply ? $payisnulls->emply . ' / ' : ''; ?>
+            <?= $payisnulls->description; ?>
+            <?= $payisnulls->p_method ? ' / ' . $payisnulls->account_name : ''; ?>
+            <?= ($payisnulls->fee_id !== null && $payisnulls->fee_id !== '') ? 
+                ' / ' . $payisnulls->fee_desc . ' ' . $payisnulls->fee_percentage . ' ' . $payisnulls->symbol : ''; ?>
+            <?= $payisnulls->p_method ? '/' : ''; ?>
+            <?= $payisnulls->loan_name ?? ''; ?>
+
+            <?php
+                if ($payisnulls->day == 1) {
+                    echo " Daily";
+                } elseif ($payisnulls->day == 7) {
+                    echo " Weekly";
+                } elseif (in_array($payisnulls->day, [28, 29, 30, 31])) {
+                    echo " Monthly";
+                }
+            ?>
+            <?= ' ' . $payisnulls->session . ' / AC/No. ' . $payisnulls->loan_code; ?>
+    </td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?= ($payisnulls->depost) ? round($payisnulls->depost, 2) : '0.00'; ?></td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?= ($payisnulls->withdrow) ? round($payisnulls->withdrow, 2) : '0.00'; ?></td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?= ($payisnulls->balance) ? round($payisnulls->balance, 2) : '0.00'; ?></td>
     
-                                       </table>
-        <!--end: Datatable -->
-    </div>
-</div>
-</div>
-
-
-<?php }else{ ?>
-    <div class="text-center">
-    <h1>
-        <br><br><br>
-OOPS!  mteja anaweza kuwa hajasaliwa ama hana mkopo</h1>
-      <a href="<?php echo base_url("admin/teller_dashboard"); ?>" class="btn btn-info">Back</a>
-    </div>
-    <?php } ?>
-
-
-
-</div>  
-
+</tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-3 px-4 border-t border-gray-200 dark:border-gray-700 hidden" data-hs-datatable-paging="">
+                    <nav class="flex items-center space-x-1"><button type="button" class="p-2.5 min-w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700" data-hs-datatable-paging-prev=""><span aria-hidden="true">«</span><span class="sr-only">Previous</span></button><div class="flex items-center space-x-1 [&>.active]:bg-gray-100 dark:[&>.active]:bg-gray-700" data-hs-datatable-paging-pages=""></div><button type="button" class="p-2.5 min-w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700" data-hs-datatable-paging-next=""><span class="sr-only">Next</span><span aria-hidden="true">»</span></button></nav>
+                </div>
+            </div>
+        </div>
 
 
 
         
+        <div id="hs-edit-shareholder-modal-<?= $customer->customer_id; ?>" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-3xl lg:w-full m-3 lg:mx-auto">
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+        <h3 class="font-bold text-gray-800 dark:text-white">Jina La Mteja: <?= htmlspecialchars($customer->f_name, ENT_QUOTES, 'UTF-8'); ?></h3>
+        <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">
+          <span class="sr-only">Close</span>
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
 
+      <?php echo form_open("oficer/create_withdrow_balance/{$customer->customer_id}"); ?>
 
+<!-- Modal Body -->
+<div class="p-4 sm:p-6">
+  <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
 
+    <!-- Total Withdraw -->
+    <div class="sm:col-span-6">
+      <label for="withdrow_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Kiasi cha Kugawa:
+      </label>
+      <input type="text" id="withdrow_<?php echo $customer->customer_id; ?>" name="withdrow"
+  value="<?= htmlspecialchars(!empty($remain_balance->balance) ? $remain_balance->balance : 0, ENT_QUOTES, 'UTF-8'); ?>"
+  class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+  required>
 
-
-<?php include('incs/footer_1.php') ?>
-
-<div class="modal fade" id="kt_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xs" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">ADJASTMENT DASHBOARD</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php echo form_open("admin/create_adjustment/{$customer->customer_id}"); ?>
-
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-4">
-                        <label for="recipient-name" min="1" class="form-control-label"><b>Amount</b></label>
-                        <input type="" name=""id="amount_1a" min="1" readonly value="10000" class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <label for="recipient-name"  class="form-control-label">*Quantity</label>
-                        <input type="number" name="" min="1" id="qnty_1a" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <label for="recipient-name" min="1" class="form-control-label">Total Amount</label>
-                        <input type="" name="" value="" autocomplete="off" id="jumla_1a" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="5000" min="1" id="amount_2a" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_2a" class="form-control"style="width: 130px; height:30px;border: radius;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name=""  id="jumla_2a" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="2000" min="1" id="amount_3a" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_3a" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name=""  id="jumla_3a" min="1" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="1000" min="1" id="amount_4a" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_4a" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" min="1" id="jumla_4a" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="500" min="1" id="amount_5a" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_5a" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" min="1" id="jumla_5a" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="200" min="1" id="amount_6a" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_6a" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" min="1" id="jumla_6a" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-                          
-
-                             <div class="col-lg-4">
-                        
-                        <input type="number" name="" min="1" id="qnty_7a" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                       
-                        <input type="" name="" value="" min="1" id="jumla_7a" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <input type="" name="" value="50" min="1" id="amount_8a" readonly class="form-control" style="width: 130px; height:30px;border: none; color: #2ccff4;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="number" name="" min="1" id="qnty_8a" class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                        <input type="" name="" value="" min="1" id="jumla_8a" autocomplete="off" class="form-control"style="width: 130px; height:30px;border: none; color: blue;">
-                        </div>
-
-
-                             <div class="col-lg-4">
-                        <label for="recipient-name" class="form-control-label"><b></b></label>
-                       
-                        </div>
-
-                        <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
-                            <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
-                            <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
-
-                            <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
-                            <input type="hidden" value="LOAN RETURN" name="description">
-                             <div class="col-lg-4">
-                                <div class="text-center">
-                        <label for="recipient-name" class="form-control-label"><b>Total Amount</b></label>
-                        </div>
-                        <input type="number" name="withdrow" min="1" id="jumlaa" autocomplete="off" required class="form-control"style="width: 130px; height:30px;border-radius: 5px;">
-                        </div>
-                             <div class="col-lg-4">
-                       
-                        </div>
-                    </div>  
-                 </div>
-            <div class="modal-footer">
-               
-                <button type="submit" class="btn btn-primary">Adjust</button>
-                <button type="reset" class="btn btn-danger">Reset</button>
-
-            </div>
-            <?php echo form_close(); ?>
-        </div>
-    </div>
-</div>
-</div>
-<!--end::Modal-->
-
-
-
-<!-- <p>withdrawal</p> -->
-
-<div class="modal fade" id="kt_modal_2<?php //echo $blanchs->blanch_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">DASHBOARD YA MALIPO</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-               
-<?php echo form_open("oficer/create_withdrow_balance/{$customer->customer_id}"); ?>
-<div class="container-fluid">
-    <div class="row mb-3">
-        <div class="col-lg-4">
-            <label for="jumlas">Toa</label>
-            <input type="number" name="withdrow" min="1" id="jumlas" autocomplete="off" value="<?php echo $remain_balance->balance; ?>" class="form-control" style="border-radius: 8px;">
-        </div>
-
-        <div class="col-lg-4">
-            <label for="method">Njia Ya Malipo</label>
-            <select name="method" id="method" class="form-control" required style="border-radius: 8px;">
-                <option value="">Chagua Malipo</option>
-                <?php foreach ($acount as $acounts): ?>
-                    <option value="<?php echo $acounts->trans_id; ?>"><?php echo $acounts->account_name; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <div class="col-lg-4">
-            <label for="with_date">Tarehe</label>
-            <?php $date = date("Y-m-d"); ?>
-            <input type="date" name="with_date" id="with_date" value="<?php echo $date; ?>" autocomplete="off" required class="form-control" style="border-radius: 8px;">
-        </div>
     </div>
 
-    <div class="col-lg-4">
-            <label for="jumlas">Pin Number</label>
-            <input type="number" name="code"  autocomplete="off" required class="form-control" style="border-radius: 8px;">
-        </div>
-
-    <!-- Hidden Fields -->
-    <input type="hidden" value="CASH WITHDRAWALS" name="description">
-    <input type="hidden" value="withdrawal" name="loan_status">
-    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
-    <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
-    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
-    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
-    <input type="hidden" name="code" value="1">
-
-    <!-- Buttons -->
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Toa</button>
-        <a   href="<?php echo base_url("oficer/get_loan_code_resend/{$customer->customer_id}") ?>" class="btn btn-warning">Tuma Pin</a>
-        <button type="reset" class="btn btn-danger">Ghairi</button>
-    </div>
-</div>
-<?php echo form_close(); ?>
-
-
-        </div>
-    </div>
-</div>
-</div>
-
-
-<!-- <p>deposit</p> -->
-<div class="modal fade" id="kt_modal_<?php //echo $blanchs->blanch_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">DASHBOARD YA MALIPO</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-            <?php echo form_open("oficer/deposit_loan/{$customer->customer_id}"); ?>
-
-<input type="hidden" name="customer_id" value="<?php echo $customer->customer_id; ?>">
-<input type="hidden" name="comp_id" value="<?php echo $customer->comp_id; ?>">
-<input type="hidden" name="blanch_id" value="<?php echo $customer->blanch_id; ?>">
-<input type="hidden" name="loan_id" value="<?php echo $customer_loan->loan_id; ?>">
-<input type="hidden" name="description" value="LOAN RETURN">
-
-<div class="container">
-    <div class="row mb-3">
-        <!-- Total Amount -->
-        <div class="col-12 col-md-6 col-lg-4">
-            <label class="form-control-label"><b>Weka</b></label>
-            <input type="number" name="depost" min="1" id="jumla" autocomplete="off" required class="form-control" style="border-radius: 5px;">
-        </div>
-
-        <!-- Deposit Method -->
-        <div class="col-12 col-md-6 col-lg-4">
-            <label class="form-control-label"><b>Njia Ya Malipo</b></label>
-            <select name="p_method" class="form-control" required style="border-radius: 8px;">
-                <option value="">Chagua Njia Ya Malipo</option>
-                <?php foreach ($acount as $acounts): ?>
-                    <option value="<?php echo $acounts->trans_id; ?>"><?php echo $acounts->account_name; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <!-- Recovery or Default Amount -->
-        <div class="col-12 col-md-6 col-lg-4">
-            <?php if ($customer_loan->loan_status == 'withdrawal') { ?>
-                <label class="form-control-label"><b>Lazo</b></label>
-                <input type="text" class="form-control" value="<?php echo number_format($total_recovery->total_pending); ?>.00" readonly style="color:red">
-            <?php } elseif ($customer_loan->loan_status == 'out') { ?>
-                <label class="form-control-label" style="color:red;"><b>Deni Sugu</b></label>
-                <input type="text" class="form-control" value="<?php echo number_format($out_stand->total_out); ?>.00" readonly style="color:red">
-            <?php } else { ?>
-                <label class="form-control-label"><b>Lazo</b></label>
-                <input type="text" class="form-control" value="0.00" readonly style="color:red">
-            <?php } ?>
-        </div>
+    <!-- Payment Method -->
+    <div class="sm:col-span-6">
+      <label for="method_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Njia Za Malipo:
+      </label>
+      <select id="method_<?php echo $customer->customer_id; ?>" name="method"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
+        <option value="">Chagua Malipo</option>
+        <?php foreach ($acount as $acounts): ?>
+          <option value="<?= $acounts->trans_id; ?>"><?= $acounts->account_name; ?></option>
+        <?php endforeach; ?>
+      </select>
     </div>
 
-    <!-- Deposit Date -->
-    <div class="row mb-3">
-        <div class="col-12 col-md-6 col-lg-4">
-            <label class="form-control-label"><b>Tarehe</b></label>
-            <input type="date" class="form-control" readonly name="deposit_date" value="<?php echo date("Y-m-d"); ?>" style="border-radius: 8px;">
-        </div>
+    <!-- Date -->
+    <div class="sm:col-span-6">
+      <label for="with_date_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Tarehe:
+      </label>
+      <input type="date" id="with_date_<?php echo $customer->customer_id; ?>" name="with_date"
+        value="<?= date('Y-m-d'); ?>"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
     </div>
-</div>
 
-<div class="modal-footer">
-    <button type="submit" class="btn btn-primary">Weka</button>
-    <button type="reset" class="btn btn-danger">Ghairi</button>
+    <!-- Code -->
+    <div class="sm:col-span-6">
+      <label for="code_<?php echo $customer->customer_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Code Number:
+      </label>
+      <input type="number" placeholder="andika code ya Mteja" id="code_<?php echo $customer->customer_id; ?>" name="code"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
+    </div>
+
+  </div>
+
+  <!-- Hidden Inputs -->
+  <input type="hidden" value="CASH WITHDRAWALS" name="description">
+  <input type="hidden" value="withdrawal" name="loan_status">
+  <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+  <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
+  <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
+  <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
+
+
+
+  <!-- Action Buttons -->
+  <div class="mt-6 flex justify-end items-center gap-x-2">
+    <button type="button" class="py-2 px-3 btn-secondary-sm"
+      data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">Funga</button>
+
+    <a href="<?php echo base_url("oficer/get_loan_code_resend/{$customer->customer_id}"); ?>"
+      class="py-2 px-3 btn-primary-sm bg-green-600 hover:bg-cyan-700 text-white">
+      Resend Code
+    </a>
+
+    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Gawa</button>
+  </div>
 </div>
 
 <?php echo form_close(); ?>
 
-        </div>
     </div>
+  </div>
 </div>
+
+  
+
+<!-- here put data -->
+
+<div id="hs-edit-deposit-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-3xl lg:w-full m-3 lg:mx-auto">
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+        <h3 class="font-bold text-gray-800 dark:text-white">Jina La Mteja: <?= htmlspecialchars($customer->f_name, ENT_QUOTES, 'UTF-8'); ?></h3>
+        <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-deposit-modal">
+          <span class="sr-only">Close</span>
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <?php echo form_open("oficer/deposit_loan/{$customer->customer_id}"); ?>
+<!-- Modal Body -->
+<div class="p-4 sm:p-6">
+  <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
+
+    <!-- Total Withdraw -->
+   
+
+    <div class="sm:col-span-6">
+  <label for="depost_display" class="block text-sm font-medium mb-2 dark:text-gray-300">
+    * Deposit:
+  </label>
+
+  <!-- Visible formatted input -->
+  <input type="text" id="depost_display"
+    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+    placeholder="0" required>
+
+  <!-- Hidden clean input to be submitted -->
+  <input type="hidden" name="depost" id="depost">
 </div>
 
-
-<!-- <p>search</p> -->
-
-<div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xs" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tafuta Mteja</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php echo form_open("oficer/search_customerData"); ?>
-
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-12">
-                            <label class="form-control-label">*Tafuta Mteja:</label>
-                            <select class="form-control kt-selectpicker" name="customer_id" required data-live-search="true">
-                                    <option value="">Select customer</option>
-                                    <?php foreach ($customery as $customers): ?>
-                                <option value="<?php echo $customers->customer_id; ?>"><?php echo $customers->f_name; ?> <?php echo $customers->m_name; ?> <?php echo $customers->l_name; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <input type="hidden" name="comp_id" value="<?php echo $customer->comp_id; ?>">
-                        </div>
-                             <div class="col-lg-4">
-                       
-                        </div>
-                    </div>  
-                 </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Tafuta Mteja</button>
-            </div>
-            <?php echo form_close(); ?>
-        </div>
+    <!-- Payment Method -->
+    <div class="sm:col-span-6">
+      <label for="p_method" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Njia Za Malipo:
+      </label>
+      <select id="p_method" name="p_method"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
+        <option value="">Chagua Malipo</option>
+        <?php foreach ($acount as $acounts): ?>
+          <option value="<?= $acounts->trans_id; ?>"><?= $acounts->account_name; ?></option>
+        <?php endforeach; ?>
+      </select>
     </div>
-</div>
-<!--end::Modal-->
+
+
+    <div class="sm:col-span-6">
+    <?php if ($customer_loan->loan_status == 'withdrawal') { ?>
+        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               value="<?php echo number_format($total_recovery->total_pending, 2); ?>" 
+               readonly style="color:red"> 
+
+    <?php } elseif ($customer_loan->loan_status == 'out') { ?>
+        <span style="color:red;">Default Amount</span>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               value="<?php echo number_format($out_stand->total_out, 2); ?>" 
+               readonly style="color:red"> 
+
+    <?php } else { ?>
+        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
+        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+                value="<?php echo number_format($total_recovery->pending, 2); ?>"
+               readonly style="color:red"> 
+    <?php } ?>
 </div>
 
+
+
+ 
+
+
+    <!-- Date -->
+    <div class="sm:col-span-6">
+      <label for="deposit_date" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Tarehe:
+      </label>
+      <input type="date" id="deposit_date" name="deposit_date"
+        value="<?= date('Y-m-d'); ?>"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
+    </div>
+
+    <!-- Code -->
+   
+
+  </div>
+
+  
+
+  <!-- Hidden Inputs -->
+  <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
+                    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
+                    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
+                    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+                     <input type="hidden" value="LOAN RETURN" name="description">
+
+  <!-- Action Buttons -->
+  <div class="mt-6 flex justify-end items-center gap-x-2">
+    <button type="button" class="py-2 px-3 btn-secondary-sm"
+      data-hs-overlay="#hs-edit-deposit-modal">Funga</button>
+
+    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Weka</button>
+  </div>
+</div>
+
+<?php echo form_close(); ?>
+
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+<!-- ========== END MAIN CONTENT BODY ========== -->
+
+<?php
+include_once APPPATH . "views/partials/footer.php";
+?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Include Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<style>
+.select2-container--default .select2-selection--single {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    height: auto;
+    color: #06b6d4; 
+    font-size: 0.875rem;
+    position: relative;
+}
+.select2-selection__rendered,
+.select2-selection__clear,
+.select2-selection__arrow {
+    color: #d1d5db;
+}
+.select2-selection__arrow {
+    right: 1rem;
+    top: 0;
+    width: 1.5rem;
+    position: absolute;
+}
+.select2-selection__clear {
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+}
+.custom-select2-dropdown {
+    background-color: #1f2937;
+    color: #d1d5db;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #ffffff !important; /* Force white text */
+}
+.custom-select2-dropdown .select2-results__option--highlighted {
+    background-color: #06b6d4 !important; /* Tailwind cyan-400 */
+    color: #ffffff !important;
+}
+
+/* White text in the dropdown input if searchable */
+.select2-search__field {
+    color: #ffffff !important;
+    background-color: #1f2937 !important; /* match dark bg */
+    border: 1px solid #374151;
+}
+.custom-select2-dropdown .select2-results__option--highlighted {
+    background-color: #06b6d4;
+    color: #ffffff;
+}
+.custom-select2-container { margin: 0; }
+</style> 
+
+<script>
+$(document).ready(function () {
+    const selectConfig = {
+        placeholder: "Select",
+        allowClear: true,
+        width: '100%',
+        dropdownCssClass: 'custom-select2-dropdown',
+        containerCssClass: 'custom-select2-container'
+    };
+
+    // Customer Search Select
+    $('#branchSelect').select2({...selectConfig, placeholder: "Tafuta Mteja"});
+
+    // Auto-submit when customer is selected
+    $('#branchSelect').on('select2:select', function () {
+        const selected = $(this).val();
+        if (selected) {
+            $('#customerSearchForm').submit();
+        }
+    });
+
+    // Employee Select (loaded dynamically based on branch)
+    $('#employeeSelect').select2({...selectConfig, placeholder: "Select Employee"});
+
+    $('#branchSelect').on('change', function () {
+        const branchId = $(this).val();
+
+        $.post('fetch_employee_blanch', { blanch_id: branchId }, function (data) {
+            const employeeSelect = $('#employeeSelect');
+            employeeSelect.html(data).select2({...selectConfig, placeholder: "Select Employee"});
+
+            // Optional: If using Preline's hsSelect
+            const customSelect = $('[data-hs-select]');
+            if (customSelect.length) {
+                customSelect.html(data);
+                customSelect.hsSelect();
+            }
+        }).fail(function (xhr, status, error) {
+            console.error('AJAX error:', status, error);
+        });
+    });
+});
+
+// Age Calculation
+function getAge(dob) {
+    const age = new Date().getFullYear() - new Date(dob).getFullYear();
+    document.getElementById('age').value = isNaN(age) ? '' : age;
+}
+</script>
 
 
 <script>
-    function SendSmSButton() {
-        event.preventDefault()
-        const resend = document.querySelector("#resend")
-        alert("jamaaa")
+  const displayInput = document.getElementById('depost_display');
+  const hiddenInput = document.getElementById('depost');
 
-        setTimeout(()=>{
-            resend.style.display = 'none'
-        }, 4000)
+  displayInput.addEventListener('input', function () {
+    // Remove non-digits and commas
+    let rawValue = this.value.replace(/,/g, '').replace(/\D/g, '');
 
-        setTimeout(()=>{
-            resend.style.display = 'block'
-        }, 10000)
+    if (rawValue === '') {
+      hiddenInput.value = '';
+      this.value = '';
+      return;
     }
+
+    // Format with commas for display
+    this.value = parseInt(rawValue).toLocaleString('en-US');
+
+    // Set hidden input without commas for submission
+    hiddenInput.value = rawValue;
+  });
 </script>
+
 
 
 

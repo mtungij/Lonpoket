@@ -92,28 +92,30 @@ include_once APPPATH . "views/partials/officerheader.php";
                         <div class="sm:col-span-4">
                             <label for="f_name" class="block text-sm font-medium mb-2 dark:text-gray-300">* First Name:</label>
                             <input type="text" id="f_name" name="f_name" placeholder="Full name" autocomplete="off" 
-                                   class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('f_name'); ?>">
+                                   class=" uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('f_name'); ?>">
                             <?php echo form_error("f_name", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
                         </div>
 
 						<div class="sm:col-span-4">
                             <label for="m_name" class="block text-sm font-medium mb-2 dark:text-gray-300">* Middle Name:</label>
                             <input type="text" id="m_name" name="m_name" placeholder="Full name" autocomplete="off" 
-                                   class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('m_name'); ?>">
+                                   class=" uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('m_name'); ?>">
                             <?php echo form_error("m_name", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
                         </div>
 
 						<div class="sm:col-span-4">
                             <label for="l_name" class="block text-sm font-medium mb-2 dark:text-gray-300">* Last Name:</label>
                             <input type="text" id="l_name" name="l_name" placeholder="Full name" autocomplete="off" 
-                                   class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('l_name'); ?>">
+                                   class=" uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('l_name'); ?>">
                             <?php echo form_error("l_name", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
                         </div>
 
                         <div class="sm:col-span-4">
                             <label for="phone_no" class="block text-sm font-medium mb-2 dark:text-gray-300">* Phone number:</label>
-                            <input type="number" id="phone_no" name="phone_no" placeholder="Mobile no" autocomplete="off" required
-                                   class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" value="<?php echo set_value('phone_no'); ?>">
+                            <input type="text" id="phone_no" name="phone_no" placeholder="0712 345 678" autocomplete="off" required
+                                class="phone-format py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+                                value="<?php echo set_value('phone_no'); ?>">
+
                             <?php echo form_error("phone_no", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
                         </div>
                         
@@ -210,6 +212,31 @@ include_once APPPATH . "views/partials/footer.php";
         HSStaticMethods.autoInit(); // This is required to initialize all hs-select dropdowns
     });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const phoneInput = document.getElementById('phone_no');
+
+    phoneInput.addEventListener('input', function (e) {
+        let value = phoneInput.value.replace(/\D/g, ''); // Remove non-digits
+
+        // Format like: 0712 345 678
+        if (value.length > 3 && value.length <= 6) {
+            value = value.replace(/(\d{3})(\d+)/, '$1 $2');
+        } else if (value.length > 6) {
+            value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3');
+        }
+
+        phoneInput.value = value;
+    });
+
+    // On submit, strip formatting so only digits are sent
+    phoneInput.form.addEventListener('submit', function () {
+        phoneInput.value = phoneInput.value.replace(/\D/g, '');
+    });
+});
+</script>
+
 <script>
 window.addEventListener('load', () => {
   setTimeout(() => {

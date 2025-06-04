@@ -42,7 +42,7 @@
 				<i class="kt-font-brand flaticon-list-2"></i>
 			</span>
 			<h3 class="kt-portlet__head-title">
-			MIAMALA YA LEO
+			KUSANYO LA LEO 
 			</h3>
 		</div>
 		<div class="kt-portlet__head-toolbar">
@@ -52,14 +52,14 @@
 	
 		&nbsp;
 		
-		<a href="<?php echo base_url("oficer/manager_prevTransaction"); ?>" class="btn btn-brand btn-elevate btn-icon-sm">
+		<!-- <a href="</?php echo base_url("oficer/manager_prevTransaction"); ?>" class="btn btn-brand btn-elevate btn-icon-sm">
 			<i class="flaticon-event-calendar-symbol"></i>
 			Previous
-		</a>
-	<a href="<?php echo base_url("oficer/manager_printCash"); ?>" class="btn btn-brand btn-elevate btn-icon-sm" target="_blank">
-			<i class="flaticon-technology"></i></a>
+		</a> -->
+	<!-- <a href="</?php echo base_url("oficer/manager_printCash"); ?>" class="btn btn-brand btn-elevate btn-icon-sm" target="_blank">
+			<i class="flaticon-technology"></i></a> -->
 		
-	<a href="" class="btn btn-info" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_4"><i class="kt-menu__link-icon flaticon2-search-1"></i>Filter</a>
+	<!-- <a href="" class="btn btn-info" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_4"><i class="kt-menu__link-icon flaticon2-search-1"></i>Filter</a> -->
 	<a href="<?php echo base_url("oficer/print_cash"); ?>" class="btn btn-brand btn-elevate btn-icon-sm" target="_blank">
 			<i class="flaticon-technology"></i></a>
 			
@@ -70,59 +70,65 @@
 
 	<div class="kt-portlet__body">
 		<!--begin: Datatable -->
+
 		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-									     <thead>
-			  						          <tr>
-				  							    <th>S/No.</th>
-												<th>JINA LA MTEJA</th>
-												<th>LIPWA</th>
-												<th>TOLEWA</th>
-												<th>TAREHE</th>
-				  									
-				  									
-				  						         </tr>
-						                  </thead>
-			
-								    <tbody>
-                                          <?php $no = 1; ?>
-									<?php foreach ($cash as $cashs): ?>
-									          <tr>
-				  					<td><?php echo $no++; ?>.</td>
-				  					<td class="c"><?php echo $cashs->f_name; ?> <?php echo $cashs->m_name; ?> <?php echo $cashs->l_name; ?></td>
-				  					<td>
-				  						<?php if ($cashs->depost == TRUE) {
-				  						 ?>
-				  						<?php echo number_format($cashs->depost); ?>
-				  					<?php }elseif ($cashs->depost == FALSE) {
-				  					 ?>
-				  					 -
-				  					 <?php } ?>
-				  					</td>
-				  					<td>
-				  						<?php if ($cashs->withdraw == TRUE) {
-				  						 ?>
-				  						<?php echo number_format($cashs->withdraw); ?>
-				  					<?php }elseif ($cashs->withdraw == FALSE) {
-				  					 ?>
-				  					 -
-				  					 <?php } ?>
-				  					</td>
-				  					<td><?php echo $cashs->lecod_day; ?></td> 
-				  								  											  							
-                                   </tr>
-                      <?php endforeach; ?>
-									
-	                </tbody>
-	                <tfoot>
-                    <tr>
-                    <th>JUMLA</th>
-					<th></th>
-					<th><?php echo number_format($sum_depost->cash_depost); ?></th>
-					<th><?php echo number_format($sum_withdrawls->cash_withdrowal); ?></th>
-					<th></th>
-                    </tr>
-                   </tfoot>
-                   </table>
+    <thead>
+        <tr>
+            <th>S/No.</th>
+            <th>JINA LA MTEJA</th>
+            <th>REJESHO</th>
+            <th>LIPWA</th>
+            <th>LAZA</th>
+            <th>ZIDI</th>
+            <th>TAREHE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        $no = 1;
+        $total_rejesho = 0;
+        $total_lipwa = 0;
+        $total_laza = 0;
+        $total_zidi = 0;
+
+        foreach ($cash as $cashs): 
+            if (empty($cashs->depost) || empty($cashs->customer_id)) {
+                continue;
+            }
+
+            $rejesho = $cashs->restrations;
+            $lipwa = $cashs->depost;
+            $laza = ($lipwa < $rejesho) ? ($rejesho - $lipwa) : 0;
+            $zidi = ($lipwa > $rejesho) ? ($lipwa - $rejesho) : 0;
+
+            $total_rejesho += $rejesho;
+            $total_lipwa += $lipwa;
+            $total_laza += $laza;
+            $total_zidi += $zidi;
+        ?>
+        <tr>
+            <td><?php echo $no++; ?></td>
+            <td><?php echo $cashs->f_name . ' ' . $cashs->m_name . ' ' . $cashs->l_name; ?></td>
+            <td><?php echo number_format($rejesho); ?></td>
+            <td><?php echo number_format($lipwa); ?></td>
+            <td><?php echo $laza > 0 ? number_format($laza) : '-'; ?></td>
+            <td><?php echo $zidi > 0 ? number_format($zidi) : '-'; ?></td>
+            <td><?php echo date('d-m-Y', strtotime($cashs->lecod_day)); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>JUMLA</th>
+            <th></th>
+            <th><?php echo number_format($total_rejesho); ?></th>
+            <th><?php echo number_format($total_lipwa); ?></th>
+            <th><?php echo number_format($total_laza); ?></th>
+            <th><?php echo number_format($total_zidi); ?></th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
 		<!--end: Datatable -->
 	</div>
 </div>

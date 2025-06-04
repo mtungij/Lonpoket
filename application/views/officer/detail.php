@@ -64,7 +64,7 @@ include_once APPPATH . "views/partials/officerheader.php";
     <div class="sm:col-span-1">
         <label for="famous_area" class="block text-sm font-medium mb-2 dark:text-gray-300">* Nick Name:</label>
         <input type="text" step="0.01" id="famous_area" name="famous_area" placeholder="andika jina maarufu la mteja" required autocomplete="off"
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
                value="<?php echo set_value('famous_area', ($customer && isset($customer->famous_area) ? htmlspecialchars($customer->famous_area, ENT_QUOTES, 'UTF-8') : '')); ?>">
         <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">Enter a number (e.g., mama jonson, baba james).</p>
         <?php echo form_error("famous_area", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
@@ -73,7 +73,7 @@ include_once APPPATH . "views/partials/officerheader.php";
     <div class="sm:col-span-1">
         <label for="place_imployment" class="block text-sm font-medium mb-2 dark:text-gray-300">* Place of Business:</label>
         <input type="text" id="place_imployment" name="place_imployment" placeholder="Enter place of business" required autocomplete="off"
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+               class=" uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
                value="<?php echo set_value('place_imployment', ($customer && isset($customer->place_imployment) ? htmlspecialchars($customer->place_imployment, ENT_QUOTES, 'UTF-8') : '')); ?>">
         <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">Enter the place of business (e.g., market, shop).</p>
         <?php echo form_error("place_imployment", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>

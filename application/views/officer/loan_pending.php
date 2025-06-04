@@ -1,200 +1,137 @@
-<?php include('incs/header_1.php'); ?>
-<?php include('incs/side_1.php'); ?>
-<?php include('incs/subheader.php'); ?>
-	
+
+<?php
+include_once APPPATH . "views/partials/officerheader.php";
+
+// --- DUMMY DATA - REMOVE AND LOAD FROM YOUR CONTROLLER ---
+// Controller should pass $loan_pending, an array of shareholder objects.
+// Each object should have 'loan_id', 'share_name', 'share_mobile', 'share_email', 'share_sex', 'share_dob'.
+// if (!isset($loan_pending)) {
+//     $loan_pending = [
+//         (object)['loan_id' => 1, 'share_name' => 'Alice Wonderland', 'share_mobile' => '0712345001', 'share_email' => 'alice@example.com', 'share_sex' => 'female', 'share_dob' => '1985-06-15'],
+//         (object)['loan_id' => 2, 'share_name' => 'Bob The Builder', 'share_mobile' => '0712345002', 'share_email' => 'bob@example.com', 'share_sex' => 'male', 'share_dob' => '1978-11-02'],
+//     ];
+// }
+// --- END DUMMY DATA ---header.php
+?>
+
+<!-- ========== MAIN CONTENT BODY ========== -->
+<div class="w-full lg:ps-64">
+    <div class="p-4 sm:p-6 space-y-6">
+
+        <!-- Page Title / Subheader -->
+        <div class="mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-200">
+               Target Ya Mikopo
+            </h2>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Omba upitishiwe ili uwahudumie.
+            </p>
+        </div>
 
 
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">					
-<!-- begin:: Subheader -->
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-   
-</div>
-<!-- end:: Subheader -->										
-<!-- begin:: Content -->
-<!-- begin:: Content -->
+		<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <div class="relative max-w-xs w-full">
+                        <label for="shareholder-table-search" class="sr-only">Search</label>
+                        <input type="text" name="shareholder-table-search" id="shareholder-table-search" class="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" placeholder="Search share holders..." data-hs-datatable-search="#shareholder_table">
+                        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3"><svg class="size-4 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></div>
+                    </div>
+                </div>
 
+<!-- Table Section -->
+<div class="overflow-x-auto">
+                    <div class="min-w-full inline-block align-middle">
+                        <div class="border rounded-lg overflow-hidden dark:border-gray-700">
+						<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" id="shareholder_table" data-hs-datatable>
+    <thead class="bg-gray-50 dark:bg-gray-700">
+        <tr>
+            <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">S/No.</span></div></th>
+            <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Customer Name</span></div></th>
+            <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Phone Number</span></div></th>
+            <th scope="col" class="py-3 px-6 text-start"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Branch</span></div></th>
+            <th scope="col" class="py-3 px-6 text-start --exclude-from-ordering"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Loan Amount Applied</span></div></th>
+            <th scope="col" class="py-3 px-6 text-start --exclude-from-ordering"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Duration Type</span></div></th>
+            <th scope="col" class="py-3 px-6 text-start --exclude-from-ordering"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Loan Type</span></div></th>
+            <th scope="col" class="py-3 px-6 text-end --exclude-from-ordering"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Loan Status</span></div></th>
+            <th scope="col" class="py-3 px-6 text-end --exclude-from-ordering"><div class="inline-flex items-center gap-x-2"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Application Date</span></div></th>
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+        <?php if (isset($loan_pending) && is_array($loan_pending) && !empty($loan_pending)): ?>
+            <?php 
+                $no = 1; 
+                $total_loan = 0;
+                foreach ($loan_pending as $loan_pendings): 
+                    $total_loan += $loan_pendings->how_loan;
+            ?>
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"><?php echo $no++; ?>.</td>
+                <td class="px-6 py-4 uppercase whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    <?php echo htmlspecialchars($loan_pendings->f_name . ' ' . $loan_pendings->m_name . ' ' . $loan_pendings->l_name, ENT_QUOTES, 'UTF-8'); ?>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($loan_pendings->phone_no, ENT_QUOTES, 'UTF-8'); ?></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($loan_pendings->blanch_name, ENT_QUOTES, 'UTF-8'); ?></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    <?php echo number_format((float) $loan_pendings->how_loan, 0, '.', ','); ?>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    <?php
+                        if ($loan_pendings->day == 1) {
+                            echo "Siku";
+                        } elseif ($loan_pendings->day == 7) {
+                            echo "Wiki";
+                        } elseif (in_array($loan_pendings->day, [28, 29, 30, 31])) {
+                            echo "Mwezi";
+                        } else {
+                            echo "N/A";
+                        }
+                        echo " (" . htmlspecialchars($loan_pendings->session, ENT_QUOTES, 'UTF-8') . ")";
+                    ?>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($loan_pendings->loan_name, ENT_QUOTES, 'UTF-8'); ?></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    <?php echo ($loan_pendings->loan_count > 1) ? 'Sio Mteja Mpya' : 'Mteja Mpya'; ?>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars(date('d M, Y', strtotime($loan_pendings->loan_day)), ENT_QUOTES, 'UTF-8'); ?></td>
+            </tr>
+            <?php endforeach; ?>
+            <tr class="bg-gray-100 dark:bg-gray-800 font-semibold">
+                <td colspan="4" class="px-6 py-4 text-end text-sm text-gray-900 dark:text-white">TOTAL:</td>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                    <?php echo number_format((float) $total_loan, 0, '.', ','); ?>
+                </td>
+                <td colspan="4"></td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
 
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-	<!--begin::Portlet-->
-	<?php if ($das = $this->session->flashdata('massage')): ?>
-	  <div class="alert alert-success fade show alert-success" role="alert">
-                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
-                            <div class="alert-text"><?php echo $das;?></div>
-                            <div class="alert-close">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="la la-close"></i></span>
-                                </button>
-                            </div>
-                  </div>
-         <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+<!-- End Table Section -->
+<?php
+include_once APPPATH . "views/partials/footer.php";
+?>
+<?php // Script for cmd+a fix for DataTables search input (if used) ?>
 
-<div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-				Loan Application List(<i>Individual</i>)
-			</h3>
-		</div>
-		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
+<script>
+  window.addEventListener('load', () => {
+    window.HSStaticMethods.autoInit(); // Ensure Preline auto-inits all datatable components
+  });
+</script>
 
-	
-		&nbsp;
-		
-		<a href="<?php echo base_url("oficer/print_loan_request"); ?>" class="btn btn-brand btn-elevate btn-icon-sm" target="_blank">
-			<i class="flaticon-technology"></i>
-			Print
-		</a>
-		<?php $blanch_id = $this->session->userdata('blanch_id'); ?>
-		<a href="<?php echo base_url("oficer/loan_group_request"); ?>" class="btn btn-primary btn-elevate btn-icon-sm">
-			<?php $number_request = $this->db->query("SELECT * FROM tbl_loans WHERE loan_status = 'open' AND group_id IS TRUE AND blanch_id = '$blanch_id'"); ?>
-			<i class="flaticon-eye"><?php echo $number_request->num_rows(); ?></i>
-		  Laon Group Request
-		</a>
-	</div>	
-</div>		</div>
-	</div>
-
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-									     <thead>
-			  						          <tr>
-		  							<th>S/No.</th>
-									<th>Loan AC/No</th>
-									<th>customer name</th>
-									<th>Phone Number</th>
-									<!-- <th>Busines/Job Name</th> -->
-									<th>Branch</th>
-									<th>Loan Amount</th>
-									<th>Loan Duration</th>
-									<th>Number of repayments</th>
-									<th>Loan Status</th>
-									<th>Action</th>
-				  									
-				  									
-				  						         </tr>
-						                  </thead>
-			
-								    <tbody>
-                                          <?php $no = 1; ?>
-									<?php foreach($loan_pending as $loan_pendings): ?>
-									          <tr>
-				  					<td><?php echo $no++; ?>.</td>
-				  					<td><?php echo $loan_pendings->loan_code; ?></td>
-				  					<td><?php echo $loan_pendings->f_name; ?> <?php echo substr($loan_pendings->m_name, 0,1); ?> <?php echo $loan_pendings->l_name; ?></td>
-				  					<td><?php echo $loan_pendings->phone_no; ?></td>
-				  					<!-- <td><?php //echo $loan_pendings->bussiness_type; ?></td> -->
-				  					<td><?php echo $loan_pendings->blanch_name; ?></td>
-				  						<td><?php echo number_format($loan_pendings->how_loan); ?></td>
-				  						<td>
-				  							<?php if ($loan_pendings->day == 1) {
-				  								 echo "Daily";
-				  							 ?>
-				  							<?php }elseif($loan_pendings->day == 7){
-                                                  echo "Weekly";
-				  							 ?>
-				  							
-				  						<?php }elseif($loan_pendings->day == 30 || $loan_pendings->day == 31 || $loan_pendings->day == 28 || $loan_pendings->day == 29){
-				  						        echo "Monthly"; 
-				  							?>
-				  							<?php } ?>
-				  								
-				  							</td>
-				  						<td><?php echo $loan_pendings->session; ?></td>
-				  						<td>
-				 	<?php if ($loan_pendings->loan_status == 'open') {
-				 ?>
-				 <a href="#" class="badge badge-danger">Pending</a>
-				<?php }elseif ($loan_pendings->loan_status == 'aprove') {
-				 ?>
-				 <a href="#" class="badge badge-success">Approved</a>
-				 <?php }elseif($loan_pendings->loan_status == 'dis'){
-				  ?>
-			<a href="#" class="badge badge-info">Disbursed</a>
-
-				  <?php } ?>
-				                        </td>
-				  				
-				  				<td>
-				  		<?php foreach ($privillage as $privillages): ?>	
-				  		<?php if ($privillages->position_id == '1') {
-				  					 ?>
-				  			<div class="dropdown dropdown-inline">
-			<button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class=""></i> Action  	
-			</button>
-			<div class="dropdown-menu dropdown-menu-right">
-				<ul class="kt-nav">
-					<li class="kt-nav__section kt-nav__section--first">
-						<span class="kt-nav__section-text">Choose an option</span>
-					</li>
-					
-					<li class="kt-nav__item">
-                          <?php if ($loan_pendings->group_id == TRUE) {
-                           ?>
-						<a href="<?php echo base_url("oficer/view_LoanCustomerData/{$loan_pendings->customer_id}/{$loan_pendings->comp_id}") ?>" class="kt-nav__link">
-							<i class="kt-nav__link-icon flaticon-eye" ></i>
-							<span class="kt-nav__link-text">View Customer Details</span>
-						</a>
-					<?php }elseif($loan_pendings->group_id == FALSE){ ?>
-					<a href="<?php echo base_url("oficer/view_Dataloan/{$loan_pendings->customer_id}/{$loan_pendings->comp_id}") ?>" class="kt-nav__link">
-					<i class="kt-nav__link-icon flaticon-eye" ></i>
-							<span class="kt-nav__link-text">View Customer Details</span>
-						</a>
-						<?php } ?>
-
-					</li>
-					
-					<li class="kt-nav__item">
-						<a href="<?php echo base_url("oficer/reject_loan/{$loan_pendings->loan_id}") ?>" class="kt-nav__link" onclick="return confirm('Are you sure?')">
-							<i class="kt-nav__link-icon flaticon2-delete"style="color:red"></i>
-							<span class="kt-nav__link-text" style="color:red" >Reject Loan</span>
-						</a>
-					</li>
-					<li class="kt-nav__item">
-						<a href="<?php echo base_url("oficer/delete_loan/{$loan_pendings->loan_id}") ?>" class="kt-nav__link" onclick="return confirm('Are you sure?')">
-							<i class="kt-nav__link-icon flaticon2-trash"></i>
-							<span class="kt-nav__link-text" >Delete Loan</span>
-						</a>
-					</li>
-					
-				</ul>
-			</div>
-	</div>
-	<?php } ?>
-	<?php endforeach; ?>
-</td>			  											  							
-</tr>
-
-<?php endforeach; ?>
-									
-	                </tbody>
-	                <tfoot>
-                    <tr>
-          <th>TOTAL</th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th><?php echo number_format($total_request->total_loan_request); ?></th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th></th>
-                    </tr>
-                   </tfoot>
-                   </table>
-		<!--end: Datatable -->
-	</div>
-</div>
-</div>
-<!-- end:: Content -->
-<!-- end:: Content -->
-				</div>				
-				
-<?php include('incs/footer_1.php') ?>
+<script>
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const inputs = document.querySelectorAll('input[data-hs-datatable-search]');
+    inputs.forEach((input) => {
+      input.addEventListener('keydown', function (evt) {
+        if ((evt.metaKey || evt.ctrlKey) && (evt.key === 'a' || evt.key === 'A')) {
+          this.select();
+        }
+      });
+    });
+    // HSStaticMethods.autoInit(['select']); // If Preline selects need explicit init
+  }, 500);
+});
+</script>

@@ -1,147 +1,103 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
-  <meta charset="utf-8">
-  <title><?php echo $compdata->comp_name; ?> | CASH TRANSACTION REPORT</title>
+    <meta charset="UTF-8">
+    <title><?= $compdata->comp_name; ?> | CASH TRANSACTION REPORT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        h3, p {
+            text-align: center;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th, td {
+            padding: 6px;
+            text-align: center;
+        }
+        thead {
+            background-color: #f2f2f2;
+        }
+        tfoot {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
+    <?php $day = date('d-m-Y'); ?>
 
-<div id="container">
- <!--  <div style='width: 100%;align-items: center; display: flex;justify-content:space-between;flex-direction: row;'>
- </div> -->
-  <style>
-    .pull{
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 0px;
-    margin-right: 150px;
-    margin-left: 80px;
+    <h3>Ripoti ya Miamala ya Fedha</h3>
+    <p style="font-size:15px;text-align:center;">
+        <b><?= $empl->empl_name; ?> - KUSANYO LA LEO TAREHE / <?= $day; ?></b>
+    </p>
 
-    }
-  </style>
-  <style>
-    .display{
-      display: flex;
-      
-    }
-  </style>
+    <table>
+        <thead>
+            <tr>
+                <th>S/No.</th>
+                <th>JINA LA MTEJA</th>
+                <th>REJESHO</th>
+                <th>LIPWA</th>
+                <th>LAZA</th>
+                <th>ZIDI</th>
+                <th>TAREHE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $no = 1;
+            $total_rejesho = 0;
+            $total_lipwa = 0;
+            $total_laza = 0;
+            $total_zidi = 0;
 
-     <style>
-             .c {
-               text-transform: uppercase;
-               }
-                
-                </style>
+            foreach ($cash as $cashs): 
+                if (empty($cashs->depost) || empty($cashs->customer_id)) continue;
 
-      
+                $rejesho = $cashs->restrations;
+                $lipwa = $cashs->depost;
 
-             <table  style="border: none">
-      <tr style="border: none">
-        <td style="border: none">
-          
+                $laza = $lipwa < $rejesho ? ($rejesho - $lipwa) : 0;
+                $zidi = $lipwa > $rejesho ? ($lipwa - $rejesho) : 0;
 
- <div style="width: 20%;">
-  <img src="<?php echo base_url().'assets/img/'.$compdata->comp_logo ?>" style="width: 100px;height: 80px;">
-  </div> 
-
-        </td>
-        <td style="border: none">
-      <div class="pull">
-  <p style="font-size:20px;" class="c"> <b><?php echo $compdata->comp_name; ?></b><br>
-        <?php echo $compdata->adress; ?> <br>
-        <?php $day = date("d-m-Y"); ?>
-        </p>
-         <p style="font-size:15px;text-align:center;"><b><?php echo $blanch_data->blanch_name; ?> - TODAY CASH TRANSACTION REPORT / <?php echo $day; ?></p>
-
-  </div>
-        </td>
-      </tr>
+                $total_rejesho += $rejesho;
+                $total_lipwa += $lipwa;
+                $total_laza += $laza;
+                $total_zidi += $zidi;
+            ?>
+            <tr>
+                <td><?= $no++; ?></td>
+                <td><?= $cashs->f_name . ' ' . $cashs->m_name . ' ' . $cashs->l_name; ?></td>
+                <td><?= number_format($rejesho); ?></td>
+                <td><?= number_format($lipwa); ?></td>
+                <td><?= $laza > 0 ? number_format($laza) : '-'; ?></td>
+                <td><?= $zidi > 0 ? number_format($zidi) : '-'; ?></td>
+                <td><?= date('d-m-Y', strtotime($cashs->lecod_day)); ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>JUMLA</th>
+                <th></th>
+                <th><?= number_format($total_rejesho); ?></th>
+                <th><?= number_format($total_lipwa); ?></th>
+                <th><?= number_format($total_laza); ?></th>
+                <th><?= number_format($total_zidi); ?></th>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
-
-     
- 
-  <div id="body">
-  <style> 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 5px;
-}
-
-tr:nth-child(even) {
-  background-color: ;
-}
-
-</style>
-</head>
-<body>
-
-
-<hr>
-<table>
-  <tr>
-    <th style="font-size:12px;border: none;">S/No.</th>
-    <th style="font-size:12px;border: none;">Customer Name</th>
-    <!-- <th style="font-size:12px;border: none;">Brach Name</th> -->
-    <th style="font-size:12px;border: none;">Deposit</th>
-    <th style="font-size:12px;border: none;">Withdrawal</th>
-    <th style="font-size:12px;border: none;">Date</th>
-  </tr>
-   <?php $no = 1; ?>
-  <?php foreach ($cash as $cashs): ?>
-    
- 
- <tr>
-    <td style="font-size:12px;border: none;" class="c"><?php echo $no++; ?>.</td>
-    <td style="font-size:12px;border: none;" class="c"><?php echo $cashs->f_name; ?> <?php echo $cashs->m_name; ?> <?php echo $cashs->l_name; ?></td>
-    <!-- <td style="font-size:12px;border: none;" class="c"><?php //echo $cashs->blanch_name; ?></td> -->
-    <td style="font-size:12px;border: none;" class="c">
-      <?php if ($cashs->depost == TRUE) {
-       ?>
-      <?php echo number_format($cashs->depost); ?>
-    <?php }elseif ($cashs->depost == FALSE) {
-     ?>
-     -
-     <?php } ?>
-      </td>
-    <td style="font-size:12px;border: none;" class="c">
-      <?php if ($cashs->withdraw == TRUE) {
-       ?>
-      <?php echo number_format($cashs->withdraw); ?>
-    <?php }elseif ($cashs->withdraw == FALSE) {
-     ?>
-     -
-     <?php } ?>
-        
-      </td>
-    <td style="font-size:12px;border: none;" class="c"><?php echo  substr($cashs->lecod_day, 0,16) ; ?></td>
-  </tr>
- <?php endforeach; ?>
- <tr>
-   <td style="font-size:12px;border: none;" class="c"></td>
-   <td style="font-size:12px;border: none;" class="c"><b>total</b></td>
-<!--    <td style="font-size:12px;border: none;" class="c"></td> -->
-   
-   <td style="font-size:12px;border: none;" class="c"><b><?php echo number_format($sum_depost->cash_depost); ?></b></td>
-   <td style="font-size:12px;border: none;" class="c"><b><?php echo number_format($sum_withdrawls->cash_withdrowal); ?></b></td>
-   <td style="font-size:12px;border: none;" class="c"></td>
- </tr>
-
-</table>
-  </div>
-
-</div>
 
 </body>
 </html>
-
-
-
-

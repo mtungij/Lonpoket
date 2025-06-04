@@ -68,75 +68,65 @@
 
 	<div class="kt-portlet__body">
 		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-									     <thead>
-			  						          <tr>
-				  							    <th>S/No.</th>
-												<th>Customer Name</th>
-												<th>Deposit</th>
-												<th>Withdrawal</th>
-												<th>Date</th>
-												<th>Time</th>
-												<th></th>
-												<th>Action</th>
-				  									
-				  									
-				  						         </tr>
-						                  </thead>
-			
-								    <tbody>
-                                          <?php $no = 1; ?>
-									<?php foreach ($cash as $cashs): ?>
-									          <tr>
-				  					<td><?php echo $no++; ?>.</td>
-				  					<td class="c"><?php echo $cashs->f_name; ?> <?php echo $cashs->m_name; ?> <?php echo $cashs->l_name; ?></td>
-				  					<td>
-				  						<?php if ($cashs->depost == TRUE) {
-				  						 ?>
-				  						<?php echo number_format($cashs->depost); ?>
-				  					<?php }elseif ($cashs->depost == FALSE) {
-				  					 ?>
-				  					 -
-				  					 <?php } ?>
-				  					</td>
-				  					<td>
-				  						<?php if ($cashs->withdraw == TRUE) {
-				  						 ?>
-				  						<?php echo number_format($cashs->withdraw); ?>
-				  					<?php }elseif ($cashs->withdraw == FALSE) {
-				  					 ?>
-				  					 -
-				  					 <?php } ?>
-				  					</td>
-				  					<td><?php echo $cashs->lecod_day; ?></td> 
-				  					<td><?php echo $cashs->time_rec; ?></td> 
-				  					<td><?php //echo $cashs->time_rec; ?></td> 
-				  					<td>
+	
+<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
+    <thead>
+        <tr>
+            <th>S/No.</th>
+            <th>JINA LA MTEJA</th>
+            <th>REJESHO</th>
+            <th>LIPWA</th>
+            <th>LAZA</th>
+            <th>ZIDI</th>
+            <th>TAREHE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        $no = 1;
+        $total_rejesho = 0;
+        $total_lipwa = 0;
+        $total_laza = 0;
+        $total_zidi = 0;
 
-				  						<?php if ($cashs->depost == TRUE) {
-				  						 ?>
-				  						<a href="<?php echo base_url("admin/delete_depost_data/{$cashs->pay_id}") ?>" class="btn btn-info btn-sm" onclick="return confirm('Are you sure?')"><i class="flaticon2-pen"></i></i></a>
-				  					<?php }else{ ?>
-				  						<?php } ?>
-				  					</td> 
-				  								  											  							
-                                   </tr>
-                      <?php endforeach; ?>
-									
-	                </tbody>
-	                <tfoot>
-                    <tr>
-                    <th>TOTAL</th>
-					<th></th>
-					<th><?php echo number_format($sum_depost->cash_depost); ?></th>
-					<th><?php echo number_format($sum_withdrawls->cash_withdrowal); ?></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-                    </tr>
-                   </tfoot>
-                   </table>
+        foreach ($cash as $cashs): 
+            if (empty($cashs->depost) || empty($cashs->customer_id)) {
+                continue;
+            }
+
+            $rejesho = $cashs->restrations;
+            $lipwa = $cashs->depost;
+            $laza = ($lipwa < $rejesho) ? ($rejesho - $lipwa) : 0;
+            $zidi = ($lipwa > $rejesho) ? ($lipwa - $rejesho) : 0;
+
+            $total_rejesho += $rejesho;
+            $total_lipwa += $lipwa;
+            $total_laza += $laza;
+            $total_zidi += $zidi;
+        ?>
+        <tr>
+            <td><?php echo $no++; ?></td>
+            <td><?php echo $cashs->f_name . ' ' . $cashs->m_name . ' ' . $cashs->l_name; ?></td>
+            <td><?php echo number_format($rejesho); ?></td>
+            <td><?php echo number_format($lipwa); ?></td>
+            <td><?php echo $laza > 0 ? number_format($laza) : '-'; ?></td>
+            <td><?php echo $zidi > 0 ? number_format($zidi) : '-'; ?></td>
+            <td><?php echo date('d-m-Y', strtotime($cashs->lecod_day)); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>JUMLA</th>
+            <th></th>
+            <th><?php echo number_format($total_rejesho); ?></th>
+            <th><?php echo number_format($total_lipwa); ?></th>
+            <th><?php echo number_format($total_laza); ?></th>
+            <th><?php echo number_format($total_zidi); ?></th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
 		<!--end: Datatable -->
 	</div>
 </div>
