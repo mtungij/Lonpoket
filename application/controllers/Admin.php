@@ -4896,26 +4896,38 @@ public function previous_transfor(){
  	     return redirect('admin/view_blanch_customer/'.$blanch_id);
  }
 
-  public function delete_customerData($customer_id){
-  	ini_set("max_execution_time", 3600);
- 	$this->load->model('queries');
- 	if($this->queries->remove_customer($customer_id));
-          $this->delete_from_paytable($customer_id);
-          $this->delete_from_subcustomer($customer_id);
-          $this->delete_from_loans($customer_id);
-          $this->delete_from_depost($customer_id);
-          $this->delete_from_prev_lecod($customer_id);
-          $this->delete_from_receive($customer_id);
-          $this->delete_from_store_penart($customer_id);
-          $this->delete_from_sponser($customer_id);
-          $this->delete_from_paypenart($customer_id);
-          $this->delete_from_outstand_loan($customer_id);
-          $this->delete_from_loanPending($customer_id);
-          $this->delete_from_customer_report($customer_id);
-          $this->delete_from_customer_pending_data($customer_id);
- 	     $this->session->set_flashdata('massage','Customer Deleted successfully');
- 	     return redirect('admin/all_customer');
- }
+ public function delete_customerData($customer_id)
+{
+    ini_set("max_execution_time", 3600);
+    $this->load->model('queries');
+
+    // Call the model function to archive and delete customer
+    $deleted = $this->queries->remove_customer($customer_id);
+
+    if ($deleted) {
+        // Proceed to delete related data only if main customer delete succeeded
+        $this->delete_from_paytable($customer_id);
+        $this->delete_from_subcustomer($customer_id);
+        $this->delete_from_loans($customer_id);
+        $this->delete_from_depost($customer_id);
+        $this->delete_from_prev_lecod($customer_id);
+        $this->delete_from_receive($customer_id);
+        $this->delete_from_store_penart($customer_id);
+        $this->delete_from_sponser($customer_id);
+        $this->delete_from_paypenart($customer_id);
+        $this->delete_from_outstand_loan($customer_id);
+        $this->delete_from_loanPending($customer_id);
+        $this->delete_from_customer_report($customer_id);
+        $this->delete_from_customer_pending_data($customer_id);
+
+        $this->session->set_flashdata('message', 'Customer deleted successfully and archived.');
+    } else {
+        $this->session->set_flashdata('message', 'Customer deletion failed or customer not found.');
+    }
+
+    return redirect('admin/all_customer');
+}
+
 
  public function delete_from_customer_pending_data($customer_id){
  	return $this->db->delete('tbl_pending_total',['customer_id'=>$customer_id]);	
