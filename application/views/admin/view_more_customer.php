@@ -190,15 +190,7 @@
 									<label class="form-control-label">*Phone Number:</label>
 							<input type="number" name="phone_no" value="<?php echo $customer_profile->phone_no; ?>" placeholder="Eg,7538, 6283" autocomplete="off" class="form-control input-sm" required >
 								</div>
-									<div class="col-lg-4 form-group-sub">
-									<label class="form-control-label">*Region:</label>
-							<select type="number" name="region_id" class="form-control select2 input-sm" required>
-								<option value="<?php echo $customer_profile->region_id; ?>"><?php echo $customer_profile->region_name; ?></option>
-                                <?php foreach ($region as $regions): ?>
-								<option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
-								<?php endforeach;?>
-							</select>
-								</div>
+								
 									<div class="col-lg-4 form-group-sub">
 									<label class="form-control-label">*District:</label>
 							<input type="text" name="district" placeholder="district" value="<?php echo $customer_profile->district; ?>" autocomplete="off" class="form-control input-sm" required>

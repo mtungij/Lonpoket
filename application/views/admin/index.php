@@ -45,128 +45,424 @@ include_once APPPATH . "views/partials/header.php";
         $total_outstanding_val = $total_remain_obj->total_out ?? 0;
         // --- END DUMMY DATA ---
         ?>
+ <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-cyan-800  px-4 py-2 border-b">
+      <h2 class="text-lg font-semibold text-white">WATEJA & WAFANYAKAZI</h2>
+    </div>
+    <div class="p-4">
+      <table class="w-full text-sm">
+        <tbody class="text-gray-700">
+          <tr class="border-b">
+            <td class="py-2">JUMLA YA WATEJA</td>
+            <td class="text-right">
+              <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo $all_customer_count; ?>
+              </span>
+            </td>
+          </tr>
+          <tr class="border-b">
+            <td class="py-2">WATEJA WAPYA LEO</td>
+            <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?= $new_customer; ?>
+              </span>
+            </td>
+          </tr>
+          <tr class="border-b">
+            <td class="py-2">WANAOMALIZA LEO</td>
+            <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?= $done_customer_count ;?>
+              </span>
+            </td>
+          </tr>
+          <tr class="border-b">
+            <td class="py-2">MADENI SUGU</td>
+            <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+             <?= $default_customer_count;?>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-2">WAFANYAKAZI</td>
+            <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo $employee_count; ?>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Card 2: MALIPO YA LEO -->
+  <?php
+  $total_deposit_daily = $total_deposit_daily ?? 0;
+  $total_deposit_weekly = $total_deposit_weekly ?? 0;
+  $total_deposit_monthly = $total_deposit_monthly ?? 0;
+  $total_all = $total_deposit_daily + $total_deposit_weekly + $total_deposit_monthly;
+?>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+  <div class="bg-cyan-800 px-4 py-2 border-b">
+    <h2 class="text-lg font-semibold text-white">MALIPO YA LEO</h2>
+  </div>
+  <div class="p-4">
+    <table class="w-full text-sm">
+      <tbody class="text-gray-700">
+        <tr class="border-b">
+          <td class="py-2">KILA SIKU</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_deposit_daily); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">WIKI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_deposit_weekly); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">MWEZI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_deposit_monthly); ?>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="py-2 font-bold">JUMLA</td>
+          <td class="text-right font-bold">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_all); ?>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+  <div class="bg-cyan-800 px-4 py-2 border-b">
+    <h2 class="text-lg font-semibold text-white">MIKOPO YA LEO</h2>
+  </div>
+  <div class="p-4">
+    <table class="w-full text-sm">
+      <tbody class="text-gray-700">
+        <tr class="border-b">
+          <td class="py-2">KILA SIKU</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_withdrawal_daily->loan_aproved ?? 0); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">WIKI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_withdrawal_weekly->loan_aproved ?? 0); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">MWEZI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_withdrawal_monthly->loan_aproved ?? 0); ?>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="py-2 font-bold">JUMLA</td>
+          <td class="text-right font-bold">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php
+                $daily = $total_withdrawal_daily->loan_aproved ?? 0;
+                $weekly = $total_withdrawal_weekly->loan_aproved ?? 0;
+                $monthly = $total_withdrawal_monthly->loan_aproved ?? 0;
+                $total = $daily + $weekly + $monthly;
+                echo number_format($total);
+              ?>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-cyan-800 px-4 py-2 border-b">
+      <h2 class="text-lg font-semibold text-white">Tathmini ya Afisa Mikopo Ya Leo</h2>
+    </div>
+    <div class="p-4">
+      <table class="w-full text-sm">
+        <tbody class="text-gray-700">
+          <?php foreach ($top_employees as $emp): ?>
+            <tr class="border-b">
+              <td class="py-2"><?php echo $emp->empl_name; ?></td>
+              <td class="text-right">
+                <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+                  <?php echo number_format($emp->total_loan); ?>
+                </span>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Card 2: MALIPO YA LEO -->
+  <!-- </?php
+  $total_deposit_daily = $total_deposit_daily ?? 0;
+  $total_deposit_weekly = $total_deposit_weekly ?? 0;
+  $total_deposit_monthly = $total_deposit_monthly ?? 0;
+  $total_all = $total_deposit_daily + $total_deposit_weekly + $total_deposit_monthly;
+?> -->
+
+<!-- <div class="bg-white rounded-lg shadow-md overflow-hidden">
+  <div class="bg-cyan-800 px-4 py-2 border-b">
+    <h2 class="text-lg font-semibold text-white">MALIPO YA LEO</h2>
+  </div>
+  <div class="p-4">
+    <table class="w-full text-sm">
+      <tbody class="text-gray-700">
+        <tr class="border-b">
+          <td class="py-2">KILA SIKU</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              </?php echo number_format($total_deposit_daily); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">WIKI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_deposit_weekly); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">MWEZI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_deposit_monthly); ?>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="py-2 font-bold">JUMLA</td>
+          <td class="text-right font-bold">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_all); ?>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> -->
+
+<!-- <div class="bg-white rounded-lg shadow-md overflow-hidden">
+  <div class="bg-cyan-800 px-4 py-2 border-b">
+    <h2 class="text-lg font-semibold text-white">MIKOPO YA LEO</h2>
+  </div>
+  <div class="p-4">
+    <table class="w-full text-sm">
+      <tbody class="text-gray-700">
+        <tr class="border-b">
+          <td class="py-2">KILA SIKU</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?php echo number_format($total_withdrawal_daily->loan_aproved ?? 0); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">WIKI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              </?php echo number_format($total_withdrawal_weekly->loan_aproved ?? 0); ?>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">MWEZI</td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              </?php echo number_format($total_withdrawal_monthly->loan_aproved ?? 0); ?>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="py-2 font-bold">JUMLA</td>
+          <td class="text-right font-bold">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              </?php
+                $daily = $total_withdrawal_daily->loan_aproved ?? 0;
+                $weekly = $total_withdrawal_weekly->loan_aproved ?? 0;
+                $monthly = $total_withdrawal_monthly->loan_aproved ?? 0;
+                $total = $daily + $weekly + $monthly;
+                echo number_format($total);
+              ?>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> -->
+</div>
+
 
         <!-- Account Balance Banner (Full Width) -->
-        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm rounded-xl overflow-hidden">
-            <div class="bg-cover bg-center p-6 sm:p-10 text-center" style="background-image: url('<?php echo base_url('assets/img/pi.png'); // Keep your background image path ?>');">
+        <!-- <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm rounded-xl overflow-hidden">
+            <div class="bg-cover bg-center p-6 sm:p-10 text-center" style="background-image: url('</?php echo base_url('assets/img/pi.png'); // Keep your background image path ?>');">
                 <h3 class="text-sm font-medium text-gray-100 dark:text-gray-300 uppercase mb-2">Main Account Balance</h3>
                 <p class="text-4xl sm:text-5xl font-bold text-white dark:text-gray-100">
-                    <?php echo number_format($sum_comp_capital->total_comp_balance); ?>
+                    </?php echo number_format($sum_comp_capital->total_comp_balance); ?>
                 </p>
-                <?php // Optional: Add a small sub-text or trend indicator if desired for the main balance ?>
+                </?php // Optional: Add a small sub-text or trend indicator if desired for the main balance ?>
                 <!-- <p class="mt-1 text-xs text-gray-200 dark:text-gray-400">+2.5% since last month</p> -->
-            </div>
-        </div>
+            <!-- </div>
+        </div>  -->
         <!-- End Account Balance Banner -->
+
+        
 
         <!-- Grid for other KPIs -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"> <?php // Added mt-6 for spacing after the banner ?>
             
             <!-- Disbursed Loans Card -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+            <!-- <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Disbursed Loans</h3>
-                 <?php if(isset($principal_loan->change_percentage) && $principal_loan->change_percentage >= 0): ?>
+                 </?php if(isset($principal_loan->change_percentage) && $principal_loan->change_percentage >= 0): ?>
                 <span class="inline-flex items-center text-green-600 dark:text-green-400 text-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                  +<?php echo $principal_loan->change_percentage; ?>%
+                  +</?php echo $principal_loan->change_percentage; ?>%
                 </span>
-                 <?php elseif(isset($principal_loan->change_percentage)): ?>
-                 <span class="inline-flex items-center text-red-600 dark:text-red-400 text-sm">
+                 </?php elseif(isset($principal_loan->change_percentage)): ?>
+                 <span class="inline-flex items-center text-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-6">
+   -->
+  <!-- Card 1: WATEJA & WAFANYAKAZI -->
+
+
+  <!-- You can add a 3rd card here if needed -->
+
+<!-- </div>
+
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                  <?php echo $principal_loan->change_percentage; ?>%
+                  </?php echo $principal_loan->change_percentage; ?>%
                 </span>
-                <?php endif; ?>
+                </?php endif; ?>
               </div>
-              <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"><?php echo number_format($principal_loan->loan_aproved); ?></div>
+              <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"></?php echo number_format($principal_loan->loan_aproved); ?></div>
               <p class="text-xs text-gray-500 dark:text-gray-400">
-                <?php echo isset($principal_loan->change_period) ? 'vs ' . htmlspecialchars($principal_loan->change_period, ENT_QUOTES, 'UTF-8') : 'Total amount disbursed'; ?>
+                </?php echo isset($principal_loan->change_period) ? 'vs ' . htmlspecialchars($principal_loan->change_period, ENT_QUOTES, 'UTF-8') : 'Total amount disbursed'; ?>
               </p>
-            </div>
+            </div> -->
 
             <!-- Loan Expectation Receivable Card -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+            <!-- <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Loan Expectation Receivable</h3>
-                 <?php if(isset($total_expect->change_percentage) && $total_expect->change_percentage >= 0): ?>
+                 </?php if(isset($total_expect->change_percentage) && $total_expect->change_percentage >= 0): ?>
                 <span class="inline-flex items-center text-green-600 dark:text-green-400 text-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                  +<?php echo $total_expect->change_percentage; ?>%
+                  +</?php echo $total_expect->change_percentage; ?>%
                 </span>
-                 <?php elseif(isset($total_expect->change_percentage)): ?>
+                 </?php elseif(isset($total_expect->change_percentage)): ?>
                  <span class="inline-flex items-center text-red-600 dark:text-red-400 text-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                  <?php echo $total_expect->change_percentage; ?>%
+                  </?php echo $total_expect->change_percentage; ?>%
                 </span>
-                <?php endif; ?>
-              </div>
-              <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"><?php echo number_format($total_expect->loan_interest); ?></div>
+                </?php endif; ?>
+              </div> -->
+              <!-- <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"></?php echo number_format($total_expect->loan_interest); ?></div>
               <p class="text-xs text-gray-500 dark:text-gray-400">
-                  <?php echo isset($total_expect->change_period) ? 'vs ' . htmlspecialchars($total_expect->change_period, ENT_QUOTES, 'UTF-8') : 'Total interest expected'; ?>
+                  </?php echo isset($total_expect->change_period) ? 'vs ' . htmlspecialchars($total_expect->change_period, ENT_QUOTES, 'UTF-8') : 'Total interest expected'; ?>
               </p>
-            </div>
+            </div> -->
 
             <!-- Total Branch Accounts Card -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+            <!-- <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Branch Accounts</h3>
-                <?php if(isset($blanch_capital_circle->change_percentage) && $blanch_capital_circle->change_percentage >= 0): ?>
+                </?php if(isset($blanch_capital_circle->change_percentage) && $blanch_capital_circle->change_percentage >= 0): ?>
                 <span class="inline-flex items-center text-green-600 dark:text-green-400 text-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                  +<?php echo $blanch_capital_circle->change_percentage; ?>%
+                  +</?php echo $blanch_capital_circle->change_percentage; ?>%
                 </span>
-                <?php elseif(isset($blanch_capital_circle->change_percentage)): ?>
+                </?php elseif(isset($blanch_capital_circle->change_percentage)): ?>
                  <span class="inline-flex items-center text-red-600 dark:text-red-400 text-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                  <?php echo $blanch_capital_circle->change_percentage; ?>%
+                  </?php echo $blanch_capital_circle->change_percentage; ?>%
                 </span>
-                <?php endif; ?>
-              </div>
-              <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"><?php echo number_format($blanch_capital_circle->total_balanch_amount); ?></div>
+                </?php endif; ?>
+              </div> -->
+              <!-- <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"></?php echo number_format($blanch_capital_circle->total_balanch_amount); ?></div>
               <p class="text-xs text-gray-500 dark:text-gray-400">
-                  <?php echo isset($blanch_capital_circle->change_period) ? 'vs ' . htmlspecialchars($blanch_capital_circle->change_period, ENT_QUOTES, 'UTF-8') : 'Combined branch capital'; ?>
+                  </?php echo isset($blanch_capital_circle->change_period) ? 'vs ' . htmlspecialchars($blanch_capital_circle->change_period, ENT_QUOTES, 'UTF-8') : 'Combined branch capital'; ?>
               </p>
-            </div>
+            </div> -->
             
             <!-- Total Income Card -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+            <!-- <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Income</h3>
               </div>
-              <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"><?php echo number_format($total_income_val); ?></div>
+              <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"></?php echo number_format($total_income_val); ?></div>
               <p class="text-xs text-gray-500 dark:text-gray-400">Overall income generated</p>
-            </div>
+            </div> -->
 
             <!-- Total Expenses Card -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+            <!-- <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Expenses</h3>
               </div>
               <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"><?php echo number_format($total_expenses_val); ?></div>
               <p class="text-xs text-gray-500 dark:text-gray-400">Overall expenses incurred</p>
-            </div>
+            </div> -->
             
             <!-- Total Loan Outstanding Card -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+            <!-- <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Loan Outstanding</h3>
               </div>
               <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-1"><?php echo number_format($total_outstanding_val); ?></div>
               <p class="text-xs text-gray-500 dark:text-gray-400">Remaining loan amounts</p>
-            </div>
+            </div> -->
 
         </div>
+        
         <!-- End Grid for other KPIs -->
         <!-- End Top KPIs -->
 
         <!-- Section 3: Chart Area -->
-        <div class="bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 p-4 md:p-6">
+        <!-- <div class="bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 p-4 md:p-6">
             <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Loan Overview Chart</h3>
             <div id="dashboard-main-chart" class="min-h-[300px] sm:min-h-[350px]"></div>
             <p class="text-xs text-gray-500 mt-2 dark:text-gray-400">Chart data needs to be implemented from controller.</p>
-        </div>
+        </div> -->
         <!-- End Chart Area -->
-
+<br> <br><br>
 
         <!-- Section 4: Quick Stats & Actions (Using your new card template) -->
         <div class="bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
@@ -176,7 +472,7 @@ include_once APPPATH . "views/partials/header.php";
                 </h3>
                 <div class="hs-dropdown relative inline-flex [--placement:bottom-right]">
                     <button id="branches-dropdown-btn" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600">
-                        Branches
+                        <!-- Branches -->
                         <svg class="hs-dropdown-open:rotate-180 size-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
@@ -238,14 +534,21 @@ echo htmlspecialchars($blanchs->blanch_name ?? '', ENT_QUOTES, 'UTF-8');
                     <!-- Stat Card: Customers -->
                     <a href="<?php echo base_url("admin/all_customer"); ?>" class="bg-white dark:bg-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <div class="flex items-center gap-x-3 mb-3">
+                        <?php $customer = $this->db->query("SELECT * FROM tbl_customer WHERE comp_id = '$comp_id'");
+							$male = $this->db->query("SELECT * FROM tbl_customer WHERE comp_id = '$comp_id' AND gender = 'male'");
+							$female = $this->db->query("SELECT * FROM tbl_customer WHERE comp_id = '$comp_id' AND gender = 'female'");
+							$active = $this->db->query("SELECT * FROM tbl_customer WHERE comp_id = '$comp_id' AND customer_status = 'open'");
+							$pendin = $this->db->query("SELECT * FROM tbl_customer WHERE comp_id = '$comp_id' AND customer_status = 'pending'");
+							$closed = $this->db->query("SELECT * FROM tbl_customer WHERE comp_id = '$comp_id' AND customer_status = 'close'");
+							 ?>
                              <!-- <img src="</?php echo base_url('assets/img/users.png'); ?>" class="size-10" alt="Customers"> -->
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Customers</h2>
                         </div>
-                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-1"><?php echo $customer_total ?? 0; ?> <span class="text-sm font-normal">Total</span></p>
-                        <div class="text-xs space-x-2">
-                            <span class="text-green-600 dark:text-green-400">Active: <?php echo $customer_active ?? 0; ?></span>
-                            <span class="text-orange-500 dark:text-orange-400">Pending: <?php echo $customer_pending ?? 0; ?></span>
-                            <span class="text-red-600 dark:text-red-400">Closed: <?php echo $customer_closed ?? 0; ?></span>
+                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-1"><?php echo $all_customer_count ?? 0; ?> <span class="text-sm font-normal">Total</span></p>
+                        <div class="text-xs space-x-2"> 
+                            <span class="text-green-600 dark:text-green-400">Active: <?php echo $active->num_rows(); ?></span>
+                            <span class="text-orange-500 dark:text-orange-400">Pending: <?php echo $pendin->num_rows(); ?></span>
+                            <span class="text-red-600 dark:text-red-400">Closed: <?php echo $closed->num_rows(); ?></span>
                         </div>
                     </a>
                     
@@ -255,59 +558,66 @@ echo htmlspecialchars($blanchs->blanch_name ?? '', ENT_QUOTES, 'UTF-8');
                              <!-- <img src="<//?php echo base_url('assets/img/hukumu.png'); ?>" class="size-10" alt="Loan Requests"> -->
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Loan Requests</h2>
                         </div>
-                        <p class="text-2xl font-bold text-red-600 dark:text-red-400"><?php echo $new_loan_count ?? 0; ?></p>
+                        <?php $new_loan = $this->db->query("SELECT * FROM tbl_loans WHERE comp_id = '$comp_id' AND loan_status = 'open'"); ?>
+                        <p class="text-2xl font-bold text-red-600 dark:text-red-400"><?php echo $new_loan->num_rows();  ?></p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">New loan applications</p>
                     </a>
 
                     <!-- Stat Card: Approved Loans -->
                     <a href="<?php echo base_url("admin/get_loan_aproved"); ?>" class="bg-white dark:bg-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <div class="flex items-center gap-x-3 mb-3">
+                        <?php
+							$ap = $this->db->query("SELECT * FROM tbl_loans WHERE comp_id = '$comp_id' AND loan_status = 'aproved'");
+							 ?>
                             <!-- <img src="</?php echo base_url('assets/img/aproved.png'); ?>" class="size-10" alt="Approved Loans"> -->
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Approved Loans</h2>
                         </div>
-                        <p class="text-2xl font-bold text-green-600 dark:text-green-400"><?php echo $approved_loans_count ?? 0; ?></p>
+                        <p class="text-2xl font-bold text-green-600 dark:text-green-400"><?php echo $ap->num_rows(); ?></p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">Loans awaiting disbursement</p>
                     </a>
 
                     <!-- Stat Card: Today Loan Pending -->
                      <a href="<?php echo base_url("admin/loan_pending_time"); ?>" class="bg-white dark:bg-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <div class="flex items-center gap-x-3 mb-3">
-                            <img src="<?php echo base_url('assets/img/penart.png'); ?>" class="size-10" alt="Today Pending">
+                            <!-- <img src="</?php echo base_url('assets/img/penart.png'); ?>" class="size-10" alt="Today Pending"> -->
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Today Loan Pending</h2>
                         </div>
-                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200"><?php echo $today_loan_pending_count ?? 0; ?></p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Loan payments due today</p>
+                        <?php $laza = $this->db->query("SELECT * FROM tbl_pending_total WHERE comp_id = '$comp_id' AND total_pend IS NOT FALSE");
+               
+							 ?>
+                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200"><?php echo $laza->num_rows(); ?></p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Loan payments due yesterday</p>
                     </a>
 
                     <!-- Stat Card: Today Receivable -->
                     <a href="<?php echo base_url("admin/today_recevable_loan"); ?>" class="bg-white dark:bg-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <div class="flex items-center gap-x-3 mb-3">
-                            <img src="<?php echo base_url('assets/img/money.png'); ?>" class="size-10" alt="Today Receivable">
+                            <!-- <img src="</?php echo base_url('assets/img/money.png'); ?>" class="size-10" alt="Today Receivable"> -->
                              <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Today Receivable</h2>
                         </div>
-                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200"><?php echo number_format($receivable_total_amount ?? 0); ?></p>
+                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200"><?php echo number_format($receivable_total->total_rejesho) ; ?></p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">Expected amount today</p>
                     </a>
 
                     <!-- Stat Card: Today Received -->
                     <a href="<?php echo base_url("admin/today_receved_loan"); ?>" class="bg-white dark:bg-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <div class="flex items-center gap-x-3 mb-3">
-                            <img src="<?php echo base_url('assets/img/money.png'); ?>" class="size-10" alt="Today Received">
-                            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Today Received</h2>
+                            <!-- <img src="</?php echo base_url('assets/img/money.png'); ?>" class="size-10" alt="Today Received"> -->
+                            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Today Collected</h2>
                         </div>
-                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200"><?php echo number_format($total_received_amount ?? 0); ?></p>
+                        <p class="text-2xl font-bold text-gray-800 dark:text-gray-200"><?php echo number_format($total_receved->total_depost); ?></p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">Amount collected today</p>
                     </a>
                     
                     <!-- Stat Card: Recommended Expenses -->
-                    <a href="<?php echo base_url("admin/get_recomended_request"); ?>" class="bg-white dark:bg-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <!-- <a href="</?php echo base_url("admin/get_recomended_request"); ?>" class="bg-white dark:bg-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <div class="flex items-center gap-x-3 mb-3">
-                             <img src="<?php echo base_url('assets/img/expences.png'); ?>" class="size-10" alt="Recommended Expenses">
+                             <img src="</?php echo base_url('assets/img/expences.png'); ?>" class="size-10" alt="Recommended Expenses">
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Recommended Expenses</h2>
                         </div>
-                       <p class="text-2xl font-bold text-red-600 dark:text-red-400"><?php echo $exp_req_count ?? 0; ?></p>
+                       <p class="text-2xl font-bold text-red-600 dark:text-red-400"></?php echo $exp_req_count ?? 0; ?></p>
                        <p class="text-xs text-gray-500 dark:text-gray-400">Pending expense requests</p>
-                    </a>
+                    </a> -->
 
                 </div>
             </div>

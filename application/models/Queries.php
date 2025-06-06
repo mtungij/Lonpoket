@@ -268,6 +268,112 @@ public function get_allcutomer($comp_id){
 		return $query->row()->total_active;
 	}
 
+	public function get_today_registered_customers_count($comp_id) {
+		$this->db->where('reg_date', date('Y-m-d'));
+		$this->db->where('comp_id', $comp_id);
+		return $this->db->count_all_results('tbl_customer'); // Returns count directly
+	}
+
+	public function count_by_company($comp_id)
+    {
+        return $this->db->where('comp_id', $comp_id)
+                        ->from('tbl_customer')
+                        ->count_all_results();
+    }
+
+	public function count_completed_today($comp_id)
+    {
+        $today = date('Y-m-d'); // Format should match your `date_show` column
+
+        return $this->db
+            ->where('loan_status', 'done')
+            ->where('comp_id', $comp_id)
+            ->where('DATE(date_show)', $today)
+            ->from('tbl_loans')
+            ->count_all_results();
+    }
+
+	public function count_default_loans_today($comp_id)
+{
+    $today = date('Y-m-d');
+
+    return $this->db
+        ->where('loan_status', 'out')
+        ->where('comp_id', $comp_id)
+        ->where('DATE(date_show)', $today)
+        ->from('tbl_loans')
+        ->count_all_results();
+}
+
+public function fetch_today_deposit_daily_comp($comp_id){
+	$today = date("Y-m-d");
+	$data = $this->db->query("SELECT SUM(depost) AS total_deposit,SUM(double_amont) AS total_double FROM tbl_depost WHERE comp_id = '$comp_id' AND day_id = '1' AND depost_day = '$today'");
+	return $data->row();
+}
+public function get_today_received_loan_total($comp_id)
+{
+    $date = date("Y-m-d");
+
+    $query = $this->db->query("
+        SELECT SUM(p.depost) AS total_amount
+        FROM tbl_depost p
+        JOIN tbl_loans l ON l.loan_id = p.loan_id
+        JOIN tbl_customer c ON c.customer_id = l.customer_id
+        JOIN tbl_blanch b ON b.blanch_id = l.blanch_id
+        JOIN tbl_account_transaction at ON at.trans_id = p.depost_method
+        WHERE p.comp_id = '$comp_id'
+        AND p.depost_day = '$date'
+        AND l.day = 1
+    ");
+
+    return $query->row()->total_amount ?? 0;
+}
+
+
+public function get_weekly_received_loan_total($comp_id)
+{
+    $date = date("Y-m-d");
+
+    $query = $this->db->query("
+        SELECT SUM(p.depost) AS total_amount
+        FROM tbl_depost p
+        JOIN tbl_loans l ON l.loan_id = p.loan_id
+        JOIN tbl_customer c ON c.customer_id = l.customer_id
+        JOIN tbl_blanch b ON b.blanch_id = l.blanch_id
+        JOIN tbl_account_transaction at ON at.trans_id = p.depost_method
+        WHERE p.comp_id = '$comp_id'
+        AND p.depost_day = '$date'
+        AND l.day = 7
+    ");
+
+    return $query->row()->total_amount ?? 0;
+}
+
+public function get_monthly_received_loan($comp_id)
+{
+    $date = date("Y-m-d");
+
+    $query = $this->db->query("
+        SELECT SUM(p.depost) AS total_amount
+        FROM tbl_depost p
+        JOIN tbl_loans l ON l.loan_id = p.loan_id
+        JOIN tbl_customer c ON c.customer_id = l.customer_id
+        JOIN tbl_blanch b ON b.blanch_id = l.blanch_id
+        JOIN tbl_account_transaction at ON at.trans_id = p.depost_method
+        WHERE p.comp_id = '$comp_id'
+        AND p.depost_day = '$date'
+        AND l.day IN (28, 29, 30, 31)
+    ");
+
+    return $query->row()->total_amount ?? 0;
+}
+
+	public function count_employee_company($comp_id)
+    {
+        return $this->db->where('comp_id', $comp_id)
+                        ->from('tbl_employee')
+                        ->count_all_results();
+    }
 	
 	public function count_open_loans_by_officer($empl_id) {
 		$query = $this->db->query("
@@ -2643,6 +2749,60 @@ public function get_total_principal($comp_id){
 	$data = $this->db->query("SELECT SUM(loan_aprove) AS loan_aproved FROM tbl_loans WHERE comp_id = '$comp_id' AND loan_status ='withdrawal'");
 	  return $data->row();
 }
+
+public function get_total_principal_day($comp_id){
+    $query = $this->db->query("
+        SELECT SUM(loan_aprove) AS loan_aproved 
+        FROM tbl_loans 
+        WHERE comp_id = '$comp_id' 
+        AND loan_status = 'withdrawal' 
+        AND day = 1
+    ");
+    return $query->row();
+}
+
+public function get_total_principal_weekly($comp_id){
+    $query = $this->db->query("
+        SELECT SUM(loan_aprove) AS loan_aproved 
+        FROM tbl_loans 
+        WHERE comp_id = '$comp_id' 
+        AND loan_status = 'withdrawal' 
+        AND day = 7
+    ");
+    return $query->row();
+}
+
+public function get_total_principal_monthly($comp_id){
+    $query = $this->db->query("
+        SELECT SUM(loan_aprove) AS loan_aproved 
+        FROM tbl_loans 
+        WHERE comp_id = '$comp_id' 
+        AND loan_status = 'withdrawal' 
+        AND day IN (28, 29, 30, 31)
+    ");
+    return $query->row();
+}
+
+
+public function get_top_5_employees_today_loans($comp_id) {
+    $today = date("Y-m-d");
+
+    $query = $this->db->query("
+        SELECT e.empl_id, e.empl_name, SUM(l.loan_aprove) AS total_loan
+        FROM tbl_loans l
+        JOIN tbl_employee e ON e.empl_id = l.empl_id
+        WHERE l.comp_id = '$comp_id'
+          AND l.loan_status = 'withdrawal'
+           AND DATE(l.loan_day) = '$today'
+        GROUP BY l.empl_id
+        ORDER BY total_loan DESC
+        LIMIT 5
+    ");
+
+    return $query->result();
+}
+
+
 
 public function get_total_principalBlanch($blanch_id){
 	$data = $this->db->query("SELECT SUM(loan_aprove) AS loan_aproveds FROM tbl_loans WHERE blanch_id = '$blanch_id' AND loan_status ='withdrawal'");

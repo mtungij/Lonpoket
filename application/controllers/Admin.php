@@ -56,10 +56,31 @@ class Admin extends CI_Controller {
 
 	 $blanch_capital_circle = $this->queries->get_total_blanch_capital($comp_id);
 
+	 $employee_count = $this->queries->count_employee_company($comp_id);
+
+	 $new_customer = $this->queries->get_today_registered_customers_count($comp_id);
+	 $all_customer_count = $this->queries->count_by_company($comp_id);
+	 $done_customer_count = $this->queries->count_completed_today($comp_id);
+	 $default_customer_count = $this->queries->count_default_loans_today($comp_id);
+	 $deposit_daily = $this->queries->fetch_today_deposit_daily_comp($comp_id);
+	 $total_deposit_daily = $this->queries->get_today_received_loan_total($comp_id);
+	 $total_deposit_weekly = $this->queries->get_weekly_received_loan_total($comp_id);
+	 $total_deposit_monthly = $this->queries->get_monthly_received_loan($comp_id);
+	 $total_withdrawal_daily = $this->queries-> get_total_principal_day($comp_id);
+	 $total_withdrawal_weekly = $this->queries->get_total_principal_weekly($comp_id);
+	 $total_withdrawal_monthly = $this->queries->get_total_principal_monthly($comp_id);
+	 $top_employees = $this->queries->get_top_5_employees_today_loans($comp_id);
+
+
+	    //  echo "<pre>";
+	   	//       print_r(    $top_employee_loans);
+	   	//            exit();
 
 	      // print_r($blanch_capital_circle);
 	      //         exit();
-	$this->load->view('admin/index',['receivable_total'=>$receivable_total,'manager_data' => $manager_data,'total_received'=>$total_received,'total_loan_pending'=>$total_loan_pending,'total_loanWithdrawal'=>$total_loanWithdrawal,'today_penart'=>$today_penart,'prepaid_today'=>$prepaid_today,'total_received'=>$total_received,'prepaid_today'=>$prepaid_today,'total_loan_fee'=>$total_loan_fee,'today_income'=>$today_income,'toay_expences'=>$toay_expences,'total_capital'=>$total_capital,'out_float'=>$out_float,'cash_bank'=>$cash_bank,'principal_loan'=>$principal_loan,'done_loan'=>$done_loan,'total_expect'=>$total_expect,'total_receved'=>$total_receved,'cash_depost'=>$cash_depost,'cash_income'=>$cash_income,'cash_expences'=>$cash_expences,'blanch'=>$blanch,'total_remain'=>$total_remain,'today_total_loan_pend'=>$today_total_loan_pend,'loanAprove'=>$loanAprove,'withdrawal'=>$withdrawal,'loan_depost'=>$loan_depost,'receive_Amount'=>$receive_Amount,'loan_fee'=>$loan_fee,'request_expences'=>$request_expences,'sum_comp_capital'=>$sum_comp_capital,'total_deducted_balance'=>$total_deducted_balance,'total_non'=>$total_non,'blanch_capital_circle'=>$blanch_capital_circle]);
+	$this->load->view('admin/index',['receivable_total'=>$receivable_total,'total_deposit_monthly'=>$total_deposit_monthly,'total_deposit_weekly'=> $total_deposit_weekly,'total_deposit_daily'=> $total_deposit_daily,'deposit_daily'=> $deposit_daily,'done_customer_count'=>$done_customer_count,'all_customer_count'=>$all_customer_count,
+	'new_customer'=> $new_customer,'total_withdrawal_daily'=> $total_withdrawal_daily,'total_withdrawal_weekly'=> $total_withdrawal_weekly,'total_withdrawal_monthly'=>$total_withdrawal_monthly,
+	 'employee_count'=> $employee_count,'top_employees'=>$top_employees,'default_customer_count'=>$default_customer_count,'manager_data' => $manager_data,'total_received'=>$total_received,'total_loan_pending'=>$total_loan_pending,'total_loanWithdrawal'=>$total_loanWithdrawal,'today_penart'=>$today_penart,'prepaid_today'=>$prepaid_today,'total_received'=>$total_received,'prepaid_today'=>$prepaid_today,'total_loan_fee'=>$total_loan_fee,'today_income'=>$today_income,'toay_expences'=>$toay_expences,'total_capital'=>$total_capital,'out_float'=>$out_float,'cash_bank'=>$cash_bank,'principal_loan'=>$principal_loan,'done_loan'=>$done_loan,'total_expect'=>$total_expect,'total_receved'=>$total_receved,'cash_depost'=>$cash_depost,'cash_income'=>$cash_income,'cash_expences'=>$cash_expences,'blanch'=>$blanch,'total_remain'=>$total_remain,'today_total_loan_pend'=>$today_total_loan_pend,'loanAprove'=>$loanAprove,'withdrawal'=>$withdrawal,'loan_depost'=>$loan_depost,'receive_Amount'=>$receive_Amount,'loan_fee'=>$loan_fee,'request_expences'=>$request_expences,'sum_comp_capital'=>$sum_comp_capital,'total_deducted_balance'=>$total_deducted_balance,'total_non'=>$total_non,'blanch_capital_circle'=>$blanch_capital_circle]);
 	}
 
 
@@ -6926,9 +6947,9 @@ return true;
 		$total_principal_receive = $this->queries->get_sum_principal_depost($comp_id);
 		$total_interest = $this->queries->get_sum_interest_depost($comp_id);
 
-		  //   echo "<pre>";
-		  // print_r($total_principal);
-		  //         exit();
+		//     echo "<pre>";
+		//   print_r($received);
+		//           exit();
 		$this->load->view('admin/today_received',['received'=>$received,'total_receved'=>$total_receved,'blanch'=>$blanch,'total_principal_receive'=>$total_principal_receive,'total_interest'=>$total_interest]);
 	}
 
@@ -8014,6 +8035,9 @@ $this->load->view('admin/sms_history',['history'=>$history,'sms_jumla'=>$sms_jum
         $comp_id = $loan_code->comp_id;
          
         $massage = 'Namba ya Siri Ya Mkopo Wako ni ' .$code;
+
+		//   print_r($massage);
+      	//            exit();
        
 		$this->sendsms($phone,$massage);
         //sms count function

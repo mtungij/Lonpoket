@@ -75,12 +75,20 @@ class Oficer extends CI_Controller{
     $deducted = $this->queries->get_today_income_blanch($blanch_id);
     $non_deducted = $this->queries->get_today_nonDeducted_fee($blanch_id);
     $blanch_amount_balance = $this->queries->get_blanch_capital_data($blanch_id);
+    $new_loans = $this->queries->count_open_loans_by_officer($empl_id);
+      // echo "<pre>";
+      // print_r($pending_customer);
+      //     exit();
 
     if ($position === 'LOAN OFFICER') {
     
       $total_customers = $this->queries->count_customers_by_officer($empl_id);
       $active = $this->queries->count_active_by_officer($empl_id);
       $new_loans = $this->queries->count_open_loans_by_officer($empl_id);
+
+      // echo "<pre>";
+      // print_r($new_loans);
+      //     exit();
   
   } elseif ($position === 'BRANCH MANAGER') {
     
@@ -97,7 +105,7 @@ class Oficer extends CI_Controller{
 
 
       //    echo "<pre>";
-      // print_r($total_customer);
+      // print_r($new_loans);
       //     exit();
     $this->load->view('officer/index',['receivable_total'=>$receivable_total,
     'total_received'=>$total_received,
@@ -2394,7 +2402,7 @@ foreach ($phone_number as  $phone) {
                 
                 if ($input < $output) {
                 $this->session->set_flashdata('mass','Amount of Loan Is Less');
-                return redirect('admin/loan_applicationForm/'.$customer_id);
+                return redirect('oficer/loan_applicationForm/'.$customer_id);
                 }elseif($input > $zaidi){
                     $this->session->set_flashdata('mass','Amount of Loan Is Greater');
                     return redirect('oficer/loan_applicationForm/'.$customer_id);
@@ -2757,7 +2765,10 @@ $this->loan_application();
       } else {
           $loan_pending = [];
       }
-  
+    // echo "<pre>";
+    //           print_r( $empl_data);
+    //                exit();
+
       // Append loan count per customer
       foreach ($loan_pending as $loan) {
           $customer_id = $loan->customer_id;
@@ -2963,7 +2974,7 @@ $this->loan_application();
     $privillage = $this->queries->get_position_empl($empl_id);
     $manager = $this->queries->get_position_manager($empl_id);
       //    echo "<pre>";
-      //  print_r($loan_aproved);
+      //  print_r( $empl_data);
       //    echo "</pre>";
       //           exit();
     $this->load->view('officer/loan_aproved',['loan_aproved'=>$loan_aproved,'empl_data'=>$empl_data,'privillage'=>$privillage,'manager'=>$manager]);
