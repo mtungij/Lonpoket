@@ -186,15 +186,16 @@ include_once APPPATH . "views/partials/header.php";
         <tr>
           <td class="py-2 font-bold">JUMLA</td>
           <td class="text-right font-bold">
-            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?php
+            <S class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <!-- </?php
                 $daily = $total_withdrawal_daily->loan_aproved ?? 0;
                 $weekly = $total_withdrawal_weekly->loan_aproved ?? 0;
                 $monthly = $total_withdrawal_monthly->loan_aproved ?? 0;
                 $total = $daily + $weekly + $monthly;
                 echo number_format($total);
-              ?>
-            </span>
+              ?> -->
+              SOON
+            </S>
           </td>
         </tr>
       </tbody>
