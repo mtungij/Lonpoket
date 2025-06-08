@@ -403,6 +403,9 @@ $communication_submenu_active = is_submenu_active(['send_email']); // Assuming S
               <?php if (has_permission('Report ya Malipo Ya Wateja Kampuni nzima')): ?>
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/cash_transaction') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/cash_transaction"); ?>">Cash Transaction</a></li>
                     <?php endif; ?> 
+                    <?php if (has_permission('Report ya Malipo Ya Wateja Kampuni nzima')): ?>
+                  <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/cash_transaction') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/cash_transaction"); ?>">Kitini Report</a></li>
+                    <?php endif; ?> 
                     <?php if (has_permission('Ripoti ya Mikopo Kila Tawi')): ?>
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/blanchiwise_report') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/blanchiwise_report"); ?>">Branch Wise Loan Summary</a></li> 
                   <?php endif; ?>

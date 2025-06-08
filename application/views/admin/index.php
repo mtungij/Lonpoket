@@ -204,18 +204,21 @@ include_once APPPATH . "views/partials/header.php";
 </div>
 </div>
 
-
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
     <div class="bg-cyan-800 px-4 py-2 border-b">
       <h2 class="text-lg font-semibold text-white">Tathmini ya Afisa Mikopo Ya Leo</h2>
     </div>
     <div class="p-4">
       <table class="w-full text-sm">
         <tbody class="text-gray-700">
-          <?php foreach ($top_employees as $emp): ?>
+          <?php
+            $total_loan_all = 0;
+            foreach ($top_employees as $emp):
+              $total_loan_all += $emp->total_loan;
+          ?>
             <tr class="border-b">
-              <td class="py-2"><?php echo $emp->empl_name; ?></td>
+              <td class="py-2"><?php echo htmlspecialchars($emp->empl_name); ?></td>
               <td class="text-right">
                 <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
                   <?php echo number_format($emp->total_loan); ?>
@@ -223,10 +226,63 @@ include_once APPPATH . "views/partials/header.php";
               </td>
             </tr>
           <?php endforeach; ?>
+
+          <!-- Jumla Row -->
+          <tr>
+            <td class="py-2 font-bold">Jumla:</td>
+            <td class="text-right font-bold">
+              <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+                <?php echo number_format($total_loan_all); ?>
+              </span>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
+
+
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+  <div class="bg-cyan-800 px-4 py-2 border-b">
+    <h2 class="text-lg font-semibold text-white">Tathmini ya Afisa Malipo Ya Leo</h2>
+  </div>
+  <div class="p-4">
+    <table class="w-full text-sm">
+      <tbody class="text-gray-700">
+        <?php
+          $total_deposit = 0;
+          if (!empty($top_depositors)) :
+            foreach ($top_depositors as $employee) :
+              $total_deposit += $employee->total_deposit;
+        ?>
+        <tr class="border-b">
+          <td class="py-2"><?= htmlspecialchars($employee->empl_name) ?></td>
+          <td class="text-right">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?= number_format($employee->total_deposit, 2) ?> TZS
+            </span>
+          </td>
+        </tr>
+        <?php endforeach; else: ?>
+        <tr>
+          <td colspan="2" class="text-center text-gray-500 py-4">Hakuna taarifa za kutosha.</td>
+        </tr>
+        <?php endif; ?>
+
+        <tr>
+          <td class="py-2 font-bold">Jumla:</td>
+          <td class="text-right font-bold">
+            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
+              <?= number_format($total_deposit, 2) ?> TZS
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
 </div>
 
 

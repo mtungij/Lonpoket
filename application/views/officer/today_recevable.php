@@ -63,6 +63,7 @@
 										<th><b>Duration Type</b></th>
 										<th><b>Loan Amount</b></th>
 										<th><b>Receivable Amount</b></th>
+										
 										<th><b>Date</b></th>	
 				  						         </tr>
 						                  </thead>
@@ -88,6 +89,7 @@
 				  							<?php } ?></td>
 				  					<td><?php echo number_format($today_recevables->loan_int); ?></td>
 				  					<td><?php echo number_format($today_recevables->restration); ?></td>
+									  
 				  					<td>
 				  					 <?php echo $today_recevables->date_show; ?>			
 				  					</td>

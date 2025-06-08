@@ -78,7 +78,7 @@
 												<th>Number of Repayment</th>
 												<th>Remain Amount</th>
 												<th>pending Day</th>
-												<th>Satart date</th>
+												<th>Start date</th>
 												<th>End date</th>
 				  						         </tr>
 						                  </thead>

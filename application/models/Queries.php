@@ -384,6 +384,71 @@ public function get_monthly_received_loan($comp_id)
 		return $query->row()->total_open_loans;
 	}
 
+	public function get_approved_loans_by_branch($blanch_id) {
+		$query = $this->db->query("
+			SELECT * 
+			FROM tbl_loans 
+			WHERE blanch_id = ? AND loan_status = 'aproved'
+		", array($blanch_id));
+	
+		return $query->result(); // returns an array of result objects
+	}
+
+	public function get_approved_loans_by_officer($blanch_id, $empl_id) {
+		$query = $this->db->query("
+			SELECT * 
+			FROM tbl_loans 
+			WHERE blanch_id = ? AND empl_id = ? AND loan_status = 'aproved'
+		", array($blanch_id, $empl_id));
+	
+		return $query->result(); // returns an array of loan objects
+	}
+	
+	public function count_disbursed_loans_by_branch($blanch_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_disbursed
+			FROM tbl_loans 
+			WHERE blanch_id = ? AND loan_status = 'disbarsed'
+		", array($blanch_id));
+	
+		return $query->row()->total_disbursed;
+	}
+	
+	public function count_disbursed_loans_by_officer($blanch_id, $empl_id) {
+		$query = $this->db->query("
+			SELECT COUNT(*) AS total_disbursed
+			FROM tbl_loans 
+			WHERE blanch_id = ? AND empl_id = ? AND loan_status = 'disbarsed'
+		", array($blanch_id, $empl_id));
+	
+		return $query->row()->total_disbursed;
+	}
+
+	public function get_pending_totals_by_branch($blanch_id) {
+		$query = $this->db->query("
+			SELECT * 
+			FROM tbl_pending_total 
+			WHERE blanch_id = ? AND total_pend IS NOT FALSE
+		", array($blanch_id));
+	
+		return $query->result(); // returns an array of objects
+	}
+
+	
+	public function get_pending_totals_by_officer($blanch_id, $empl_id) {
+		$query = $this->db->query("
+			SELECT * 
+			FROM tbl_pending_total 
+			WHERE blanch_id = ? AND empl_id = ? AND total_pend IS NOT FALSE
+		", array($blanch_id, $empl_id));
+	
+		return $query->result(); // returns an array of objects
+	}
+	
+	
+	
+	
+
 
 	public function get_loan_by_loan_id($loan_id) {
 		$this->db->select('tbl_customer.f_name, tbl_customer.m_name, tbl_customer.l_name, tbl_customer.phone_no, tbl_employee.empl_name, tbl_blanch.blanch_name');
@@ -1299,6 +1364,27 @@ public function get_totalLoanout($customer_id){
 		 return $data->result();
 	}
 
+	public function get_top_5_deposit_employees($comp_id) {
+		$date = date("Y-m-d");
+	
+		$query = "
+			SELECT e.empl_id, e.empl_name,  SUM(d.depost) AS total_deposit
+			FROM tbl_depost d
+			JOIN tbl_employee e ON e.empl_id = d.empl_id
+			WHERE d.comp_id = ?
+			  AND d.depost_day >= ?
+			GROUP BY e.empl_id, e.empl_name
+			ORDER BY total_deposit DESC
+			LIMIT 5
+		";
+	
+		$result = $this->db->query($query, [$comp_id, $date]);
+		return $result->result();
+	}
+	
+	
+	
+
 	public function get_blanchTransaction($blanch_id){
 		$date = date("Y-m-d");
 		$data = $this->db->query("SELECT * FROM tbl_prev_lecod p JOIN tbl_customer c ON c.customer_id = p.customer_id JOIN tbl_blanch b ON b.blanch_id = p.blanch_id WHERE p.blanch_id = '$blanch_id' AND p.lecod_day = '$date'");
@@ -1323,6 +1409,32 @@ public function get_totalLoanout($customer_id){
 		$data = $this->db->query("SELECT * FROM tbl_prev_lecod pr JOIN tbl_customer c ON c.customer_id = pr.customer_id JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  WHERE pr.blanch_id = '$blanch_id' AND lecod_day >= '$date' ORDER BY prev_id DESC");
 		 return $data->result();
 	}
+
+	// public function get_today_recevable_loanBlanch($blanch_id){
+	// 	$today = date("Y-m-d");
+	
+	// 	$today_recevable = $this->db->query("
+	// 		SELECT * 
+	// 		FROM tbl_loans l 
+	// 		JOIN tbl_blanch b ON b.blanch_id = l.blanch_id 
+	// 		JOIN tbl_customer c ON c.customer_id = l.customer_id
+	// 		JOIN tbl_depost p ON p.loan_id = l.loan_id
+	// 		WHERE l.loan_status = 'withdrawal' 
+	// 		AND l.blanch_id = '$blanch_id' 
+	// 		AND l.date_show = '$today'
+			
+	// 	");
+		
+	// 	return $today_recevable->result();
+	// }
+
+	public function get_today_recevable_loanBlanch($blanch_id){
+    	$today = date("Y-m-d");
+    	//$date = $today_data->format("Y-m-d");
+    	$today_recevable = $this->db->query("SELECT * FROM tbl_loans l JOIN tbl_blanch b ON b.blanch_id = l.blanch_id JOIN tbl_customer c ON c.customer_id = l.customer_id  WHERE  l.loan_status = 'withdrawal' AND l.blanch_id = '$blanch_id' AND l.date_show ='$today'");
+    	return $today_recevable->result();
+    }
+	
 
 
 	public function get_cash_transaction_by_officer($empl_id) {
@@ -1451,7 +1563,15 @@ public function update_guarantor($id, $data)
 		   return $data->result();
 	}
 
-
+	public function has_pending_loans($customer_id)
+	{
+		return $this->db
+			->where('customer_id', $customer_id)
+			->where('loan_status !=', 'done')
+			->get('tbl_loans')
+			->num_rows() > 0;
+	}
+	
 
 	public function get_sum_Depost($comp_id){
 		$data = $this->db->query("SELECT SUM(total_loan) AS total_loanData FROM tbl_prev_lecod WHERE comp_id = '$comp_id'");
@@ -1776,6 +1896,102 @@ public function get_loan_done($customer_id){
 	$loan_done = $this->db->query("SELECT * FROM tbl_loans WHERE customer_id = '$customer_id' ORDER BY loan_id DESC");
 	 return $loan_done->row();
 }
+
+public function get_new_customers_for_officer($blanch_id, $empl_id) {
+    $query = $this->db->query("
+        SELECT c.*, COUNT(l.loan_id) AS total_loans
+        FROM tbl_customer c
+        LEFT JOIN tbl_loans l ON l.customer_id = c.customer_id
+        WHERE c.blanch_id = ? AND c.empl_id = ?
+        GROUP BY c.customer_id
+        HAVING total_loans <=  1
+        ORDER BY c.customer_id DESC
+    ", array($blanch_id, $empl_id));
+
+    return $query->result();
+}
+
+public function count_customers_with_one_loan_today($blanch_id, $empl_id) {
+    $today = date("Y-m-d");
+    $query = $this->db->query("
+        SELECT COUNT(*) AS total_customers
+        FROM (
+            SELECT c.customer_id
+            FROM tbl_customer c
+            LEFT JOIN tbl_loans l ON l.customer_id = c.customer_id AND DATE(l.loan_day) = ?
+            WHERE c.blanch_id = ? AND c.empl_id = ?
+            GROUP BY c.customer_id
+            HAVING COUNT(l.loan_id) = 1
+        ) AS subquery
+    ", array($today, $blanch_id, $empl_id));
+
+    return $query->row()->total_customers;
+}
+
+
+
+public function get_new_customers_for_branchmanager($blanch_id) {
+    $query = $this->db->query("
+        SELECT c.*, COUNT(l.loan_id) AS total_loans
+        FROM tbl_customer c
+        LEFT JOIN tbl_loans l ON l.customer_id = c.customer_id
+        WHERE c.blanch_id = ?
+        GROUP BY c.customer_id
+        HAVING total_loans <= 1
+        ORDER BY c.customer_id DESC
+    ", array($blanch_id));
+
+    return $query->result();
+}
+
+public function count_customers_completed_loan_today($blanch_id) {
+    $today = date("Y-m-d");
+    $query = $this->db->query("
+        SELECT COUNT(DISTINCT c.customer_id) AS total_customers
+        FROM tbl_customer c
+        JOIN tbl_loans l ON l.customer_id = c.customer_id
+        WHERE c.blanch_id = ?
+          AND l.loan_status = 'done'
+          AND DATE(l.loan_day) = ?
+    ", array($blanch_id, $today));
+
+    return $query->row()->total_customers;
+}
+
+public function count_customers_completed_loan_today_officer($blanch_id, $empl_id) {
+    $today = date("Y-m-d");
+    $query = $this->db->query("
+        SELECT COUNT(DISTINCT c.customer_id) AS total_customers
+        FROM tbl_customer c
+        JOIN tbl_loans l ON l.customer_id = c.customer_id
+        WHERE c.blanch_id = ?
+          AND c.empl_id = ?
+          AND l.loan_status = 'done'
+          AND DATE(l.loan_day) = ?
+    ", array($blanch_id, $empl_id, $today));
+
+    return $query->row()->total_customers;
+}
+
+
+
+public function count_new_customers_by_customer_id_today($blanch_id) {
+    $today = date("Y-m-d");
+    $query = $this->db->query("
+        SELECT COUNT(*) AS total_customers
+        FROM (
+            SELECT c.customer_id
+            FROM tbl_customer c
+            LEFT JOIN tbl_loans l ON l.customer_id = c.customer_id AND DATE(l.loan_day) = ?
+            WHERE c.blanch_id = ?
+            GROUP BY c.customer_id
+            HAVING COUNT(l.loan_id) = 1
+        ) AS new_customers
+    ", array($today, $blanch_id));
+
+    return $query->row()->total_customers;
+}
+
 
 public function get_repayment_data($comp_id){
 	$data = $this->db->query("SELECT * FROM tbl_loans l JOIN tbl_customer c ON c.customer_id = l.customer_id JOIN tbl_blanch b ON b.blanch_id = l.blanch_id JOIN tbl_loan_category lc ON lc.category_id = l.category_id WHERE l.comp_id = '$comp_id' AND l.loan_status = 'done'");
@@ -2319,13 +2535,22 @@ public function update_password_data($comp_id, $userdata)
     	return $today_recevable->result();
     }
 
-    public function get_today_recevable_loanBlanch($blanch_id){
-    	$today = date("Y-m-d");
-    	//$date = $today_data->format("Y-m-d");
-    	$today_recevable = $this->db->query("SELECT * FROM tbl_loans l JOIN tbl_blanch b ON b.blanch_id = l.blanch_id JOIN tbl_customer c ON c.customer_id = l.customer_id  WHERE  l.loan_status = 'withdrawal' AND l.blanch_id = '$blanch_id' AND l.date_show ='$today'");
-    	return $today_recevable->result();
-    }
-
+ 
+	public function get_today_recevable_loanBlanch_by_officer($blanch_id, $empl_id){
+		$today = date("Y-m-d");
+		$today_receivable = $this->db->query("
+			SELECT * 
+			FROM tbl_loans l 
+			JOIN tbl_blanch b ON b.blanch_id = l.blanch_id 
+			JOIN tbl_customer c ON c.customer_id = l.customer_id  
+			WHERE l.loan_status = 'withdrawal' 
+			AND l.blanch_id = '$blanch_id' 
+			AND l.empl_id = '$empl_id'
+			AND l.date_show = '$today'
+		");
+		return $today_receivable->result();
+	}
+	
 
 
     public function get_total_recevable($comp_id){
@@ -2349,6 +2574,20 @@ public function update_password_data($comp_id, $userdata)
     	$today_data = $this->db->query("SELECT SUM(restration) AS total_rejesho FROM tbl_loans WHERE blanch_id = '$blanch_id' AND loan_status = 'withdrawal' AND date_show = '$date'");
     	return $today_data->row();
     }
+
+	public function get_total_recevableBlanch_by_officer($blanch_id, $empl_id){
+		$date = date("Y-m-d");
+		$today_data = $this->db->query("
+			SELECT SUM(restration) AS total_rejesho 
+			FROM tbl_loans 
+			WHERE blanch_id = '$blanch_id' 
+			AND empl_id = '$empl_id'
+			AND loan_status = 'withdrawal' 
+			AND date_show = '$date'
+		");
+		return $today_data->row();
+	}
+	
 
 	public function get_total_recevableByOfficer($empl_id) {
 		$date = date("Y-m-d");
@@ -5245,6 +5484,22 @@ public function get_total_loan_pending($blanch_id){
 	$data = $this->db->query("SELECT * FROM tbl_pending_total pt JOIN tbl_loans l ON l.loan_id = pt.loan_id JOIN tbl_blanch b ON b.blanch_id = pt.blanch_id JOIN tbl_customer c ON c.customer_id = pt.customer_id  WHERE pt.blanch_id = '$blanch_id' AND total_pend IS NOT FALSE ");
 	return $data->result();
 }
+
+public function get_total_loan_pending_officer($blanch_id, $empl_id) {
+    $query = $this->db->query("
+        SELECT * 
+        FROM tbl_pending_total pt
+        JOIN tbl_loans l ON l.loan_id = pt.loan_id
+        JOIN tbl_blanch b ON b.blanch_id = pt.blanch_id
+        JOIN tbl_customer c ON c.customer_id = pt.customer_id
+        WHERE pt.blanch_id = ? 
+          AND c.empl_id = ? 
+          AND pt.total_pend IS NOT FALSE
+    ", array($blanch_id, $empl_id));
+
+    return $query->result(); // Returns array of pending loans for that officer
+}
+
 
 public function get_total_loan_pending_by_officer($blanch_id, $empl_id){
     $data = $this->db->query("

@@ -75,19 +75,24 @@ class Oficer extends CI_Controller{
     $deducted = $this->queries->get_today_income_blanch($blanch_id);
     $non_deducted = $this->queries->get_today_nonDeducted_fee($blanch_id);
     $blanch_amount_balance = $this->queries->get_blanch_capital_data($blanch_id);
-    $new_loans = $this->queries->count_open_loans_by_officer($empl_id);
+    
       // echo "<pre>";
       // print_r($pending_customer);
       //     exit();
-
+    
     if ($position === 'LOAN OFFICER') {
     
       $total_customers = $this->queries->count_customers_by_officer($empl_id);
       $active = $this->queries->count_active_by_officer($empl_id);
       $new_loans = $this->queries->count_open_loans_by_officer($empl_id);
+      $new_customer =  $this->queries->count_customers_with_one_loan_today($blanch_id, $empl_id);
+      $done_customer = $this->queries->count_customers_completed_loan_today_officer($blanch_id, $empl_id);
+      $lipwa = $this->queries->get_cash_transaction_by_officer($empl_id);
+      $approved_customer = $this->queries->get_approved_loans_by_officer($blanch_id, $empl_id);
+      $disbursed_customer =$this->queries->count_disbursed_loans_by_officer($blanch_id, $empl_id);
 
       // echo "<pre>";
-      // print_r($new_loans);
+      // print_r($lipwa);
       //     exit();
   
   } elseif ($position === 'BRANCH MANAGER') {
@@ -95,12 +100,22 @@ class Oficer extends CI_Controller{
       $total_customers = $this->queries->count_customers_by_branch($blanch_id);
       $active = $this->queries->count_active_by_branch($blanch_id);
       $new_loans = $this->queries->count_open_loans_by_branch($blanch_id);
+      $new_customer = $this->queries->count_new_customers_by_customer_id_today($blanch_id);
+      $done_customer = $this->queries->count_customers_completed_loan_today($blanch_id);
+      $approved_customer = $this->queries->get_approved_loans_by_branch($blanch_id);
+      $disbursed_customer =$this->queries->count_disbursed_loans_by_branch($blanch_id);
+      
   
   } else {
       $total_customers = 0;
       $new_loans = 0;
+      $done_customer=0;
+      $approved_customer = 0;
+      $disbursed_customer=0;
   }
-  
+    // echo "<pre>";
+    //   print_r( $new_customer);
+    //       exit();
 
 
 
@@ -109,6 +124,11 @@ class Oficer extends CI_Controller{
       //     exit();
     $this->load->view('officer/index',['receivable_total'=>$receivable_total,
     'total_received'=>$total_received,
+    'new_customer'=>$new_customer,
+    'disbursed_customer'=>$disbursed_customer,
+    'approved_customer'=>$approved_customer,
+    'lipwa'=>$lipwa,
+    'done_customer'=>$done_customer,
     'total_customers' =>  $total_customers,
     'total_active'=> $active,
     'new_loans' => $new_loans,
@@ -2120,30 +2140,51 @@ $this->load->model('queries');
 }
 
 
-public function search_customer(){
-$this->load->model('queries');
- $blanch_id = $this->session->userdata('blanch_id');
-$empl_id = $this->session->userdata('empl_id');
-$manager_data = $this->queries->get_manager_data($empl_id);
-$comp_id = $manager_data->comp_id;
-$company_data = $this->queries->get_companyData($comp_id);
-$blanch_data = $this->queries->get_blanchData($blanch_id);
-$empl_data = $this->queries->get_employee_data($empl_id);
+public function search_customer() {
+  $this->load->model('queries');
+  $blanch_id = $this->session->userdata('blanch_id');
+  $empl_id = $this->session->userdata('empl_id');
+  $manager_data = $this->queries->get_manager_data($empl_id);
+  $comp_id = $manager_data->comp_id;
+  $company_data = $this->queries->get_companyData($comp_id);
+  $blanch_data = $this->queries->get_blanchData($blanch_id);
+  $empl_data = $this->queries->get_employee_data($empl_id);
 
-$customer_id = $this->input->post('customer_id');
-$customer = $this->queries->search_CustomerID($customer_id,$comp_id);
-@$customer_id = $customer->customer_id;
-@$sponser = $this->queries->get_sponser($customer_id);
-@$sponsers_data = $this->queries->get_sponserCustomer($customer_id);
-@$region = $this->queries->get_region();
-$privillage = $this->queries->get_position_empl($empl_id);
-$manager = $this->queries->get_position_manager($empl_id);
-//   echo "<pre>";
-// print_r($sponser);
-//  echo "</pre>";
-//    exit();
-$this->load->view('officer/search_customer',['customer'=>$customer,'sponser'=>$sponser,'sponsers_data'=>$sponsers_data,'region'=>$region,'empl_data'=>$empl_data,'privillage'=>$privillage,'manager'=>$manager]);
+  $customer_id = $this->input->post('customer_id');
+  $customer = $this->queries->search_CustomerID($customer_id, $comp_id);
+
+  if (!$customer) {
+      $this->session->set_flashdata('error', 'Mteja hakupatikana.');
+      redirect('oficer/loan_application');
+  }
+
+  // ✅ Check if customer has any active/pending loan
+  if ($this->queries->has_pending_loans($customer_id)) {
+    $data = [
+        'message' => 'Mteja bado hajamaliza mkopo.',
+        'type' => 'warning'
+    ];
+    $this->load->view('officer/toast_message_view', $data);
+    return;
 }
+
+  @$sponser = $this->queries->get_sponser($customer_id);
+  @$sponsers_data = $this->queries->get_sponserCustomer($customer_id);
+  @$region = $this->queries->get_region();
+  $privillage = $this->queries->get_position_empl($empl_id);
+  $manager = $this->queries->get_position_manager($empl_id);
+
+  $this->load->view('officer/search_customer', [
+      'customer' => $customer,
+      'sponser' => $sponser,
+      'sponsers_data' => $sponsers_data,
+      'region' => $region,
+      'empl_data' => $empl_data,
+      'privillage' => $privillage,
+      'manager' => $manager
+  ]);
+}
+
 
 
 // public function creat_sponser($customer_id,$comp_id){
@@ -3606,6 +3647,9 @@ public function disburse($loan_id){
 
         if ($position === 'LOAN OFFICER') {
           $disburse = $this->queries->get_DisbarsedLoanByOfficer($empl_id);
+
+            // print_r($disburse);
+            //         exit();
       
           // Calculate totals for this officer
           $total_loan = 0;
@@ -5449,6 +5493,7 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
     }
 
    public function loan_pending_time(){
+    $position = strtoupper(trim($this->session->userdata('position_name')));
     $this->load->model('queries');
         $blanch_id = $this->session->userdata('blanch_id');
         $empl_id = $this->session->userdata('empl_id');
@@ -5463,12 +5508,29 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
        $privillage = $this->queries->get_position_empl($empl_id);
        $manager = $this->queries->get_position_manager($empl_id);
 
-       $loan_pending_new = $this->queries->get_total_loan_pending($blanch_id);
-       $new_total_pending = $this->queries->get_total_pend_loan($blanch_id);
+      
+     
+       if ($position === 'LOAN OFFICER') {
+    
+        $loan_pendng_new = $this->queries->get_total_loan_pending_officer($blanch_id, $empl_id);
        
-      //  echo "<pre>";
-      // print_r($new_total_pending);
-      //     exit();
+        // echo "<pre>";
+        // print_r($lipwa);
+        //     exit();
+    
+    } elseif ($position === 'BRANCH MANAGER') {
+      $loan_pending_new = $this->queries->get_total_loan_pending($blanch_id);
+      
+      $new_total_pending = $this->queries->get_total_pend_loan($blanch_id);
+        
+    
+    } else {
+        $total_customers = 0;
+        $new_loans = 0;
+        $done_customer=0;
+        $approved_customer = 0;
+        $disbursed_customer=0;
+    }
     
     $this->load->view('officer/loan_pending_time',['loan_pend'=>$loan_pend,'pend'=>$pend,'privillage'=>$privillage,'manager'=>$manager,'loan_pending_new'=>$loan_pending_new,'new_total_pending'=>$new_total_pending]);
     }
@@ -5909,6 +5971,7 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
 
     public function today_recevable_loan(){
     $this->load->model('queries');
+    $position = strtoupper(trim($this->session->userdata('position_name')));
     $blanch_id = $this->session->userdata('blanch_id');
     $empl_id = $this->session->userdata('empl_id');
     $manager_data = $this->queries->get_manager_data($empl_id);
@@ -5917,10 +5980,36 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
     $blanch_data = $this->queries->get_blanchData($blanch_id);
     $empl_data = $this->queries->get_employee_data($empl_id);
 
-    $today_recevable = $this->queries->get_today_recevable_loanBlanch($blanch_id);
-    $rejesho = $this->queries->get_total_recevableBlanch($blanch_id);
+    
+   
     $privillage = $this->queries->get_position_empl($empl_id);
     $manager = $this->queries->get_position_manager($empl_id);
+
+
+      // echo "<pre>";
+      // print_r($position);
+      //     exit();
+   
+    if ($position === 'LOAN OFFICER') {
+    
+      $today_recevable = $this->queries->get_today_recevable_loanBlanch_by_officer($blanch_id, $empl_id);
+      $rejesho = $this->queries->get_total_recevableBlanch_by_officer($blanch_id, $empl_id);
+      // echo "<pre>";
+      // print_r($today_recevable);
+      //     exit();
+  
+  } elseif ($position === 'BRANCH MANAGER') {
+    $rejesho = $this->queries->get_total_recevableBlanch($blanch_id);
+    $today_recevable = $this->queries->get_today_recevable_loanBlanch($blanch_id);
+      // echo "<pre>";
+      // print_r($today_recevable);
+      //     exit();
+  
+  } else {
+      $total_customers = 0;
+      $new_loans = 0;
+  }
+  
           //     echo "<pre>";
           // print_r($today_recevable);
           //           exit();

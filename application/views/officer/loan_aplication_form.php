@@ -51,13 +51,9 @@ include_once APPPATH . "views/partials/officerheader.php";
                     Loan Application Form
                 </h3>
 
-				<?php
-    $action_url = isset($skip_next) && is_object($skip_next)
-        ? "oficer/modify_loanapplication/{$customer->customer_id}/{$skip_next->loan_id}"
-        : "oficer/create_loanapplication/{$customer->customer_id}";
-?>
+			
+<?php echo form_open("oficer/create_loanapplication/{$customer->customer_id}", ['novalidate' => true]); ?>
 
-<?php echo form_open($action_url, ['novalidate' => true]); ?>
 
 <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
 

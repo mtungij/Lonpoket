@@ -70,16 +70,18 @@ class Admin extends CI_Controller {
 	 $total_withdrawal_weekly = $this->queries->get_total_principal_weekly($comp_id);
 	 $total_withdrawal_monthly = $this->queries->get_total_principal_monthly($comp_id);
 	 $top_employees = $this->queries->get_top_5_employees_today_loans($comp_id);
+	 $top_depositors = $this->queries->get_top_5_deposit_employees($comp_id);
 
 
 	    //  echo "<pre>";
-	   	//       print_r(    $top_employee_loans);
+	   	//       print_r(    $top_depositors);
 	   	//            exit();
 
 	      // print_r($blanch_capital_circle);
 	      //         exit();
 	$this->load->view('admin/index',['receivable_total'=>$receivable_total,'total_deposit_monthly'=>$total_deposit_monthly,'total_deposit_weekly'=> $total_deposit_weekly,'total_deposit_daily'=> $total_deposit_daily,'deposit_daily'=> $deposit_daily,'done_customer_count'=>$done_customer_count,'all_customer_count'=>$all_customer_count,
-	'new_customer'=> $new_customer,'total_withdrawal_daily'=> $total_withdrawal_daily,'total_withdrawal_weekly'=> $total_withdrawal_weekly,'total_withdrawal_monthly'=>$total_withdrawal_monthly,
+	'new_customer'=> $new_customer,'top_depositors'=> $top_depositors,
+	'total_withdrawal_daily'=> $total_withdrawal_daily,'total_withdrawal_weekly'=> $total_withdrawal_weekly,'total_withdrawal_monthly'=>$total_withdrawal_monthly,
 	 'employee_count'=> $employee_count,'top_employees'=>$top_employees,'default_customer_count'=>$default_customer_count,'manager_data' => $manager_data,'total_received'=>$total_received,'total_loan_pending'=>$total_loan_pending,'total_loanWithdrawal'=>$total_loanWithdrawal,'today_penart'=>$today_penart,'prepaid_today'=>$prepaid_today,'total_received'=>$total_received,'prepaid_today'=>$prepaid_today,'total_loan_fee'=>$total_loan_fee,'today_income'=>$today_income,'toay_expences'=>$toay_expences,'total_capital'=>$total_capital,'out_float'=>$out_float,'cash_bank'=>$cash_bank,'principal_loan'=>$principal_loan,'done_loan'=>$done_loan,'total_expect'=>$total_expect,'total_receved'=>$total_receved,'cash_depost'=>$cash_depost,'cash_income'=>$cash_income,'cash_expences'=>$cash_expences,'blanch'=>$blanch,'total_remain'=>$total_remain,'today_total_loan_pend'=>$today_total_loan_pend,'loanAprove'=>$loanAprove,'withdrawal'=>$withdrawal,'loan_depost'=>$loan_depost,'receive_Amount'=>$receive_Amount,'loan_fee'=>$loan_fee,'request_expences'=>$request_expences,'sum_comp_capital'=>$sum_comp_capital,'total_deducted_balance'=>$total_deducted_balance,'total_non'=>$total_non,'blanch_capital_circle'=>$blanch_capital_circle]);
 	}
 
@@ -5011,9 +5013,9 @@ public function previous_transfor(){
  	$sum_depost = $this->queries->get_sumCashtransDepost($comp_id);
  	$sum_withdrawls = $this->queries->get_sumCashtransWithdrow($comp_id);
  	$blanch = $this->queries->get_blanch($comp_id);
- 	   //  echo "<pre>";
- 	   // print_r($blanch);
- 	   //       exit();
+ 	//     echo "<pre>";
+ 	//    print_r($cash);
+ 	//          exit();
  	$this->load->view('admin/cash_transaction',['cash'=>$cash,'sum_depost'=>$sum_depost,'sum_withdrawls'=>$sum_withdrawls,'blanch'=>$blanch]);
  }
 

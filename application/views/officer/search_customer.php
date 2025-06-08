@@ -156,67 +156,54 @@ include_once APPPATH . "views/partials/officerheader.php";
 
                 </h3>
                
-<?php
-// Check if $sponser exists, is an object, and has the property 'sp_id'
-$hasSponser = isset($sponser) && is_object($sponser) && property_exists($sponser, 'sp_id');
 
-// Set form action URL based on the presence of a sponsor
-$action = $hasSponser
-    ? "oficer/modify_sponser/{$sponser->sp_id}/{$sponser->customer_id}"
-    : "oficer/create_sponser/{$customer->customer_id}/{$customer->comp_id}";
-?>
 
-<?php echo form_open($action); ?>
+                <?php echo form_open("oficer/create_sponser/{$customer->customer_id}/{$customer->comp_id}"); ?>
 
 <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
     <div class="sm:col-span-4">
         <label for="sp_name" class="block text-sm font-medium mb-2 dark:text-gray-300">* First Name:</label>
         <input type="text" id="sp_name" name="sp_name" placeholder="jina la kwanza la mdhamini" autocomplete="off" 
-               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_name', $sponser->sp_name ?? ''); ?>">
+               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
         <?php echo form_error("sp_name", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
     </div>
 
     <div class="sm:col-span-4">
         <label for="sp_mname" class="block text-sm font-medium mb-2 dark:text-gray-300">* Middle Name:</label>
         <input type="text" id="sp_mname" name="sp_mname" placeholder="jina la pili la mdhamini" autocomplete="off" 
-               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_mname', $sponser->sp_mname ?? ''); ?>">
+               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
         <?php echo form_error("sp_mname", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
     </div>
 
     <div class="sm:col-span-4">
         <label for="sp_lname" class="block text-sm font-medium mb-2 dark:text-gray-300">* Last Name:</label>
         <input type="text" id="sp_lname" name="sp_lname" placeholder="jina la mwisho la mdhamini" autocomplete="off" 
-               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_lname', $sponser->sp_lname ?? ''); ?>">
+               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
         <?php echo form_error("sp_lname", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
     </div>
 
     <div class="sm:col-span-4">
         <label for="sp_phone_no" class="block text-sm font-medium mb-2 dark:text-gray-300">* Phone no:</label>
         <input type="text" id="sp_phone_no" name="sp_phone_no" placeholder="Namba ya simu ya mdhamini" autocomplete="off" 
-               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_phone_no', $sponser->sp_phone_no ?? ''); ?>">
+               class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
         <?php echo form_error("sp_phone_no", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
     </div>
 
     <div class="sm:col-span-4">
         <label for="sp_relation" class="block text-sm font-medium mb-2 dark:text-gray-300">* Relationship With Customer:</label>
         <input type="text" id="sp_relation" name="sp_relation" placeholder="mdhamini ana uhusiano gani na mkopaji..? mf mume,kaka n.k" autocomplete="off" 
-               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('sp_relation', $sponser->sp_relation ?? ''); ?>">
+               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
         <?php echo form_error("sp_relation", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
     </div>
 
     <div class="sm:col-span-4">
         <label for="nature" class="block text-sm font-medium mb-2 dark:text-gray-300">* Guarantor Business:</label>
         <input type="text" id="nature" name="nature" placeholder="Biashara ya Mdhamini" autocomplete="off" 
-               class=" uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-               value="<?php echo set_value('nature', $sponser->nature ?? ''); ?>">
+               class="uppercase py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
         <?php echo form_error("nature", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
     </div>
 </div>
+
 
 <!-- Hidden Inputs -->
 <input type="hidden" name="comp_id" value="<?php echo htmlspecialchars($_SESSION['comp_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
