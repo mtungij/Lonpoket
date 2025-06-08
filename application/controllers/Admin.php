@@ -3112,9 +3112,9 @@ public function disburse($loan_id){
 		$depost = $this->queries->get_sumTodayDepost($comp_id);
 		$withdraw = $this->queries->get_sumTodayWithdrawal($comp_id);
 		$customer = $this->queries->get_allcustomerDatagroup($comp_id);
-		  // echo "<pre>";
-		  // print_r($customer);
-		  //   exit();
+		//   echo "<pre>";
+		//   print_r($customer);
+		//     exit();
 		$this->load->view('admin/teller_dashboard',['float'=>$float,'depost'=>$depost,'withdraw'=>$withdraw,'customer'=>$customer]);
 	}
 

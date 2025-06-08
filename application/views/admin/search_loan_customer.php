@@ -88,6 +88,20 @@ if (!empty($customer_loan_status)) {
         </span>
     </span>
 </li>
+
+<li class="flex items-center py-3">
+    <span class="font-bold">Customer Code</span>
+    <span class="ml-auto">
+        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium">
+            <?php echo $customer->code; ?>
+        </span>
+    </span>
+</li>
+
+
+
+
+
                         <li class="flex items-center py-3">
                                <span class="font-bold">Gawa</span>
                             <?php if (!empty($customer_loan->loan_stat_date)) : ?>

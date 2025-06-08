@@ -62,8 +62,6 @@ include_once APPPATH . "views/partials/header.php";
         <?= strtoupper($customers->blanch_name); ?>
     </option>
 <?php endforeach; ?>
-
-
     </select>
 </div>
 
