@@ -1,5 +1,6 @@
   <!-- JS Implementing Plugins -->
 
+
    <!-- jQuery (required by DataTables.net) -->
    <script src="<?php echo base_url('node_modules/jquery/dist/jquery.min.js'); ?>"></script>
 
@@ -410,6 +411,10 @@
       })();
     });
   </script>
+
+
+
+
 
   </body>
 </html>

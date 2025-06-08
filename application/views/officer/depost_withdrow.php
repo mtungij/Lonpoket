@@ -455,6 +455,8 @@ if (!empty($customer_loan_status)) {
 </div>
 
   
+<!-- Add this spinner next to the submit button -->
+
 
 <!-- here put data -->
 
@@ -527,11 +529,6 @@ if (!empty($customer_loan_status)) {
     <?php } ?>
 </div>
 
-
-
- 
-
-
     <!-- Date -->
     <div class="sm:col-span-6">
       <label for="deposit_date" class="block text-sm font-medium mb-2 dark:text-gray-300">
@@ -562,7 +559,18 @@ if (!empty($customer_loan_status)) {
     <button type="button" class="py-2 px-3 btn-secondary-sm"
       data-hs-overlay="#hs-edit-deposit-modal">Funga</button>
 
-    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Weka</button>
+      <button id="submit-btn" type="submit"
+  class="py-2 px-4 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white flex items-center gap-2">
+  <span>Weka</span>
+  <svg id="spinner" class="hidden w-5 h-5 animate-spin text-cyan-200 dark:text-cyan-400"
+    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10"
+      stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor"
+      d="M4 12a8 8 0 018-8v4l3.536-3.536A9 9 0 103.515 15.536L7.05 12H4z"></path>
+  </svg>
+</button>
+
   </div>
 </div>
 
@@ -642,6 +650,20 @@ include_once APPPATH . "views/partials/footer.php";
 }
 .custom-select2-container { margin: 0; }
 </style> 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const spinner = document.getElementById("spinner");
+    const button = document.getElementById("submit-btn");
+    const text = document.getElementById("submit-text");
+
+    form.addEventListener("submit", function () {
+      button.disabled = true;
+      text.textContent = "Tafadhali subiri...";
+      spinner.classList.remove("hidden");
+    });
+  });
+</script>
 
 <script>
 $(document).ready(function () {

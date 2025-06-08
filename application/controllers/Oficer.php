@@ -2267,26 +2267,32 @@ public function create_sponser($customer_id, $comp_id) {
 
       $this->db->insert('tbl_sponser', $data);
 
-      $this->session->set_flashdata('massage', 'Sponsor saved successfully');
+      $this->session->set_flashdata('massage', 'Taarifa za mdhamini zimepokelewa');
 
       $compdata = $this->queries->get_companyData($comp_id);
       $comp_name = $compdata->comp_name;
-      $comp_number = $compdata->comp_number;
-      
-      // Pata jina kamili la mteja
+
+      // Sponsor fullname and phone for SMS
+      $sp_fullname = $data['sp_name'] . ' ' . $data['sp_mname'] . ' ' . $data['sp_lname'];
+      $phone = $data['sp_phone_no'];
+
+      // Customer full name
       $customer_name = $customer->f_name . ' ' . $customer->m_name . ' ' . $customer->l_name;
-      
-      // Ujumbe wa SMS
+
+      // SMS message
       $massage = "Habari $sp_fullname, umetajwa kama mdhamini wa $customer_name katika taasisi ya kifedha $comp_name. "
-      . "Iwapo hukubaliani kuwa mdhamini wake, tafadhali wasiliana nasi kupitia 0626573025/0627548192. Tunathamini ushirikiano wako.";
-      
-      // Tuma SMS
+                . "Iwapo hukubaliani kuwa mdhamini wake, tafadhali wasiliana nasi kupitia 0626573025/0627548192. Tunathamini ushirikiano wako.";
+
+      // Send SMS
       $this->sendsms($phone, $massage);
 
-      // Redirect using already available $customerdata
+      // Redirect
       redirect("oficer/loan_applicationForm/" . $customerdata);
   }
 }
+
+  
+
 
  
 
@@ -2330,84 +2336,89 @@ public function create_sponser($customer_id, $comp_id) {
 
 
     public function create_loanapplication($customer_id) {
-      $this->load->helper('string');
+      // Load necessary helpers and libraries
+      $this->load->helper(['form', 'string']);
+      $this->load->library('form_validation');
+      $this->load->model('queries');
+  
+      // Set validation rules
       $this->form_validation->set_rules('comp_id', 'Company', 'required');
       $this->form_validation->set_rules('empl_id', 'Employee', 'required');
       $this->form_validation->set_rules('blanch_id', 'Blanch', 'required');
       $this->form_validation->set_rules('customer_id', 'Customer', 'required');
       $this->form_validation->set_rules('category_id', 'Category', 'required');
       $this->form_validation->set_rules('how_loan', 'How Loan', 'required');
-      $this->form_validation->set_rules('day', 'Day', 'required');
+      $this->form_validation->set_rules('day', 'Day', 'required|integer');
       $this->form_validation->set_rules('session', 'Session', 'required');
       $this->form_validation->set_rules('rate', 'Rate', 'required');
       $this->form_validation->set_rules('reason', 'Reason', 'required');
   
-      if ($this->form_validation->run()) {
-          $data = $this->input->post();
-  
-          // Generate a random loan code
-          $data['loan_code'] = random_string('numeric', 14);
-  
-          // Add the logged-in user's name and ID
-          
-          $data['created_by'] = $this->session->userdata('user_id');
-  
-          // Validate created_by
-          if (!$data['created_by']) {
-              $this->session->set_flashdata('error', 'Session expired. Please log in again.');
-              return redirect('login'); // Redirect to login
-          }
-  
-          $this->load->model('queries');
-          $category_id = $data['category_id'];
-          $how_loan = $data['how_loan'];
-          $cat = $this->queries->get_loancategoryData($category_id);
-          $loan_price = $cat->loan_price;
-          $loan_perday = $cat->loan_perday;
-  
-          if ($how_loan < $loan_price) {
-              $this->session->set_flashdata('mass', 'Amount of Loan Is Less');
-              return redirect('oficer/loan_applicationForm/' . $customer_id);
-          } elseif ($how_loan > $loan_perday) {
-              $this->session->set_flashdata('mass', 'Amount of Loan Is Greater');
-              return redirect('oficer/loan_applicationForm/' . $customer_id);
-          } else {
-              $loan_id = $this->queries->insert_loan($data);
-              $new_customer = $this->queries->get_loan_by_loan_id($loan_id);
-              $first_name = $new_customer->f_name;
-              $middle_name = $new_customer->m_name;
-              $last_name = $new_customer->l_name;
-              $phone_number = $new_customer->phone_no;
-              $employee_name = $new_customer->empl_name;
-              $blanch_name = $new_customer->blanch_name;
-
-  
-              // Prepare SMS message
-              $massage = "Ndugu " . $first_name . ", maombi ya mkopo wa TZS " . number_format($how_loan, 0) . " uliyoomba yameshatumwa. Tutakujulisha kwa njia ya SMS yakishajadiliwa na kukubaliwa.";
-  
-
-
-$massage = "Habari! Kuna maombi ya mkopo  katika tawi la $blanch_name. 
-Jina la mteja ni $first_name $middle_name $last_name, nambari ya simu ni $phone_number. 
-Afisa aliyesajili ni $employee_name. Kiasi cha mkopo kilichoombwa ni TZS " . number_format($how_loan, 0);
-
-$phone_number = [    255763727272, 
-                     255627548192,
-                     255626573025
- 
-];
-
-foreach ($phone_number as  $phone) {
- $this->sendsms($phone, $massage);
-}
-  
-              $this->session->set_flashdata('massage', 'Loan application created successfully!');
-              return redirect('oficer/collelateral_session/' . $loan_id);
-          }
+      // Run validation
+      if ($this->form_validation->run() === FALSE) {
+          // Send validation errors back
+          $this->session->set_flashdata('error', validation_errors());
+          return redirect('oficer/loan_applicationForm/' . $customer_id);
       }
   
-      $this->collelateral_session();
+      // Collect form data
+      $data = $this->input->post();
+      $data['loan_code'] = random_string('numeric', 14);
+      $data['created_by'] = $this->session->userdata('user_id');
+  
+      if (!$data['created_by']) {
+          $this->session->set_flashdata('error', 'Session expired. Please log in again.');
+          return redirect('login');
+      }
+  
+      // Fetch category info for limits
+      $category_id = $data['category_id'];
+      $how_loan = $data['how_loan'];
+      $cat = $this->queries->get_loancategoryData($category_id);
+      $loan_price = $cat->loan_price;
+      $loan_perday = $cat->loan_perday;
+  
+      if ($how_loan < $loan_price) {
+          $this->session->set_flashdata('mass', 'Amount of Loan Is Less than minimum allowed');
+          return redirect('oficer/loan_applicationForm/' . $customer_id);
+      }
+  
+      if ($how_loan > $loan_perday) {
+          $this->session->set_flashdata('mass', 'Amount of Loan Is Greater than daily limit');
+          return redirect('oficer/loan_applicationForm/' . $customer_id);
+      }
+  
+      // Insert loan into DB
+      $loan_id = $this->queries->insert_loan($data);
+      $new_customer = $this->queries->get_loan_by_loan_id($loan_id);
+  
+      // Prepare notification message
+      $first_name   = $new_customer->f_name;
+      $middle_name  = $new_customer->m_name;
+      $last_name    = $new_customer->l_name;
+      $phone_number = $new_customer->phone_no;
+      $employee_name = $new_customer->empl_name;
+      $blanch_name  = $new_customer->blanch_name;
+  
+      $message = "Habari! Kuna maombi ya mkopo katika tawi la $blanch_name. 
+  Jina la mteja ni $first_name $middle_name $last_name, nambari ya simu ni $phone_number. 
+  Afisa aliyesajili ni $employee_name. Kiasi cha mkopo kilichoombwa ni TZS " . number_format($how_loan, 0);
+  
+      // Phone numbers to notify
+      $phone_numbers = [
+          '255763727272',
+          '255627548192',
+          '255626573025',
+      ];
+  
+      foreach ($phone_numbers as $phone) {
+          $this->sendsms($phone, $message);
+      }
+  
+      // Redirect with success message
+      $this->session->set_flashdata('massage', 'Loan application created successfully!');
+      return redirect('oficer/collelateral_session/' . $loan_id);
   }
+  
   
 
 
@@ -4638,9 +4649,9 @@ public function insert_blanch_principal($comp_id,$blanch_id,$trans_id,$princ_sta
         $massage = 'Habari ' . $first_name . ' ' . $last_name . ', namba yako ya siri kwa ajili ya kutolewa mkopo ni ' . $code . '. Asante kwa kuchagua huduma zetu. - ' . $comp_name;
 
        
-        // echo "<br>";
-        // print_r(  $loan_code);
-        // echo "<br>";
+       
+        // print_r(  $massage);
+      
         //      exit();
        
         $this->sendsms($phone,$massage);

@@ -31,17 +31,41 @@ include_once APPPATH . "views/partials/officerheader.php";
             </p>
         </div>
         <!-- End Page Title / Subheader -->
+        <?php if ($this->session->flashdata('error')): ?>
+  <div id="flash-error-toast" class="max-w-xs bg-red-500 text-sm text-red-500 rounded-xl shadow-lg" role="alert" tabindex="-1" aria-labelledby="hs-toast-solid-color-red-label">
+    <div id="hs-toast-solid-color-red-label" class="flex p-4">
+      <?= htmlspecialchars($this->session->flashdata('error'), ENT_QUOTES, 'UTF-8'); ?>
 
-        <?php // Flash Messages ?>
-        <?php if ($das = $this->session->flashdata('massage')): ?>
-        <div class="bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert">
-            <div class="flex">
-                <div class="flex-shrink-0"><span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-500"><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span></div>
-                <div class="ms-3"><h3 class="text-gray-800 font-semibold dark:text-white">Success</h3><p class="mt-2 text-sm text-gray-700 dark:text-gray-400"><?php echo $das;?></p></div>
-                <div class="ps-3 ms-auto"><div class="-mx-1.5 -my-1.5"><button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-50 focus:ring-teal-600 dark:bg-transparent dark:hover:bg-teal-800/50 dark:text-teal-600" data-hs-remove-element="[role=alert]"><span class="sr-only">Dismiss</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div></div>
-            </div>
-        </div>
-        <?php endif; ?>
+      <div class="ms-auto">
+        <button type="button" onclick="document.getElementById('flash-error-toast').style.display='none'" class="inline-flex shrink-0 justify-center items-center size-5 rounded-lg text-white hover:text-white opacity-50 hover:opacity-100 focus:outline-hidden focus:opacity-100" aria-label="Close">
+          <span class="sr-only">Close</span>
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+
+<?php if ($this->session->flashdata('massage')): ?>
+    <div class="max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabindex="-1" aria-labelledby="hs-toast-success-example-label">
+    <div class="flex p-4">
+      <div class="shrink-0">
+        <svg class="shrink-0 size-4 text-teal-500 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
+        </svg>
+      </div>
+      <div class="ms-3">
+        <p id="hs-toast-success-example-label" class="text-sm text-gray-700 dark:text-neutral-400">
+        <?= $this->session->flashdata('massage'); ?>
+        </p>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+
             <!-- FALSE -->
       
         <!-- Card: Register Share Holder Form -->
@@ -93,6 +117,7 @@ include_once APPPATH . "views/partials/officerheader.php";
         <select id="StaffSelect" name="empl_id" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm">
            
             <?php foreach ($empl_blanch as $empl_blanchs): ?>
+                <option value="">select officer</option>
 				<option value="<?php echo $empl_blanchs->empl_id; ?>"><?php echo $empl_blanchs->empl_name; ?></option>
 				<?php endforeach; ?>
          
@@ -114,7 +139,6 @@ include_once APPPATH . "views/partials/officerheader.php";
     id="how_loan"
     name="how_loan"
     placeholder="Kiasi cha mkopo kinachoombwa bila riba"
-    value="<?php echo set_value('how_loan'); ?>"
     autocomplete="off"
     required
     class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
