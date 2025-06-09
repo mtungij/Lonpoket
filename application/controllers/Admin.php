@@ -3558,6 +3558,8 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 
 
     public function deposit_loan($customer_id){
+	$empl_id = $this->session->userdata('empl_id');
+	
     $this->form_validation->set_rules('customer_id','Customer','required');
 	$this->form_validation->set_rules('comp_id','Company','required');
 	$this->form_validation->set_rules('blanch_id','blanch','required');
@@ -3575,6 +3577,7 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	      $comp_id = $depost['comp_id'];
 	      $blanch_id = $depost['blanch_id'];
 	      $p_method = $depost['p_method'];
+		  $wakala_name = $depost['wakala_name'];
 	      $loan_id = $depost['loan_id'];
 	      $deposit_date = $depost['deposit_date'];
 	      $depost = $depost['depost'];
@@ -3595,6 +3598,7 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	         
 	      $this->load->model('queries');
 	      $comp_id = $this->session->userdata('comp_id');
+		  $empl_data = $this->queries->get_employee_data($empl_id);
 	      $company_data = $this->queries->get_companyData($comp_id);
 	      $loan_restoration = $this->queries->get_restoration_loan($loan_id);
 	      $empl_id = $loan_restoration->empl_id;
@@ -3638,7 +3642,7 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 		  $depost_money = $blanch_capital + $new_depost;
                
 	      //admin role
-	      $role = $admin_data->role;
+	      $role = $empl_data->empl_name;
           
 
 	      $out_data = $this->queries->getOutstand_loanData($loan_id);
@@ -3764,9 +3768,9 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 
             
           	if ($deposit_check == TRUE) {
-	       $this->update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id);	
+	       $this->update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id,$wakala_name);	
 	       		}else{
-          $dep_id = $this->insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id);
+          $dep_id = $this->insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$wakala_name);
            }
 
           //$this->insert_blanch_amount($blanch_id,$new_depost);
@@ -3799,11 +3803,11 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	      }
 	      $this->update_outstand_status($loan_id);
 	     if ($deposit_check == TRUE) {
-	     $this->update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id);
+	     $this->update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id,$wakala_name);
 	      }else{
-	      $this->insert_loan_lecordDataDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id);	
+	      $this->insert_loan_lecordDataDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id,$wakala_name);	
 	      }
-        $this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id);
+        $this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id,$wakala_name);
 	     $this->insert_remainloan($loan_id,$depost_amount,$paid_out,$dep_id);
 	     $this->update_loastatus($loan_id);
 	     //$this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date);
@@ -3819,7 +3823,7 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	     }elseif(@$interest_blanch == FALSE){
 	     $this->insert_interest_blanch_capital($comp_id,$blanch_id,$trans_id,$princ_status,$interest_insert);
        }
-	      $this->insert_customer_report($loan_id,$comp_id,$blanch_id,$customer_id,$group_id,$new_depost,$pay_id,$deposit_date);
+	      $this->insert_customer_report($loan_id,$comp_id,$blanch_id,$customer_id,$group_id,$new_depost,$pay_id,$deposit_date,$wakala_name);
 	     $this->insert_prepaid_balance($loan_id,$comp_id,$blanch_id,$customer_id,$prepaid,$dep_id);
 	     $this->update_customer_statusLoan($customer_id);
 	     $total_depost = $this->queries->get_sum_dapost($loan_id);
@@ -3865,9 +3869,9 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	          
 	      //insert depost balance
 	       	if ($deposit_check == TRUE) {
-	       $this->update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id);	
+	       $this->update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id,$wakala_name);	
 	       		}else{
-          $dep_id = $this->insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id);
+          $dep_id = $this->insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$wakala_name);
            } 
          
           $new_balance = $new_depost;
@@ -3877,11 +3881,11 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	      	$this->session->set_flashdata('massage','deposit has made successfully');
 	      }
 	     if ($deposit_check == TRUE) {
-	     $this->update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id);
+	     $this->update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id,$wakala_name);
 	      }else{
-	      $this->insert_loan_lecordDataDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id);	
+	      $this->insert_loan_lecordDataDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id,$wakala_name);	
 	      }
-        $this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id);
+        $this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id,$wakala_name);
 	     $this->insert_remainloan($loan_id,$depost_amount,$paid_out,$dep_id);
 	     //$this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date);
 	     //$this->depost_Blanch_accountBalance($comp_id,$blanch_id,$payment_method,$depost_money);
@@ -3942,9 +3946,9 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 
 	      //insert depost balance
 	       		if ($deposit_check == TRUE) {
-	       $this->update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id);	
+	       $this->update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id,$wakala_name);	
 	       		}else{
-          $dep_id = $this->insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id);
+          $dep_id = $this->insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$wakala_name);
            }
           $new_balance = $new_depost;
 	      if ($dep_id > 0) {
@@ -3966,11 +3970,11 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	      	$this->session->set_flashdata('massage','Deposit has made Sucessfully');
 	      }
 	      if ($deposit_check == TRUE) {
-	     $this->update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id);
+	     $this->update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id,$wakala_name);
 	      }else{
-	      $this->insert_loan_lecordDataDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id);	
+	      $this->insert_loan_lecordDataDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id,$wakala_name);	
 	      }
-        $this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id);
+        $this->depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id,$wakala_name);
 	     
 
 	     //$this->depost_Blanch_accountBalance($comp_id,$blanch_id,$payment_method,$depost_money);
@@ -4058,15 +4062,15 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
       }
 
 
-      public function update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id){
+      public function update_loan_lecordDataDeposit_data($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$dep_id,$group_id,$trans_id,$restoration,$loan_aproved,$deposit_date,$empl_id,$wakala_name){
       	$sqldata="UPDATE `tbl_prev_lecod` SET `depost`= '$update_res',`trans_id`='$trans_id' WHERE `pay_id`= '$dep_id'";
      $query = $this->db->query($sqldata);
      return true;
       }
 
 
-      public function update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id){
-     $sqldata="UPDATE `tbl_depost` SET `depost`= '$update_res',`sche_principal`='$day_princ',`sche_interest`='$day_int',`depost_method`='$p_method' WHERE `dep_id`= '$dep_id'";
+      public function update_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$dep_id,$wakala_name){
+     $sqldata="UPDATE `tbl_depost` SET `depost`= '$update_res',`sche_principal`='$day_princ',`sche_interest`='$day_int',`sche_interest`='$day_int' WHERE `dep_id`= '$dep_id'";
      $query = $this->db->query($sqldata);
      return true;	
       }
@@ -4074,15 +4078,15 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 
    
 
-   public function insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id){
+   public function insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id,$wakala_name){
 
    	 $report_day = date("Y-m-d");
-    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$update_res','0','SYSTEM / DEFAULT LOAN RETURN','$report_day','$report_day','$group_id','$dep_id')");
+    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`,`wakala_name`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$update_res','0','SYSTEM / DEFAULT LOAN RETURN','$report_day','$report_day','$group_id','$dep_id',$wakala_name)");
    }
 
-  public function insert_returnDescriptionData_report($comp_id,$blanch_id,$customer_id,$loan_id,$depost,$group_id,$dep_id){
+  public function insert_returnDescriptionData_report($comp_id,$blanch_id,$customer_id,$loan_id,$depost,$group_id,$dep_id,$wakala_name){
      $report_day = date("Y-m-d");
-    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$depost','0','SYSTEM / PENDING LOAN RETURN','$report_day','$report_day','$group_id','$dep_id')");
+    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`,`wakala_name`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$depost','0','SYSTEM / PENDING LOAN RETURN','$report_day','$report_day','$group_id','$dep_id','$wakala_name')");
    }
 
      public function update_loan_pending_balance($loan_id,$deni_lipa){
@@ -4091,9 +4095,9 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
      return true;
      }
 
-      public function insert_description_report($comp_id,$blanch_id,$customer_id,$loan_id,$total_pend,$deni_lipa,$group_id,$dep_id){
+      public function insert_description_report($comp_id,$blanch_id,$customer_id,$loan_id,$total_pend,$deni_lipa,$group_id,$dep_id,$wakala_name){
       $report_day = date("Y-m-d");
-    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$total_pend','$deni_lipa','SYSTEM / LOAN PENDING RETURN','$report_day','$report_day','$group_id','$dep_id')");
+    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`,`wakala_name`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$total_pend','$deni_lipa','SYSTEM / LOAN PENDING RETURN','$report_day','$report_day','$group_id','$dep_id','$wakala_name')");
       }
 
    //update empty
@@ -4427,17 +4431,17 @@ $sqldata="UPDATE `tbl_depost` SET `depost`= '$remain_oldDepost',`sche_principal`
     	$this->db->query("INSERT INTO tbl_prev_lecod (`comp_id`,`customer_id`,`loan_id`,`blanch_id`,`depost`,`lecod_day`,`pay_id`,`time_rec`,`trans_id`,`restrations`,`loan_aprov`,`empl_id`,`group_id`) VALUES ('$comp_id','$customer_id','$loan_id','$blanch_id','$update_res','$deposit_date','$dep_id','$time','$trans_id','$restoration','$loan_aproved','$empl_id','$group_id')");
     }
 
-     public function insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id){
+     public function insert_loan_lecorDeposit($comp_id,$customer_id,$loan_id,$blanch_id,$update_res,$p_method,$role,$day_int,$day_princ,$loan_status,$group_id,$deposit_date,$empl_id,$wakala_name){
     	//$day = date("Y-m-d");
     	$date = date("Y-m-d H:i:s"); 
-    	$this->db->query("INSERT INTO  tbl_depost (`comp_id`,`customer_id`,`loan_id`,`blanch_id`,`depost`,`depost_day`,`depost_method`,`empl_username`,`sche_principal`,`sche_interest`,`dep_status`,`group_id`,`empl_id`,`deposit_day`) VALUES ('$comp_id','$customer_id','$loan_id','$blanch_id','$update_res','$deposit_date','$p_method','$role','$day_princ','$day_int','$loan_status','$group_id','$empl_id','$date')");
+    	$this->db->query("INSERT INTO  tbl_depost (`comp_id`,`customer_id`,`loan_id`,`blanch_id`,`depost`,`depost_day`,`depost_method`,`empl_username`,`sche_principal`,`sche_interest`,`dep_status`,`group_id`,`empl_id`,`deposit_day`,`wakala_name`) VALUES ('$comp_id','$customer_id','$loan_id','$blanch_id','$update_res','$deposit_date','$p_method','$role','$day_princ','$day_int','$loan_status','$group_id','$empl_id','$date','$wakala_name')");
      return $this->db->insert_id();
 
     }
 
-   public function depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id){
+   public function depost_balance($loan_id,$comp_id,$blanch_id,$customer_id,$new_depost,$sum_balance,$description,$role,$group_id,$p_method,$deposit_date,$dep_id,$wakala_name){
    	$day = date("Y-m-d");
-  $this->db->query("INSERT INTO tbl_pay (`loan_id`,`blanch_id`,`comp_id`,`customer_id`,`depost`,`balance`,`description`,`pay_status`,`stat`,`date_pay`,`emply`,`group_id`,`date_data`,`p_method`,`dep_id`) VALUES ('$loan_id','$blanch_id','$comp_id','$customer_id','$new_depost','$sum_balance','CASH DEPOSIT','1','1','$day','$role','$group_id','$deposit_date','$p_method','$dep_id')");
+  $this->db->query("INSERT INTO tbl_pay (`loan_id`,`blanch_id`,`comp_id`,`customer_id`,`depost`,`balance`,`description`,`pay_status`,`stat`,`date_pay`,`emply`,`group_id`,`date_data`,`p_method`,`dep_id`,`wakala_name`) VALUES ('$loan_id','$blanch_id','$comp_id','$customer_id','$new_depost','$sum_balance','CASH DEPOSIT','1','1','$day','$role','$group_id','$deposit_date','$p_method','$dep_id','$wakala_name')");
 
       }
 
@@ -6876,15 +6880,25 @@ return true;
 	public function today_recevable_loan(){
 		$this->load->model('queries');
 		$comp_id = $this->session->userdata('comp_id');
+	
+		// Data collections
 		$today_recevable = $this->queries->get_today_recevable_loan($comp_id);
 		$rejesho = $this->queries->get_total_recevable($comp_id);
-
+		$kusanyo = $this->queries->get_today_recevable_loan_branchwise($comp_id);
 		$employee = $this->queries->get_today_recevable_employee($comp_id);
-		  //     echo "<pre>";
-		  // print_r($employee);
-		  //           exit();
-		$this->load->view('admin/today_recevable',['today_recevable'=>$today_recevable,'rejesho'=>$rejesho,'employee'=>$employee]);
+
+	
+		// Load view
+		$this->load->view('admin/today_recevable', [
+			'today_recevable' => $today_recevable,
+			'rejesho' => $rejesho,
+			'employee' => $employee
+		]);
 	}
+	
+
+	
+	
 
 
 
@@ -8820,39 +8834,30 @@ public function update_customer_details($customer_id){
 		$this->form_validation->set_rules('blanch_id','blanch','required');
 		$this->form_validation->set_rules('f_name','First name','required');
 		$this->form_validation->set_rules('m_name','Middle name','required');
+		$this->form_validation->set_rules('empl_id','empl','required');
 		$this->form_validation->set_rules('l_name','Last name','required');
-		$this->form_validation->set_rules('gender','gender','required');
-		$this->form_validation->set_rules('date_birth','date_birth','required');
-		$this->form_validation->set_rules('age','Age');
 		$this->form_validation->set_rules('phone_no','phone number','required');
-		$this->form_validation->set_rules('region_id','region','required');
-		$this->form_validation->set_rules('district','district','required');
-		$this->form_validation->set_rules('ward','ward','required');
-		$this->form_validation->set_rules('street','street','required');
 		$this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
 		if ($this->form_validation->run()) {
 			 $data = $this->input->post();
 
 			 $blanch_id = $data['blanch_id'];
+			 $empl_id = $data['empl_id'];
 			 $f_name = $data['f_name'];
 			 $m_name = $data['m_name'];
 			 $l_name = $data['l_name'];
-			 $gender = $data['gender'];
-			 $date_birth = $data['date_birth'];
-			 $age = $data['age'];
 			 $phone_no = $data['phone_no'];
-			 $region_id = $data['region_id'];
-			 $district = $data['district'];
-			 $ward = $data['ward'];
-			 $street = $data['street'];
+		
+			
+		
 			 // echo "<pre>";
 			 // print_r($data);
 			 //     exit();
 			 $this->load->model('queries');
-			 if ($this->update_customer_profile_data($customer_id,$blanch_id,$f_name,$m_name,$l_name,$gender,$date_birth,$age,$phone_no,$region_id,$district,$ward,$street)) {
-			 	$this->session->set_flashdata("massage",'Data Updated successfully');
-			 }else{
-			 	$this->session->set_flashdata("error",'Failed');
+			 if ($this->queries->update_profile_data($customer_id, $blanch_id, $f_name, $m_name, $l_name, $phone_no, $empl_id)) {
+				 $this->session->set_flashdata("massage", 'Data Updated successfully');
+			 } else {
+				 $this->session->set_flashdata("error", 'Failed');
 			 }
 	
           return redirect("admin/view_more_customer/".$customer_id);
@@ -8860,8 +8865,8 @@ public function update_customer_details($customer_id){
 		$this->view_more_customer();
 	}
 
-	public function update_customer_profile_data($customer_id,$blanch_id,$f_name,$m_name,$l_name,$gender,$date_birth,$age,$phone_no,$region_id,$district,$ward,$street){
-	$sqldata="UPDATE `tbl_customer` SET `blanch_id`= '$blanch_id',`f_name`='$f_name',`m_name`='$m_name',`l_name`='$l_name',`gender`='$gender',`date_birth`='$date_birth',`age`='$age',`phone_no`='$phone_no',`region_id`='$region_id',`district`='$district',`ward`='$ward' WHERE `customer_id`= '$customer_id'";
+	public function update_customer_profile_data($customer_id,$blanch_id,$f_name,$m_name,$l_name,$phone_no,$empl_id){
+	$sqldata="UPDATE `tbl_customer` SET `blanch_id`= '$blanch_id',`f_name`='$f_name',`m_name`='$m_name',`l_name`='$l_name',`phone_no`='$phone_no',`empl_id`='$empl_id' WHERE `customer_id`= '$customer_id'";
     // print_r($sqldata);
     //    exit();
     $query = $this->db->query($sqldata);

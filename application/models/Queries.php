@@ -2551,6 +2551,33 @@ public function update_password_data($comp_id, $userdata)
 		return $today_receivable->result();
 	}
 	
+	public function get_today_recevable_loan_branchwise($comp_id){
+		$today = date("Y-m-d");
+	
+		$query = $this->db->query("
+			SELECT 
+				b.blanch_id,
+				b.blanch_name,
+				SUM(l.restration) AS total_restration
+			FROM 
+				tbl_loans l
+			LEFT JOIN 
+				tbl_blanch b ON b.blanch_id = l.blanch_id
+			LEFT JOIN 
+				tbl_customer c ON c.customer_id = l.customer_id
+			LEFT JOIN 
+				tbl_employee e ON e.empl_id = l.empl_id
+			WHERE 
+				l.date_show = '$today' 
+				AND l.loan_status = 'withdrawal' 
+				AND l.comp_id = '$comp_id'
+			GROUP BY 
+				b.blanch_id, b.blanch_name
+		");
+	
+		return $query->result();
+	}
+	
 
 
     public function get_total_recevable($comp_id){
@@ -5973,7 +6000,7 @@ public function fetch_employee($blanch_id)
 
 
   public function get_loan_collection_customer($customer_id){
- 	$loan_data = $this->db->query("SELECT pn.penart_paid,SUM(d.depost) AS total_depost,c.f_name,c.m_name,c.l_name,b.blanch_name,l.loan_id,l.loan_int,l.restration,l.loan_status,ot.loan_end_date,l.loan_aprove,e.username,ot.loan_stat_date,l.session,l.day,at.oficer,at.phone_oficer,at.region_oficer,at.district_oficer,at.ward_oficer,at.street_oficer,at.oficer_position,r.region_name,at.attach_id,at.cont_attachment,c.customer_id  FROM tbl_loans l 
+ 	$loan_data = $this->db->query("SELECT pn.penart_paid,SUM(d.depost) AS total_depost,c.f_name,c.m_name,c.l_name,b.blanch_name,l.loan_id,l.loan_int,l.restration,l.loan_status,ot.loan_end_date,l.loan_aprove,e.username,e.empl_name,ot.loan_stat_date,l.session,l.day,at.oficer,at.phone_oficer,at.region_oficer,at.district_oficer,at.ward_oficer,at.street_oficer,at.oficer_position,r.region_name,at.attach_id,at.cont_attachment,c.customer_id  FROM tbl_loans l 
 	 LEFT JOIN tbl_pay_penart pn ON pn.loan_id = l.loan_id  
 	 LEFT JOIN tbl_depost d ON d.loan_id = l.loan_id 
 	 JOIN tbl_customer c ON c.customer_id = l.customer_id 
@@ -5989,7 +6016,76 @@ public function fetch_employee($blanch_id)
 
  	return $loan_data->result();
  }
-
+ public function update_profile_data($customer_id, $blanch_id, $f_name, $m_name, $l_name, $phone_no, $empl_id)
+ {
+	 $this->db->trans_start();
+ 
+	 // Update tbl_customer
+	 $this->db->where('customer_id', $customer_id);
+	 $this->db->update('tbl_customer', [
+		 'blanch_id' => $blanch_id,
+		 'f_name'    => $f_name,
+		 'm_name'    => $m_name,
+		 'l_name'    => $l_name,
+		 'phone_no'  => $phone_no,
+		 'empl_id'   => $empl_id
+	 ]);
+ 
+	 // Update tbl_loans
+	 $this->db->where('customer_id', $customer_id);
+	 $this->db->update('tbl_loans', [
+		 'blanch_id' => $blanch_id,
+		 'empl_id'   => $empl_id
+	 ]);
+ 
+	 // Update tbl_depost
+	 $this->db->where('customer_id', $customer_id);
+	 $this->db->update('tbl_depost', [
+		 'blanch_id' => $blanch_id,
+		 'empl_id'   => $empl_id
+	 ]);
+ 
+	 // ✅ Get loan_ids to update tbl_outstand and tbl_outstand_loan
+	 $this->db->select('loan_id');
+	 $this->db->where('customer_id', $customer_id);
+	 $loan_ids_result = $this->db->get('tbl_loans')->result();
+ 
+	 if (!empty($loan_ids_result)) {
+		 $loan_ids = array_column($loan_ids_result, 'loan_id');
+ 
+		 // ✅ Update tbl_outstand
+		 $this->db->where_in('loan_id', $loan_ids);
+		 $this->db->update('tbl_outstand', [
+			 'blanch_id' => $blanch_id
+		 ]);
+ 
+		 // ✅ Update tbl_outstand_loan
+		 $this->db->where_in('loan_id', $loan_ids);
+		 $this->db->update('tbl_outstand_loan', [
+			 'blanch_id' => $blanch_id
+		 ]);
+	 }
+ 
+	 // Update tbl_prev_lecod
+	 $this->db->where('customer_id', $customer_id);
+	 $this->db->update('tbl_prev_lecod', [
+		 'blanch_id' => $blanch_id,
+		 'empl_id'   => $empl_id
+	 ]);
+ 
+	 // Update tbl_customer_report
+	 $this->db->where('customer_id', $customer_id);
+	 $this->db->update('tbl_customer_report', [
+		 'blanch_id' => $blanch_id
+	 ]);
+ 
+	 $this->db->trans_complete();
+	 return $this->db->trans_status();
+ }
+ 
+ 
+ 
+ 
 
  public function update_customer_profile_data($customer_id,$data){
  	return $this->db->where('customer_id',$customer_id)->update('tbl_customer',$data);

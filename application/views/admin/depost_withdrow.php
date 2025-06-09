@@ -283,25 +283,27 @@ if ($status === 'withdrawal' || $status === 'out') { ?>
                                         <?php foreach ($loan_desc  as $payisnulls): ?>
                                             <tr>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo $payisnulls->date_data; ?></td>
-    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+    <td class=" uppercase px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
     <?= $payisnulls->emply ? $payisnulls->emply . ' / ' : ''; ?>
-            <?= $payisnulls->description; ?>
-            <?= $payisnulls->p_method ? ' / ' . $payisnulls->account_name : ''; ?>
-            <?= ($payisnulls->fee_id !== null && $payisnulls->fee_id !== '') ? 
-                ' / ' . $payisnulls->fee_desc . ' ' . $payisnulls->fee_percentage . ' ' . $payisnulls->symbol : ''; ?>
-            <?= $payisnulls->p_method ? '/' : ''; ?>
-            <?= $payisnulls->loan_name ?? ''; ?>
+<?= $payisnulls->description; ?>
+<?= $payisnulls->p_method ? ' / ' . $payisnulls->account_name : ''; ?>
+<?= !empty($payisnulls->wakala_name) ? ' / ' . $payisnulls->wakala_name : ''; ?>
+<?= ($payisnulls->fee_id !== null && $payisnulls->fee_id !== '') ? 
+    ' / ' . $payisnulls->fee_desc . ' ' . $payisnulls->fee_percentage . ' ' . $payisnulls->symbol : ''; ?>
+<?= $payisnulls->p_method ? ' / ' : ''; ?>
+<?= $payisnulls->loan_name ?? ''; ?>
 
-            <?php
-                if ($payisnulls->day == 1) {
-                    echo " Daily";
-                } elseif ($payisnulls->day == 7) {
-                    echo " Weekly";
-                } elseif (in_array($payisnulls->day, [28, 29, 30, 31])) {
-                    echo " Monthly";
-                }
-            ?>
-            <?= ' ' . $payisnulls->session . ' / AC/No. ' . $payisnulls->loan_code; ?>
+<?php
+    if ($payisnulls->day == 1) {
+        echo " Daily";
+    } elseif ($payisnulls->day == 7) {
+        echo " Weekly";
+    } elseif (in_array($payisnulls->day, [28, 29, 30, 31])) {
+        echo " Monthly";
+    }
+?>
+<?= ' ' . $payisnulls->session; ?>
+
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?= ($payisnulls->depost) ? round($payisnulls->depost, 2) : '0.00'; ?></td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?= ($payisnulls->withdrow) ? round($payisnulls->withdrow, 2) : '0.00'; ?></td>
@@ -451,17 +453,32 @@ if ($status === 'withdrawal' || $status === 'out') { ?>
 
     <!-- Payment Method -->
     <div class="sm:col-span-6">
-      <label for="p_method" class="block text-sm font-medium mb-2 dark:text-gray-300">
-        * Njia Za Malipo:
-      </label>
-      <select id="p_method" name="p_method"
-        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600">
-        <option value="">Chagua Malipo</option>
-        <?php foreach ($acount as $acounts): ?>
-          <option value="<?= $acounts->trans_id; ?>"><?= $acounts->account_name; ?></option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+  <label for="p_method" class="block text-sm font-medium mb-2 dark:text-gray-300">
+    * Njia Za Malipo:
+  </label>
+  <select id="p_method" name="p_method"
+    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600"
+    onchange="handlePaymentChange(this)">
+    <option value="">Chagua Malipo</option>
+    <?php foreach ($acount as $acounts): ?>
+      <option value="<?= $acounts->trans_id; ?>" data-label="<?= strtolower(trim($acounts->account_name)); ?>">
+        <?= $acounts->account_name; ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+  <!-- Hidden field to pass label to PHP -->
+  <input type="hidden" name="p_method" id="p_method_label" >
+</div>
+
+
+
+    <div class="sm:col-span-6" id="wakala_field" style="display:none;">
+  <label for="wakala_name" class="block text-sm font-medium mb-2 dark:text-gray-300">
+    * Jina la Wakala:
+  </label>
+  <input type="text" id="wakala_name" name="wakala_name" 
+    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600">
+</div>
 
 
     <div class="sm:col-span-6">
@@ -651,4 +668,28 @@ function getAge(dob) {
     const age = new Date().getFullYear() - new Date(dob).getFullYear();
     document.getElementById('age').value = isNaN(age) ? '' : age;
 }
+</script>
+
+<script>
+  function handlePaymentChange(select) {
+    const selectedOption = select.options[select.selectedIndex];
+    const label = selectedOption.getAttribute('data-label')?.trim().toLowerCase();
+
+    const wakalaField = document.getElementById('wakala_field');
+    const wakalaInput = document.getElementById('wakala_name');
+
+    // Update hidden field
+    document.getElementById('p_method_label').value = label;
+
+    if (label === 'm-pesa' || label === 'lipa-mpesa') {
+      wakalaField.style.display = 'block';
+      wakalaInput.removeAttribute('disabled'); // make sure it's enabled
+      wakalaInput.setAttribute('required', 'required');
+    } else {
+      wakalaInput.removeAttribute('required');
+      wakalaInput.setAttribute('disabled', 'disabled'); // disable to prevent HTML5 error
+      wakalaInput.value = '';
+      wakalaField.style.display = 'none';
+    }
+  }
 </script>

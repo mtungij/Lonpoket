@@ -208,6 +208,31 @@ class Welcome extends CI_Controller {
 
 
 
+	   public function clone_today_loans() {
+		// Step 1: Clone today's loans
+		$this->load->model('queries');
+		$comp_id = $this->session->userdata('comp_id');
+		$this->queries->clone_loans_today($comp_id); // Example method
+	
+		// Step 2: Get branch-wise total
+		$kusanyo = $this->queries->get_today_recevable_loan_branchwise($comp_id);
+	
+		// Step 3: Send SMS
+		$phone = '0629364847';
+		$massage = "Habari, matarajio ya makusanyo ya leo kwa matawi ni kama ifuatavyo:\n";
+		foreach ($kusanyo as $row) {
+			$blanch = $row->blanch_name;
+			$amount = number_format($row->total_restration);
+			$massage .= "- $blanch: Tsh $amount\n";
+		}
+	
+	
+		$this->sendsms($phone, $massage);
+	
+		// Optional: Redirect or load view
+		
+	}
+
 
 
      //begin withdrawal function

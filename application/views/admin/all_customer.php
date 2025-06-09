@@ -104,13 +104,45 @@ include_once APPPATH . "views/partials/header.php";
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo ucfirst(htmlspecialchars($customers->blanch_name, ENT_QUOTES, 'UTF-8')); ?></td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
     <br>
-    <?php if ($customers->customer_status == 'open') { ?>
-        <a href="#" class="badge badge-success">Active</a>
-    <?php } elseif ($customers->customer_status == 'close') { ?>
-        <a href="#" class="badge badge-danger">Closed</a>
-    <?php } elseif ($customers->customer_status == 'pending') { ?>
-        <a href="#" class="badge badge-warning">Pending</a>
-    <?php } ?>
+  
+    <?php
+$status = $customers->customer_status;
+
+switch ($status) {
+    case 'open':
+        $color = 'bg-yellow-100 text-yellow-800 border-yellow-300';
+        $label = 'Pending';
+        break;
+    case 'aproved':
+        $color = 'bg-sky-100 text-sky-800 border-sky-300';
+        $label = 'Approved';
+        break;
+    case 'withdrawal':
+        $color = 'bg-blue-100 text-blue-800 border-blue-300';
+        $label = 'Active';
+        break;
+    case 'done':
+        $color = 'bg-green-100 text-green-800 border-green-300';
+        $label = 'Done';
+        break;
+    case 'out':
+        $color = 'bg-red-100 text-red-800 border-red-300';
+        $label = 'Default';
+        break;
+    case 'disbarsed':
+        $color = 'bg-gray-100 text-gray-800 border-gray-300';
+        $label = 'Disbursed';
+        break;
+    default:
+        $color = 'bg-slate-100 text-slate-800 border-slate-300';
+        $label = ucfirst($status);
+}
+?>
+
+<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border <?php echo $color; ?>">
+    <?php echo $label; ?>
+</span>
+
 </td>
     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
         <div class="hs-dropdown relative inline-flex [--placement:bottom-right]">

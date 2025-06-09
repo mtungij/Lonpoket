@@ -18,7 +18,7 @@
 
 
 
-
+<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
   <!-- Theme Check and Update -->
   <script>
     const html = document.querySelector('html');
