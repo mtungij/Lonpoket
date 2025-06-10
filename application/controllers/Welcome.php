@@ -209,16 +209,14 @@ class Welcome extends CI_Controller {
 
 
 	   public function clone_today_loans() {
-		// Step 1: Clone today's loans
+		// Step 1: Clone today's loans (optional if needed elsewhere)
 		$this->load->model('queries');
-		$comp_id = 255;
-		
+		$comp_id = 256;
 	
 		// Step 2: Get branch-wise total
 		$kusanyo = $this->queries->get_today_recevable_loan_branchwise($comp_id);
 	
-		// Step 3: Send SMS
-		$phone = '255763727272';
+		// Step 3: Prepare SMS message
 		$massage = "Habari, matarajio ya makusanyo ya leo kwa matawi ni kama ifuatavyo:\n";
 		foreach ($kusanyo as $row) {
 			$blanch = $row->blanch_name;
@@ -226,12 +224,18 @@ class Welcome extends CI_Controller {
 			$massage .= "- $blanch: Tsh $amount\n";
 		}
 	
+		// Step 4: Send to multiple recipients
+		$phone_numbers = ['255763727272', '255629364847']; // Add more if needed
 	
-		$this->sendsms($phone, $massage);
+		foreach ($phone_numbers as $phone) {
+			$this->sendsms($phone, $massage);
+		}
 	
-		// Optional: Redirect or load view
-		
+		// Optional: Feedback or redirection
+		// $this->session->set_flashdata('success', 'Makusanyo cloned na SMS zimetumwa.');
+		// redirect('admin/some_page');
 	}
+	
 
 
 
