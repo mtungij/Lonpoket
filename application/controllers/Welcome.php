@@ -259,7 +259,7 @@ $massage .= "MKOPO PAMOJA NA RIBA = $total_loan_int";
 // Example send_sms function (replace this with your provider's API call)
 
 		// Step 4: Send to multiple recipients
-		$phone_numbers = ['255629364847', '255619679334']; // Add more if needed
+		$phone_numbers = ['255763727272', '255619679334']; // Add more if needed
 	
 		foreach ($phone_numbers as $phone) {
 			$this->sendsms($phone, $massage);
