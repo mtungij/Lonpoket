@@ -92,7 +92,7 @@ class Oficer extends CI_Controller{
       $disbursed_customer =$this->queries->count_disbursed_loans_by_officer($blanch_id, $empl_id);
 
       // echo "<pre>";
-      // print_r($lipwa);
+      // print_r( $empl_data);
       //     exit();
   
   } elseif ($position === 'BRANCH MANAGER') {
