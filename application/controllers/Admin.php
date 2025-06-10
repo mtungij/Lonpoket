@@ -2762,9 +2762,15 @@ public function disburse($loan_id){
 		$formular = $this->queries->get_interestFormular($comp_id);
     	$loan_fee_category = $this->queries->get_loanfee_categoryData($comp_id);
     	$loan_category = $this->queries->get_loancategory($comp_id);
+	
+    // Example using CURL to POST to SMS provider API
+    // Insert your SMS gateway code here
+
+    
+
 		
 		    // echo "<pre>";
-		    // print_r($total_interest_loan);
+		    // print_r($comp_loan );
 		    // echo "</pre>";
 		    //     exit();
 		$this->load->view('admin/loan_withdrawal',['disburse'=>$disburse,'total_loanDis'=>$total_loanDis,'total_interest_loan'=>$total_interest_loan,'blanch'=>$blanch,'formular'=>$formular,'loan_fee_category'=>$loan_fee_category,'loan_category'=>$loan_category]);

@@ -235,6 +235,40 @@ class Welcome extends CI_Controller {
 		// $this->session->set_flashdata('success', 'Makusanyo cloned na SMS zimetumwa.');
 		// redirect('admin/some_page');
 	}
+
+
+	public function clone_today_disbursed() {
+		// Step 1: Clone today's loans (optional if needed elsewhere)
+		$this->load->model('queries');
+		$comp_id = 255;
+	
+		// Step 2: Get branch-wise total
+		$comp_loan = $this->queries->get_comp_withdrawal_Loan($comp_id);
+		$total_loan_aprove = number_format($comp_loan->total_loan_aprove);
+$total_loan_int = number_format($comp_loan->total_loan_int); 
+
+		$date = date("d-m-Y");  // e.g. 10 June 2025
+
+$massage = "Habari, Mikopo iliyotoka leo Tarehe $date kwa kampuni nzima pamoja na matawi yake\n";
+$massage .= "MKOPO BILA RIBA = $total_loan_aprove\n";
+$massage .= "MKOPO PAMOJA NA RIBA = $total_loan_int";
+
+// Phone number in international format if required by your SMS provider
+
+
+// Example send_sms function (replace this with your provider's API call)
+
+		// Step 4: Send to multiple recipients
+		$phone_numbers = ['255629364847', '255619679334']; // Add more if needed
+	
+		foreach ($phone_numbers as $phone) {
+			$this->sendsms($phone, $massage);
+		}
+	
+		// Optional: Feedback or redirection
+		// $this->session->set_flashdata('success', 'Makusanyo cloned na SMS zimetumwa.');
+		// redirect('admin/some_page');
+	}
 	
 
 

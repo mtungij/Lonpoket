@@ -899,6 +899,27 @@ public function get_monthly_received_loan($comp_id)
        }
 
 
+	   public function get_comp_withdrawal_Loan($comp_id){
+		$date = date("Y-m-d");
+		$loan = $this->db->query("
+			SELECT 
+				SUM(l.loan_aprove) AS total_loan_aprove, 
+				SUM(l.loan_int) AS total_loan_int
+			FROM tbl_loans l 
+			LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id 
+			LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id 
+			LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id 
+			LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id 
+			LEFT JOIN tbl_outstand ot ON ot.loan_id = l.loan_id 
+			LEFT JOIN tbl_account_transaction at ON at.trans_id = l.method  
+			WHERE l.comp_id = '$comp_id' 
+			AND l.loan_status = 'withdrawal' 
+			AND ot.loan_stat_date = '$date'
+		");
+		return $loan->row(); // return single row with sums
+	}
+	
+
 
 
            public function get_withdrawal_Loan($comp_id){
