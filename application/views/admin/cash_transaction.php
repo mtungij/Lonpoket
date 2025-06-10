@@ -125,6 +125,7 @@ include_once APPPATH . "views/partials/header.php";
                           <th scope="col" class="px-4 py-3">Laza</th>
                           <th scope="col" class="px-4 py-3">Zidi</th>
                           <th scope="col" class="px-4 py-3">Tarehe</th>
+                          <th scope="col" class="px-4 py-3">Action</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -175,6 +176,20 @@ include_once APPPATH . "views/partials/header.php";
                           </td>
                          
                           <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo date('d-m-Y', strtotime($cashs->lecod_day)); ?></td>
+                          <td>
+
+<?php if ($cashs->depost == TRUE) {
+ ?>
+<a  href="<?php echo base_url("admin/delete_depost_data/{$cashs->pay_id}") ?>"  class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-yellow-500 dark:bg-red-500 text-white hover:bg-yellow-600 focus:outline-hidden focus:bg-yellow-600 disabled:opacity-50 disabled:pointer-events-none">
+  Delete
+</a>
+<?php }else{ ?>
+<?php } ?>
+
+
+
+</td> 
+                       
                       </tr>
                       <?php endforeach; ?>
                   </tbody>
