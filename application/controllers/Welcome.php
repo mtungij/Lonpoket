@@ -240,7 +240,7 @@ class Welcome extends CI_Controller {
 	public function clone_today_disbursed() {
 		// Step 1: Clone today's loans (optional if needed elsewhere)
 		$this->load->model('queries');
-		$comp_id = 255;
+		$comp_id = 256;
 	
 		// Step 2: Get branch-wise total
 		$comp_loan = $this->queries->get_comp_withdrawal_Loan($comp_id);
