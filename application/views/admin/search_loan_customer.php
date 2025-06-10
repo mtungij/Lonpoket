@@ -484,7 +484,7 @@ if (!empty($customer_loan_status)) {
     <?php endforeach; ?>
   </select>
   <!-- Hidden field to pass label to PHP -->
-  <input type="hidden" name="p_method" id="p_method_label" >
+
 </div>
 
 
@@ -688,27 +688,25 @@ function getAge(dob) {
 </script>
 
 <script>
-  function handlePaymentChange(select) {
-    const selectedOption = select.options[select.selectedIndex];
-    const label = selectedOption.getAttribute('data-label')?.trim().toLowerCase();
+ function handlePaymentChange(select) {
+  const selectedOption = select.options[select.selectedIndex];
+  const label = selectedOption.getAttribute('data-label')?.trim().toLowerCase();
 
-    const wakalaField = document.getElementById('wakala_field');
-    const wakalaInput = document.getElementById('wakala_name');
+  const wakalaField = document.getElementById('wakala_field');
+  const wakalaInput = document.getElementById('wakala_name');
 
-    // Update hidden field
-    document.getElementById('p_method_label').value = label;
-
-    if (label === 'm-pesa' || label === 'lipa-mpesa') {
-      wakalaField.style.display = 'block';
-      wakalaInput.removeAttribute('disabled'); // make sure it's enabled
-      wakalaInput.setAttribute('required', 'required');
-    } else {
-      wakalaInput.removeAttribute('required');
-      wakalaInput.setAttribute('disabled', 'disabled'); // disable to prevent HTML5 error
-      wakalaInput.value = '';
-      wakalaField.style.display = 'none';
-    }
+  if (label === 'm-pesa' || label === 'lipa-mpesa') {
+    wakalaField.style.display = 'block';         // show input
+    wakalaInput.removeAttribute('disabled');      // enable input
+    wakalaInput.setAttribute('required', 'required');  // make required
+  } else {
+    wakalaField.style.display = 'none';           // hide input
+    wakalaInput.value = '';                        // clear input
+    wakalaInput.setAttribute('disabled', 'disabled');  // disable input
+    wakalaInput.removeAttribute('required');      // remove required
   }
+}
+
 </script>
 
 

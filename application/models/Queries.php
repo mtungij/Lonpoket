@@ -6134,6 +6134,102 @@ public function get_remain_amount($loan_id) {
  	return $data->row();
  }
 
+ public function get_grouped_payments_by_company($comp_id = null)
+ {
+	 $this->db->select('
+		 p.comp_id,
+		 e.empl_id,
+		 e.empl_name,
+		 p.emply AS representative,
+		 c.customer_id,
+		 CONCAT_WS(" ", c.f_name, c.m_name, c.l_name) AS customer_name,
+		 p.depost,
+		 p.wakala_name AS wakala,
+		 t.account_name AS payment_method_name
+	 ');
+	 $this->db->from('tbl_pay p');
+	 $this->db->join('tbl_customer c', 'p.customer_id = c.customer_id', 'left');
+	 $this->db->join('tbl_employee e', 'c.empl_id = e.empl_id', 'left');
+	 $this->db->join('tbl_account_transaction t', 'p.p_method = t.trans_id', 'left');
+ 
+	 if ($comp_id !== null) {
+		 $this->db->where('p.comp_id', $comp_id);
+	 }
+ 
+	 $this->db->where('p.emply !=', 'SYSTEM WITHDRAWAL');
+	 $this->db->where('p.depost !=', 0);
+	 $this->db->where('t.account_name IS NOT NULL', null, false);
+	 $this->db->where('p.depost IS NOT NULL', null, false);
+	 $this->db->order_by('e.empl_name, t.account_name, p.emply');
+ 
+	 $query = $this->db->get();
+	 $result = $query->result();
+ 
+	 // Group data by employee, payment method, and representative
+	 $grouped = [];
+ 
+	 foreach ($result as $row) {
+		 $empl_name = $row->empl_name ?? 'Unknown Employee';
+		 $method = $row->payment_method_name ?? 'Unknown Method';
+		 $rep = $row->representative ?? 'Unknown Representative';
+ 
+		 if (!isset($grouped[$empl_name])) {
+			 $grouped[$empl_name] = [
+				 'empl_id' => $row->empl_id,
+				 'empl_name' => $empl_name,
+				 'comp_id' => $row->comp_id,
+				 'payment_methods' => []
+			 ];
+		 }
+ 
+		 if (!isset($grouped[$empl_name]['payment_methods'][$method])) {
+			 $grouped[$empl_name]['payment_methods'][$method] = [];
+		 }
+ 
+		 if (!isset($grouped[$empl_name]['payment_methods'][$method][$rep])) {
+			 $grouped[$empl_name]['payment_methods'][$method][$rep] = [];
+		 }
+ 
+		 $grouped[$empl_name]['payment_methods'][$method][$rep][] = [
+			 'customer_id'    => $row->customer_id,
+			 'customer_name'  => $row->customer_name,
+			 'deposit'        => $row->depost,
+			 'wakala'         => $row->wakala
+		 ];
+	 }
+ 
+	 // Reformat grouped array to desired output
+	 $final_output = [];
+	 foreach ($grouped as $empl_data) {
+		 $methods = [];
+		 foreach ($empl_data['payment_methods'] as $method_name => $reps) {
+			 $representatives = [];
+			 foreach ($reps as $rep_name => $customers) {
+				 $representatives[] = [
+					 'representative' => $rep_name,
+					 'customers' => $customers
+				 ];
+			 }
+			 $methods[] = [
+				 'method' => $method_name,
+				 'representatives' => $representatives
+			 ];
+		 }
+ 
+		 $final_output[] = [
+			 'empl_id' => $empl_data['empl_id'],
+			 'empl_name' => $empl_data['empl_name'],
+			 'comp_id' => $empl_data['comp_id'],
+			 'payment_methods' => $methods
+		 ];
+	 }
+ 
+	 return $final_output;
+ }
+ 
+ 
+ 
+
 
  public function get_total_pay_description($loan_id){
      $data = $this->db->query("SELECT * FROM tbl_pay p LEFT JOIN tbl_loans l ON l.loan_id = p.loan_id LEFT JOIN tbl_account_transaction at ON at.trans_id = p.p_method WHERE p.loan_id = '$loan_id' ORDER BY p.pay_id DESC LIMIT 5");
