@@ -5017,9 +5017,9 @@ public function previous_transfor(){
  	$sum_depost = $this->queries->get_sumCashtransDepost($comp_id);
  	$sum_withdrawls = $this->queries->get_sumCashtransWithdrow($comp_id);
  	$blanch = $this->queries->get_blanch($comp_id);
- 	//     echo "<pre>";
- 	//    print_r($cash);
- 	//          exit();
+ 	    echo "<pre>";
+ 	   print_r($cash);
+ 	         exit();
  	$this->load->view('admin/cash_transaction',['cash'=>$cash,'sum_depost'=>$sum_depost,'sum_withdrawls'=>$sum_withdrawls,'blanch'=>$blanch]);
  }
 

@@ -273,6 +273,11 @@ if ($status === 'withdrawal' || $status === 'out') { ?>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
                                 <?php @$loan_desc = $this->queries->get_total_pay_description($customer_loan->loan_id);
+
+// echo "<pre>";
+// print_r( $loan_desc);
+// echo "</pre>";
+// exit();
                                       @$remain_balance = $this->queries->get_total_remain_with($customer_loan->loan_id);
                                       @$total_recovery = $this->queries->get_total_loan_pend($customer_loan->loan_id);
                                       @$total_penart =   $this->queries->get_total_penart_loan($customer_loan->loan_id);

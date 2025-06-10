@@ -281,7 +281,7 @@ if (!empty($customer_loan_status)) {
 
                                 <?php @$loan_desc = $this->queries->get_total_pay_description($customer_loan->loan_id);
 
-    //                                  echo "<pre>";
+    //    echo "<pre>";
     //   print_r( $loan_desc);
     //  echo "</pre>";
     //   exit();
