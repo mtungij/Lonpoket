@@ -3830,7 +3830,7 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 	     $loan_int = $loan_restoration->loan_int;
 	     $remain_loan = $loan_int - $total_depost->remain_balance_loan;
 	        //sms send
-			$message = 'Ndugu ' . $first_name . ' ' . $last_name . 
+			$massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
            ', umelipa ' . number_format($new_balance) . 
            ' ' . $comp_name . 
            '. Kiasi kilichobaki kulipwa kwa changamoto, fika ofisini.';
@@ -3953,12 +3953,17 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
           $new_balance = $new_depost;
 	      if ($dep_id > 0) {
 			$this->session->set_flashdata('massage','Malipo Yamelipishwa kikamilifu');
-			$massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
-			', umelipa ' . number_format($new_balance) . 
-			' kwa ' . $comp_name . 
-			'. Kama kuna changamoto kwenye malipo yako, tafadhali wasiliana nasi kupitia 0626573025 / 0627548192.';
-		
-
+			
+			$total_depost = $this->queries->get_sum_dapost($loan_id);
+			$loan_int = $loan_restoration->loan_int;
+			$left_loan = $loan_int - $total_depost->remain_balance_loan;
+	  
+			if ($left_loan == 0) {
+			  $massage = 'Ndugu ' . $first_name . ' ' . $last_name . ', tumepokea malipo yako ' . number_format($new_balance) . ' yaliyofanyika tarehe ' . date("d/m/Y") . ' kupitia ' . $comp_name . '. Asante kwa kumaliza mkopo. Ikiwa una changamoto zozote, tafadhali wasiliana nasi kupitia 0626 573 025 au 0627 548 192.';
+		  } else {
+			  $massage = 'Ndugu ' . $first_name . ' ' . $last_name . ', tumepokea malipo yako ' . number_format($new_balance) . ' yaliyofanyika tarehe ' . date("d/m/Y") . ' kupitia ' . $comp_name . '. Deni lililobaki kulipwa ni shilingi ' . number_format($left_loan) . '. Ikiwa una changamoto zozote, tafadhali wasiliana nasi kupitia 0626 573 025 au 0627 548 192.';
+		  }
+		  
 //   print_r($massage );
 //               echo "<br>";
 //             print_r($phone);

@@ -4305,7 +4305,7 @@ if ($position === 'LOAN OFFICER') {
            $loan_ID = $loan_id;
           @$out_check = $this->queries->get_outstand_total($loan_id);
           $amount_remain = @$out_check->remain_amount;
-            // print_r($new_balance);
+            // print_r( $amount_remain);
             //       exit();
           if($amount_remain > $new_balance){
           $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id);
@@ -4336,7 +4336,7 @@ if ($position === 'LOAN OFFICER') {
 
 
           $new_balance = $new_depost;
-           
+          
           if ($pay_id > 0) {
              $this->session->set_flashdata('massage','pesa has made Sucessfully');
              $massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
@@ -4451,13 +4451,16 @@ if ($position === 'LOAN OFFICER') {
 			// ' ' . $comp_name . 
 			// '. Kiasi kilichobaki kulipwa ' . number_format($new_remain_amount) . 
 			// ' kama kuna changamoto kwenye malipo yako fika ofisini.';
+      $total_depost = $this->queries->get_sum_dapost($loan_id);
+      $loan_int = $loan_restoration->loan_int;
+      $left_loan = $loan_int - $total_depost->remain_balance_loan;
 
-      $massage = 'Ndugu ' . $first_name . ' ' . $last_name . 
-			', umelipa ' . number_format($new_balance) . 
-			' ' . $comp_name . 
-			'. Kama kuna changamoto kwenye malipo yako, tafadhali wasiliana nasi kupitia 0626573025 / 0627548192.';
-
- 
+      if ($left_loan == 0) {
+        $massage = 'Ndugu ' . $first_name . ' ' . $last_name . ', tumepokea malipo yako ' . number_format($new_balance) . ' yaliyofanyika tarehe ' . date("d/m/Y") . ' kupitia ' . $comp_name . '. Asante kwa kumaliza mkopo. Ikiwa una changamoto zozote, tafadhali wasiliana nasi kupitia 0626 573 025 au 0627 548 192.';
+    } else {
+        $massage = 'Ndugu ' . $first_name . ' ' . $last_name . ', tumepokea malipo yako ' . number_format($new_balance) . ' yaliyofanyika tarehe ' . date("d/m/Y") . ' kupitia ' . $comp_name . '. Deni lililobaki kulipwa ni shilingi ' . number_format($left_loan) . '. Ikiwa una changamoto zozote, tafadhali wasiliana nasi kupitia 0626 573 025 au 0627 548 192.';
+    }
+    
 
 			$this->sendsms($phone,$massage);
             
