@@ -91,7 +91,7 @@ class Oficer extends CI_Controller{
       $approved_customer = $this->queries->get_approved_loans_by_officer($blanch_id, $empl_id);
       $disbursed_customer =$this->queries->count_disbursed_loans_by_officer($blanch_id, $empl_id);
     
-      // echo "<pre>";
+      // echo "<pre>";get_cash_transaction_by_officer($empl_id, $blanch_id)
       // print_r( $lipwa);
       //     exit();
   
@@ -2409,6 +2409,7 @@ public function create_sponser($customer_id, $comp_id) {
           '255763727272',
           '255627548192',
           '255626573025',
+          '255619679334',
       ];
   
       foreach ($phone_numbers as $phone) {
