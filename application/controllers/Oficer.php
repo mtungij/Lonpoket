@@ -90,9 +90,9 @@ class Oficer extends CI_Controller{
       $lipwa = $this->queries->get_cash_transaction_by_officer($empl_id);
       $approved_customer = $this->queries->get_approved_loans_by_officer($blanch_id, $empl_id);
       $disbursed_customer =$this->queries->count_disbursed_loans_by_officer($blanch_id, $empl_id);
-
+    
       // echo "<pre>";
-      // print_r( $empl_data);
+      // print_r( $lipwa);
       //     exit();
   
   } elseif ($position === 'BRANCH MANAGER') {
@@ -104,6 +104,7 @@ class Oficer extends CI_Controller{
       $done_customer = $this->queries->count_customers_completed_loan_today($blanch_id);
       $approved_customer = $this->queries->get_approved_loans_by_branch($blanch_id);
       $disbursed_customer =$this->queries->count_disbursed_loans_by_branch($blanch_id);
+      $lipwa = $this->queries->get_cash_transaction_by_blanch($blanch_id);
       
   
   } else {
@@ -2968,6 +2969,9 @@ $this->loan_application();
 
       public function aprove_loan($loan_id){
             //Prepare array of user data
+            $this->db->where('loan_id', $loan_id);
+		        $this->db->delete('tbl_outstand');
+
         $this->load->helper('string');
         $day = date('Y-m-d H:i');
             $data = array(
@@ -3058,11 +3062,12 @@ public function disburse($loan_id){
     $this->load->model('queries');
     $blanch_id = $this->session->userdata('blanch_id');
     $empl_id = $this->session->userdata('empl_id');
+    $empl_data = $this->queries->get_employee_data($empl_id);
     $manager_data = $this->queries->get_manager_data($empl_id);
     $comp_id = $manager_data->comp_id;
     $company_data = $this->queries->get_companyData($comp_id);
     $blanch_data = $this->queries->get_blanchData($blanch_id);
-    $empl_data = $this->queries->get_employee_data($empl_id);
+   
     $manager = $this->queries->get_position_manager($empl_id);
 
     //$admin_data = $this->queries->get_admin_role($comp_id);
@@ -3088,7 +3093,11 @@ public function disburse($loan_id){
       $session = $loan_data->session;
       $end_date = $day * $session;
       //admin data
-      $role = $empl_data->username;
+      $role = $empl_data->empl_name;
+
+          // echo "<pre>";
+          // print_r($role);
+          // echo "<br>";
       $interest_loan = $loan_data_interst->interest_formular;
       if ($loan_data_interst->rate == 'FLAT RATE') {
       // $now = date("Y-m-d");

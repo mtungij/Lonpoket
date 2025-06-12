@@ -583,7 +583,6 @@ public function get_monthly_received_loan($comp_id)
 				LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id
 				LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id
 				LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id
-				LEFT JOIN tbl_region r ON r.region_id = c.region_id
 				LEFT JOIN tbl_account_type at ON at.account_id = s.account_id
 				LEFT JOIN tbl_employee e ON e.empl_id = c.empl_id
 				WHERE l.loan_id = '$loan_id'
@@ -882,7 +881,7 @@ public function get_monthly_received_loan($comp_id)
        }
 
        public function get_loanDisbarsed($loan_id){
-       	  $data = $this->db->query("SELECT l.loan_id,l.code,l.blanch_id,l.group_id,l.comp_id,l.customer_id,l.loan_aprove,l.loan_code,l.day,l.session,c.comp_name,c.comp_phone,cs.phone_no FROM tbl_loans l JOIN tbl_company c ON c.comp_id = l.comp_id JOIN tbl_customer cs ON cs.customer_id = l.customer_id WHERE l.loan_id = '$loan_id'");
+       	  $data = $this->db->query("SELECT l.loan_id,l.how_loan,l.code,l.blanch_id,l.group_id,l.comp_id,l.customer_id,l.loan_aprove,l.loan_code,l.day,l.session,c.comp_name,c.comp_phone,cs.phone_no FROM tbl_loans l JOIN tbl_company c ON c.comp_id = l.comp_id JOIN tbl_customer cs ON cs.customer_id = l.customer_id WHERE l.loan_id = '$loan_id'");
        	     return $data->row();
        }
 
@@ -995,6 +994,7 @@ public function get_monthly_received_loan($comp_id)
 					SELECT * 
 					FROM tbl_customer c 
 					LEFT JOIN tbl_sponser s ON s.customer_id = c.customer_id
+					LEFT JOIN tbl_sub_customer b ON b.customer_id= c.customer_id
 					WHERE c.customer_id = '$customer_id'
 				");
 				return $data->row();
@@ -1472,7 +1472,7 @@ public function get_totalLoanout($customer_id){
 	
 
 
-	public function get_cash_transaction_by_officer($empl_id) {
+	public function get_cash_transaction_by_officer($empl_id, $blanch_id) {
 		$date = date("Y-m-d");
 	
 		$data = $this->db->query("
@@ -1481,12 +1481,32 @@ public function get_totalLoanout($customer_id){
 			JOIN tbl_customer c ON c.customer_id = pr.customer_id 
 			JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  
 			WHERE pr.empl_id = '$empl_id' 
+			AND pr.blanch_id = '$blanch_id'
 			AND pr.lecod_day >= '$date' 
 			ORDER BY pr.prev_id DESC
 		");
 	
 		return $data->result();
 	}
+
+
+	public function get_cash_transaction_by_blanch($blanch_id) {
+		$date = date("Y-m-d");
+	
+		$data = $this->db->query("
+			SELECT * 
+			FROM tbl_prev_lecod pr 
+			JOIN tbl_customer c ON c.customer_id = pr.customer_id 
+			JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  
+			WHERE pr.blanch_id = '$blanch_id'
+			AND pr.lecod_day >= '$date' 
+			ORDER BY pr.prev_id DESC
+		");
+	
+		return $data->result();
+	}
+	
+	
 	
 
 

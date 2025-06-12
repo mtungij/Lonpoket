@@ -2128,34 +2128,36 @@ public function create_sponser($customer_id, $comp_id) {
 
 
 	public function aprove_loan($loan_id){
-    	$this->load->helper('string');
-            //Prepare array of user data
-    	$day = date('Y-m-d H:i');
-            $data = array(
-            'loan_aprove'=> $this->input->post('loan_aprove'),
-            'penat_status'=> $this->input->post('penat_status'),
-            'loan_status'=> 'aproved',
-            'loan_day' => $day,
-            'code' => random_string('numeric',4),
-           
-            );
-            //   echo "<pre>";
-            // print_r($data);
-            //  echo "</pre>";
-            //   exit();
-            
-            //Pass user data to model
-           $this->load->model('queries'); 
-            $data = $this->queries->update_status($loan_id,$data);
-            
-            //Storing insertion status message.
-            if($data){
-                $this->session->set_flashdata('massage','Loan Approved successfully');
-            }else{
-                $this->session->set_flashdata('error','Data failed!!');
-            }
-            return redirect('admin/loan_pending');
+		$this->load->helper('string');
+		$this->load->model('queries');
+	
+		// Delete existing records for the loan_id from tbl_outstand
+		$this->db->where('loan_id', $loan_id);
+		$this->db->delete('tbl_outstand');
+	
+		// Prepare array of user data
+		$day = date('Y-m-d H:i');
+		$data = array(
+			'loan_aprove'=> $this->input->post('loan_aprove'),
+			'penat_status'=> $this->input->post('penat_status'),
+			'loan_status'=> 'aproved',
+			'loan_day' => $day,
+			'code' => random_string('numeric',4),
+		);
+	
+		// Update loan status
+		$updated = $this->queries->update_status($loan_id, $data);
+	
+		// Flash message
+		if($updated){
+			$this->session->set_flashdata('massage','Loan Approved successfully');
+		} else {
+			$this->session->set_flashdata('error','Data failed!!');
+		}
+	
+		return redirect('admin/loan_pending');
 	}
+	
 
 	
 	
@@ -2328,6 +2330,8 @@ public function delete_loan_fee($fee_id){
 public function disburse($loan_id){
 	$this->load->model('queries');
 	$comp_id = $this->session->userdata('comp_id');
+	$empl_id = $this->session->userdata('empl_id');
+    $empl_data = $this->queries->get_employee_data($empl_id);
 	$admin_data = $this->queries->get_admin_role($comp_id);
 	$loan_fee = $this->queries->get_loanfee($comp_id);
 	$loan_data = $this->queries->get_loanDisbarsed($loan_id);
@@ -2349,7 +2353,7 @@ public function disburse($loan_id){
 	  $session = $loan_data->session;
 
 	  //admin data
-	  $role = $admin_data->role;
+	  $role = $empl_data->empl_name;
 
       $interest_loan = $loan_data_interst->interest_formular;
 	  $interest = $interest_loan;
@@ -2613,8 +2617,8 @@ public function disburse($loan_id){
             //   exit();
            //send sms function
          
-               print_r($massage);
-                   exit();
+            //    print_r($massage);
+            //        exit();
             //Pass user data to model
            $this->load->model('queries'); 
             $data = $this->queries->update_status($loan_id,$data);
@@ -3462,15 +3466,7 @@ $sqldata="UPDATE `tbl_loans` SET `dis_date`='$now',`return_date`= '$return_data'
 }
 
 
-//insert start loan and end loan  date
-// public function insert_startLoan_date($comp_id,$loan_id,$blanch_id){
-// // $now = date("Y-m-d");
-// // $someDate = DateTime::createFromFormat("Y-m-d",$now);
-// // $someDate->add(new DateInterval('P'.$end_date.'D'));
-// //  //echo $someDate->format("Y-m-d");
-// //        $return_data = $someDate->format("Y-m-d H:i");
-// $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`) VALUES ('$comp_id','$loan_id','$blanch_id')");
-// }
+
 
 public function insert_startLoan_date($comp_id,$loan_id,$blanch_id,$end_date,$customer_id,$with_date){
 $this->load->model('queries');

@@ -304,7 +304,7 @@ include_once APPPATH . "views/partials/header.php";
                         <div class="sm:col-span-4">
                             <label for="how_loan" class="block text-sm font-medium mb-2 dark:text-gray-300">* Kiasi Kinachopitishwa:</label>
                             <input type="text" id="how_loan" name="loan_aprove" placeholder="Full name" autocomplete="off" 
-                                   class="py-2.5 px-4 block w-full border-green-600 rounded-lg text-sm focus:border-green-500 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" 
+                                   class="py-2.5 px-4 block w-full border-green-600 rounded-lg text-sm focus:border-green-500 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-green-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600" 
                                    value="<?php echo set_value('sp_lname', isset($loan_form->how_loan) ? $loan_form->how_loan : ''); ?>"
                        required>
                         </div>

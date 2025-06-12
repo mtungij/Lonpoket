@@ -185,56 +185,7 @@ include_once APPPATH . "views/partials/header.php";
         </div>
         <!-- End Card: Share Holder List Table -->
 
-        <?php // Modals for Edit Share Holder ?>
-        <?php if (isset($share) && is_array($share)): ?>
-            <?php foreach ($share as $sh_item): ?>
-            <div id="hs-edit-shareholder-modal-<?php echo $sh_item->share_id; ?>" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
-                <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-3xl lg:w-full m-3 lg:mx-auto"> <?php // Wider modal for more fields ?>
-                    <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700">
-                        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
-                            <h3 class="font-bold text-gray-800 dark:text-white">Edit Share Holder: <?php echo htmlspecialchars($sh_item->share_name, ENT_QUOTES, 'UTF-8'); ?></h3>
-                            <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-shareholder-modal-<?php echo $sh_item->share_id; ?>"><span class="sr-only">Close</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-                        </div>
-                        <div class="p-4 sm:p-6 overflow-y-auto">
-                            <?php echo form_open("admin/modify_shareholder/{$sh_item->share_id}"); ?>
-                                <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
-                                    <div class="sm:col-span-4">
-                                        <label for="modal_share_name_<?php echo $sh_item->share_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">* Full name:</label>
-                                        <input type="text" id="modal_share_name_<?php echo $sh_item->share_id; ?>" name="share_name" value="<?php echo htmlspecialchars($sh_item->share_name, ENT_QUOTES, 'UTF-8'); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
-                                    </div>
-                                    <div class="sm:col-span-4">
-                                        <label for="modal_share_mobile_<?php echo $sh_item->share_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">* Mobile no:</label>
-                                        <input type="number" id="modal_share_mobile_<?php echo $sh_item->share_id; ?>" name="share_mobile" value="<?php echo htmlspecialchars($sh_item->share_mobile, ENT_QUOTES, 'UTF-8'); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
-                                    </div>
-                                    <div class="sm:col-span-4">
-                                        <label for="modal_share_email_<?php echo $sh_item->share_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">* Email:</label>
-                                        <input type="email" id="modal_share_email_<?php echo $sh_item->share_id; ?>" name="share_email" value="<?php echo htmlspecialchars($sh_item->share_email, ENT_QUOTES, 'UTF-8'); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
-                                    </div>
-                                    <div class="sm:col-span-6">
-                                        <label for="modal_share_sex_<?php echo $sh_item->share_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">* Gender:</label>
-                                        <select id="modal_share_sex_<?php echo $sh_item->share_id; ?>" name="share_sex" class="py-2.5 px-4 pe-9 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required
-                                                data-hs-select='{ "placeholder": "Select gender", /* ... hs-select options ... */ }'>
-                                            <option value="male" <?php echo ($sh_item->share_sex == 'male') ? 'selected' : ''; ?>>Male</option>
-                                            <option value="female" <?php echo ($sh_item->share_sex == 'female') ? 'selected' : ''; ?>>Female</option>
-                                        </select>
-                                    </div>
-                                    <div class="sm:col-span-6">
-                                        <label for="modal_share_dob_<?php echo $sh_item->share_id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">* Date of Birth:</label>
-                                        <input type="date" id="modal_share_dob_<?php echo $sh_item->share_id; ?>" name="share_dob" value="<?php echo htmlspecialchars($sh_item->share_dob, ENT_QUOTES, 'UTF-8'); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
-                                    </div>
-                                </div>
-                                <div class="mt-6 flex justify-end items-center gap-x-2 py-3">
-                                    <button type="button" class="py-2 px-3 btn-secondary-sm" data-hs-overlay="#hs-edit-shareholder-modal-<?php echo $sh_item->share_id; ?>">Close</button>
-                                    <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Update</button>
-                                </div>
-                            <?php echo form_close(); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-        <!-- End Modals -->
+      
 
     </div>
 </div>
