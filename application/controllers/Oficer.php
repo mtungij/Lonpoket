@@ -1732,6 +1732,9 @@ public function customer(){
 
 
     public function create_customer() {
+
+    
+
       $this->form_validation->set_rules('comp_id', 'company', 'required');
       $this->form_validation->set_rules('empl_id', 'company', 'required');
       $this->form_validation->set_rules('blanch_id', 'blanch', 'required');
@@ -1840,6 +1843,8 @@ public function customer(){
         public function create_lastDetail($customer_id)
         {
             // Prepare array of user data
+          
+
             $data = array(
                 'customer_id'       => $this->input->post('customer_id'),
                 'famous_area'       => $this->input->post('famous_area'),
@@ -2142,6 +2147,7 @@ $this->load->model('queries');
 
 
 public function search_customer() {
+
   $this->load->model('queries');
   $blanch_id = $this->session->userdata('blanch_id');
   $empl_id = $this->session->userdata('empl_id');
@@ -2152,6 +2158,10 @@ public function search_customer() {
   $empl_data = $this->queries->get_employee_data($empl_id);
 
   $customer_id = $this->input->post('customer_id');
+  
+  $this->db->where('customer_id', $customer_id);
+  $this->db->delete('tbl_sponser');
+
   $customer = $this->queries->search_CustomerID($customer_id, $comp_id);
 
   if (!$customer) {
