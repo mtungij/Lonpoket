@@ -1565,6 +1565,10 @@ public function search_customer(){
 $this->load->model('queries');
 $comp_id = $this->session->userdata('comp_id');
 $customer_id = $this->input->post('customer_id');
+
+$this->db->where('customer_id', $customer_id);
+$this->db->delete('tbl_sponser');
+
 $customer = $this->queries->search_CustomerID($customer_id,$comp_id);
 @$customer_id = $customer->customer_id;
 @$sponser = $this->queries->get_sponser($customer_id);
@@ -1918,6 +1922,9 @@ public function create_sponser($customer_id, $comp_id) {
 				$loan_id = $this->queries->insert_loan($data);
 	
 				$this->session->set_flashdata('massage', 'Loan application created successfully!');
+				$this->db->where('loan_id', $loan_id);
+               $this->db->delete('tbl_collelateral');
+
 				return redirect('admin/collelateral_session/' . $loan_id);
 			}
 		}
@@ -4018,10 +4025,10 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
           	}elseif($depost < $total_pend){
            $deni_lipa = $total_pend - $depost;
            $this->update_loan_pending_balance($loan_id,$deni_lipa);
-           $this->insert_returnDescriptionData_report($comp_id,$blanch_id,$customer_id,$loan_id,$depost,$group_id,$dep_id);
+           $this->insert_returnDescriptionData_report($comp_id,$blanch_id,$customer_id,$loan_id,$depost,$group_id,$dep_id,$wakala_name);
           }elseif ($depost = $total_pend) {
           $this->update_loan_pending_remain($loan_id);
-          $this->insert_returnDescriptionData_report($comp_id,$blanch_id,$customer_id,$loan_id,$depost,$group_id,$dep_id);
+          $this->insert_returnDescriptionData_report($comp_id,$blanch_id,$customer_id,$loan_id,$depost,$group_id,$dep_id,$wakala_name);
           }
           }elseif ($data_pend->total_pend == FALSE) {
           	//echo "hakuna kitu";
