@@ -6525,36 +6525,37 @@ public function get_today_expected_collections($comp_id)
 
     $this->db->from('tbl_loans l');
 
-    // Join customer details
     $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id', 'left');
-
-    // Join employee details
     $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id', 'left');
 
-    // Correct join with single quotes for string literal
     $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND (p.description = 'CASH DEPOSIT' OR p.description IS NULL)", 'left');
 
-    // Filter by today's expected collection date
     $this->db->where('l.date_show', $today);
-
-    // Filter by company
     $this->db->where('l.comp_id', $comp_id);
 
     $details = $this->db->get()->result();
 
-    // Get total of restration for today
+    // Get total restration sum
     $this->db->select('SUM(restration) AS total_restration');
     $this->db->from('tbl_loans');
     $this->db->where('date_show', $today);
     $this->db->where('comp_id', $comp_id);
-    $sum_result = $this->db->get()->row();
+    $sum_restration = $this->db->get()->row();
+
+    // Get total depost sum from payments matching conditions
+    $this->db->select('SUM(p.depost) AS total_depost');
+    $this->db->from('tbl_loans l');
+    $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND p.description = 'CASH DEPOSIT'", 'inner');
+    $this->db->where('l.date_show', $today);
+    $this->db->where('l.comp_id', $comp_id);
+    $sum_depost = $this->db->get()->row();
 
     return [
         'details' => $details,
-        'total_restration' => $sum_result->total_restration ?? 0
+        'total_restration' => $sum_restration->total_restration ?? 0,
+        'total_depost' => $sum_depost->total_depost ?? 0
     ];
 }
-
 
 
 
