@@ -6510,6 +6510,7 @@ public function get_today_expected_collections($comp_id)
 {
     $today = date('Y-m-d');
 
+    // Get detailed loan and payment info
     $this->db->select("
         l.loan_id,
         l.customer_id,
@@ -6522,27 +6523,22 @@ public function get_today_expected_collections($comp_id)
         COALESCE(p.depost, 0) AS depost,
         COALESCE(p.date_data, NULL) AS payment_date
     ");
-
     $this->db->from('tbl_loans l');
-
     $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id', 'left');
     $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id', 'left');
-
-    $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND (p.description = 'CASH DEPOSIT' OR p.description IS NULL)", 'left');
-
+    $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND p.description = 'CASH DEPOSIT'", 'left');
     $this->db->where('l.date_show', $today);
     $this->db->where('l.comp_id', $comp_id);
-
     $details = $this->db->get()->result();
 
-    // Sum of restration
+    // Total restration
     $this->db->select('SUM(restration) AS total_restration');
     $this->db->from('tbl_loans');
     $this->db->where('date_show', $today);
     $this->db->where('comp_id', $comp_id);
     $sum_restration = $this->db->get()->row();
 
-    // Sum of depost
+    // Total depost (only CASH DEPOSIT entries)
     $this->db->select('SUM(p.depost) AS total_depost');
     $this->db->from('tbl_loans l');
     $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND p.description = 'CASH DEPOSIT'", 'inner');
@@ -6550,18 +6546,32 @@ public function get_today_expected_collections($comp_id)
     $this->db->where('l.comp_id', $comp_id);
     $sum_depost = $this->db->get()->row();
 
-    // Count distinct customers
+    // Count of total customers expected to pay today
     $this->db->select('COUNT(DISTINCT customer_id) AS total_customers');
     $this->db->from('tbl_loans');
     $this->db->where('date_show', $today);
     $this->db->where('comp_id', $comp_id);
     $total_customers = $this->db->get()->row();
 
+    // Count of customers who made a deposit
+    $this->db->select('COUNT(DISTINCT l.customer_id) AS deposited_customers');
+    $this->db->from('tbl_loans l');
+    $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND p.description = 'CASH DEPOSIT'", 'inner');
+    $this->db->where('l.date_show', $today);
+    $this->db->where('l.comp_id', $comp_id);
+    $this->db->where('p.depost >', 0);
+    $deposited_customers = $this->db->get()->row();
+
+    // Count of customers who did not make a deposit
+    $no_deposit_customers = ($total_customers->total_customers ?? 0) - ($deposited_customers->deposited_customers ?? 0);
+
     return [
         'details' => $details,
         'total_restration' => $sum_restration->total_restration ?? 0,
         'total_depost' => $sum_depost->total_depost ?? 0,
-        'total_customers' => $total_customers->total_customers ?? 0
+        'total_customers' => $total_customers->total_customers ?? 0,
+        'deposited_customers' => $deposited_customers->deposited_customers ?? 0,
+        'no_deposit_customers' => $no_deposit_customers
     ];
 }
 
