@@ -57,8 +57,9 @@
 </head>
 <body>
 <?php 
+$company_name = "CDC MICROFINANCE LIMITED";
 $company_address = "Anglicana Street,TARIME, Tanzania";
-$company_email = "info@cdcmicrofinance@gmail.com";
+$company_email = "cdcmicrofinance@gmail.com";
 $company_phone = "+255 763 727 272";
 $logo_url = base_url('assets/images/logo.png'); // adjust the path as needed
 
@@ -66,8 +67,7 @@ $logo_url = base_url('assets/images/logo.png'); // adjust the path as needed
     <!-- ✅ Company Header -->
     <div class="company-header">
         <img src="<?= $logo_url ?>" alt="Company Logo" />
-        <h2 class="uppercase"><?= htmlspecialchars($comp_data->comp_name) ?></h2>
-        
+        <h2 class="uppercase"><?= htmlspecialchars($company_name) ?></h2>
         <p><?= htmlspecialchars($company_address) ?></p>
         <p>Email: <?= htmlspecialchars($company_email) ?> | Phone: <?= htmlspecialchars($company_phone) ?></p>
     </div>
