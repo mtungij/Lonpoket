@@ -6450,6 +6450,63 @@ return $data->row();
 }
 
 
+// public function get_todaexpected_collections($comp_id)
+// {
+//     $today = date('Y-m-d');
+
+//     $this->db->select("
+//         l.loan_id,
+//         l.customer_id,
+//         l.how_loan AS loan_amount,
+//         l.restration,
+//         l.date_show AS expected_date,
+//         COALESCE(p.depost, 0) AS depost,
+//         COALESCE(p.date_data, NULL) AS payment_date
+//     ");
+    
+//     $this->db->from('tbl_loans l');
+    
+//     $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND l.date_show = p.date_data', 'left');
+
+//     $this->db->where('l.date_show', $today);
+//     $this->db->where('l.comp_id', $comp_id);
+
+//     $query = $this->db->get();
+//     return $query->result();
+// }
+
+public function get_today_expected_collections($comp_id)
+{
+    $today = date('Y-m-d');
+
+    $this->db->select("
+        l.loan_id,
+        l.customer_id,
+        l.how_loan AS loan_amount,
+        l.restration,
+        l.date_show AS expected_date,
+        COALESCE(p.description, 0) AS amount_paid,
+        COALESCE(p.depost, 0) AS depost,
+        COALESCE(p.date_data, NULL) AS payment_date
+    ");
+
+    $this->db->from('tbl_loans l');
+
+    // LEFT JOIN so that loans still appear even if no payment has been made
+    $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show', 'left');
+
+    // Filter by today's expected collection date
+    $this->db->where('l.date_show', $today);
+
+    // Filter by company
+    $this->db->where('l.comp_id', $comp_id);
+
+    $query = $this->db->get();
+    return $query->result();
+}
+
+
+
   public function get_deposit_data_record($pay_id){
  	$data = $this->db->query("SELECT * FROM tbl_prev_lecod pr WHERE pr.pay_id = $pay_id");
  	return $data->row();

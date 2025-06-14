@@ -5424,11 +5424,12 @@ public function previous_transfor(){
 	
 		$old_newpend = $this->queries->get_pending_reportLoancompany($comp_id);
 		$pend = $this->queries->get_sun_loanPendingcompany($comp_id);
+		$lazo = $this->queries->get_today_expected_collections($comp_id);
 	
 	
-		//    echo "<pre>";
-		//   print_r($new_pending);
-		//       exit();
+		   echo "<pre>";
+		  print_r($lazo);
+		      exit();
 		
 		$this->load->view('admin/loan_pending_yesterday',['blanch'=>$blanch,'new_pending'=>$new_pending,'total_pending_new'=>$total_pending_new,'old_newpend'=>$old_newpend,'pend'=>$pend]);
 		}
