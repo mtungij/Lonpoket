@@ -49,7 +49,7 @@
             <br>
             <b style="font-size:12px;border: none;">Customer ID</b> <?php echo $statement->customer_code; ?>
             <br>
-            <b style="font-size:12px;border: none;">Address </b>: <?php echo $statement->region_name; ?>,<?php echo $statement->district; ?>,<?php echo $statement->ward; ?>,<?php echo $statement->street; ?>
+
              </td>
             <td>
               <b style="font-size:12px;border: none;">Branch</b> : <?php echo $statement->blanch_name; ?>

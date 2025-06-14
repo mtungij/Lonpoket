@@ -55,35 +55,38 @@ include_once APPPATH . "views/partials/header.php";
                        <?php
 $customer_loan_status = $this->queries->get_loan_active_customer($customer->customer_id);
 
+// Default badge
 $status_label = 'Not Active';
-$status_class = 'bg-blue-600 text-white dark:bg-blue-500';
+$status_class = 'border-blue-600 text-gray-800 dark:text-white';
 
 if (!empty($customer_loan_status)) {
     switch ($customer_loan_status->loan_status) {
         case 'withdrawal':
             $status_label = 'Active';
-            $status_class = 'bg-teal-500 text-white';
+            $status_class = 'border-teal-500 text-teal-700 dark:text-white';
             break;
         case 'done':
-            $status_label = 'Kumaliza';
-            $status_class = 'bg-yellow-500 text-white';
+            $status_label = 'Done';
+            $status_class = 'border-yellow-500 text-yellow-700 dark:text-white';
             break;
         case 'out':
             $status_label = 'Deni Sugu';
-            $status_class = 'bg-red-500 text-white';
+            $status_class = 'border-red-500 text-red-700 dark:text-white';
             break;
     }
 }
 ?>
 
+
 <li class="flex items-center py-3">
     <span class="font-bold">Status</span>
     <span class="ml-auto">
-        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium <?php echo $status_class; ?>">
+        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border bg-white shadow-2xs dark:bg-neutral-900 dark:border-neutral-700 <?php echo $status_class; ?>">
             <?php echo $status_label; ?>
         </span>
     </span>
 </li>
+
 
                         <li class="flex items-center py-3">
                                <span class="font-bold">withdraw Date</span>

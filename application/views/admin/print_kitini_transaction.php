@@ -2,28 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title><?= htmlspecialchars($company_name) ?> - Cash Transactions</title>
+    <title><?= htmlspecialchars($comp_data->comp_name) ?> - Cash Transactions</title>
     <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    body { font-family: Arial, sans-serif; font-size: 12px; color: #333; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
-    th { background-color: #00bcd4; color: white; }
-    tr:nth-child(even) { background-color: #f2f2f2; }
-    .total-row { background-color: #ddd; font-weight: bold; }
-    .text-right { text-align: right; }
-</style>
-
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #00bcd4;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .total-row {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .company-header {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .company-header img {
+            max-height: 80px;
+            margin-bottom: 10px;
+        }
+        .company-header h2 {
+            margin: 5px 0;
+        }
+        .company-header p {
+            margin: 2px 0;
+        }
+    </style>
 </head>
 <body>
-    <!-- <h2></?= htmlspecialchars($company_name) ?></h2> -->
-    <h3>Representatives Report</h3>
+<?php 
+$company_address = "Anglicana Street,TARIME, Tanzania";
+$company_email = "info@cdcmicrofinance@gmail.com";
+$company_phone = "+255 763 727 272";
+$logo_url = base_url('assets/images/logo.png'); // adjust the path as needed
 
+?>
+    <!-- ✅ Company Header -->
+    <div class="company-header">
+        <img src="<?= $logo_url ?>" alt="Company Logo" />
+        <h2 class="uppercase"><?= htmlspecialchars($comp_data->comp_name) ?></h2>
+        
+        <p><?= htmlspecialchars($company_address) ?></p>
+        <p>Email: <?= htmlspecialchars($company_email) ?> | Phone: <?= htmlspecialchars($company_phone) ?></p>
+    </div>
+
+    <!-- ✅ Report Title -->
+    <h3 style="text-align: center; margin-top: 30px;">Representatives Report</h3>
+
+    <!-- ✅ Table -->
     <table>
         <thead>
             <tr>
@@ -39,22 +91,21 @@
             <?php if (!empty($grouped_payments)): ?>
                 <?php foreach ($grouped_payments as $employee): ?>
                     <?php
-                    // Calculate rowspan for employee
-                    $rowCount = 0;
-                    foreach ($employee['payment_methods'] as $method) {
-                        foreach ($method['representatives'] as $rep) {
-                            $rowCount += count($rep['customers']);
+                        $rowCount = 0;
+                        foreach ($employee['payment_methods'] as $method) {
+                            foreach ($method['representatives'] as $rep) {
+                                $rowCount += count($rep['customers']);
+                            }
                         }
-                    }
-                    $firstEmpRow = true;
+                        $firstEmpRow = true;
                     ?>
                     <?php foreach ($employee['payment_methods'] as $method): ?>
                         <?php
-                        $methodRowCount = 0;
-                        foreach ($method['representatives'] as $rep) {
-                            $methodRowCount += count($rep['customers']);
-                        }
-                        $firstMethodRow = true;
+                            $methodRowCount = 0;
+                            foreach ($method['representatives'] as $rep) {
+                                $methodRowCount += count($rep['customers']);
+                            }
+                            $firstMethodRow = true;
                         ?>
                         <?php foreach ($method['representatives'] as $rep): ?>
                             <?php foreach ($rep['customers'] as $customer): ?>

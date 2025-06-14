@@ -80,29 +80,26 @@ include_once APPPATH . "views/partials/header.php";
     <div
       class="flex flex-col w-full sm:w-auto space-y-2 md:flex-row md:items-center md:space-y-0 md:space-x-3">
       
-	  <a href="<?php echo base_url("admin/yesterday_pending")?>" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" >
-  <!-- Filter Icon SVG -->
-  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 019 17v-3.586L3.293 6.707A1 1 0 013 6V4z"></path>
-  </svg>
-  Malazo Ya Jana
+      <a href="<?php echo base_url("admin/loan_pending_time")?>" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+
+<!-- SVG Back Arrow -->
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+</svg>
+
+Back
 </a>
 
+
       <!-- Export Button -->
-      <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal">
-  <!-- Filter Icon SVG -->
-  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 019 17v-3.586L3.293 6.707A1 1 0 013 6V4z"></path>
-  </svg>
-  Filter Data
-</button>
+  
 
 
    
 
 
       <a
-        href="<?php echo base_url("admin/print_pending_loan"); ?>"
+        href="<?php echo base_url("admin/print_pending_yesterday"); ?>"
         class="w-full md:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 rounded-lg focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:focus:ring-cyan-800" target="_blank"
       >
         <span class="bg-cyan-200 p-1 rounded mr-2">
@@ -136,36 +133,38 @@ include_once APPPATH . "views/partials/header.php";
                       </tr>
                   </thead>
 				  <tbody>
-    <?php 
-        $no = 1; 
-        $total_loan_int = 0; 
-        $total_lazo = 0; 
-    ?>
+                  <?php
+$no = 1;
+$total_loan_int = 0;
+$total_return_total = 0;
+?>
 
-    <?php foreach ($new_pending as $new_pendings): 
-        $total_loan_int += $new_pendings->loan_int;
-        $total_lazo += $new_pendings->total_pend;
-    ?>
+                  <?php $no = 1 ?>        
+                  <?php foreach($old_newpend as $loan_pends): 
+                     $total_loan_int += $loan_pends->loan_int;
+                     $total_return_total += $loan_pends->return_total;
+                    ?>
+                    
         <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $no++; ?>.</td>
-            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $new_pendings->blanch_name; ?></td>
-            <td class="uppercase px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $new_pendings->f_name; ?> <?php echo $new_pendings->m_name; ?> <?php echo $new_pendings->l_name; ?></td>
-            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $new_pendings->phone_no; ?></td>
-            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo number_format($new_pendings->loan_int); ?></td>
-			<td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $new_pendings->loan_name; ?></td>
+            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $loan_pends->blanch_name; ?></td>
+            <td class="uppercase px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $loan_pends->f_name; ?> <?php echo $loan_pends->m_name; ?> <?php echo $loan_pends->l_name; ?></td>
+            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $loan_pends->phone_no; ?></td>
+            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo number_format($loan_pends->loan_int); ?></td>
+			<td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $loan_pends->loan_name; ?></td>
             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <?php 
-                    if ($new_pendings->day == '1') {
+                    if ($loan_pends->day == '1') {
                         echo "Daily";
-                    } elseif ($new_pendings->day == '7') {
+                    } elseif ($loan_pends->day == '7') {
                         echo "Weekly";
-                    } elseif (in_array($new_pendings->day, ['28','29','30','31'])) {
+                    } elseif (in_array($loan_pends->day, ['28','29','30','31'])) {
                         echo "Monthly";
                     }
                 ?>
             </td>
-            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo number_format($new_pendings->total_pend); ?></td>
-            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $new_pendings->date; ?></td>
+            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo number_format($loan_pends->return_total); ?></td>
+            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $loan_pends->pend_date; ?></td>
         </tr>
     <?php endforeach; ?>
 
@@ -174,9 +173,10 @@ include_once APPPATH . "views/partials/header.php";
         <td colspan="4" class="px-4 py-2 text-gray-900 dark:text-white">JUMLA</td>
         <td class="px-4 py-2 text-green-600 dark:text-green-400"><?php echo number_format($total_loan_int); ?></td>
         <td></td>
-		<td></td>
-        <td class="px-4 py-2 text-green-600 dark:text-green-400"><?php echo number_format($total_lazo); ?></td>
-        <td></td>
+		<td>  </td>
+        <td class="px-4 py-2 text-green-600 dark:text-green-400"><?php echo number_format($total_return_total); ?></td>
+        <td> </td>
+        
     </tr>
 </tbody>
 

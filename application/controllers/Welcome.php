@@ -134,6 +134,7 @@ class Welcome extends CI_Controller {
 				if ($userexit->position_id == 22) {
 					$allowed_links = $this->queries->get_employee_links($userexit->empl_id);
 					$sessionData['permissions'] = $allowed_links;
+					
 				}
 	
 				$this->session->set_userdata($sessionData);

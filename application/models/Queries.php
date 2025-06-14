@@ -3066,16 +3066,57 @@ public function get_total_principal($comp_id){
 	  return $data->row();
 }
 
-public function get_total_principal_day($comp_id){
-    $query = $this->db->query("
-        SELECT SUM(loan_aprove) AS loan_aproved 
-        FROM tbl_loans 
-        WHERE comp_id = '$comp_id' 
-        AND loan_status = 'withdrawal' 
-        AND day = 1
-    ");
-    return $query->row();
+// public function get_total_principal_day($comp_id) {
+//     $today = date('Y-m-d'); // Get today's date
+
+//     $query = $this->db->query("
+//         SELECT SUM(loan_aprove) AS loan_aproved 
+//         FROM tbl_loans 
+//         WHERE comp_id = ? 
+//         AND loan_status = 'withdrawal' 
+//         AND DATE(loan_day) = ?
+//     ", [$comp_id, $today]);
+
+//     return $query->row();
+// }
+
+public function get_today_withdrawal_daily_comp($comp_id){
+	$today = date("Y-m-d");
+	$data = $this->db->query("SELECT SUM(loan_aprove) AS total_loanWith_day FROM tbl_loans l LEFT JOIN tbl_outstand ot ON ot.loan_id = l.loan_id WHERE l.comp_id = '$comp_id' AND loan_stat_date = '$today' AND l.day = '1'");
+	return $data->row();
 }
+
+public function get_sun_loanPendingcompany($comp_id){
+	$pend = date("Y-m-d");
+	$pending = $this->db->query("SELECT SUM(return_total) AS total_pending FROM tbl_loan_pending WHERE comp_id = '$comp_id' AND action_date >='$pend'");
+	return $pending->row();
+
+}
+
+
+
+public function get_pending_reportLoancompany($comp_id){
+    $pend = date("Y-m-d");
+    
+    $data = $this->db->query("
+        SELECT 
+            lp.*, 
+            c.*, 
+            b.*, 
+            l.*, 
+            lt.loan_name 
+        FROM tbl_loan_pending lp 
+        LEFT JOIN tbl_customer c ON c.customer_id = lp.customer_id 
+        LEFT JOIN tbl_blanch b ON b.blanch_id = lp.blanch_id 
+        LEFT JOIN tbl_loans l ON l.loan_id = lp.loan_id 
+        LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id
+        WHERE lp.comp_id = '$comp_id' 
+        AND lp.action_date >= '$pend'
+    ");
+
+    return $data->result();
+}
+
 
 public function get_total_principal_weekly($comp_id){
     $query = $this->db->query("
@@ -5600,9 +5641,20 @@ public function get_total_pend_loan($blanch_id){
 
 
 public function get_total_loan_pendingComp($comp_id){
-	$data = $this->db->query("SELECT * FROM tbl_pending_total pt JOIN tbl_loans l ON l.loan_id = pt.loan_id JOIN tbl_blanch b ON b.blanch_id = pt.blanch_id JOIN tbl_customer c ON c.customer_id = pt.customer_id  WHERE pt.comp_id = '$comp_id' AND total_pend IS NOT FALSE ");
-	return $data->result();
+    $query = $this->db->query("
+        SELECT * 
+        FROM tbl_pending_total pt
+        JOIN tbl_loans l ON l.loan_id = pt.loan_id
+        JOIN tbl_blanch b ON b.blanch_id = pt.blanch_id
+        JOIN tbl_customer c ON c.customer_id = pt.customer_id
+        JOIN tbl_loan_category lc ON lc.category_id = l.category_id
+        WHERE pt.comp_id = ?
+        AND total_pend IS NOT FALSE
+    ", [$comp_id]);
+
+    return $query->result();
 }
+
 
 
 public function get_total_pend_loan_company($comp_id){

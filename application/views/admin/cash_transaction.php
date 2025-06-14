@@ -1,12 +1,4 @@
 
-
-
-
-
-
-
-
-
 <?php
 include_once APPPATH . "views/partials/header.php";
 

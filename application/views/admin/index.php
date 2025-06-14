@@ -13,7 +13,8 @@ include_once APPPATH . "views/partials/header.php";
                     Admin Dashboard
                 </h2>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    <?php echo htmlspecialchars($_SESSION['comp_name'] ?? 'Your Company', ENT_QUOTES, 'UTF-8'); ?>
+                <?php echo htmlspecialchars($manager_data->comp_name ?? 'Your Company', ENT_QUOTES, 'UTF-8'); ?>
+
                 </p>
             </div>
             <div>
@@ -28,23 +29,7 @@ include_once APPPATH . "views/partials/header.php";
         <!-- Section 2: Top KPIs (Using your new card template) -->
         
         <!-- Section 2: Top KPIs (Revised with Full-Width Account Balance Banner) -->
-        <?php
-        // --- DUMMY DATA - Replace with actual data from your controller ---
-        $sum_comp_capital = (object)['total_comp_balance' => 125000000]; // Main balance
-        // KPIs for the grid
-        $principal_loan = (object)['loan_aproved' => 75000000, 'change_percentage' => 5.1, 'change_period' => 'this week'];
-        $total_expect = (object)['loan_interest' => 8500000, 'change_percentage' => -1.2, 'change_period' => 'last 7 days'];
-        $blanch_capital_circle = (object)['total_balanch_amount' => 250000000, 'change_percentage' => 0.8, 'change_period' => 'YTD'];
-        $total_non_obj = (object)['total_nondeducted' => 15000000]; // Renamed to avoid conflict
-        $total_deducted_balance_obj = (object)['total_deducted' => 500000]; // Renamed
-        $request_expences_obj = (object)['total_exp' => 3500000]; // Renamed
-        $total_remain_obj = (object)['total_out' => 65000000]; // Renamed
-
-        $total_income_val = ($total_non_obj->total_nondeducted ?? 0) + ($total_deducted_balance_obj->total_deducted ?? 0);
-        $total_expenses_val = $request_expences_obj->total_exp ?? 0;
-        $total_outstanding_val = $total_remain_obj->total_out ?? 0;
-        // --- END DUMMY DATA ---
-        ?>
+     
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
 <div class="bg-white rounded-lg shadow-md overflow-hidden">
     <div class="bg-cyan-800  px-4 py-2 border-b">
@@ -161,8 +146,7 @@ include_once APPPATH . "views/partials/header.php";
           <td class="py-2">KILA SIKU</td>
           <td class="text-right">
             <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?php echo number_format($total_withdrawal_daily->loan_aproved ?? 0); ?>
-               
+              <?php echo number_format($total_withdrawal_daily->total_loanWith_day); ?>
             </span>
           </td>
         </tr>

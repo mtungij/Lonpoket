@@ -401,10 +401,35 @@ if (!empty($customer_loan_status)) {
     <button type="button" class="py-2 px-3 btn-secondary-sm"
       data-hs-overlay="#hs-edit-shareholder-modal-<?= $customer->customer_id; ?>">Funga</button>
 
-    <a href="<?php echo base_url("oficer/get_loan_code_resend/{$customer->customer_id}"); ?>"
-      class="py-2 px-3 btn-primary-sm bg-green-600 hover:bg-cyan-700 text-white">
-      Resend Code
-    </a>
+      <a href="<?php echo base_url("oficer/get_loan_code_resend/{$customer->customer_id}"); ?>"
+   class="py-2 px-3 btn-primary-sm bg-green-600 hover:bg-cyan-700 text-white flex items-center gap-2"
+   onclick="showSvgLoaderAndRedirect(event, this)">
+  <span>Resend Code</span>
+  <!-- Spinner SVG -->
+  <span class="loader-svg hidden w-6 h-6">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"
+         width="20" height="20" style="shape-rendering: auto; display: block; background: transparent;">
+      <g>
+        <circle r="20" fill="#e90c59" cy="50" cx="30">
+          <animate begin="-0.5s" values="30;70;30" keyTimes="0;0.5;1" dur="1s"
+                   repeatCount="indefinite" attributeName="cx" />
+        </circle>
+        <circle r="20" fill="#46dff0" cy="50" cx="70">
+          <animate begin="0s" values="30;70;30" keyTimes="0;0.5;1" dur="1s"
+                   repeatCount="indefinite" attributeName="cx" />
+        </circle>
+        <circle r="20" fill="#e90c59" cy="50" cx="30">
+          <animate begin="-0.5s" values="30;70;30" keyTimes="0;0.5;1" dur="1s"
+                   repeatCount="indefinite" attributeName="cx" />
+          <animate repeatCount="indefinite" dur="1s"
+                   keyTimes="0;0.499;0.5;1" calcMode="discrete"
+                   values="0;0;1;1" attributeName="fill-opacity" />
+        </circle>
+      </g>
+    </svg>
+  </span>
+</a>
+
 
     <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Gawa</button>
   </div>
@@ -681,6 +706,21 @@ function getAge(dob) {
 </script>
 
 
+<script>
+function showSvgLoaderAndRedirect(event, el) {
+  event.preventDefault();
+
+  // Show the SVG loader
+  const loader = el.querySelector('.loader-svg');
+  loader.classList.remove('hidden');
+
+  // Disable further clicks
+  el.classList.add('pointer-events-none', 'opacity-70');
+
+  // Redirect
+  window.location.href = el.href;
+}
+</script>
 
 
 
