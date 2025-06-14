@@ -6511,12 +6511,11 @@ public function get_today_expected_collections($comp_id)
 {
     $today = date('Y-m-d');
 
-    // First: Get detailed loan/payment/customer info
+    // Select all necessary fields including full customer name
     $this->db->select("
         l.loan_id,
         l.customer_id,
-        c.first_name,
-        c.last_name,
+        CONCAT_WS(' ', c.f_name, c.m_name, c.l_name) AS full_name,
         l.how_loan AS loan_amount,
         l.restration,
         l.date_show AS expected_date,
@@ -6529,10 +6528,10 @@ public function get_today_expected_collections($comp_id)
     // Join tbl_customer using customer_id
     $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id', 'left');
 
-    // Join tbl_pay using loan_id and expected date
+    // Join tbl_pay using loan_id and expected collection date
     $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show', 'left');
 
-    // Filter today's expected collection date
+    // Filter by today's date
     $this->db->where('l.date_show', $today);
 
     // Filter by company
@@ -6540,7 +6539,7 @@ public function get_today_expected_collections($comp_id)
 
     $details = $this->db->get()->result();
 
-    // Get sum of restration for today
+    // Get sum of restration for today's expected collections
     $this->db->select('SUM(restration) AS total_restration');
     $this->db->from('tbl_loans');
     $this->db->where('date_show', $today);
