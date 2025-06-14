@@ -6528,11 +6528,11 @@ public function get_today_expected_collections($comp_id)
     // Join customer details
     $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id', 'left');
 
-    // Join employee details with empl_name (single column)
+    // Join employee details
     $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id', 'left');
 
-    // Join payments on expected date AND description = 'CASH DEPOSIT'
-    $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show AND (p.description = "CASH DEPOSIT" OR p.description IS NULL)', 'left');
+    // Correct join with single quotes for string literal
+    $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND (p.description = 'CASH DEPOSIT' OR p.description IS NULL)", 'left');
 
     // Filter by today's expected collection date
     $this->db->where('l.date_show', $today);
