@@ -6514,7 +6514,7 @@ public function get_today_expected_collections($comp_id)
         l.loan_id,
         l.customer_id,
         CONCAT_WS(' ', c.f_name, c.m_name, c.l_name) AS full_name,
-        CONCAT_WS(' ', e.f_name, e.m_name, e.l_name) AS empl_name,
+        e.empl_name AS empl_name,
         l.how_loan AS loan_amount,
         l.restration,
         l.date_show AS expected_date,
@@ -6525,13 +6525,13 @@ public function get_today_expected_collections($comp_id)
 
     $this->db->from('tbl_loans l');
 
-    // Join customer details (borrower)
+    // Join customer details
     $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id', 'left');
 
-    // Join employee details using empl_id from tbl_loans
+    // Join employee details with empl_name (single column)
     $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id', 'left');
 
-    // Join payments made on expected date
+    // Join payments on expected date
     $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show', 'left');
 
     // Filter by today's expected collection date
@@ -6554,7 +6554,6 @@ public function get_today_expected_collections($comp_id)
         'total_restration' => $sum_result->total_restration ?? 0
     ];
 }
-
 
 
 
