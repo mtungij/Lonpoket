@@ -6518,31 +6518,31 @@ public function get_today_expected_collections($comp_id)
         l.how_loan AS loan_amount,
         l.restration,
         l.date_show AS expected_date,
-        COALESCE(p.description, 0) AS amount_paid,
+        COALESCE(p.description, 'NONE') AS amount_paid,
         COALESCE(p.depost, 0) AS depost,
         COALESCE(p.date_data, NULL) AS payment_date
     ");
 
     $this->db->from('tbl_loans l');
 
-    // Join customer details
+    // Join customer info
     $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id', 'left');
 
-    // Join employee details with empl_name (single column)
+    // Join employee info
     $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id', 'left');
 
-    // Join payments on expected date
-    $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show', 'left');
+    // LEFT JOIN with payment table and expected date
+    $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show AND (p.description = "CASH DEPOSIT" OR p.description IS NULL)', 'left');
 
-    // Filter by today's expected collection date
+    // Only today's expected collections
     $this->db->where('l.date_show', $today);
 
-    // Filter by company
+    // Company filter
     $this->db->where('l.comp_id', $comp_id);
 
     $details = $this->db->get()->result();
 
-    // Get total of restration for today
+    // Sum of today's restration
     $this->db->select('SUM(restration) AS total_restration');
     $this->db->from('tbl_loans');
     $this->db->where('date_show', $today);
