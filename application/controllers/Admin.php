@@ -4021,7 +4021,7 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
            $deni_lipa = $depost - $total_pend;
            //$recovery = $deni_lipa - $total_pend; 
            $this->update_loan_pending_remain($loan_id);
-           $this->insert_description_report($comp_id,$blanch_id,$customer_id,$loan_id,$total_pend,$deni_lipa,$group_id,$dep_id); 
+           $this->insert_description_report($comp_id,$blanch_id,$customer_id,$loan_id,$total_pend,$deni_lipa,$group_id,$dep_id,$wakala_name); 
           	}elseif($depost < $total_pend){
            $deni_lipa = $total_pend - $depost;
            $this->update_loan_pending_balance($loan_id,$deni_lipa);

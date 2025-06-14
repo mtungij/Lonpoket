@@ -5188,9 +5188,9 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
       }
   
      
-      // echo "<pre>";
-      // print_r($cash );
-      // exit();
+      echo "<pre>";
+      print_r($cash );
+      exit();
   
       $this->load->view('officer/cash_transaction', [
           'cash' => $cash,
