@@ -6475,10 +6475,43 @@ return $data->row();
 //     return $query->result();
 // }
 
+// public function get_today_expected_collections($comp_id)
+// {
+//     $today = date('Y-m-d');
+
+//     $this->db->select("
+//         l.loan_id,
+//         l.customer_id,
+//         l.how_loan AS loan_amount,
+//         l.restration,
+//         l.date_show AS expected_date,
+//         COALESCE(p.description, 0) AS amount_paid,
+//         COALESCE(p.depost, 0) AS depost,
+//         COALESCE(p.date_data, NULL) AS payment_date
+//     ");
+
+//     $this->db->from('tbl_loans l');
+
+//     // LEFT JOIN so that loans still appear even if no payment has been made
+//     $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show', 'left');
+
+//     // Filter by today's expected collection date
+//     $this->db->where('l.date_show', $today);
+
+//     // Filter by company
+//     $this->db->where('l.comp_id', $comp_id);
+
+//     $query = $this->db->get();
+//     return $query->result();
+// }
+
+
+
 public function get_today_expected_collections($comp_id)
 {
     $today = date('Y-m-d');
 
+    // First: Get the detailed loan/payment rows
     $this->db->select("
         l.loan_id,
         l.customer_id,
@@ -6489,21 +6522,25 @@ public function get_today_expected_collections($comp_id)
         COALESCE(p.depost, 0) AS depost,
         COALESCE(p.date_data, NULL) AS payment_date
     ");
-
     $this->db->from('tbl_loans l');
-
-    // LEFT JOIN so that loans still appear even if no payment has been made
     $this->db->join('tbl_pay p', 'l.loan_id = p.loan_id AND p.date_data = l.date_show', 'left');
-
-    // Filter by today's expected collection date
     $this->db->where('l.date_show', $today);
-
-    // Filter by company
     $this->db->where('l.comp_id', $comp_id);
+    $details = $this->db->get()->result();
 
-    $query = $this->db->get();
-    return $query->result();
+    // Second: Get the sum of restration
+    $this->db->select('SUM(restration) AS total_restration');
+    $this->db->from('tbl_loans');
+    $this->db->where('date_show', $today);
+    $this->db->where('comp_id', $comp_id);
+    $sum_result = $this->db->get()->row();
+
+    return [
+        'details' => $details,
+        'total_restration' => $sum_result->total_restration ?? 0
+    ];
 }
+
 
 
 
