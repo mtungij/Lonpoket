@@ -73,13 +73,13 @@ include_once APPPATH . "views/partials/header.php";
       class="flex flex-col w-full sm:w-auto space-y-2 md:flex-row md:items-center md:space-y-0 md:space-x-3">
       
       <!-- Export Button -->
-      <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal">
+      <!-- <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal"> -->
   <!-- Filter Icon SVG -->
-  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 019 17v-3.586L3.293 6.707A1 1 0 013 6V4z"></path>
   </svg>
   Filter Data
-</button>
+</button> -->
 
 
    
@@ -102,145 +102,97 @@ include_once APPPATH . "views/partials/header.php";
   </div>
 
 
+  <?php
+    // Initialize totals BEFORE the condition
+    $sno = 1;
+    $total_restration = 0;
+    $total_depost = 0;
+    $total_laza = 0;
+    $total_zidi = 0;
+?>
 
   <!-- Spacer to push buttons right on large screens -->
   
-              <table id="shareholder_table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-cyan-500 uppercase bg-gray-50 dark:bg-cyan-500 dark:text-gray-50">
-                      <tr>
-                      
-                        
-                          <th scope="col" class="px-4 py-3">S/No</th>
-                          <th scope="col" class="px-4 py-3">Jina La Mteja</th>
-                          <th scope="col" class="px-4 py-3">Rejesho</th>
-                          <th scope="col" class="px-4 py-3">Lipwa</th>
-                          <th scope="col" class="px-4 py-3">Laza</th>
-                          <th scope="col" class="px-4 py-3">Zidi</th>
-                          <th scope="col" class="px-4 py-3">Tarehe</th>
-                          <th scope="col" class="px-4 py-3">Action</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-
-
-                       <?php 
-        $no = 1;
-        $total_rejesho = 0;
-        $total_lipwa = 0;
-        $total_laza = 0;
-        $total_zidi = 0;
-
-        foreach ($cash as $cashs): 
-            if (empty($cashs->depost) || empty($cashs->customer_id)) {
-                continue;
-            }
-
-            $rejesho = $cashs->restrations;
-            $lipwa = $cashs->depost;
-            $laza = ($lipwa < $rejesho) ? ($rejesho - $lipwa) : 0;
-            $zidi = ($lipwa > $rejesho) ? ($lipwa - $rejesho) : 0;
-
-            $total_rejesho += $rejesho;
-            $total_lipwa += $lipwa;
-            $total_laza += $laza;
-            $total_zidi += $zidi;
-        ?>
-
-                      <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                          
-                          
-                          <td class="px-4 py-2">
-                              <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-white"><?php echo $no++; ?></span>
-                          </td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <div class="flex items-center">
-                                  
-                                 <?php echo $cashs->f_name . ' ' . $cashs->m_name . ' ' . $cashs->l_name; ?>
-                              </div>
-                          </td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo number_format($rejesho); ?></td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo number_format($lipwa); ?></td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          <?php echo $laza > 0 ? number_format($laza) : '-'; ?>
-                          </td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          <?php echo $zidi > 0 ? number_format($zidi) : '-'; ?>
-                          </td>
-                         
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo date('d-m-Y', strtotime($cashs->lecod_day)); ?></td>
-                          <td>
-
-<?php if ($cashs->depost == TRUE) {
- ?>
-<a  href="<?php echo base_url("admin/delete_depost_data/{$cashs->pay_id}") ?>"  class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-yellow-500 dark:bg-red-500 text-white hover:bg-yellow-600 focus:outline-hidden focus:bg-yellow-600 disabled:opacity-50 disabled:pointer-events-none">
-  Delete
-</a>
-<?php }else{ ?>
-<?php } ?>
-
-
-
-</td> 
-                       
-                      </tr>
-                      <?php endforeach; ?>
-                  </tbody>
-                  <tfoot>
+  <table id="shareholder_table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-cyan-500 uppercase bg-gray-50 dark:bg-cyan-500 dark:text-gray-50">
         <tr>
-           
+            <th scope="col" class="px-4 py-3">S/No</th>
+            <th scope="col" class="px-4 py-3">Jina La Mteja</th>
+            <th scope="col" class="px-4 py-3">Rejesho</th>
+            <th scope="col" class="px-4 py-3">Lipwa</th>
+            <th scope="col" class="px-4 py-3">Laza</th>
+            <th scope="col" class="px-4 py-3">Zidi</th>
+            <th scope="col" class="px-4 py-3">Tarehe</th>
+            <th scope="col" class="px-4 py-3">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($lazo['details'])): ?>
+            <?php
+                $sno = 1;
+                $total_restration = 0;
+                $total_depost = 0;
+                $total_laza = 0;
+                $total_zidi = 0;
+            ?>
+            <?php foreach ($lazo['details'] as $item): ?>
+                <?php
+                    $laza = 0;
+                    $zidi = 0;
 
-            <th scope="col" class="px-4 py-3">JUMLA</th>
-                          <th scope="col" class="px-4 py-3 dark:text-white"></th>
-                          <th scope="col" class="px-4 py-3 dark:text-white"><?php echo number_format($total_rejesho); ?></th>
-                          <th scope="col" class="px-4 py-3 dark:text-white"><?php echo number_format($total_lipwa); ?></th>
-                          <th scope="col" class="px-4 py-3 dark:text-white"><?php echo number_format($total_laza); ?></th>
-                          <th scope="col" class="px-4 py-3 dark:text-white"><?php echo number_format($total_zidi); ?></th>
-                        
+                    if ($item->depost < $item->restration) {
+                        $laza = $item->restration - $item->depost;
+                    } elseif ($item->depost > $item->restration) {
+                        $zidi = $item->depost - $item->restration;
+                    }
+
+                    // accumulate totals
+                    $total_restration += $item->restration;
+                    $total_depost += $item->depost;
+                    $total_laza += $laza;
+                    $total_zidi += $zidi;
+                ?>
+                <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <td class="px-4 py-2">
+                        <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-white"><?= $sno++; ?></span>
+                    </td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <div class="flex items-center"><?= htmlspecialchars($item->full_name) ?></div>
+                    </td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= number_format($item->restration) ?></td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= number_format($item->depost) ?></td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $laza > 0 ? number_format($laza) : '-' ?></td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $zidi > 0 ? number_format($zidi) : '-' ?></td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= htmlspecialchars($item->expected_date) ?></td>
+                    <td>
+                        <?php if ($item->depost): ?>
+                            <a href="<?= base_url("admin/delete_depost_data/{$item->loan_id}") ?>" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-yellow-500 dark:bg-red-500 text-white hover:bg-yellow-600 focus:outline-hidden focus:bg-yellow-600 disabled:opacity-50 disabled:pointer-events-none">
+                                Delete
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="8" class="px-4 py-3 text-center text-gray-500 dark:text-white">Hakuna taarifa za leo.</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+    <tfoot class="font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700">
+        <tr>
+            <td colspan="2" class="px-4 py-3">JUMLA</td>
+            <td class="px-4 py-3"><?= number_format($total_restration) ?></td>
+            <td class="px-4 py-3"><?= number_format($total_depost) ?></td>
+            <td class="px-4 py-3"><?= number_format($total_laza) ?></td>
+            <td class="px-4 py-3"><?= number_format($total_zidi) ?></td>
+            <td colspan="2" class="px-4 py-3"></td>
         </tr>
     </tfoot>
-              </table>
+</table>
+
           </div>
-          <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0" aria-label="Table navigation">
-              <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  Showing
-                  <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
-                  of
-                  <span class="font-semibold text-gray-900 dark:text-white">1000</span>
-              </span>
-              <ul class="inline-flex items-stretch -space-x-px">
-                  <li>
-                      <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                          <span class="sr-only">Previous</span>
-                          <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                          </svg>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                  </li>
-                  <li>
-                      <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                  </li>
-                  <li>
-                      <a href="#" aria-current="page" class="z-10 flex items-center justify-center px-3 py-2 text-sm leading-tight border text-primary-600 bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                  </li>
-                  <li>
-                      <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-                  </li>
-                  <li>
-                      <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                  </li>
-                  <li>
-                      <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                          <span class="sr-only">Next</span>
-                          <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                          </svg>
-                      </a>
-                  </li>
-              </ul>
-          </nav>
+       
       </div>
   </div>
 </section>

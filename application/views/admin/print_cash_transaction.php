@@ -1,109 +1,184 @@
-<?php $day = date('d-m-Y'); ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title><?php echo $compdata->comp_name; ?> | CASH TRANSACTION REPORT</title>
+    <meta charset="UTF-8" />
+    <title><?= htmlspecialchars($comp_data->comp_name) ?> - Cash Transaction</title>
     <style>
-        table {
+        html, body {
+            margin: 0;
+            padding: 0;
             width: 100%;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+        table {
             border-collapse: collapse;
-            font-size: 14px;
+            width: 100%;
+            margin-top: 20px;
         }
         th, td {
-            padding: 6px;
-            border: 1px solid #000;
-            text-align: center;
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            text-align: left;
         }
         th {
-            background: #eee;
+            background-color: #00bcd4;
+            color: white;
         }
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
-        .header img {
-            height: 60px;
-            margin-right: 15px;
-        }
-        .header .title {
-            font-size: 18px;
+        .total-row {
+            background-color: #ddd;
             font-weight: bold;
+        }
+        .company-header {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .company-header img {
+            max-height: 80px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
+<?php 
+$company_name = "CDC MICROFINANCE LIMITED";
+$company_address = "Anglicana Street, TARIME, Tanzania";
+$company_email = "cdcmicrofinance@gmail.com";
+$company_phone = "+255 763 727 272";
+$logo_path = FCPATH . 'assets/img/cdclogo.png';
+$logo_url = 'file://' . $logo_path;
 
-<!-- Company Logo + Name -->
-<div class="header">
-    <img src="<?php echo base_url('assets/images/logo.png'); ?>" alt="Logo">
-    <div class="title"><?php echo $compdata->comp_name; ?> | KUSANYO LA LEO REPORT</div>
+
+?>
+    <!-- Company Header -->
+    <div class="company-header">
+    <div style="text-align: center;">
+    <img src="<?= $logo_url ?>" alt="Company Logo" style="max-height: 100px; width: auto;" />
 </div>
 
-<!-- Employee and Date Info -->
+        <h2><?= htmlspecialchars($company_name) ?></h2>
+        <p><?= htmlspecialchars($company_address) ?></p>
+        <p>Email: <?= htmlspecialchars($company_email) ?> | Phone: <?= htmlspecialchars($company_phone) ?></p>
+    </div>
 
+    <!-- Report Title -->
+    <h3 style="text-align: center; margin-top: 30px;">CASH TRANSANCTION REPORT</h3>
 
-<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-    <thead>
-        <tr>
-            <th>S/No.</th>
-            <th>JINA LA MTEJA</th>
-            <th>REJESHO</th>
-            <th>LIPWA</th>
-            <th>LAZA</th>
-            <th>ZIDI</th>
-            <th>TAREHE</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php 
-        $no = 1;
-        $total_rejesho = 0;
-        $total_lipwa = 0;
-        $total_laza = 0;
-        $total_zidi = 0;
+    <!-- Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>S/No</th>
+                <th>Jina La Mteja</th>
+                <th>Afisa</th>
+                <th>Namba Ya Simu</th>
+                <th>Mkopo</th>
+                <th>Product</th>
+                <th>Muda</th>
+                <th>Rejesho</th>
+                <th>Lipwa</th>
+                <th>Laza</th>
+                <th>Zidi</th>
+                <th>Tarehe</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if (!empty($lazo['details'])): ?>
+            <?php
+                $no = 1;
+                $total_restration = 0;
+                $total_depost = 0;
+                $total_laza = 0;
+                $total_zidi = 0;
+            ?>
+            <?php foreach ($lazo['details'] as $item): ?>
+                <?php
+                    $laza = 0;
+                    $zidi = 0;
 
-        foreach ($cash as $cashs): 
-            if (empty($cashs->depost) || empty($cashs->customer_id)) {
-                continue;
-            }
+                    if ($item->depost < $item->restration) {
+                        $laza = $item->restration - $item->depost;
+                    } elseif ($item->depost > $item->restration) {
+                        $zidi = $item->depost - $item->restration;
+                    }
 
-            $rejesho = $cashs->restrations;
-            $lipwa = $cashs->depost;
-            $laza = ($lipwa < $rejesho) ? ($rejesho - $lipwa) : 0;
-            $zidi = ($lipwa > $rejesho) ? ($lipwa - $rejesho) : 0;
+                    $total_restration += $item->restration;
+                    $total_depost += $item->depost;
+                    $total_laza += $laza;
+                    $total_zidi += $zidi;
+                ?>           
+                <tr>
+                    <td><?= $no++ ?>.</td>
+                    <td><?= strtoupper(htmlspecialchars($item->full_name)) ?></td>
+                    <td><?= strtoupper(htmlspecialchars($item->empl_name)) ?></td>
+                    
+                    <td>
+<?php 
+    // Replace leading '255' with '0' if it exists at the start of phone_no
+    $phone = $item->phone_no;
+    if (strpos($phone, '255') === 0) {
+        $phone = '0' . substr($phone, 3);
+    }
+    echo htmlspecialchars($phone);
+?>
+</td>
 
-            $total_rejesho += $rejesho;
-            $total_lipwa += $lipwa;
-            $total_laza += $laza;
-            $total_zidi += $zidi;
-        ?>
-        <tr>
-            <td><?php echo $no++; ?></td>
-            <td><?php echo $cashs->f_name . ' ' . $cashs->m_name . ' ' . $cashs->l_name; ?></td>
-            <td><?php echo number_format($rejesho); ?></td>
-            <td><?php echo number_format($lipwa); ?></td>
-            <td><?php echo $laza > 0 ? number_format($laza) : '-'; ?></td>
-            <td><?php echo $zidi > 0 ? number_format($zidi) : '-'; ?></td>
-            <td><?php echo date('d-m-Y', strtotime($cashs->lecod_day)); ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>JUMLA</th>
-            <th></th>
-            <th><?php echo number_format($total_rejesho); ?></th>
-            <th><?php echo number_format($total_lipwa); ?></th>
-            <th><?php echo number_format($total_laza); ?></th>
-            <th><?php echo number_format($total_zidi); ?></th>
-            <th></th>
-        </tr>
-    </tfoot>
-</table>
+                    <td><?= number_format($item->loan_amount) ?></td>
+                    <td><?= htmlspecialchars($item->loan_name) ?></td>
+                    <td>
+<?php 
+    // Determine the frequency text based on $item->day
+    if ($item->day == '1') {
+        $frequency = "Siku";
+    } elseif ($item->day == '7') {
+        $frequency = "Weekl";
+    } elseif (in_array($item->day, ['28','29','30','31'])) {
+        $frequency = "Mwezi";
+    } else {
+        $frequency = "Other"; // fallback if needed
+    }
+    
+    // Output frequency with session inside parentheses
+    echo $frequency . " (" . htmlspecialchars($item->session) . ")";
+?>
+</td>
 
+                    <td><?= number_format($item->restration) ?></td>
+                    <td><?= number_format($item->depost) ?></td>
+                    <td><?= $laza > 0 ? number_format($laza) : '-' ?></td>
+                    <td><?= $zidi > 0 ? number_format($zidi) : '-' ?></td>
+                    <td><?= htmlspecialchars($item->expected_date) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            <!-- Totals Row -->
+            <tr class="total-row">
+                <td colspan="2"><b>
+                JUMLA
+                </b></td>
+                <td><b> </b></td>
+                <td><b> </b></td>
+                <td><b> </b></td>
+                <td><b> </b></td>
+                <td><b> </b></td>
+                <td><b><?= number_format($total_restration) ?> </b></td>
+                <td><b><?= number_format($total_depost) ?> </b></td>
+                <td><b><?= number_format($total_laza) ?></b></td>
+                <td><b> <?= number_format($total_zidi) ?></b></td>
+                <td><b> </b></td>
+            </tr>
+        <?php else: ?>
+            <tr>
+                <td colspan="7" style="text-align: center;">Hakuna taarifa za leo.</td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
 </body>
 </html>

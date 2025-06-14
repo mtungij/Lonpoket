@@ -6514,19 +6514,29 @@ public function get_today_expected_collections($comp_id)
     $this->db->select("
         l.loan_id,
         l.customer_id,
+        l.day,
+        l.session,
         CONCAT_WS(' ', c.f_name, c.m_name, c.l_name) AS full_name,
+        c.phone_no,
         e.empl_name AS empl_name,
         l.how_loan AS loan_amount,
         l.restration,
         l.date_show AS expected_date,
         COALESCE(p.description, '') AS amount_paid,
         COALESCE(p.depost, 0) AS depost,
-        COALESCE(p.date_data, NULL) AS payment_date
+        COALESCE(p.date_data, NULL) AS payment_date,
+        cat.loan_name,
+        o.loan_stat_date,
+        o.loan_end_date,
+        b.blanch_name
     ");
     $this->db->from('tbl_loans l');
     $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id', 'left');
     $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id', 'left');
     $this->db->join('tbl_pay p', "l.loan_id = p.loan_id AND p.date_data = l.date_show AND p.description = 'CASH DEPOSIT'", 'left');
+    $this->db->join('tbl_loan_category cat', 'cat.category_id = l.category_id', 'left');
+    $this->db->join('tbl_outstand o', 'o.loan_id = l.loan_id', 'left');
+    $this->db->join('tbl_blanch b', 'b.blanch_id = l.blanch_id', 'left');
     $this->db->where('l.date_show', $today);
     $this->db->where('l.comp_id', $comp_id);
     $details = $this->db->get()->result();
@@ -6562,7 +6572,7 @@ public function get_today_expected_collections($comp_id)
     $this->db->where('p.depost >', 0);
     $deposited_customers = $this->db->get()->row();
 
-    // Count of customers who did not make a deposit
+    // Calculate customers who did not make a deposit
     $no_deposit_customers = ($total_customers->total_customers ?? 0) - ($deposited_customers->deposited_customers ?? 0);
 
     return [
