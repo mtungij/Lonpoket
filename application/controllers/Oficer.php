@@ -5376,9 +5376,9 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
 
       $lazo =$this->queries->get_today_offficerexpected_collections($blanch_id, $empl_id);
   
-        echo "<pre>";
-           print_r( $lazo  );
-                 exit();
+        // echo "<pre>";
+        //    print_r( $lazo  );
+        //          exit();
     
       $company_name = $company_data->comp_name;
       $company_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', $company_name);
