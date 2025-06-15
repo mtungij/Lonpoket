@@ -5343,7 +5343,7 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
       // Load the HTML view
       $html = $this->load->view('officer/print_managercash_transaction', [
         'company_name' => $company_name,
-        'blanch_data'=>$blanch_data,X
+        'blanch_data'=>$blanch_data,
         'lazo' => $lazo,
       ], true);
     
