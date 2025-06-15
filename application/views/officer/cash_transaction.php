@@ -82,22 +82,42 @@ include_once APPPATH . "views/partials/officerheader.php";
 </button> -->
 
 
-   
+<?php 
+$position = strtoupper($this->session->userdata('position_name'));
 
+if ($position === 'LOAN OFFICER'): ?>
+  <a
+    href="<?php echo base_url('oficer/print_officer_cash_transaction'); ?>"
+    class="w-full md:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800"
+    target="_blank"
+  >
+    <span class="bg-green-200 p-1 rounded mr-2">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path
+          d="M14 2H6a2 2 0 00-2 2v16c0 1.104.896 2 2 2h12a2 2 0 002-2V8l-6-6zM13 3.5L18.5 9H13V3.5zM10 14h1v4h-1v-4zm-2.5 0H9v1.5H8v.5h1v1H7.5V14zm7 0H15a1 1 0 110 2h-.5v2H13v-4z" />
+      </svg>
+    </span>
+    Print Officer PDF
+  </a>
 
-      <a
-        href="<?php echo base_url("oficer/print_manager_cash_transaction"); ?>"
-        class="w-full md:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 rounded-lg focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:focus:ring-cyan-800" target="_blank"
-      >
-        <span class="bg-cyan-200 p-1 rounded mr-2">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path
-              d="M14 2H6a2 2 0 00-2 2v16c0 1.104.896 2 2 2h12a2 2 0 002-2V8l-6-6zM13 3.5L18.5 9H13V3.5zM10 14h1v4h-1v-4zm-2.5 0H9v1.5H8v.5h1v1H7.5V14zm7 0H15a1 1 0 110 2h-.5v2H13v-4z" />
-          </svg>
-        </span>
-        Print PDF
-      </a>
+<?php elseif ($position === 'BRANCH MANAGER'): ?>
+  <a
+    href="<?php echo base_url('oficer/print_manager_cash_transaction'); ?>"
+    class="w-full md:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 rounded-lg focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:focus:ring-cyan-800"
+    target="_blank"
+  >
+    <span class="bg-cyan-200 p-1 rounded mr-2">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path
+          d="M14 2H6a2 2 0 00-2 2v16c0 1.104.896 2 2 2h12a2 2 0 002-2V8l-6-6zM13 3.5L18.5 9H13V3.5zM10 14h1v4h-1v-4zm-2.5 0H9v1.5H8v.5h1v1H7.5V14zm7 0H15a1 1 0 110 2h-.5v2H13v-4z" />
+      </svg>
+    </span>
+    Print Manager PDF
+  </a>
+<?php endif; ?>
+
     </div>
   </div>
 
