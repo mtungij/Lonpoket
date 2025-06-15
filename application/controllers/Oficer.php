@@ -2242,9 +2242,9 @@ public function create_sponser($customer_id, $comp_id) {
 
   $this->load->library('form_validation');
 
-  $this->form_validation->set_rules('sp_name', 'First Name', 'required|alpha');
-  $this->form_validation->set_rules('sp_mname', 'Middle Name', 'required|alpha');
-  $this->form_validation->set_rules('sp_lname', 'Last Name', 'required|alpha');
+  $this->form_validation->set_rules('sp_name', 'First Name', 'required');
+  $this->form_validation->set_rules('sp_mname', 'Middle Name', 'required');
+  $this->form_validation->set_rules('sp_lname', 'Last Name', 'required');
   $this->form_validation->set_rules(
       'sp_phone_no', 
       'Phone Number', 
@@ -5168,7 +5168,11 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
       $company_data = $this->queries->get_companyData($comp_id);
       $blanch_data = $this->queries->get_blanchData($blanch_id);
       $empl_data = $this->queries->get_employee_data($empl_id);
-      
+      $lazo_data =$this->queries->get_today_offficerexpected_collections( $blanch_id);
+      echo "<pre>";
+       print_r($lazo_data);
+     echo "<pre>";
+       exit();
      
      
       $privillage = $this->queries->get_position_empl($empl_id);
