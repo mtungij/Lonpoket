@@ -495,26 +495,26 @@ if (!empty($customer_loan_status)) {
     </div>
 
 
-    <div class="sm:col-span-6">
-    <?php if ($customer_loan->loan_status == 'withdrawal') { ?>
+    <!-- <div class="sm:col-span-6">
+    </?php if ($customer_loan->loan_status == 'withdrawal') { ?>
         <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
         <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-               value="<?php echo number_format($total_recovery->total_pending, 2); ?>" 
+               value="</?php echo number_format($total_recovery->total_pending, 2); ?>" 
                readonly style="color:red"> 
 
-    <?php } elseif ($customer_loan->loan_status == 'out') { ?>
+    </?php } elseif ($customer_loan->loan_status == 'out') { ?>
         <span style="color:red;">Default Amount</span>
         <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-               value="<?php echo number_format($out_stand->total_out, 2); ?>" 
+               value="</?php echo number_format($out_stand->total_out, 2); ?>" 
                readonly style="color:red"> 
 
-    <?php } else { ?>
+    </?php } else { ?>
         <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
         <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-                value="<?php echo number_format($total_recovery->pending, 2); ?>"
+                value="</?php echo number_format($total_recovery->pending, 2); ?>"
                readonly style="color:red"> 
-    <?php } ?>
-</div>
+    </?php } ?>
+</div> -->
 
 
 
