@@ -332,45 +332,102 @@ include_once APPPATH . "views/partials/header.php";
   <!-- </div> -->
 
 
-  <div class="bg-white rounded-lg shadow-md overflow-hidden">
-  <div class="bg-cyan-800 px-4 py-2 border-b">
+<!-- Tailwind styled card with pie chart -->
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+  <div class="bg-cyan-800 px-4 py-2 border-b border-cyan-900 dark:border-cyan-700">
     <h2 class="text-lg font-semibold text-white">Tathmini ya Afisa Malipo Ya Leo</h2>
   </div>
-  <div class="p-4">
-    <table class="w-full text-sm">
-      <tbody class="text-gray-700">
-        <?php
-          $total_deposit = 0;
-          if (!empty($top_depositors)) :
-            foreach ($top_depositors as $employee) :
-              $total_deposit += $employee->total_deposit;
-        ?>
-        <tr class="border-b">
-          <td class="py-2"><?= htmlspecialchars($employee->empl_name) ?></td>
-          <td class="text-right">
-            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?= number_format($employee->total_deposit, 2) ?> TZS
-            </span>
-          </td>
-        </tr>
-        <?php endforeach; else: ?>
-        <tr>
-          <td colspan="2" class="text-center text-gray-500 py-4">Hakuna taarifa za kutosha.</td>
-        </tr>
-        <?php endif; ?>
 
-        <tr>
-          <td class="py-2 font-bold">Jumla:</td>
-          <td class="text-right font-bold">
-            <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?= number_format($total_deposit, 2) ?> TZS
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="p-4">
+    <?php
+      $total_deposit = 0;
+      $names = [];
+      $amounts = [];
+
+      if (!empty($top_depositors)) {
+        foreach ($top_depositors as $employee) {
+          $names[] = $employee->empl_name;
+          $amounts[] = $employee->total_deposit;
+          $total_deposit += $employee->total_deposit;
+        }
+      }
+    ?>
+
+    <?php if (!empty($top_depositors)): ?>
+      <!-- Chart Canvas -->
+      <canvas id="depositChart" height="200"></canvas>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        const ctx = document.getElementById('depositChart').getContext('2d');
+        const depositChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: <?= json_encode($names) ?>,
+            datasets: [{
+              label: 'Kiasi cha Uwekaji (TZS)',
+              data: <?= json_encode($amounts) ?>,
+              backgroundColor: 'rgba(34, 197, 94, 0.7)',
+              borderColor: 'rgba(34, 197, 94, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return context.parsed.y.toLocaleString('en-US') + ' TZS';
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return value.toLocaleString('en-US') + ' TZS';
+                  },
+                  color: "#ffffff" // y-axis text color in dark mode
+                },
+                grid: {
+                  color: "rgba(255,255,255,0.1)"
+                }
+              },
+              x: {
+                ticks: {
+                  color: "#ffffff" // x-axis text color in dark mode
+                },
+                grid: {
+                  color: "rgba(255,255,255,0.1)"
+                }
+              }
+            }
+          }
+        });
+      </script>
+
+      <!-- Total Display -->
+      <div class="mt-4 text-right">
+        <span class="inline-block bg-green-600 text-white text-sm px-3 py-1 rounded font-semibold">
+          Jumla: <?= number_format($total_deposit, 2) ?> TZS
+        </span>
+      </div>
+
+    <?php else: ?>
+      <!-- No Data Message -->
+      <div class="text-center text-gray-500 dark:text-gray-300 py-8">
+        Hakuna taarifa za kutosha.
+      </div>
+    <?php endif; ?>
+    
   </div>
 </div>
+
+
 
 
 </div>
@@ -864,4 +921,39 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(document.documentElement, { attributes: true });
     }
 });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const pieCtx = document.getElementById('depositorsPieChart').getContext('2d');
+
+  const depositorsPieChart = new Chart(pieCtx, {
+    type: 'pie',
+    data: {
+      labels: <?= json_encode(array_map(fn($e) => $e->empl_name, $top_depositors)) ?>,
+      datasets: [{
+        data: <?= json_encode(array_map(fn($e) => $e->total_deposit, $top_depositors)) ?>,
+        backgroundColor: [
+          '#14b8a6', '#0ea5e9', '#8b5cf6', '#f59e0b', '#ef4444',
+          '#10b981', '#3b82f6', '#eab308', '#6366f1', '#ec4899'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: '#374151',
+            font: {
+              size: 12
+            }
+          }
+        }
+      }
+    }
+  });
 </script>
