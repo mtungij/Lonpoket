@@ -1472,38 +1472,6 @@ public function get_totalLoanout($customer_id){
 	
 
 
-	public function get_cash_transaction_by_officer($empl_id) {
-		$date = date("Y-m-d");
-	
-		$data = $this->db->query("
-			SELECT * 
-			FROM tbl_prev_lecod pr 
-			JOIN tbl_customer c ON c.customer_id = pr.customer_id 
-			JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  
-			WHERE pr.empl_id = '$empl_id' 
-			AND pr.lecod_day >= '$date' 
-			ORDER BY pr.prev_id DESC
-		");
-	
-		return $data->result();
-	}
-	
-	public function get_cash_transaction_by_blanch($blanch_id) {
-		$date = date("Y-m-d");
-	
-		$data = $this->db->query("
-			SELECT * 
-			FROM tbl_prev_lecod pr 
-			JOIN tbl_customer c ON c.customer_id = pr.customer_id 
-			JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  
-			WHERE pr.blanch_id = '$blanch_id'
-			AND pr.lecod_day >= '$date' 
-			ORDER BY pr.prev_id DESC
-		");
-	
-		return $data->result();
-	}
-	
 
 
 	public function get_sumCashtransDepost($comp_id){
@@ -6603,6 +6571,39 @@ public function get_today_expected_collections($comp_id)
         'no_deposit_customers' => $no_deposit_customers
     ];
 }
+
+
+	public function get_cash_transaction_by_officer($empl_id) {
+		$date = date("Y-m-d");
+	
+		$data = $this->db->query("
+			SELECT * 
+			FROM tbl_prev_lecod pr 
+			JOIN tbl_customer c ON c.customer_id = pr.customer_id 
+			JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  
+			WHERE pr.empl_id = '$empl_id' 
+			AND pr.lecod_day >= '$date' 
+			ORDER BY pr.prev_id DESC
+		");
+	
+		return $data->result();
+	}
+
+	public function get_cash_transaction_by_blanch($blanch_id) {
+		$date = date("Y-m-d");
+	
+		$data = $this->db->query("
+			SELECT * 
+			FROM tbl_prev_lecod pr 
+			JOIN tbl_customer c ON c.customer_id = pr.customer_id 
+			JOIN tbl_blanch b ON b.blanch_id = pr.blanch_id  
+			WHERE pr.blanch_id = '$blanch_id'
+			AND pr.lecod_day >= '$date' 
+			ORDER BY pr.prev_id DESC
+		");
+	
+		return $data->result();
+	}
 
 
 public function managerexpected_collections($blanch_id)

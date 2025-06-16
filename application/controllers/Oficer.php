@@ -4086,6 +4086,51 @@ if ($position === 'LOAN OFFICER') {
 }
 
 
+
+public function today_officer_transaction(){
+  $position = strtoupper($this->session->userdata('position_name'));
+  $this->load->model('queries');
+  $blanch_id = $this->session->userdata('blanch_id');
+  $empl_id = $this->session->userdata('empl_id');
+  $manager_data = $this->queries->get_manager_data($empl_id);
+  $comp_id = $manager_data->comp_id;
+  $company_data = $this->queries->get_companyData($comp_id);
+  $blanch_data = $this->queries->get_blanchData($blanch_id);
+  $empl_data = $this->queries->get_employee_data($empl_id);
+  
+ 
+ 
+  $privillage = $this->queries->get_position_empl($empl_id);
+  $manager = $this->queries->get_position_manager($empl_id);
+
+  if ($position === 'LOAN OFFICER') {
+      $cash = $this->queries->get_cash_transaction_by_officer($empl_id);
+      $sum_depost = $this->queries->get_sumCashtransDepostByOfficer($empl_id);
+      $sum_withdrawls = $this->queries->get_sumCashtransWithdrowByOfficer($empl_id);
+      
+  } elseif ($position === 'BRANCH MANAGER') {
+      $cash = $this->queries->get_cash_transactionBlanch($blanch_id);
+      $sum_depost = $this->queries->get_sumCashtransDepostBlanch($blanch_id);
+      $sum_withdrawls = $this->queries->get_sumCashtransWithdrowBlanch($blanch_id);
+  } else {
+      $cash = [];
+      $sum_depost = 0;
+  }
+
+ 
+ 
+
+  $this->load->view('officer/today_officer_transaction', [
+      'cash' => $cash,
+      'sum_depost' => $sum_depost,
+      'sum_withdrawls' => $sum_withdrawls,
+      'empl_data' => $empl_data,
+      'privillage' => $privillage,
+      'manager' => $manager
+  ]);
+}
+
+
   public function deposit_loan($customer_id){
     ini_set("max_execution_time", 3600);
     $this->load->model('queries');

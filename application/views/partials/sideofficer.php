@@ -225,6 +225,8 @@ $communication_submenu_active = is_submenu_active(['send_email']); // Assuming S
               <ul class="pt-2 ps-2">
              
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('oficer/cash_transaction') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("oficer/cash_transaction"); ?>">Cash Transaction</a></li>
+
+                  <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('oficer/today_officer_transaction') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("oficer/today_officer_transaction"); ?>">Today Transaction</a></li>
                   
                    
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('oficer/blanchiwise_report') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("oficer/blanchiwise_report"); ?>">Branch Wise Loan Summary</a></li> 
