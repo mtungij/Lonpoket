@@ -29,8 +29,114 @@ include_once APPPATH . "views/partials/header.php";
         <!-- Section 2: Top KPIs (Using your new card template) -->
         
         <!-- Section 2: Top KPIs (Revised with Full-Width Account Balance Banner) -->
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Card -->
+        <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-4 md:p-5">
+            <div class="flex items-center gap-x-2">
+              <p class="text-xs uppercase text-gray-500 dark:text-gray-50">
+                Total Customers
+              </p>
+              <div class="hs-tooltip">
+                <div class="hs-tooltip-toggle">
+                  <svg class="shrink-0 size-4 text-gray-500 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                    <path d="M12 17h.01" />
+                  </svg>
+                  <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-gray-700" role="tooltip">
+                    hii ni idadi jumla ya wateja wote kwenye kampuni
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-1 flex items-center gap-x-2">
+              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">
+              <?php echo $all_customer_count; ?>
+              </h3>
+              <span class="flex items-center gap-x-1 text-green-600">
+                <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                  <polyline points="16 7 22 7 22 13" />
+                </svg>
+                <span class="inline-block text-sm">
+                  1.7%
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- End Card -->
+
+        <!-- Card -->
+        <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-4 md:p-5">
+            <div class="flex items-center gap-x-2">
+              <p class="text-xs uppercase text-gray-500 dark:text-gray-200">
+                Total Staff
+              </p>
+            </div>
+
+            <div class="mt-1 flex items-center gap-x-2">
+              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-50">
+              <?php echo $employee_count; ?>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!-- End Card -->
+
+        <!-- Card -->
+        <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-4 md:p-5">
+            <div class="flex items-center gap-x-2">
+              <p class="text-xs uppercase text-gray-500 dark:text-gray-200">
+               Today Deposit
+              </p>
+            </div>
+
+            <div class="mt-1 flex items-center gap-x-2">
+              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">
+              <?php echo number_format($total_deposit_daily); ?>
+              </h3>
+              <span class="flex items-center gap-x-1 text-red-600">
+                <!-- <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
+                  <polyline points="16 17 22 17 22 11" />
+                </svg> -->
+                <!-- <span class="inline-block text-sm">
+                  1.7%
+                </span> -->
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- End Card -->
+
+        <!-- Card -->
+        <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-4 md:p-5">
+            <div class="flex items-center gap-x-2">
+              <p class="text-xs uppercase text-gray-500 dark:text-gray-200">
+               Today Withdraw
+              </p>
+            </div>
+
+            <div class="mt-1 flex items-center gap-x-2">
+              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">
+              <?php echo number_format($total_withdrawal_daily->total_loanWith_day); ?>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!-- End Card -->
+      </div>
+
+<!--  -->
      
- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+ <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
 <div class="bg-white rounded-lg shadow-md overflow-hidden">
     <div class="bg-cyan-800  px-4 py-2 border-b">
       <h2 class="text-lg font-semibold text-white">WATEJA & WAFANYAKAZI</h2>
@@ -42,7 +148,7 @@ include_once APPPATH . "views/partials/header.php";
             <td class="py-2">JUMLA YA WATEJA</td>
             <td class="text-right">
               <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?php echo $all_customer_count; ?>
+              </?php echo $all_customer_count; ?>
               </span>
             </td>
           </tr>
@@ -50,7 +156,7 @@ include_once APPPATH . "views/partials/header.php";
             <td class="py-2">WATEJA WAPYA LEO</td>
             <td class="text-right">
             <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?= $new_customer; ?>
+              </?= $new_customer; ?>
               </span>
             </td>
           </tr>
@@ -58,7 +164,7 @@ include_once APPPATH . "views/partials/header.php";
             <td class="py-2">WANAOMALIZA LEO</td>
             <td class="text-right">
             <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?= $done_customer_count ;?>
+              </?= $done_customer_count ;?>
               </span>
             </td>
           </tr>
@@ -66,7 +172,7 @@ include_once APPPATH . "views/partials/header.php";
             <td class="py-2">MADENI SUGU</td>
             <td class="text-right">
             <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-             <?= $default_customer_count;?>
+             </?= $default_customer_count;?>
               </span>
             </td>
           </tr>
@@ -74,7 +180,7 @@ include_once APPPATH . "views/partials/header.php";
             <td class="py-2">WAFANYAKAZI</td>
             <td class="text-right">
             <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?php echo $employee_count; ?>
+              </?php echo $employee_count; ?>
               </span>
             </td>
           </tr>
@@ -84,14 +190,14 @@ include_once APPPATH . "views/partials/header.php";
   </div>
 
   <!-- Card 2: MALIPO YA LEO -->
-  <?php
+  <!-- </?php
   $total_deposit_daily = $total_deposit_daily ?? 0;
   $total_deposit_weekly = $total_deposit_weekly ?? 0;
   $total_deposit_monthly = $total_deposit_monthly ?? 0;
   $total_all = $total_deposit_daily + $total_deposit_weekly + $total_deposit_monthly;
-?>
+?> -->
 
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<!-- <div class="bg-white rounded-lg shadow-md overflow-hidden">
   <div class="bg-cyan-800 px-4 py-2 border-b">
     <h2 class="text-lg font-semibold text-white">MALIPO YA LEO</h2>
   </div>
@@ -133,9 +239,9 @@ include_once APPPATH . "views/partials/header.php";
       </tbody>
     </table>
   </div>
-</div>
+</div> -->
 
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<!-- <div class="bg-white rounded-lg shadow-md overflow-hidden">
   <div class="bg-cyan-800 px-4 py-2 border-b">
     <h2 class="text-lg font-semibold text-white">MIKOPO YA LEO</h2>
   </div>
@@ -146,7 +252,7 @@ include_once APPPATH . "views/partials/header.php";
           <td class="py-2">KILA SIKU</td>
           <td class="text-right">
             <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?php echo number_format($total_withdrawal_daily->total_loanWith_day); ?>
+              </?php echo number_format($total_withdrawal_daily->total_loanWith_day); ?>
             </span>
           </td>
         </tr>
@@ -154,7 +260,7 @@ include_once APPPATH . "views/partials/header.php";
           <td class="py-2">WIKI</td>
           <td class="text-right">
             <span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-               <?php echo number_format($total_withdrawal_weekly->loan_aproved ?? 0); ?> 
+               </?php echo number_format($total_withdrawal_weekly->loan_aproved ?? 0); ?> 
             
             </span>
           </td>
@@ -171,7 +277,7 @@ include_once APPPATH . "views/partials/header.php";
           <td class="py-2 font-bold">JUMLA</td>
           <td class="text-right font-bold">
             <Span class="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded">
-              <?php
+              </?php
                 $daily = $total_withdrawal_daily->loan_aproved ?? 0;
                 $weekly = $total_withdrawal_weekly->loan_aproved ?? 0;
                 $monthly = $total_withdrawal_monthly->loan_aproved ?? 0;
@@ -186,15 +292,15 @@ include_once APPPATH . "views/partials/header.php";
     </table>
   </div>
 </div>
-</div>
+</div> -->
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
-    <div class="bg-cyan-800 px-4 py-2 border-b">
+<!-- <div class="bg-white rounded-lg shadow-md overflow-hidden"> -->
+    <!-- <div class="bg-cyan-800 px-4 py-2 border-b">
       <h2 class="text-lg font-semibold text-white">Tathmini ya Afisa Mikopo Ya Leo</h2>
-    </div>
-    <div class="p-4">
-      <table class="w-full text-sm">
+    </div> -->
+    <!-- <div class="p-4"> -->
+      <!-- <table class="w-full text-sm">
         <tbody class="text-gray-700">
           <?php
             $total_loan_all = 0;
@@ -211,7 +317,7 @@ include_once APPPATH . "views/partials/header.php";
             </tr>
           <?php endforeach; ?>
 
-          <!-- Jumla Row -->
+         
           <tr>
             <td class="py-2 font-bold">Jumla:</td>
             <td class="text-right font-bold">
@@ -221,9 +327,9 @@ include_once APPPATH . "views/partials/header.php";
             </td>
           </tr>
         </tbody>
-      </table>
-    </div>
-  </div>
+      </table> -->
+    <!-- </div> -->
+  <!-- </div> -->
 
 
   <div class="bg-white rounded-lg shadow-md overflow-hidden">
