@@ -1570,6 +1570,21 @@ $this->db->where('customer_id', $customer_id);
 $this->db->delete('tbl_sponser');
 
 $customer = $this->queries->search_CustomerID($customer_id,$comp_id);
+if (!$customer) {
+	$this->session->set_flashdata('error', 'Mteja hakupatikana.');
+	redirect('oficer/loan_application');
+}
+
+// ✅ Check if customer has any active/pending loan
+if ($this->queries->has_pending_loans($customer_id)) {
+  $data = [
+	  'message' => 'Mteja bado hajamaliza mkopo.',
+	  'type' => 'warning'
+  ];
+  $this->load->view('officer/toast_message_view', $data);
+  return;
+}
+
 @$customer_id = $customer->customer_id;
 @$sponser = $this->queries->get_sponser($customer_id);
 @$sponsers_data = $this->queries->get_sponserCustomer($customer_id);

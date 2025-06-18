@@ -942,11 +942,117 @@ public function get_monthly_received_loan($comp_id)
        	   return $loan->result();
        }
 
-          public function get_withdrawal_LoanBlanch($blanch_id){
-        $date = date("Y-m-d");
-       	$loan = $this->db->query("SELECT * FROM tbl_loans l JOIN tbl_customer c ON c.customer_id = l.customer_id JOIN tbl_loan_category lt ON lt.category_id = l.category_id JOIN tbl_blanch b ON b.blanch_id = l.blanch_id JOIN tbl_sub_customer s ON s.customer_id = l.customer_id JOIN tbl_outstand ot ON ot.loan_id = l.loan_id  WHERE l.blanch_id = '$blanch_id' AND l.loan_status = 'withdrawal' ORDER BY l.loan_id DESC ");
-       	   return $loan->result();
-       }
+	//    public function get_grouped_withdrawal_LoanBlanch($blanch_id){
+	// 	$this->db->select('l.*, c.*, lt.*, b.*, s.*, ot.*, e.empl_name');
+	// 	$this->db->from('tbl_loans l');
+	// 	$this->db->join('tbl_customer c', 'c.customer_id = l.customer_id');
+	// 	$this->db->join('tbl_loan_category lt', 'lt.category_id = l.category_id');
+	// 	$this->db->join('tbl_blanch b', 'b.blanch_id = l.blanch_id');
+	// 	$this->db->join('tbl_sub_customer s', 's.customer_id = l.customer_id');
+	// 	$this->db->join('tbl_outstand ot', 'ot.loan_id = l.loan_id');
+	// 	$this->db->join('tbl_employee e', 'e.empl_id = l.empl_id');
+	// 	$this->db->where('l.blanch_id', $blanch_id);
+	// 	$this->db->where('l.loan_status', 'withdrawal');
+	// 	$this->db->order_by('e.empl_name');
+		
+	// 	$query = $this->db->get();
+	// 	$results = $query->result();
+	
+	// 	// Group by empl_name
+	// 	$grouped = [];
+	// 	foreach ($results as $row) {
+	// 		$grouped[$row->empl_name][] = $row;
+	// 	}
+	
+	// 	return $grouped;
+	// }
+
+
+	public function get_grouped_withdrawal_LoanBlanch($blanch_id, $from_date = null, $to_date = null)
+{
+    $this->db->select('l.*, c.*, lt.*, b.*, s.*, ot.*, e.empl_name');
+    $this->db->from('tbl_loans l');
+    $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id');
+    $this->db->join('tbl_loan_category lt', 'lt.category_id = l.category_id');
+    $this->db->join('tbl_blanch b', 'b.blanch_id = l.blanch_id');
+    $this->db->join('tbl_sub_customer s', 's.customer_id = l.customer_id');
+    $this->db->join('tbl_outstand ot', 'ot.loan_id = l.loan_id');
+    $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id');
+    $this->db->where('l.blanch_id', $blanch_id);
+    $this->db->where('l.loan_status', 'withdrawal');
+
+    // Add date filters if provided
+    if ($from_date) {
+        $this->db->where('l.disburse_day >=', $from_date);
+    }
+    if ($to_date) {
+        $this->db->where('l.disburse_day <=', $to_date);
+    }
+
+    $this->db->order_by('e.empl_name');
+    
+    $query = $this->db->get();
+    $results = $query->result();
+
+    // Group by empl_name
+    $grouped = [];
+    foreach ($results as $row) {
+        $grouped[$row->empl_name][] = $row;
+    }
+
+    return $grouped;
+}
+
+
+public function get_grouped_withdrawal_todayBlanch($blanch_id, $from_date = null, $to_date = null)
+{
+    $this->db->select('l.*, c.*, lt.*, b.*, s.*, ot.*, e.empl_name');
+    $this->db->from('tbl_loans l');
+    $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id');
+    $this->db->join('tbl_loan_category lt', 'lt.category_id = l.category_id');
+    $this->db->join('tbl_blanch b', 'b.blanch_id = l.blanch_id');
+    $this->db->join('tbl_sub_customer s', 's.customer_id = l.customer_id');
+    $this->db->join('tbl_outstand ot', 'ot.loan_id = l.loan_id');
+    $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id');
+
+    $this->db->where('l.blanch_id', $blanch_id);
+    $this->db->where('l.loan_status', 'withdrawal');
+
+    // Add this line to filter disburse_day = today
+    $this->db->where('DATE(l.disburse_day)', date('Y-m-d'));
+
+    $this->db->order_by('e.empl_name');
+    
+    $query = $this->db->get();
+    $results = $query->result();
+
+    // Group by empl_name
+    $grouped = [];
+    foreach ($results as $row) {
+        $grouped[$row->empl_name][] = $row;
+    }
+
+    return $grouped;
+}
+
+
+
+	public function get_grouped_withdrawal_LoanBlanch_by_date($blanch_id, $from_date, $to_date)
+{
+    $this->db->select('*');  // or your required columns
+    $this->db->from('tbl_loans');
+    $this->db->where('blanch_id', $blanch_id);
+    $this->db->where('disburse_day >=', $from_date);
+    $this->db->where('disburse_day <=', $to_date);
+    // add grouping if needed here
+
+    $query = $this->db->get();
+    return $query->result();
+}
+
+
+
+	
 
 	   public function get_withdrawal_LoanByOfficer($empl_id) {
 		$this->db->select('*');
