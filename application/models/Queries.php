@@ -1036,6 +1036,41 @@ public function get_grouped_withdrawal_todayBlanch($blanch_id, $from_date = null
 }
 
 
+public function get_grouped_withdrawal_officertodayBlanch($blanch_id, $empl_id = null, $from_date = null, $to_date = null)
+{
+    $this->db->select('l.*, c.*, lt.*, b.*, s.*, ot.*, e.empl_name');
+    $this->db->from('tbl_loans l');
+    $this->db->join('tbl_customer c', 'c.customer_id = l.customer_id');
+    $this->db->join('tbl_loan_category lt', 'lt.category_id = l.category_id');
+    $this->db->join('tbl_blanch b', 'b.blanch_id = l.blanch_id');
+    $this->db->join('tbl_sub_customer s', 's.customer_id = l.customer_id');
+    $this->db->join('tbl_outstand ot', 'ot.loan_id = l.loan_id');
+    $this->db->join('tbl_employee e', 'e.empl_id = l.empl_id');
+
+    $this->db->where('l.blanch_id', $blanch_id);
+    $this->db->where('l.loan_status', 'withdrawal');
+    $this->db->where('DATE(l.disburse_day)', date('Y-m-d'));
+
+    if (!empty($empl_id)) {
+        $this->db->where('l.empl_id', $empl_id);
+    }
+
+    $this->db->order_by('e.empl_name');
+
+    $query = $this->db->get();
+    $results = $query->result();
+
+    // Group by empl_name
+    $grouped = [];
+    foreach ($results as $row) {
+        $grouped[$row->empl_name][] = $row;
+    }
+
+    return $grouped;
+}
+
+
+
 
 	public function get_grouped_withdrawal_LoanBlanch_by_date($blanch_id, $from_date, $to_date)
 {

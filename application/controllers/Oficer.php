@@ -5265,7 +5265,11 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
   }
   
   public function withdraw_transactions()
+
   {
+    $position = strtoupper(trim($this->session->userdata('position_name')));
+
+
       $this->load->model('queries');
       $blanch_id = $this->session->userdata('blanch_id');
       $empl_id = $this->session->userdata('empl_id');
@@ -5277,11 +5281,28 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
       $blanch_data = $this->queries->get_blanchData($blanch_id);
       $empl_data = $this->queries->get_employee_data($empl_id);
   
-      $disburse_grouped = $this->queries->get_grouped_withdrawal_todayBlanch($blanch_id);
+     
       $total_loanDis = $this->queries->get_sum_loanwithdrawal_data($comp_id);
       $total_interest_loan = $this->queries->get_sum_loanwithdrawal_interest($comp_id);
       $privillage = $this->queries->get_position_empl($empl_id);
       $manager = $this->queries->get_position_manager($empl_id);
+
+      if ($position === 'LOAN OFFICER') {
+    
+        $disburse_grouped = $this->queries->get_grouped_withdrawal_officertodayBlanch($blanch_id, $empl_id);
+      
+        // echo "<pre>";get_cash_transaction_by_officer($empl_id, $blanch_id)
+        // print_r( $lipwa);
+        //     exit();
+    
+    } elseif ($position === 'BRANCH MANAGER') {
+      
+      $disburse_grouped = $this->queries->get_grouped_withdrawal_todayBlanch($blanch_id);
+        
+    
+    } else {
+      $disburse_grouped=0;
+    }
   
       $this->load->view('officer/loan_withdrawal', [
           'disburse_grouped' => $disburse_grouped,
