@@ -88,8 +88,17 @@
 						                  </thead>
 			
 								    <tbody>
-                                        
-									<?php foreach($disburse as $loan_aproveds): ?>
+									<?php
+$total_loan_aprove = 0;
+$total_loan_int = 0;
+$total_restoration = 0;
+?>
+									<?php foreach($disburse as $loan_aproveds): 
+    $total_loan_aprove += $loan_aproveds->loan_aprove;
+    $total_loan_int += $loan_aproveds->loan_int;
+    $total_restoration += $loan_aproveds->restration;
+?>
+
 									          <tr>
 				  					<td><?php echo $loan_aproveds->f_name; ?> <?php echo substr($loan_aproveds->m_name, 0,1); ?> <?php echo $loan_aproveds->l_name; ?></td>
 				  					<td><?php echo $loan_aproveds->blanch_name; ?></td>
@@ -312,26 +321,25 @@
                        <?php endforeach; ?>
 									
 	                </tbody>
-	                <tfoot>
-                    <tr>
-                                       <th><b>TOTAL</b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-										<!-- <th><b><?php //echo number_format($total_loanDis->total_loan); ?></b></th> -->
-										<th><b></b></th>
-										<th><b><?php echo number_format($total_loanDis->total_loan); ?></b></th>
-										<th><b><?php echo number_format($total_interest_loan->total_loan_int); ?></b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-										<th><b></b></th>
-									
-                    </tr>
-                   </tfoot>
+					<tfoot>
+    <tr>
+        <th><b>TOTAL</b></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><b><?= number_format($total_loan_aprove) ?></b></th>
+        <th><b><?= number_format($total_loan_int) ?></b></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><b><?= number_format($total_restoration) ?></b></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+</tfoot>
+
                    </table>
 		<!--end: Datatable -->
 	</div>
