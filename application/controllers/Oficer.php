@@ -77,7 +77,7 @@ class Oficer extends CI_Controller{
     $blanch_amount_balance = $this->queries->get_blanch_capital_data($blanch_id);
     
       // echo "<pre>";
-      // print_r($pending_customer);
+      // print_r( $empl_data);
       //     exit();
     
     if ($position === 'LOAN OFFICER') {
@@ -128,6 +128,7 @@ class Oficer extends CI_Controller{
     'new_customer'=>$new_customer,
     'disbursed_customer'=>$disbursed_customer,
     'approved_customer'=>$approved_customer,
+    'empl_data'=>$empl_data,
     'lipwa'=>$lipwa,
     'done_customer'=>$done_customer,
     'total_customers' =>  $total_customers,
@@ -2978,38 +2979,40 @@ $this->loan_application();
     }
 
 
-      public function aprove_loan($loan_id){
-            //Prepare array of user data
-            $this->db->where('loan_id', $loan_id);
-		        $this->db->delete('tbl_outstand');
-
-        $this->load->helper('string');
-        $day = date('Y-m-d H:i');
-            $data = array(
-            'loan_aprove'=> $this->input->post('loan_aprove'),
-            'penat_status'=> $this->input->post('penat_status'),
-            'empl_id'=> $this->input->post('empl_id'),
-            'loan_status'=> 'aproved',
-            'loan_day' => $day,
-            'code' => random_string('numeric',4),
-           
-            );
-            //   echo "<pre>";
-            // print_r($data);
-            //  echo "</pre>";
-            //   exit();
-            
-            //Pass user data to model
-           $this->load->model('queries'); 
-            $data = $this->queries->update_status($loan_id,$data);
-            
-            //Storing insertion status message.
-            if($data){
-                $this->session->set_flashdata('massage','Loan Approved successfully');
-            }else{
-                $this->session->set_flashdata('error','Data failed!!');
-            }
-            return redirect('oficer/loan_pending');
+    public function aprove_loan($loan_id){
+      $this->load->helper('string');
+      $this->load->model('queries');
+    
+      // Delete existing records for the loan_id from tbl_outstand
+      $this->db->where('loan_id', $loan_id);
+      $this->db->delete('tbl_outstand');
+    
+      // Get current datetime
+      $day = date('Y-m-d H:i');
+    
+      // Get current approver's name from session
+      $approved_by = isset($_SESSION['empl_name']) ? $_SESSION['empl_name'] : 'Unknown';
+    
+      // Prepare data for update
+      $data = array(
+        'loan_aprove'   => $this->input->post('loan_aprove'),
+        'penat_status'  => $this->input->post('penat_status'),
+        'loan_status'   => 'aproved',
+        'loan_day'      => $day,
+        'code'          => random_string('numeric',4),
+        'approved_by'   => $approved_by, // <== NEW LINE
+      );
+    
+      // Update loan record
+      $updated = $this->queries->update_status($loan_id, $data);
+    
+      if ($updated) {
+        $this->session->set_flashdata('massage', 'Loan Approved successfully');
+      } else {
+        $this->session->set_flashdata('error', 'Data failed!!');
+      }
+    
+      return redirect('admin/loan_pending');
     }
 
 
@@ -4980,6 +4983,7 @@ public function create_withdrow_balance($customer_id){
           $customer_data = $this->queries->get_customerData($customer_id);
           $phone = $customer_data->phone_no;
           $old_balance = $datas_balance->balance;
+          $branch_name =$customer_data->blanch_name;
           $balance = $old_balance;
           $with_balance = $balance - $new_balance; 
 
@@ -4992,13 +4996,25 @@ public function create_withdrow_balance($customer_id){
           $remain_balance = $balance;
           $today = date("Y-m-d H:i");
 
-          $sms = 'Tsh.'.$remain_balance.' Imetolewa kwenye Acc Yako ' . $loan_codeID .' Tarehe '.$today;
-          $massage = $sms;
-          $phone = $phones;
-              // print_r($massage);
-              //    echo "<br>";
-              // print_r($phone);
-              //           exit();
+          
+          $company_name = $company_data->comp_name;
+          $amount       = number_format($remain_balance, 0);
+          $today        = date('Y-m-d');
+          
+        //   $massage = "Habari $full_name, umepokea Tsh $amount kutoka $company_name tarehe $today. Tunakutakia urejeshaji mwema wa mkopo. Asante kwa kutumia huduma zetu.";
+        $massage = "Habari! Ombi la mkopo wa tsh $amount katika tawi la $branch_name kwa $full_name mwenye namba $phone limeidhinishwa na Manager $day_loan->approved_by .Ahsante.";
+    
+        // List of phone numbers to notify
+        $numbers = [
+                   
+          '255629364847',     // Admin or officer 1
+          '255748470181'      // Admin or officer 2
+        ];
+        
+        // Send SMS to each number
+        foreach ($numbers as $phone) {
+          $this->sendsms($phone, $massage);
+        }
               
             @$check_deducted = $this->queries->get_deducted_blanch($blanch_id);
             $deducted = @$check_deducted->deducted;

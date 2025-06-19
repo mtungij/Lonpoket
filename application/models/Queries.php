@@ -906,11 +906,30 @@ public function get_monthly_received_loan($comp_id)
        }
 
 
-         public function get_DisbarsedLoan($comp_id){
-        //$date = date("Y-m-d");
-       	$loan = $this->db->query("SELECT * FROM tbl_loans l LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id  WHERE l.comp_id = '$comp_id' AND l.loan_status = 'disbarsed' ORDER BY l.loan_id DESC ");
-       	   return $loan->result();
-       }
+	   public function get_DisbarsedLoan($comp_id){
+		$loan = $this->db->query("
+			SELECT 
+				l.*, 
+				c.*, 
+				lt.*, 
+				b.*, 
+				s.*, 
+				e.empl_name AS created_by_name
+			FROM 
+				tbl_loans l 
+			LEFT JOIN tbl_customer c ON c.customer_id = l.customer_id 
+			LEFT JOIN tbl_loan_category lt ON lt.category_id = l.category_id 
+			LEFT JOIN tbl_blanch b ON b.blanch_id = l.blanch_id 
+			LEFT JOIN tbl_sub_customer s ON s.customer_id = l.customer_id 
+			LEFT JOIN tbl_employee e ON e.empl_id = l.created_by
+			WHERE 
+				l.comp_id = '$comp_id' 
+				AND l.loan_status = 'disbarsed' 
+			ORDER BY l.loan_id DESC
+		");
+		return $loan->result();
+	}
+	
 
 
 	   public function get_comp_withdrawal_Loan($comp_id){
@@ -3950,10 +3969,25 @@ return $data->row();
        }
 
 
-       public function get_customerData($customer_id){
-       	$customer = $this->db->query("SELECT * FROM tbl_customer WHERE customer_id = '$customer_id'");
-       	 return $customer->row();
-       }
+	   public function get_customerData($customer_id){
+		$customer = $this->db->query("
+			SELECT 
+				c.*, 
+				b.blanch_name 
+				
+			FROM 
+				tbl_customer c 
+			LEFT JOIN 
+				tbl_blanch b 
+				ON b.blanch_id = c.blanch_id
+			WHERE 
+				c.customer_id = '$customer_id'
+		");
+		return $customer->row();
+	}
+	
+	
+	
 
        public function get_comp_data($comp_id){
        	$data = $this->db->query("SELECT * FROM tbl_company WHERE comp_id = '$comp_id'");

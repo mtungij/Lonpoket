@@ -9,9 +9,11 @@ include_once APPPATH . "views/partials/officerheader.php";
         <!-- Section 1: Page Title / Subheader -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div>
-                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-200">
-				<b>Dashboard-Afisa</b> - <b><?php echo $manager_data->comp_name; ?></b> / <b><?php echo $manager_data->blanch_name; ?>
-                </h2>
+            <h1 class="text-xl font-semibold text-gray-800 dark:text-white">
+  Welcome <span class="font-bold text-blue-600">- <?= $empl_data->empl_name ?></span> / 
+  <span class="font-bold text-green-600"><?= $manager_data->blanch_name; ?></span>
+</h1>
+
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
 					</b> <?php //echo $_SESSION['empl_name']; ?>                </h3>
                 </p>

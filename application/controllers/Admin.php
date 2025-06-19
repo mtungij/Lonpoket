@@ -2157,28 +2157,34 @@ public function create_sponser($customer_id, $comp_id) {
 		$this->db->where('loan_id', $loan_id);
 		$this->db->delete('tbl_outstand');
 	
-		// Prepare array of user data
+		// Get current datetime
 		$day = date('Y-m-d H:i');
+	
+		// Get current approver's name from session
+		$approved_by = isset($_SESSION['empl_name']) ? $_SESSION['empl_name'] : 'Unknown';
+	
+		// Prepare data for update
 		$data = array(
-			'loan_aprove'=> $this->input->post('loan_aprove'),
-			'penat_status'=> $this->input->post('penat_status'),
-			'loan_status'=> 'aproved',
-			'loan_day' => $day,
-			'code' => random_string('numeric',4),
+			'loan_aprove'   => $this->input->post('loan_aprove'),
+			'penat_status'  => $this->input->post('penat_status'),
+			'loan_status'   => 'aproved',
+			'loan_day'      => $day,
+			'code'          => random_string('numeric',4),
+			'approved_by'   => $approved_by, // <== NEW LINE
 		);
 	
-		// Update loan status
+		// Update loan record
 		$updated = $this->queries->update_status($loan_id, $data);
 	
-		// Flash message
-		if($updated){
-			$this->session->set_flashdata('massage','Loan Approved successfully');
+		if ($updated) {
+			$this->session->set_flashdata('massage', 'Loan Approved successfully');
 		} else {
-			$this->session->set_flashdata('error','Data failed!!');
+			$this->session->set_flashdata('error', 'Data failed!!');
 		}
 	
 		return redirect('admin/loan_pending');
 	}
+	
 	
 
 	
@@ -3367,7 +3373,8 @@ public function create_withdrow_balance($customer_id){
 		//   exit();
           //admin role
           $role = $empl_data->empl_name;
-             
+        //        print_r( $blanch_capital);
+		//   exit();
 		  $datas_balance = $this->queries->get_remainbalance($customer_id);
 		  $customer_data = $this->queries->get_customerData($customer_id);
 		//   	  print_r(  $customer_data);
@@ -3376,7 +3383,7 @@ public function create_withdrow_balance($customer_id){
 		  $first_name= $customer_data->f_name;
 		  $middle_name =$customer_data->m_name;
 		  $last_name= $customer_data->l_name;
-
+         $branch_name =$customer_data->blanch_name;
 
 		  $full_name = ucwords(trim("{$first_name} {$middle_name} {$last_name}"));
 		  $old_balance = $datas_balance->balance;
@@ -3396,9 +3403,21 @@ public function create_withdrow_balance($customer_id){
 		  $amount       = number_format($remain_balance, 0);
 		  $today        = date('Y-m-d');
 		  
-		  $massage = "Habari $full_name, umepokea Tsh $amount kutoka $company_name tarehe $today. Tunakutakia urejeshaji mwema wa mkopo. Asante kwa kutumia huduma zetu.";
-         
-          $this->sendsms($phone,$massage);
+		//   $massage = "Habari $full_name, umepokea Tsh $amount kutoka $company_name tarehe $today. Tunakutakia urejeshaji mwema wa mkopo. Asante kwa kutumia huduma zetu.";
+		$massage = "Habari! Ombi la mkopo wa tsh $amount katika tawi la $branch_name kwa $full_name mwenye namba $phone limeidhinishwa na Manager $day_loan->approved_by .Ahsante.";
+
+		// List of phone numbers to notify
+		$numbers = [
+			         
+			'255629364847',     // Admin or officer 1
+			'255748470181'      // Admin or officer 2
+		];
+		
+		// Send SMS to each number
+		foreach ($numbers as $phone) {
+			$this->sendsms($phone, $massage);
+		}
+		
 
 		//sms counter function
           @$smscount = $this->queries->get_smsCountDate($comp_id);
