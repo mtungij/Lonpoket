@@ -3012,7 +3012,7 @@ $this->loan_application();
         $this->session->set_flashdata('error', 'Data failed!!');
       }
     
-      return redirect('admin/loan_pending');
+      return redirect('oficer/loan_pending');
     }
 
 
