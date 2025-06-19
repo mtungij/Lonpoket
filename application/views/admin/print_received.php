@@ -24,10 +24,17 @@
 <table  style="border: none">
 <tr style="border: none">
 <td style="border: none">
+<?php
+
+$logo_path = FCPATH . 'assets/img/cdclogo.png';
+$logo_url = 'file://' . $logo_path;
 
 
-<div style="width: 20%;">
-<img src="<?php echo base_url().'assets/img/'.$compdata->comp_logo ?>" style="width: 100px;height: 80px;">
+?>
+    <!-- Company Header -->
+  
+
+<img src="<?= $logo_url ?>" style="width: 100px;height: 80px;">
 </div> 
 
 </td>

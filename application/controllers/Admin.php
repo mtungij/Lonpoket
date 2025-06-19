@@ -5347,9 +5347,9 @@ public function previous_transfor(){
     
     $blanch_data = $this->queries->get_blanch_data($blanch_id);
     $empl_data = $this->queries->get_employee_data($empl_id);
-       //     echo "<pre>";
-       // print_r($data);
-       //        exit();
+           echo "<pre>";
+       print_r($data);
+              exit();
 
     $this->load->view('admin/previous_cash',['data'=>$data,'from'=>$from,'to'=>$to,'total_cashDepost'=>$total_cashDepost,'total_withdrawal'=>$total_withdrawal,'comp_id'=>$comp_id,'blanch'=>$blanch,'blanch_data'=>$blanch_data,'blanch_id'=>$blanch_id,'empl_data'=>$empl_data,'empl_id'=>$empl_id]);
     }
