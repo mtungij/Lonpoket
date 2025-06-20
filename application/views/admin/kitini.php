@@ -273,7 +273,7 @@ include_once APPPATH . "views/partials/header.php";
 
       <!-- Modal Body -->
     
-      <?php echo form_open("admin/prev_cashtransaction"); ?>
+      <?php echo form_open("admin/prev_kitini"); ?>
       <div class="p-4 overflow-y-auto">
         <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
           

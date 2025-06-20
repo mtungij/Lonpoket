@@ -6394,7 +6394,7 @@ public function get_remain_amount($loan_id) {
  	return $data->row();
  }
 
- public function get_grouped_payments_by_company($comp_id = null)
+ public function get_grouped_payments_by_company($comp_id = null, $from = null, $to = null)
  {
 	 $this->db->select('
 		 p.comp_id,
@@ -6417,7 +6417,12 @@ public function get_remain_amount($loan_id) {
 	 }
  
 	 // Filter for today
-	 $this->db->where('DATE(p.date_data)', date('Y-m-d'));
+	
+
+	 if ($from && $to) {
+        $this->db->where('DATE(p.date_data) >=', $from);
+        $this->db->where('DATE(p.date_data) <=', $to);
+    }
  
 	 $this->db->where('p.emply !=', 'SYSTEM WITHDRAWAL');
 	 $this->db->where('p.depost !=', 0);
