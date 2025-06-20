@@ -79,38 +79,42 @@ include_once APPPATH . "views/partials/header.php";
           <input type="hidden" name="employee_id" value="<?= htmlspecialchars($employee_id) ?>">
 
           <!-- Table / Permissions Grid -->
-          <?php foreach ($grouped_links as $group => $links): ?>
-            <h2 class="text-lg font-semibold mt-6 mb-2 text-gray-800 dark:text-gray-200">
-              <?= htmlspecialchars($group) ?>
-            </h2>
+          <h2 class="text-2xl font-bold mb-4 text-gray-700 dark:text-white">
+  Manage Permissions for: <?= htmlspecialchars($employee->empl_name ?? 'Unknown') ?>
+</h2>
 
-            <div class="grid sm:grid-cols-2 mt-1 gap-2">
-              <?php foreach ($links as $link): ?>
-                <?php $isChecked = in_array($link->id, $employee_links) ? 'checked' : ''; ?>
-                <label for="link_<?= $link->id ?>"
-                       class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus-within:border-blue-500 focus-within:ring-blue-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    id="link_<?= $link->id ?>"
-                    name="permissions[]"
-                    value="<?= $link->id ?>"
-                    class="permission-checkbox shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500"
-                    <?= $isChecked ?>
-                  >
-                  <span class="text-sm text-gray-700 ms-3 dark:text-gray-400">
-                    <?= htmlspecialchars($link->link_name, ENT_QUOTES, 'UTF-8') ?>
-                  </span>
-                </label>
-              <?php endforeach; ?>
-            </div>
-          <?php endforeach; ?>
+<form method="post" action="<?= base_url('admin/save_permissions/' . $employee_id); ?>">
+  <input type="hidden" name="employee_id" value="<?= $employee_id ?>">
 
-          <!-- Submit button -->
-          <div class="mt-6 px-6 pb-6">
-            <button type="submit"
-                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-              Update Permissions
-            </button>
+  <?php foreach ($grouped_links as $group => $links): ?>
+    <h3 class="text-lg font-semibold mt-6 mb-2 text-gray-800 dark:text-gray-200">
+      <?= htmlspecialchars($group) ?>
+    </h3>
+
+    <div class="grid sm:grid-cols-2 gap-2">
+      <?php foreach ($links as $link): ?>
+        <?php $isChecked = in_array($link->id, $employee_links) ? 'checked' : ''; ?>
+        <label for="link_<?= $link->id ?>" class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 cursor-pointer">
+          <input
+            type="checkbox"
+            id="link_<?= $link->id ?>"
+            name="permissions[]"
+            value="<?= $link->id ?>"
+            class="permission-checkbox shrink-0 mt-0.5 border-gray-300 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:checked:bg-blue-500"
+            <?= $isChecked ?>
+          >
+          <span class="ms-3 text-gray-700 dark:text-gray-300"><?= htmlspecialchars($link->link_name) ?></span>
+        </label>
+      <?php endforeach; ?>
+    </div>
+  <?php endforeach; ?>
+
+  <div class="mt-6">
+    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+      Update Permissions
+    </button>
+  </div>
+</form>
           </div>
 
         </div>

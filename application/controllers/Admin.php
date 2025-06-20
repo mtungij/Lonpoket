@@ -912,29 +912,27 @@ public function save_permissions($employee_id)
 public function manage($employee_id) {
     $this->load->model('queries');
 
-    // Get employee details
     $employee = $this->queries->get_employee_by_id($employee_id);
-
-    // Get all links and group them
     $all_links = $this->queries->get_all_links();
+    $employee_links = $this->queries->get_employee_link_ids($employee_id);
+
+    // Group links by group_name
     $grouped_links = [];
     foreach ($all_links as $link) {
-        $group = $link->controller ?? 'Others';
+        $group = $link->group_name ?? 'Others';
         $grouped_links[$group][] = $link;
     }
 
-    // Get employee's current permissions (link IDs)
-    $employee_links = $this->queries->get_employee_link_ids($employee_id);
-
     $data = [
         'employee_id'     => $employee_id,
-        'employee'        => $employee, // 👈 Pass employee object
+        'employee'        => $employee,
         'employee_links'  => $employee_links,
         'grouped_links'   => $grouped_links,
     ];
 
     $this->load->view('admin/manage_permissions', $data);
 }
+
 
 
 
