@@ -48,7 +48,7 @@ include_once APPPATH . "views/partials/header.php";
   <div class="flex flex-col">
     <div class="-m-1.5 overflow-x-auto">
       <div class="p-1.5 min-w-full inline-block align-middle">
-        <div class="bg-white border border-gray-200 rounded-xl shadow-2xs overflow-hidden dark:bg-gray-800 dark:border-gray-700">
+        <div class="bg-white border border-gray-200  w-full rounded-xl shadow-2xs overflow-hidden dark:bg-gray-800 dark:border-gray-700">
 
           <!-- Header -->
           <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
@@ -79,9 +79,7 @@ include_once APPPATH . "views/partials/header.php";
           <input type="hidden" name="employee_id" value="<?= htmlspecialchars($employee_id) ?>">
 
           <!-- Table / Permissions Grid -->
-          <h2 class="text-2xl font-bold mb-4 text-gray-700 dark:text-white">
-  Manage Permissions for: <?= htmlspecialchars($employee->empl_name ?? 'Unknown') ?>
-</h2>
+
 
 <form method="post" action="<?= base_url('admin/save_permissions/' . $employee_id); ?>">
   <input type="hidden" name="employee_id" value="<?= $employee_id ?>">
