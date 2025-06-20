@@ -407,9 +407,9 @@ $communication_submenu_active = is_submenu_active(['send_email']); // Assuming S
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/today_transactions') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/today_transactions"); ?>">Today Transaction</a></li>
                     <!-- </?php endif; ?>  -->
 
-                    <?php if (has_permission('Report ya Malipo Ya Wateja Kampuni nzima')): ?>
+                    
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/cash_transaction') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/kitini"); ?>">Kitini Report</a></li>
-                    <?php endif; ?> 
+                   
                     <?php if (has_permission('Ripoti ya Mikopo Kila Tawi')): ?>
                   <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <?php echo is_active_link('admin/today_receved_loan') ? 'text-cyan-600 dark:text-cyan-500' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-400 dark:hover:text-gray-300'; ?>" href="<?php echo base_url("admin/today_receved_loan"); ?>">General Collection Report</a></li> 
                   <?php endif; ?>
