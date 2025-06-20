@@ -78,6 +78,34 @@ public function get_position(){
 	 return $pos->result();
 }
 
+public function update_employee_links($employee_id, $link_ids)
+{
+    // Clear current permissions
+    $this->db->where('employee_id', $employee_id);
+    $this->db->delete('tbl_permission');
+
+    // Add selected ones
+    if (!empty($link_ids)) {
+        foreach ($link_ids as $link_id) {
+            $this->db->insert('tbl_permission', [
+                'employee_id' => $employee_id,
+                'link_id'     => $link_id
+            ]);
+        }
+    }
+}
+
+
+public function get_employee_link_ids($employee_id)
+{
+    $this->db->select('link_id');
+    $this->db->from('tbl_permission');
+    $this->db->where('employee_id', $employee_id);
+    $query = $this->db->get()->result();
+
+    return array_column($query, 'link_id'); // returns array of IDs
+}
+
 
 public function update_position($data,$position_id){
 	return $this->db->where('position_id',$position_id)->update('tbl_position',$data);
@@ -1723,6 +1751,30 @@ public function get_totalLoanout($customer_id){
 	   return $empl->row();
 	}
 
+	public function update_employee_permissions($employee_id, $new_permissions)
+{
+    // Delete all old permissions for employee
+    $this->db->where('employee_id', $employee_id);
+    $this->db->delete('tbl_permission');
+
+    // Insert new permissions
+    foreach ($new_permissions as $link_id) {
+        $this->db->insert('tbl_permission', [
+            'employee_id' => $employee_id,
+            'link_id' => $link_id,
+        ]);
+    }
+}
+
+public function get_employee_by_id($employee_id) {
+    return $this->db->get_where('tbl_employee', ['empl_id' => $employee_id])->row();
+}
+
+
+	public function get_employee_details($empl_id){
+		$empl = $this->db->query("SELECT * FROM tbl_employee WHERE empl_id = '$empl_id'");
+	   return $empl->row();
+	}
 	public function get_sponser($customer_id){
 		$sponser = $this->db->query("SELECT * FROM tbl_sponser WHERE customer_id = '$customer_id'");
 		  return $sponser->row();

@@ -357,23 +357,41 @@ $colour = $isOpen ? 'amber' : 'green';  // Tailwind colour family
 
         <?= $actionLabel ?>
       </a>
-    
-      <!-- grant access option (always shown) -->
-      <div class="py-2 first:pt-0 last:pb-0">
-        <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-blue-600 hover:bg-blue-50 focus:ring-2 focus:ring-blue-500 dark:text-blue-400 dark:hover:bg-gray-700"
-           href="<?= base_url("admin/privillage/{$employees->empl_id}"); ?>">
-          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="7.5" cy="6.5" r="3"/>
-            <path d="M2 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>
-            <rect x="14" y="11" width="8" height="8" rx="1.5"/>
-            <path d="M16 11v-2a3 3 0 0 1 6 0v2"/>
-            <circle cx="18" cy="15" r="1"/>
-          </svg>
-          User Access
-        </a>
-      </div>
+
+      <?php if ($employees->position_id == 22): ?>
+  <!-- grant access option (always shown) -->
+  <div class="py-2 first:pt-0 last:pb-0">
+    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-blue-600 hover:bg-blue-50 focus:ring-2 focus:ring-blue-500 dark:text-blue-400 dark:hover:bg-gray-700"
+       href="<?= base_url("admin/manage/{$employees->empl_id}"); ?>">
+      <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="7.5" cy="6.5" r="3"/>
+        <path d="M2 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>
+        <rect x="14" y="11" width="8" height="8" rx="1.5"/>
+        <path d="M16 11v-2a3 3 0 0 1 6 0v2"/>
+        <circle cx="18" cy="15" r="1"/>
+      </svg>
+      User Preveldeges
+    </a>
+  </div>
+<?php else: ?>
+  <div class="py-2 first:pt-0 last:pb-0">
+    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-blue-600 hover:bg-blue-50 focus:ring-2 focus:ring-blue-500 dark:text-blue-400 dark:hover:bg-gray-700"
+       href="<?= base_url("admin/privillage/{$employees->empl_id}"); ?>">
+      <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="7.5" cy="6.5" r="3"/>
+        <path d="M2 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>
+        <rect x="14" y="11" width="8" height="8" rx="1.5"/>
+        <path d="M16 11v-2a3 3 0 0 1 6 0v2"/>
+        <circle cx="18" cy="15" r="1"/>
+      </svg>
+      User Access
+    </a>
+  </div>
+<?php endif; ?>
 
 
       <div class="py-2 first:pt-0 last:pb-0">

@@ -884,6 +884,72 @@ public function store_link()
 	}
 
 
+// 	public function manage($employee_id)
+// {
+//     $this->load->model('queries');
+
+//     $data['employee_id'] = $employee_id;
+//     $data['all_links'] = $this->queries->get_all_links();
+//     $data['employee_links'] = $this->queries->get_employee_link_ids($employee_id); // Returns array of link IDs
+
+//     $this->load->view('admin/manage_permissions', $data);
+// }
+
+public function save_permissions($employee_id)
+{
+    $this->load->model('queries');
+
+    // Get posted permissions (array of link ids)
+    $new_permissions = $this->input->post('permissions') ?? [];
+
+    // Update employee permissions in DB (delete old and insert new)
+    $this->queries->update_employee_permissions($employee_id, $new_permissions);
+
+    $this->session->set_flashdata('success', 'Permissions updated successfully!');
+    redirect('admin/manage/' . $employee_id);
+}
+
+public function manage($employee_id) {
+    $this->load->model('queries');
+
+    // Get employee details
+    $employee = $this->queries->get_employee_by_id($employee_id);
+
+    // Get all links and group them
+    $all_links = $this->queries->get_all_links();
+    $grouped_links = [];
+    foreach ($all_links as $link) {
+        $group = $link->controller ?? 'Others';
+        $grouped_links[$group][] = $link;
+    }
+
+    // Get employee's current permissions (link IDs)
+    $employee_links = $this->queries->get_employee_link_ids($employee_id);
+
+    $data = [
+        'employee_id'     => $employee_id,
+        'employee'        => $employee, // 👈 Pass employee object
+        'employee_links'  => $employee_links,
+        'grouped_links'   => $grouped_links,
+    ];
+
+    $this->load->view('admin/manage_permissions', $data);
+}
+
+
+
+
+public function update()
+{
+    $employee_id = $this->input->post('employee_id');
+    $selected_links = $this->input->post('link_ids'); // array
+
+    $this->load->model('queries');
+    $this->queries->update_employee_links($employee_id, $selected_links);
+
+    $this->session->set_flashdata('success', 'Permissions updated successfully');
+    redirect('admin/manage/' . $employee_id);
+}
 
 	public function all_employee(){
 		$this->load->model('queries');
@@ -891,10 +957,10 @@ public function store_link()
 		$all_employee = $this->queries->get_Allemployee($comp_id);
 		$blanch = $this->queries->get_blanch($comp_id);
 		$position = $this->queries->get_position();
-		  //    echo "<pre>";
-		  // print_r($data);
-		  //  echo "</pre>";
-		  //      exit();
+		//      echo "<pre>";
+		//   print_r($position);
+		//    echo "</pre>";
+		//        exit();
 		$this->load->view('admin/all_employee',['all_employee'=>$all_employee,'blanch'=>$blanch,'position'=>$position]);
 	}
 
