@@ -458,75 +458,39 @@ if (!empty($customer_loan_status)) {
 
     <!-- Total Withdraw -->
     <div class="sm:col-span-6">
-      <label for=depost" class="block text-sm font-medium mb-2 dark:text-gray-300">
+      <label for="depost" class="block text-sm font-medium mb-2 dark:text-gray-300">
         * Weka:
       </label>
-      <input type="text" id=depost" name="depost"
-  class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-  required>
-
+      <input type="text" id="depost" name="depost"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
+        required>
     </div>
 
     <!-- Payment Method -->
-  
     <div class="sm:col-span-6">
-  <label for="p_method" class="block text-sm font-medium mb-2 dark:text-gray-300">
-    * Njia Za Malipo:
-  </label>
-  <select id="p_method" name="p_method"
-    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600"
-    onchange="handlePaymentChange(this)">
-    <option value="">Chagua Malipo</option>
-    <?php foreach ($acount as $acounts): ?>
-      <option value="<?= $acounts->trans_id; ?>" data-label="<?= strtolower(trim($acounts->account_name)); ?>">
-        <?= $acounts->account_name; ?>
-      </option>
-    <?php endforeach; ?>
-  </select>
-  <!-- Hidden field to pass label to PHP -->
+      <label for="p_method" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Njia Za Malipo:
+      </label>
+      <select id="p_method" name="p_method"
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600"
+        onchange="handlePaymentChange(this)">
+        <option value="">Chagua Malipo</option>
+        <?php foreach ($acount as $acounts): ?>
+          <option value="<?= $acounts->trans_id; ?>" data-label="<?= strtolower(trim($acounts->account_name)); ?>">
+            <?= $acounts->account_name; ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
-</div>
-
-
-
+    <!-- Wakala Field -->
     <div class="sm:col-span-6" id="wakala_field" style="display:none;">
-  <label for="wakala_name" class="block text-sm font-medium mb-2 dark:text-gray-300">
-    * Jina la Wakala:
-  </label>
-  <input type="text" id="wakala_name" name="wakala_name" 
-    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600">
-</div>
-
-
-
-
- 
-
-    <!-- <div class="sm:col-span-6">
-    </?php if ($customer_loan->loan_status == 'withdrawal') { ?>
-        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
-        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-               value="</?php echo number_format($total_recovery->total_pending, 2); ?>" 
-               readonly style="color:red"> 
-
-    </?php } elseif ($customer_loan->loan_status == 'out') { ?>
-        <span style="color:red;">Default Amount</span>
-        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-               value="</?php echo number_format($out_stand->total_out, 2); ?>" 
-               readonly style="color:red"> 
-
-    </?php } else { ?>
-        <label for="pending" class="block text-sm font-medium mb-2 dark:text-gray-300">Recovery Amount</label>
-        <input type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-                value="</?php echo number_format($total_recovery->pending, 2); ?>"
-               readonly style="color:red"> 
-    </?php } ?>
-</div> -->
-
-
-
- 
-
+      <label for="wakala_name" class="block text-sm font-medium mb-2 dark:text-gray-300">
+        * Jina la Wakala:
+      </label>
+      <input type="text" id="wakala_name" name="wakala_name" 
+        class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600">
+    </div>
 
     <!-- Date -->
     <div class="sm:col-span-6">
@@ -536,20 +500,17 @@ if (!empty($customer_loan_status)) {
       <input type="date" id="deposit_date" name="deposit_date"
         value="<?= date('Y-m-d'); ?>"
         class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-        readonly>
+        required>
     </div>
-
-    <!-- Code -->
-   
 
   </div>
 
   <!-- Hidden Inputs -->
   <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id">
-                    <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
-                    <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
-                    <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
-                     <input type="hidden" value="LOAN RETURN" name="description">
+  <input type="hidden" value="<?php echo $customer->comp_id; ?>" name="comp_id">
+  <input type="hidden" value="<?php echo $customer->blanch_id; ?>" name="blanch_id">
+  <input type="hidden" value="<?php echo $customer_loan->loan_id; ?>" name="loan_id">
+  <input type="hidden" value="LOAN RETURN" name="description">
 
   <!-- Action Buttons -->
   <div class="mt-6 flex justify-end items-center gap-x-2">
@@ -559,7 +520,6 @@ if (!empty($customer_loan_status)) {
     <button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Weka</button>
   </div>
 </div>
-
 <?php echo form_close(); ?>
 
     </div>
@@ -638,6 +598,25 @@ include_once APPPATH . "views/partials/footer.php";
 </style> 
 
 <script>
+  const depostInput = document.getElementById('depost');
+
+  // Format with commas while typing
+  depostInput.addEventListener('input', function (e) {
+    let value = e.target.value.replace(/,/g, '').replace(/[^\d.]/g, '');
+    if (value) {
+      const parts = value.split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      e.target.value = parts.join('.');
+    }
+  });
+
+  // Remove commas before form submission
+  depostInput.form.addEventListener('submit', function () {
+    depostInput.value = depostInput.value.replace(/,/g, '');
+  });
+</script>
+
+<script>
 $(document).ready(function () {
     const selectConfig = {
         placeholder: "Select",
@@ -708,6 +687,8 @@ function getAge(dob) {
 }
 
 </script>
+
+
 
 
 

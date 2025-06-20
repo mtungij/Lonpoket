@@ -478,6 +478,21 @@ public function get_monthly_received_loan($comp_id)
 	return $customer->result(); 
 	}
 
+	public function get_allcutomerofficerData($blanch_id, $empl_id)
+{
+    $customer = $this->db->query("
+        SELECT * FROM tbl_customer c  
+        LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id 
+        LEFT JOIN tbl_account_type at ON at.account_id = sc.account_id 
+        LEFT JOIN tbl_blanch b ON b.blanch_id = c.blanch_id 
+        WHERE c.blanch_id = '$blanch_id' AND c.empl_id = '$empl_id' 
+        ORDER BY c.customer_id DESC
+    "); 
+
+    return $customer->result(); 
+}
+
+
 	public function get_allcutomerblanchData_by_officer($blanch_id, $empl_id){
 		$customer = $this->db->query("
 			SELECT * 

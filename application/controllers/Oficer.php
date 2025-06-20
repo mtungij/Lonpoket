@@ -2108,6 +2108,7 @@ public function upadate_customer($customer_id){
 }
 
 public function loan_application(){
+  $position = strtoupper(trim($this->session->userdata('position_name')));
     $this->load->model('queries');
     $blanch_id = $this->session->userdata('blanch_id');
     $empl_id = $this->session->userdata('empl_id');
@@ -2116,10 +2117,18 @@ public function loan_application(){
     $company_data = $this->queries->get_companyData($comp_id);
     $blanch_data = $this->queries->get_blanchData($blanch_id);
     $empl_data = $this->queries->get_employee_data($empl_id);
-
-    $customer = $this->queries->get_allcutomerblanchData($blanch_id);
+    
+   
     $privillage = $this->queries->get_position_empl($empl_id);
     $manager = $this->queries->get_position_manager($empl_id);
+    if (strtoupper($position) === 'LOAN OFFICER') {
+        $customer = $this->queries->get_allcutomerofficerData($blanch_id, $empl_id);
+    } elseif ($position === 'BRANCH MANAGER') {
+      $customer = $this->queries->get_allcutomerblanchData($blanch_id);
+    } else {
+        $customer = []; // fallback: empty list
+    }
+    
       //   echo "<pre>";
       // print_r($customer);
       //      exit();
