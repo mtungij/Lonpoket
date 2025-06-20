@@ -38,14 +38,22 @@ include_once APPPATH . "views/partials/header.php";
   </div>
   
 </div>
-<?php if (isset($from) && isset($to)): ?>
+<?php 
+  if (!empty($from) && !empty($to) && strtotime($from) !== false && strtotime($to) !== false): 
+?>
   <div class="mb-4 p-4 bg-gray-100 rounded-md shadow-sm">
     <strong>Showing payments from:</strong>
     <span class="text-green-600 font-semibold"><?php echo date("d M Y", strtotime($from)); ?></span>
     to
     <span class="text-green-600 font-semibold"><?php echo date("d M Y", strtotime($to)); ?></span>
   </div>
+<?php else: ?>
+  <div class="mb-4 p-4 bg-gray-100 rounded-md shadow-sm text-gray-600">
+    <strong>No date range selected. Showing all payments.</strong>
+  </div>
 <?php endif; ?>
+
+
 
           
   <!-- Search Input (Left) -->

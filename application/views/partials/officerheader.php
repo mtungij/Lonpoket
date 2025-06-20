@@ -48,7 +48,7 @@
 <body class="bg-gray-50 dark:bg-gray-900 font-poppins">
 <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.js"></script>
   
-  <!-- <?php include_once APPPATH . 'views/partials/navbar.php'; ?> -->
+  <!-- <?php include_once APPPATH . 'views/partials/navbarofficer.php'; ?> -->
 
   <!-- ========== MAIN CONTENT ========== -->
   <!-- Breadcrumb -->

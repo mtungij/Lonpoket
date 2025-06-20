@@ -114,19 +114,19 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Company Name</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control" name="comp_name" type="text" value="<?php echo $comp_data->comp_name; ?>">
+                                            <input readonly class="form-control" name="comp_name" type="text" value="<?php echo $comp_data->comp_name; ?>">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Company Registration No.</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control" name="comp_number" type="number" value="<?php echo $comp_data->comp_number; ?>">
+                                            <input readonly class="form-control" name="comp_number" type="number" value="<?php echo $comp_data->comp_number; ?>">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Address</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control" name="adress" type="text" value="<?php echo $comp_data->adress; ?>">
+                                            <input readonly class="form-control" name="adress" type="text" value="<?php echo $comp_data->adress; ?>">
                                            
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                                                <input type="number" name="comp_phone" class="form-control" value="<?php echo $comp_data->comp_phone; ?>" placeholder="Phone" aria-describedby="basic-addon1">
+                                                <input readonly type="number" name="comp_phone" class="form-control" value="<?php echo $comp_data->comp_phone; ?>" placeholder="Phone" aria-describedby="basic-addon1">
                                             </div>
                                             
                                         </div>
@@ -145,21 +145,11 @@
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                                                <input type="email" name="comp_email" class="form-control" value="<?php echo $comp_data->comp_email; ?>" placeholder="Email" aria-describedby="basic-addon1">
+                                                <input readonly type="email" name="comp_email" class="form-control" value="<?php echo $comp_data->comp_email; ?>" placeholder="Email" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group form-group-last row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Region</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                           <select type="number" name="region_id" class="form-control">
-                                           	<option value="<?php echo $comp_data->region_id; ?>"><?php echo $comp_data->region_name; ?></option>
-                                           	<?php foreach ($region as $regions): ?>
-                                           	<option value="<?php echo $regions->region_id; ?>"><?php echo $regions->region_name; ?></option>
-                                           	<?php endforeach; ?>
-                                           </select>
-                                        </div>
-                                    </div>
+                                  
                                     <br>
                                     <div class="text-center">
                                     	  <button type="submit" class="btn btn-primary">Update</button>
