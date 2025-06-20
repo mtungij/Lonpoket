@@ -38,7 +38,14 @@ include_once APPPATH . "views/partials/header.php";
   </div>
   
 </div>
-
+<?php if (isset($from) && isset($to)): ?>
+  <div class="mb-4 p-4 bg-gray-100 rounded-md shadow-sm">
+    <strong>Showing payments from:</strong>
+    <span class="text-green-600 font-semibold"><?php echo date("d M Y", strtotime($from)); ?></span>
+    to
+    <span class="text-green-600 font-semibold"><?php echo date("d M Y", strtotime($to)); ?></span>
+  </div>
+<?php endif; ?>
 
           
   <!-- Search Input (Left) -->
@@ -84,20 +91,18 @@ include_once APPPATH . "views/partials/header.php";
 
    
 
+<a
+  href="<?php echo base_url("admin/print_kitini_transaction?from={$from}&to={$to}&representative=" . urlencode($representative)); ?>"
+  class="w-full md:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 rounded-lg"
+  target="_blank">
+  <span class="bg-cyan-200 p-1 rounded mr-2">
+    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M14 2H6a2 2 0 00-2 2v16c0 1.104.896 2 2 2h12a2 2 0 002-2V8l-6-6zM13 3.5L18.5 9H13V3.5zM10 14h1v4h-1v-4zm-2.5 0H9v1.5H8v.5h1v1H7.5V14zm7 0H15a1 1 0 110 2h-.5v2H13v-4z" />
+    </svg>
+  </span>
+  Print PDF
+</a>
 
-      <a
-        href="<?php echo base_url("admin/print_kitini"); ?>"
-        class="w-full md:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 rounded-lg focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:focus:ring-cyan-800" target="_blank"
-      >
-        <span class="bg-cyan-200 p-1 rounded mr-2">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path
-              d="M14 2H6a2 2 0 00-2 2v16c0 1.104.896 2 2 2h12a2 2 0 002-2V8l-6-6zM13 3.5L18.5 9H13V3.5zM10 14h1v4h-1v-4zm-2.5 0H9v1.5H8v.5h1v1H7.5V14zm7 0H15a1 1 0 110 2h-.5v2H13v-4z" />
-          </svg>
-        </span>
-        Print PDF
-      </a>
     </div>
   </div>
 
@@ -277,7 +282,11 @@ include_once APPPATH . "views/partials/header.php";
       <div class="p-4 overflow-y-auto">
         <div class="grid sm:grid-cols-12 gap-4 sm:gap-6">
           
-  
+        <?php
+      $date = date("Y-m-d");
+      $from = isset($from) ? $from : $date;
+      $to = isset($to) ? $to : $date;
+    ?>
 
           <!-- Date -->
           <?php $date = date("Y-m-d"); ?>

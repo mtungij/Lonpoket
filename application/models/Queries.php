@@ -6394,7 +6394,7 @@ public function get_remain_amount($loan_id) {
  	return $data->row();
  }
 
- public function get_grouped_payments_by_company($comp_id = null, $from = null, $to = null)
+ public function get_grouped_payments_by_company($comp_id = null, $from = null, $to = null, $representative = null)
  {
 	 $this->db->select('
 		 p.comp_id,
@@ -6416,13 +6416,14 @@ public function get_remain_amount($loan_id) {
 		 $this->db->where('p.comp_id', $comp_id);
 	 }
  
-	 // Filter for today
-	
-
-	 if ($from && $to) {
-        $this->db->where('DATE(p.date_data) >=', $from);
-        $this->db->where('DATE(p.date_data) <=', $to);
-    }
+	 if (!empty($from) && !empty($to)) {
+		 $this->db->where('DATE(p.date_data) >=', $from);
+		 $this->db->where('DATE(p.date_data) <=', $to);
+	 }
+ 
+	 if (!empty($representative)) {
+		 $this->db->where('p.emply', $representative); // <-- filter by representative
+	 }
  
 	 $this->db->where('p.emply !=', 'SYSTEM WITHDRAWAL');
 	 $this->db->where('p.depost !=', 0);
@@ -6433,9 +6434,8 @@ public function get_remain_amount($loan_id) {
 	 $query = $this->db->get();
 	 $result = $query->result();
  
-	 // Group data by employee, payment method, and representative
+	 // ---- Grouping logic stays unchanged ----
 	 $grouped = [];
- 
 	 foreach ($result as $row) {
 		 $empl_name = $row->empl_name ?? 'Unknown Employee';
 		 $method = $row->payment_method_name ?? 'Unknown Method';
@@ -6466,7 +6466,7 @@ public function get_remain_amount($loan_id) {
 		 ];
 	 }
  
-	 // Reformat grouped array to desired output
+	 // ---- Format grouped result ----
 	 $final_output = [];
 	 foreach ($grouped as $empl_data) {
 		 $methods = [];
