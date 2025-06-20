@@ -5138,13 +5138,16 @@ public function previous_transfor(){
 	 $empl_data = $this->queries->get_employee_data($empl_id);
 	 $representative = $empl_data ? $empl_data->empl_name : null;
  
-	 // Call function with representative name (and no date filters)
-	 $data['grouped_payments'] = $this->queries->get_grouped_payments_by_company($comp_id, null, null, $representative);
+	 // Default to today's date
+	 $today = date('Y-m-d');
  
-	 // ✅ Ensure these are passed to avoid "undefined variable" errors in view
+	 // Fetch data for today
+	 $data['grouped_payments'] = $this->queries->get_grouped_payments_by_company($comp_id, $today, $today, $representative);
+ 
+	 // Pass required data to view
 	 $data['representative'] = $representative;
-	 $data['from'] = '';  // Or use date('Y-m-d') if you want today as default
-	 $data['to'] = '';
+	 $data['from'] = $today;
+	 $data['to'] = $today;
  
 	 $this->load->view('admin/kitini', $data);
  }
