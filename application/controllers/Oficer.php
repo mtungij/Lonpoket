@@ -115,7 +115,7 @@ class Oficer extends CI_Controller{
       $disbursed_customer=0;
   }
     // echo "<pre>";
-    //   print_r( $new_customer);
+    //   print_r( $empl_data);
     //       exit();
 
 
@@ -1902,6 +1902,58 @@ public function customer(){
     }
 
 
+
+public function upload_passport()
+{
+    $image = $this->input->post('image');
+    $customer_id = $this->input->post('customer_id');
+
+    if (!$image || !$customer_id) {
+        echo "Missing image or customer ID.";
+        return;
+    }
+
+    // Fetch existing passport path
+    $this->db->select('passport');
+    $this->db->where('customer_id', $customer_id);
+    $query = $this->db->get('tbl_sub_customer');
+    $customer = $query->row();
+
+    $folderPath = './assets/uploads/';
+    if (!is_dir($folderPath)) {
+        mkdir($folderPath, 0755, true);
+    }
+
+    // Decode base64 image
+    $image_parts = explode(";base64,", $image);
+    $image_base64 = base64_decode($image_parts[1]);
+    $fileName = uniqid() . '.png';
+    $filePath = $folderPath . $fileName;
+
+    // Save new image
+    if (file_put_contents($filePath, $image_base64) === false) {
+        echo "Failed to save image.";
+        return;
+    }
+
+    // If customer had old image, delete it
+    if ($customer && !empty($customer->passport)) {
+        $oldImagePath = './' . $customer->passport; // full path
+        if (file_exists($oldImagePath)) {
+            unlink($oldImagePath);
+        }
+    }
+
+    // Update DB with new image path
+    $this->db->where('customer_id', $customer_id);
+    $this->db->update('tbl_sub_customer', ['passport' => 'assets/uploads/' . $fileName]);
+
+    echo "Passport image saved successfully.";
+}
+
+
+
+
     public function update_customerID($customer_id){
         if(!empty($_FILES['passport']['name'])){
                 $config['upload_path'] = 'assets/i/';
@@ -2173,7 +2225,9 @@ public function search_customer() {
   $this->db->delete('tbl_sponser');
 
   $customer = $this->queries->search_CustomerID($customer_id, $comp_id);
-
+  //  echo "<pre>";
+  //     print_r($customer);
+  //          exit();
   if (!$customer) {
       $this->session->set_flashdata('error', 'Mteja hakupatikana.');
       redirect('oficer/loan_application');

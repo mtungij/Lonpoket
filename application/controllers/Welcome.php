@@ -161,7 +161,7 @@ class Welcome extends CI_Controller {
 				}
 	
 			} else {
-				$this->session->set_flashdata('mass', $this->lang->line("invalid_account_menu"));
+				$this->session->set_flashdata('mass', "Your Phone number or password is invalid please try again");
 				return redirect("welcome/employee_login");
 			}
 	

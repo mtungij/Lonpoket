@@ -34,7 +34,12 @@ include_once APPPATH . "views/partials/header.php";
             <div class="w-full md:w-3/12 md:mx-2">
                 <div class="bg-white p-3 border-t-4 border-green-400">
                     <div class="image overflow-hidden">
-                        <img class="h-auto w-full mx-auto" src="<?= base_url('assets/img/customer21.png') ?>" alt="Customer Image">
+                    <?php if (!empty($data_customer->passport)): ?>
+                       <img class="h-auto w-full mx-auto" src="<?= base_url($data_customer->passport) ?>" alt="Customer Passport">
+                        <?php else: ?>
+                          <img class="h-auto w-full mx-auto" src="<?= base_url('assets/img/customer21.png') ?>" alt="Customer Image">
+                    <?php endif; ?>
+
                     </div>
                     <h1 class="text-green-500 font-bold text-xl leading-8 my-1 dark:text-neutral-900 text-center">
                         <?= strtoupper($customer->f_name) . " " . strtoupper($customer->m_name) . " " . strtoupper($customer->l_name) ?>
