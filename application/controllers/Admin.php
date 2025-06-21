@@ -5533,9 +5533,9 @@ public function print_kitini_transaction()
     
     $blanch_data = $this->queries->get_blanch_data($blanch_id);
     $empl_data = $this->queries->get_employee_data($empl_id);
-           echo "<pre>";
-       print_r($data);
-              exit();
+    //        echo "<pre>";
+    //    print_r($data);
+    //           exit();
 
     $this->load->view('admin/previous_cash',['data'=>$data,'from'=>$from,'to'=>$to,'total_cashDepost'=>$total_cashDepost,'total_withdrawal'=>$total_withdrawal,'comp_id'=>$comp_id,'blanch'=>$blanch,'blanch_data'=>$blanch_data,'blanch_id'=>$blanch_id,'empl_data'=>$empl_data,'empl_id'=>$empl_id]);
     }
@@ -5682,9 +5682,9 @@ public function print_kitini_transaction()
 		$lazo = $this->queries->get_today_expected_collections($comp_id);
 	
 	
-		   echo "<pre>";
-		  print_r($lazo);
-		      exit();
+		//    echo "<pre>";
+		//   print_r($lazo);
+		//       exit();
 		
 		$this->load->view('admin/loan_pending_yesterday',['blanch'=>$blanch,'new_pending'=>$new_pending,'total_pending_new'=>$total_pending_new,'old_newpend'=>$old_newpend,'pend'=>$pend]);
 		}
