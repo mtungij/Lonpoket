@@ -5894,48 +5894,46 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
 
     }
 
-   public function loan_pending_time(){
-    $position = strtoupper(trim($this->session->userdata('position_name')));
-    $this->load->model('queries');
-        $blanch_id = $this->session->userdata('blanch_id');
-        $empl_id = $this->session->userdata('empl_id');
-        $manager_data = $this->queries->get_manager_data($empl_id);
-        $comp_id = $manager_data->comp_id;
-        $company_data = $this->queries->get_companyData($comp_id);
-        $blanch_data = $this->queries->get_blanchData($blanch_id);
-        $empl_data = $this->queries->get_employee_data($empl_id);
-
-       $loan_pend = $this->queries->get_pending_reportLoanblanch($blanch_id);
-       $pend = $this->queries->get_sun_loanPendingBlanch($blanch_id);
-       $privillage = $this->queries->get_position_empl($empl_id);
-       $manager = $this->queries->get_position_manager($empl_id);
-
-      
-     
-       if ($position === 'LOAN OFFICER') {
-    
-        $loan_pendng_new = $this->queries->get_total_loan_pending_officer($blanch_id, $empl_id);
-       
-        // echo "<pre>";
-        // print_r($lipwa);
-        //     exit();
-    
-    } elseif ($position === 'BRANCH MANAGER') {
-      $loan_pending_new = $this->queries->get_total_loan_pending($blanch_id);
-      
-      $new_total_pending = $this->queries->get_total_pend_loan($blanch_id);
-        
-    
-    } else {
-        $total_customers = 0;
-        $new_loans = 0;
-        $done_customer=0;
-        $approved_customer = 0;
-        $disbursed_customer=0;
-    }
-    
-    $this->load->view('officer/loan_pending_time',['loan_pend'=>$loan_pend,'pend'=>$pend,'privillage'=>$privillage,'manager'=>$manager,'loan_pending_new'=>$loan_pending_new,'new_total_pending'=>$new_total_pending]);
-    }
+    public function loan_pending_time() {
+      $position = strtoupper(trim($this->session->userdata('position_name')));
+      $this->load->model('queries');
+  
+      $blanch_id = $this->session->userdata('blanch_id');
+      $empl_id = $this->session->userdata('empl_id');
+  
+      $manager_data = $this->queries->get_manager_data($empl_id);
+      $comp_id = $manager_data->comp_id;
+  
+      $company_data = $this->queries->get_companyData($comp_id);
+      $blanch_data = $this->queries->get_blanchData($blanch_id);
+      $empl_data = $this->queries->get_employee_data($empl_id);
+  
+      $loan_pend = $this->queries->get_pending_reportLoanblanch($blanch_id);
+      $pend = $this->queries->get_sun_loanPendingBlanch($blanch_id);
+      $privillage = $this->queries->get_position_empl($empl_id);
+      $manager = $this->queries->get_position_manager($empl_id);
+  
+  
+  
+      if ($position === 'LOAN OFFICER') {
+          $loan_pending_new = $this->queries->get_total_loan_pending_officer($blanch_id, $empl_id);
+          $new_total_pending = $this->queries->get_total_pend_officerloan($blanch_id, $empl_id);
+  
+      } elseif ($position === 'BRANCH MANAGER') {
+          $loan_pending_new = $this->queries->get_total_loan_pending($blanch_id);
+          $new_total_pending = $this->queries->get_total_pend_loan($blanch_id);
+      }
+  
+      $this->load->view('officer/loan_pending_time', [
+          'loan_pend' => $loan_pend,
+          'pend' => $pend,
+          'privillage' => $privillage,
+          'manager' => $manager,
+          'loan_pending_new' => $loan_pending_new,
+          'new_total_pending' => $new_total_pending
+      ]);
+  }
+  
 
      public function manager_loan_pending_time(){
     $this->load->model('queries');

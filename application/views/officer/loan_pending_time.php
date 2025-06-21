@@ -1,6 +1,6 @@
 <?php include('incs/header_1.php'); ?>
 <?php include('incs/side_1.php'); ?>
-<?php include('incs/subheader.php'); ?>
+<?php include('incs/subheader.php'); ?> 
 
 
                    <style>
@@ -95,40 +95,40 @@
 											    <th>Date</th> 
 				  						         </tr>
 						                  </thead>
-			
-								    <tbody>
-                                          <?php $no = 1; ?>
-									<?php foreach ($loan_pending_new as $loan_pends): ?>
-									          <tr>
-				  					<td><?php echo $no++; ?>.</td>
-				  					<!-- <td class="c"><?php //echo $loan_pends->blanch_name; ?> </td> -->
-				  					<td class="c">
-				  					   <?php echo $loan_pends->f_name; ?> <?php echo $loan_pends->m_name; ?> <?php echo $loan_pends->l_name; ?>
-				  					</td>
-				  					<td>
-				  						<?php echo $loan_pends->phone_no; ?>
-				  					</td>
-				  					<td><?php echo number_format($loan_pends->loan_int); ?></td> 
-				  					<td>
-				  						<?php if($loan_pends->day == '1'){ ?>
-				  							<?php echo "Daily"; ?>
-				  						<?php //echo $loan_pends->return_day; ?>
-				  						<?php }elseif ($loan_pends->day == '7'){
-				  							echo "Weekly";
-				  						 ?>
-				  						 <?php }elseif ($loan_pends->day == '30') {
-				  						 	echo "Monthly";
-				  						  ?>
-				  						  <?php } ?>
-				  							
-				  						</td> 
-				  					<td><?php echo number_format($loan_pends->total_pend); ?></td> 
-				  					 <td><?php echo $loan_pends->date; ?></td>  
-				  								  											  							
-                                   </tr>
-                      <?php endforeach; ?>
-									
-	                </tbody>
+										  <tbody>
+  <?php $no = 1; ?>
+
+  <?php if (!empty($loan_pending_new) && is_array($loan_pending_new)): ?>
+    <?php foreach ($loan_pending_new as $loan_pends): ?>
+      <tr>
+        <td><?php echo $no++; ?>.</td>
+        <td class="c">
+          <?php echo $loan_pends->f_name; ?> <?php echo $loan_pends->m_name; ?> <?php echo $loan_pends->l_name; ?>
+        </td>
+        <td><?php echo $loan_pends->phone_no; ?></td>
+        <td><?php echo number_format($loan_pends->loan_int); ?></td> 
+        <td>
+          <?php
+            if ($loan_pends->day == '1') {
+              echo "Daily";
+            } elseif ($loan_pends->day == '7') {
+              echo "Weekly";
+            } elseif ($loan_pends->day == '30') {
+              echo "Monthly";
+            }
+          ?>
+        </td> 
+        <td><?php echo number_format($loan_pends->total_pend); ?></td> 
+        <td><?php echo $loan_pends->date; ?></td>  
+      </tr>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <tr>
+      <td colspan="7" class="text-center text-danger">No pending loans found.</td>
+    </tr>
+  <?php endif; ?>
+</tbody>
+
 	                <tfoot>
                     <tr>
                     <th>TOTAL</th>

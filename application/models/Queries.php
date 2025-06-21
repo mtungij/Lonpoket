@@ -5875,6 +5875,19 @@ public function get_total_pend_loan($blanch_id){
 }
 
 
+public function get_total_pend_officerloan($blanch_id, $empl_id) {
+    $query = $this->db->query("
+        SELECT SUM(pt.total_pend) AS total_pending 
+        FROM tbl_pending_total pt
+        JOIN tbl_customer c ON c.customer_id = pt.customer_id
+        WHERE pt.blanch_id = ? AND c.empl_id = ?
+    ", array($blanch_id, $empl_id));
+
+    return $query->row();
+}
+
+
+
 public function get_total_loan_pendingComp($comp_id){
     $query = $this->db->query("
         SELECT * 
