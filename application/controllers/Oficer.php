@@ -6439,25 +6439,44 @@ $this->db->query("INSERT INTO tbl_outstand (`comp_id`,`loan_id`,`blanch_id`,`loa
     $this->load->view('officer/today_recevable',['today_recevable'=>$today_recevable,'rejesho'=>$rejesho,'empl_data'=>$empl_data,'privillage'=>$privillage,'manager'=>$manager]);
     }
 
-     public function today_receved_loan(){
+    public function today_receved_loan()
+    {
         $this->load->model('queries');
-    $blanch_id = $this->session->userdata('blanch_id');
-    $empl_id = $this->session->userdata('empl_id');
-    $manager_data = $this->queries->get_manager_data($empl_id);
-    $comp_id = $manager_data->comp_id;
-    $company_data = $this->queries->get_companyData($comp_id);
-    $blanch_data = $this->queries->get_blanchData($blanch_id);
-    $empl_data = $this->queries->get_employee_data($empl_id);
-
-    $received = $this->queries->get_today_received_loanBlanch($blanch_id);
-    $total_receved = $this->queries->get_sum_today_recevedBlanch($blanch_id);
-    $privillage = $this->queries->get_position_empl($empl_id);
-    $manager = $this->queries->get_position_manager($empl_id);
-          //   echo "<pre>";
+    
+        $blanch_id = $this->session->userdata('blanch_id');
+        $empl_id   = $this->session->userdata('empl_id');
+    
+        // Read filter inputs
+        $from_date   = $this->input->post('from') ?? date('Y-m-d');
+        $to_date     = $this->input->post('to') ?? date('Y-m-d');
+        $loan_status = $this->input->post('dep_status');
+    
+        // Get filtered data
+        $received = $this->queries->get_received_loanBlanch($blanch_id, $empl_id, $from_date, $to_date, $loan_status);
+    
+          //      echo "<pre>";
           // print_r($received);
-          //         exit();
-        $this->load->view('officer/today_received',['received'=>$received,'total_receved'=>$total_receved,'empl_data'=>$empl_data,'privillage'=>$privillage,'manager'=>$manager]);
+          //           exit();
+        // Other info
+        $manager_data = $this->queries->get_manager_data($empl_id);
+        $comp_id = $manager_data->comp_id;
+        $company_data = $this->queries->get_companyData($comp_id);
+        $blanch_data = $this->queries->get_blanchData($blanch_id);
+        $empl_data = $this->queries->get_employee_data($empl_id);
+        $privillage = $this->queries->get_position_empl($empl_id);
+        $manager = $this->queries->get_position_manager($empl_id);
+    
+        $this->load->view('officer/today_received', [
+            'received'     => $received,
+            'empl_data'    => $empl_data,
+            'privillage'   => $privillage,
+            'manager'      => $manager,
+            'from_date'    => $from_date,
+            'to_date'      => $to_date,
+            'loan_status'  => $loan_status
+        ]);
     }
+    
 
     public function manager_today_receved_loan(){
     $this->load->model('queries');

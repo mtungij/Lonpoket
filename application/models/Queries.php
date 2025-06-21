@@ -2881,11 +2881,36 @@ public function update_password_data($comp_id, $userdata)
     	return $data->result();
     }
 
-     public function get_today_received_loanBlanch($blanch_id){
-    $date = date("Y-m-d");
-    	$data = $this->db->query("SELECT * FROM tbl_depost p JOIN tbl_loans l ON l.loan_id = p.loan_id JOIN tbl_customer c ON c.customer_id = l.customer_id JOIN tbl_blanch b ON b.blanch_id = l.blanch_id LEFT JOIN tbl_account_transaction at ON at.trans_id = p.depost_method WHERE p.blanch_id = '$blanch_id' AND p.depost_day = '$date'");
-    	return $data->result();
-    }
+	public function get_received_loanBlanch($blanch_id, $empl_id = null, $from_date = null, $to_date = null, $loan_status = null)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_depost p');
+		$this->db->join('tbl_loans l', 'l.loan_id = p.loan_id');
+		$this->db->join('tbl_customer c', 'c.customer_id = l.customer_id');
+		$this->db->join('tbl_blanch b', 'b.blanch_id = l.blanch_id');
+		$this->db->join('tbl_account_transaction at', 'at.trans_id = p.depost_method', 'left');
+	
+		$this->db->where('p.blanch_id', $blanch_id);
+	
+		if (!empty($empl_id)) {
+			$this->db->where('p.empl_id', $empl_id);
+		}
+	
+		if (!empty($from_date) && !empty($to_date)) {
+			$this->db->where('DATE(p.depost_day) >=', $from_date);
+			$this->db->where('DATE(p.depost_day) <=', $to_date);
+		} else {
+			$this->db->where('DATE(p.depost_day)', date('Y-m-d'));
+		}
+	
+		if (!empty($loan_status)) {
+			$this->db->where('l.loan_status', $loan_status);
+		}
+	
+		return $this->db->get()->result();
+	}
+	
+
 
     public function get_sumReceived_amount($comp_id){
     	$date = date("Y-m-d");
