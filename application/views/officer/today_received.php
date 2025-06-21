@@ -104,10 +104,13 @@ include_once APPPATH . "views/partials/officerheader.php";
 
     <!-- Totals Row -->
     <tr class="bg-gray-100 dark:bg-gray-700 font-bold">
-        <td colspan="5" class="px-4 py-3 dark:text-white text-right">Total</td>
+        
+        <td colspan="4" class="px-4 py-3 dark:text-white text-right">Total</td>
+        <td></td>
         <td class="px-4 py-3 dark:text-white"><?= number_format($total_loan); ?></td>
+        <td></td>
         <td class="px-4 py-3 dark:text-white"><?= number_format($total_received); ?></td>
-        <td colspan="3"></td>
+        
     </tr>
 </tbody>
 
