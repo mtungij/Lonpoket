@@ -59,7 +59,8 @@ include_once APPPATH . "views/partials/header.php";
     <option value="<?= $customers->customer_id ?>">
         <?= strtoupper($customers->f_name . " " . $customers->m_name . " " . $customers->l_name); ?> /
         <?= strtoupper($customers->customer_code); ?> /
-        <?= strtoupper($customers->blanch_name); ?>
+        <?= strtoupper($customers->blanch_name); ?> /
+        <?= strtoupper($customers->empl_name); ?> 
     </option>
 <?php endforeach; ?>
     </select>

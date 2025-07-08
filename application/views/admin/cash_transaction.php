@@ -85,6 +85,7 @@ include_once APPPATH . "views/partials/header.php";
                         
             <th scope="col" class="px-4 py-3">S/No</th>
             <th scope="col" class="px-4 py-3">Jina La Mteja</th>
+            <th scope="col" class="px-4 py-3">Status</th>
             <th scope="col" class="px-4 py-3">Rejesho</th>
             <th scope="col" class="px-4 py-3">Lipwa</th>
             <th scope="col" class="px-4 py-3">Laza</th>
@@ -129,6 +130,16 @@ include_once APPPATH . "views/partials/header.php";
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <div class="flex items-center"><?= htmlspecialchars($item->full_name) ?></div>
                     </td>
+                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                        <?php if ($item->loan_status == 'withdrawal'): ?>
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Active</span>
+                        <?php elseif ($item->loan_status == 'out'): ?>
+                            <span class="bg-red-100 text-red-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Default</span>
+                        <?php else: ?>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><?= htmlspecialchars($item->loan_status) ?></span>
+                        <?php endif; ?>
+                     </td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= number_format($item->restration) ?></td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= number_format($item->depost) ?></td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $laza > 0 ? number_format($laza) : '-' ?></td>
@@ -145,7 +156,7 @@ include_once APPPATH . "views/partials/header.php";
     </tbody>
     <tfoot class="font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700">
         <tr>
-            <td colspan="2" class="px-4 py-3">JUMLA</td>
+            <td colspan="3" class="px-4 py-3">JUMLA</td>
             <td class="px-4 py-3"><?= number_format($total_restration) ?></td>
             <td class="px-4 py-3"><?= number_format($total_depost) ?></td>
             <td class="px-4 py-3"><?= number_format($total_laza) ?></td>

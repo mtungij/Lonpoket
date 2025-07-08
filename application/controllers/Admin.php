@@ -4006,9 +4006,9 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
             // print_r($new_balance);
             //       exit();
           if($amount_remain > $new_balance){
-          $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$new_balance,$group_id,$dep_id);
+          $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$new_balance,$group_id,$dep_id,$wakala_name);
           }elseif($amount_remain = $new_balance) {
-          $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$new_balance,$group_id,$dep_id);
+          $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$new_balance,$group_id,$dep_id,$wakala_name);
           }
 
           //$phone = '255'.substr($phones, 1,10);
@@ -4087,11 +4087,11 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
               
           if($amount_remain > $new_balance){
 
-         $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id);
+         $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id,$wakala_name);
           // print_r($comp_id);
           //         exit();
           }elseif($amount_remain = $new_balance) {
-          $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id);
+          $this->insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id,$wakala_name);
           }
           
           
@@ -4247,13 +4247,15 @@ public function insert_loan_lecordData($comp_id,$customer_id,$loan_id,$blanch_id
 
    public function insert_outstand_balance($comp_id,$blanch_id,$customer_id,$loan_id,$update_res,$group_id,$dep_id,$wakala_name){
 
-   	 $report_day = date("Y-m-d");
-    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`,`wakala_name`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$update_res','0','SYSTEM / DEFAULT LOAN RETURN','$report_day','$report_day','$group_id','$dep_id',$wakala_name)");
+$report_day = date("Y-m-d");
+$this->db->query("INSERT INTO tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`,`wakala_name`) 
+VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$update_res','0','SYSTEM / NJE YA MKATABA','$report_day','$report_day','$group_id','$dep_id','$wakala_name')");
+
    }
 
   public function insert_returnDescriptionData_report($comp_id,$blanch_id,$customer_id,$loan_id,$depost,$group_id,$dep_id,$wakala_name){
      $report_day = date("Y-m-d");
-    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`,`wakala_name`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$depost','0','SYSTEM / PENDING LOAN RETURN','$report_day','$report_day','$group_id','$dep_id','$wakala_name')");
+    $this->db->query("INSERT INTO  tbl_pay (`comp_id`,`blanch_id`,`customer_id`,`loan_id`,`withdrow`,`balance`,`description`,`date_data`,`auto_date`,`group_id`,`dep_id`,`wakala_name`) VALUES ('$comp_id','$blanch_id','$customer_id','$loan_id','$depost','0','SYSTEM / LAZO YA NYUMA','$report_day','$report_day','$group_id','$dep_id','$wakala_name')");
    }
 
      public function update_loan_pending_balance($loan_id,$deni_lipa){

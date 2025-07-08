@@ -78,6 +78,7 @@ $logo_url = 'file://' . $logo_path;
         <tr>
             <th>S/No</th>
             <th>Jina La Mteja</th>
+            <th>Loan Status</th>
             <th>Afisa</th>
             <th>Namba Ya Simu</th>
             <th>Mkopo</th>
@@ -119,6 +120,20 @@ $logo_url = 'file://' . $logo_path;
             <tr>
                 <td><?= $no++ ?>.</td>
                 <td><?= strtoupper(htmlspecialchars($item->full_name)) ?></td>
+               
+
+                <td>
+    <?php 
+        if ($item->loan_status == 'withdrawal') {
+            echo '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Active</span>';
+        } elseif ($item->loan_status == 'out') {
+            echo '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Nje Mkataba</span>';
+        } else {
+            echo '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-400 text-gray-500">Unknown</span>';
+        }
+    ?>
+</td>
+
                 <td><?= strtoupper(htmlspecialchars($item->empl_name)) ?></td>
                 <td>
                     <?php 
@@ -220,6 +235,61 @@ $logo_url = 'file://' . $logo_path;
         </tbody>
     </table>
 <?php endif; ?>
+
+<!-- ✅ Summary by Loan Status -->
+<h3>MUHTASARI WA MALIPO KWA STATUS</h3>
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>S/No</th>
+            <th>Loan Status</th>
+            <th>Idadi ya Wateja</th>
+            <th>Jumla ya Lipwa (TSh)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            $status_summary = [];
+
+            foreach ($lazo['details'] as $item) {
+                $status = $item->loan_status;
+
+                if (!isset($status_summary[$status])) {
+                    $status_summary[$status] = [
+                        'count' => 0,
+                        'total' => 0
+                    ];
+                }
+
+                $status_summary[$status]['count'] += 1;
+                $status_summary[$status]['total'] += $item->depost;
+            }
+
+            $sn = 1;
+            if (!empty($status_summary)):
+                foreach ($status_summary as $status => $data):
+                    // Convert status to human-friendly label
+                    if ($status == 'withdrawal') {
+                        $status_label = 'Active';
+                    } elseif ($status == 'out') {
+                        $status_label = 'Nje Mkataba';
+                    } else {
+                        $status_label = 'Disbursed';
+                    }
+        ?>
+            <tr>
+                <td><?= $sn++ ?>.</td>
+                <td><?= $status_label ?></td>
+                <td><?= $data['count'] ?></td>
+                <td><?= number_format($data['total']) ?></td>
+            </tr>
+        <?php endforeach; else: ?>
+            <tr>
+                <td colspan="4" style="text-align: center;">Hakuna malipo yaliyopatikana.</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
 
     
 </body>

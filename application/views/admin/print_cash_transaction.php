@@ -80,6 +80,7 @@ $logo_url = 'file://' . $logo_path;
             <th>Afisa</th>
             <th>Namba Ya Simu</th>
             <th>Mkopo</th>
+            <th>Status</th>
             <th>Product</th>
             <th>Muda</th>
             <th>Rejesho</th>
@@ -129,6 +130,17 @@ $logo_url = 'file://' . $logo_path;
                     ?>
                 </td>
                 <td><?= number_format($item->loan_amount) ?></td>
+                <td>
+                    <?php 
+                        if ($item->loan_status == 'withdrawal') {
+                            echo '<span style="color: green;">Active</span>';
+                        } elseif ($item->loan_status == 'out') {
+                            echo '<span style="color: red;">Default</span>';
+                        } else {
+                            echo '<span style="color: orange;">disbursed</span>';
+                        }
+                    ?>
+                </td>
                 <td><?= htmlspecialchars($item->loan_name) ?></td>
                 <td>
                     <?php 
@@ -221,5 +233,60 @@ $logo_url = 'file://' . $logo_path;
 <?php endif; ?>
 
     
+<!-- ✅ Summary by Loan Status -->
+<h3>MUHTASARI WA MALIPO KWA STATUS</h3>
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>S/No</th>
+            <th>Loan Status</th>
+            <th>Idadi ya Wateja</th>
+            <th>Jumla ya Lipwa (TSh)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            $status_summary = [];
+
+            foreach ($lazo['details'] as $item) {
+                $status = $item->loan_status;
+
+                if (!isset($status_summary[$status])) {
+                    $status_summary[$status] = [
+                        'count' => 0,
+                        'total' => 0
+                    ];
+                }
+
+                $status_summary[$status]['count'] += 1;
+                $status_summary[$status]['total'] += $item->depost;
+            }
+
+            $sn = 1;
+            if (!empty($status_summary)):
+                foreach ($status_summary as $status => $data):
+                    // Convert status to human-friendly label
+                    if ($status == 'withdrawal') {
+                        $status_label = 'Active';
+                    } elseif ($status == 'out') {
+                        $status_label = 'Default';
+                    } else {
+                        $status_label = 'Disbursed';
+                    }
+        ?>
+            <tr>
+                <td><?= $sn++ ?>.</td>
+                <td><?= $status_label ?></td>
+                <td><?= $data['count'] ?></td>
+                <td><?= number_format($data['total']) ?></td>
+            </tr>
+        <?php endforeach; else: ?>
+            <tr>
+                <td colspan="4" style="text-align: center;">Hakuna malipo yaliyopatikana.</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
 </body>
 </html>

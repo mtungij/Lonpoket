@@ -541,10 +541,24 @@ public function get_monthly_received_loan($comp_id)
 	  return $customer->result(); 
 	}
 
-		public function get_allcustomerDatagroup($comp_id){
-	$customer = $this->db->query("SELECT * FROM tbl_customer c  LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id LEFT JOIN tbl_account_type at ON at.account_id = sc.account_id LEFT JOIN tbl_blanch b ON b.blanch_id = c.blanch_id  WHERE c.comp_id = '$comp_id'  ORDER BY c.customer_id DESC");
-	  return $customer->result();  
-	}
+		public function get_allcustomerDatagroup($comp_id) {
+    $customer = $this->db->query("
+        SELECT 
+            c.*, 
+            sc.*, 
+            at.*, 
+            b.*, 
+            e.empl_name 
+        FROM tbl_customer c  
+        LEFT JOIN tbl_sub_customer sc ON sc.customer_id = c.customer_id 
+        LEFT JOIN tbl_account_type at ON at.account_id = sc.account_id 
+        LEFT JOIN tbl_blanch b ON b.blanch_id = c.blanch_id 
+        LEFT JOIN tbl_employee e ON e.empl_id = c.empl_id
+        WHERE c.comp_id = '$comp_id'  
+        ORDER BY c.customer_id DESC
+    ");
+    return $customer->result();  
+}
 
 
 
@@ -6766,6 +6780,7 @@ public function get_today_expected_collections($comp_id)
     // Get detailed loan and payment info with one row per loan
     $this->db->select("
         l.loan_id,
+		l.loan_status,
         l.customer_id,
         l.day,
         l.session,
@@ -6898,6 +6913,7 @@ public function managerexpected_collections($blanch_id)
     // Get detailed loan and payment info with one row per loan
     $this->db->select("
         l.loan_id,
+		l.loan_status,
         l.customer_id,
         l.day,
         l.session,
@@ -7002,6 +7018,7 @@ public function get_today_offficerexpected_collections($blanch_id, $empl_id)
     // Get detailed loan and payment info with one row per loan
     $this->db->select("
         l.loan_id,
+		l.loan_status,
         l.customer_id,
         l.day,
         l.session,

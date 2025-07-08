@@ -138,6 +138,7 @@ if ($position === 'LOAN OFFICER'): ?>
         <tr>
             <th scope="col" class="px-4 py-3">S/No</th>
             <th scope="col" class="px-4 py-3">Jina La Mteja</th>
+            <th>Status</th>
             <th scope="col" class="px-4 py-3">Rejesho</th>
             <th scope="col" class="px-4 py-3">Lipwa</th>
             <th scope="col" class="px-4 py-3">Laza</th>
@@ -178,6 +179,18 @@ if ($position === 'LOAN OFFICER'): ?>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <div class="flex items-center"><?= htmlspecialchars($item->full_name) ?></div>
                     </td>
+                      <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                        <?php if ($item->loan_status == 'withdrawal'): ?>
+                            
+                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-blue-600 text-blue-600 dark:text-blue-500">Active</span>
+                        <?php elseif ($item->loan_status == 'out'): ?>
+                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Default</span>
+
+                        <?php else: ?>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900 dark:text-white">Unknown</span>
+                        <?php endif; ?>
+                      </td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= number_format($item->restration) ?></td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= number_format($item->depost) ?></td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $laza > 0 ? number_format($laza) : '-' ?></td>

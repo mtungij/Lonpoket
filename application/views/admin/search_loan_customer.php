@@ -74,11 +74,11 @@ if (!empty($customer_loan_status)) {
             $status_class = 'bg-teal-500 text-white';
             break;
         case 'done':
-            $status_label = 'Kumaliza';
+            $status_label = 'Done';
             $status_class = 'bg-yellow-500 text-white';
             break;
         case 'out':
-            $status_label = 'Deni Sugu';
+            $status_label = 'Nje Mkataba';
             $status_class = 'bg-red-500 text-white';
             break;
     }
@@ -251,7 +251,9 @@ if (!empty($customer_loan_status)) {
                     <option value="<?= $customers->customer_id ?>">
                         <?= strtoupper($customers->f_name . " " . $customers->m_name . " " . $customers->l_name); ?> /
                         <?= strtoupper($customers->customer_code); ?> /
-                        <?= strtoupper($customers->blanch_name); ?>
+                        <?= strtoupper($customers->blanch_name); ?> /
+                        <?= strtoupper($customers->empl_name); ?>
+
                     </option>
                 <?php endforeach; ?>
             </select>
