@@ -5,7 +5,7 @@
   <style>
     /* Keeping your explicit background style as requested. */
     body {
-      background-image: url('<?php echo base_url(); ?>assets/img/shop.jpg');
+      background-image: url('<?php echo base_url(); ?>assets/img/register.jpg');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%; /* Stretches image, may distort */
@@ -62,7 +62,7 @@
   <div class="col-span-1">
     <label for="comp_name" class="block text-sm mb-2 dark:text-white">Microfinance Name</label>
     <div class="relative">
-      <input type="text" id="comp_name" name="comp_name" class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:placeholder-gray-500 dark:focus:ring-gray-600" required autocomplete="off" placeholder="Company name">
+      <input type="text" id="comp_name" name="comp_name" class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:placeholder-gray-500 dark:focus:ring-gray-600" required autocomplete="off" placeholder="microfinance name">
       <?php $comp_name_error = form_error("comp_name"); if ($comp_name_error): ?>
         <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
           <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -179,7 +179,7 @@
 
           <p class="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?
-            <a class="text-cyan-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-cyan-500" href="<?php echo base_url("welcome/login"); ?>">
+            <a class="text-cyan-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-cyan-500" href="<?php echo base_url("welcome/employee_login"); ?>">
               Sign In
             </a>
           </p>

@@ -11,7 +11,7 @@ include_once APPPATH . "views/partials/guest_header.php";
       e.g., class="bg-[url('<?php echo base_url(); ?>assets/img/mikoposoft.PNG')] bg-no-repeat bg-fixed bg-cover" (or bg-fill)
     */
     body {
-      background-image: url('<?php echo base_url(); ?>assets/img/cdc.jpeg');
+      background-image: url('<?php echo base_url(); ?>assets/img/finance.jpg');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%; /* Stretches image, may distort */

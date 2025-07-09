@@ -5,7 +5,7 @@
   <style>
     /* Keeping your explicit background style as requested. */
     body {
-      background-image: url('<?php echo base_url(); ?>assets/img/mikoposoft.PNG');
+      background-image: url('<?php echo base_url(); ?>assets/img/branch.png');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%; /* Stretches image, may distort */

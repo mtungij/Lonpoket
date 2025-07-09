@@ -102,8 +102,8 @@ public function create_blanch()
 
     
 
-            $this->session->set_flashdata('massage', 'Branch created and default management employee assigned');
-            return redirect('welcome/blanch');
+            $this->session->set_flashdata('massage', 'Branch created and default management Login Here');
+            return redirect('welcome/employee_login'); // Redirect to employee login		
         } else {
             $this->session->set_flashdata('error', 'Failed to create branch');
             return redirect('welcome/blanch');
