@@ -22,9 +22,11 @@ class Queries extends CI_Model {
 		  return $data->result();
 	}
 
-	public function insert_company_data($data){
-		return $this->db->insert('tbl_company',$data);
-	}
+	public function insert_company_data($data) {
+    $this->db->insert('tbl_company', $data);
+    return $this->db->insert_id(); // ✅ This returns the correct auto-incremented comp_id
+}
+
 
 	public function insert_blanch($data){
 		return $this->db->insert('tbl_blanch',$data);
@@ -1780,9 +1782,7 @@ public function get_totalLoanout($customer_id){
     }
 }
 
-public function get_employee_by_id($employee_id) {
-    return $this->db->get_where('tbl_employee', ['empl_id' => $employee_id])->row();
-}
+
 
 
 	public function get_employee_details($empl_id){
@@ -6715,6 +6715,14 @@ return $data->row();
 {
     return $this->db->insert('tbl_permission', $data);
 }
+
+
+
+
+public function get_employee_by_id($empl_id) {
+    return $this->db->get_where('tbl_employee', ['empl_id' => $empl_id])->row();
+}
+
 
 
 // public function get_todaexpected_collections($comp_id)

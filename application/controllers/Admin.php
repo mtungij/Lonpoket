@@ -736,6 +736,7 @@ $sqldata="UPDATE `tbl_ac_company` SET `comp_balance`= '$total_remain' WHERE  `tr
         'empl_email'   => $this->input->post('empl_email', TRUE),
         'comp_id'      => $this->input->post('comp_id', TRUE),
         'ac_status'    => 'empl',
+		'must_update' => 0,
         'blanch_id'    => $this->input->post('blanch_id', TRUE),
         'position_id'  => $this->input->post('position_id', TRUE),
         'username'     => $this->input->post('username', TRUE),

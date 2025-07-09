@@ -14,25 +14,106 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('comp_number','Registration number','required');
 		$this->form_validation->set_rules('comp_email','company Email','required');
 		$this->form_validation->set_rules('sms_status','sms','required');
-		$this->form_validation->set_rules('password','password','required');
+		
 		$this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
 		if ($this->form_validation->run() ) {
 		     $data = $this->input->post();
-		     $data['password'] = sha1($this->input->post('password'));
+		     $data['password'] = password_hash('123456', PASSWORD_BCRYPT); // hashed password
 		      //   echo "<pre>";
 		      // print_r($data);
 		      // echo "</pre>";
 		      //      exit();
 		     $this->load->model('queries');
-		      if ($this->queries->insert_company_data($data)) {
-		           $this->session->set_flashdata('massage','Your Company Registration Successfully ');
-		      }else{
+			  $comp_id = $this->queries->insert_company_data($data);
+		      if ($comp_id) {
+
+			// 	     echo "<pre>";
+		    //   print_r($comp_id);
+		    //   echo "</pre>";
+		    //        exit();
+              $this->session->set_userdata('comp_id', $comp_id);
+    $this->session->set_flashdata('massage','Your Company Registration Successfully ');
+          redirect('welcome/blanch');
+			  }
+		      else{
 		      	 $this->session->set_flashdata('error','Data Failed');
 		      }
 		      return redirect('welcome/register');
 		}
 		$this->register();
 	}
+
+	public function blanch(){
+		$this->load->model('queries');
+		 $comp_id = $this->session->userdata('comp_id');
+		 $blanch = $this->queries->get_blanch($comp_id);
+		 $region = $this->queries->get_region();
+		  // print_r($region);
+		  //    exit();
+		$this->load->view('home/blanch',['blanch'=>$blanch,'region'=>$region]);
+	}
+
+public function create_blanch()
+{
+    $this->form_validation->set_rules('comp_id', 'Company', 'required');
+    $this->form_validation->set_rules('region_id', 'Region', 'required');
+    $this->form_validation->set_rules('blanch_name', 'Branch Name', 'required');
+    $this->form_validation->set_rules('blanch_no', 'Branch Phone', 'required');
+    $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
+
+    if ($this->form_validation->run()) {
+        $data = $this->input->post();
+
+        $this->load->model('queries');
+
+        // Insert branch and get its ID
+        $blanch_id = $this->queries->insert_blanch($data);
+
+        if ($blanch_id) {
+            // Prepare default employee data
+            $default_employee = [
+                'empl_name'   => 'System Admin',
+                'empl_no'     => $data['blanch_no'],
+                'empl_email'  => 'admin@company.com',
+                'username'    => 'admin_' . $blanch_id,
+                'empl_sex'    => 'male',
+                'account_no'  => 'CASH',
+                'salary'      => 0,
+                'password'    => password_hash('123456', PASSWORD_BCRYPT), // hashed password
+				
+                'position_id' => 22, // assume 22 = management
+                'comp_id'     => $data['comp_id'],
+                'blanch_id'   => $blanch_id,
+                'ac_status'   => 'empl',
+				'must_update' => 1 // to force password change on first login
+            ];
+
+            // Insert default employee
+            $employee_id = $this->queries->insert_employee($default_employee);
+
+            // Get all permissions and assign to the employee
+            $all_permissions = $this->queries->get_all_links();
+            foreach ($all_permissions as $perm) {
+                $this->queries->insert_permission([
+					'employee_id' => $employee_id,
+					'link_id'     => $perm->id, // FIXED: use object notation
+				]);
+            }
+
+    
+
+            $this->session->set_flashdata('massage', 'Branch created and default management employee assigned');
+            return redirect('welcome/blanch');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to create branch');
+            return redirect('welcome/blanch');
+        }
+    }
+
+    $this->blanch();
+}
+
+
 
 	public function login(){
 		$this->load->view('home/login');
@@ -99,76 +180,141 @@ class Welcome extends CI_Controller {
 	
 	
 	
+	
 	public function Employee_signin() {
-		$this->form_validation->set_rules('empl_no', 'Employee Phone number', 'required');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		$this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
-	
-		if ($this->form_validation->run()) {
-			$empl_no = $this->input->post('empl_no');
-			$password_input = $this->input->post('password');
-	
-			$this->load->model('queries');
-			$userexit = $this->queries->employee_user_data($empl_no);
-	
-			if ($userexit && password_verify($password_input, $userexit->password)) {
-	
-				$sessionData = [
-					'empl_id'     => $userexit->empl_id,
-					'blanch_id'   => $userexit->blanch_id,
-					'username'    => $userexit->username,
-					'empl_name'   => $userexit->empl_name,
-					'comp_id'     => $userexit->comp_id ?? null,
-					'position_id' => $userexit->position_id,
-					'position_name' => $userexit->position,
-					'user_id'     => $userexit->empl_id,
-				];
+    $this->form_validation->set_rules('empl_no', 'Employee Phone number', 'required');
+    $this->form_validation->set_rules('password', 'Password', 'required');
+    $this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
 
-				//    echo "<br>";
-        	    // print_r($sessionData);
-        	    // echo "<br>";
-        	    //  exit();
-				
-	
-				// 👉 Only load permission links for position 22
-				if ($userexit->position_id == 22) {
-					$allowed_links = $this->queries->get_employee_links($userexit->empl_id);
-					$sessionData['permissions'] = $allowed_links;
-					
-				}
-	
-				$this->session->set_userdata($sessionData);
-	
-				if ($userexit->empl_status == 'open') {
-					$this->session->set_flashdata('massage', $this->lang->line("login_menu"));
-	
-					// Redirect based on position
-					switch ($userexit->position_id) {
-						case '1':
-						case '2':
-						case '6':
-						case '17':
-							return redirect('oficer/index');
-						case '22':
-							return redirect('admin/index');
-						default:
-							return redirect('oficer/index');
-					}
-	
-				} else {
-					$this->session->set_flashdata('mass', $this->lang->line("blocked_menu"));
-					return redirect("welcome/employee_login");
-				}
-	
-			} else {
-				$this->session->set_flashdata('mass', "Your Phone number or password is invalid please try again");
-				return redirect("welcome/employee_login");
-			}
-	
-		} else {
-			$this->employee_login();
-		}
-	}
+    if ($this->form_validation->run()) {
+        $empl_no = $this->input->post('empl_no');
+        $password_input = $this->input->post('password');
+
+        $this->load->model('queries');
+        $userexit = $this->queries->employee_user_data($empl_no);
+
+        if ($userexit && password_verify($password_input, $userexit->password)) {
+
+            $sessionData = [
+                'empl_id'        => $userexit->empl_id,
+                'blanch_id'      => $userexit->blanch_id,
+                'username'       => $userexit->username,
+                'empl_name'      => $userexit->empl_name,
+                'comp_id'        => $userexit->comp_id ?? null,
+                'position_id'    => $userexit->position_id,
+                'position_name'  => $userexit->position,
+                'user_id'        => $userexit->empl_id,
+                'must_update'    => $userexit->must_update ?? 0,
+            ];
+
+            // Load links for management only
+            if ($userexit->position_id == 22) {
+                $allowed_links = $this->queries->get_employee_links($userexit->empl_id);
+                $sessionData['permissions'] = $allowed_links;
+            }
+
+            $this->session->set_userdata($sessionData);
+
+            if ($userexit->empl_status == 'open') {
+
+                // ✅ Force update for management who have must_update flag
+                if ($userexit->position_id == 22 && $userexit->must_update == 1) {
+                    return redirect('welcome/update_profile');
+                }
+
+                // Redirect by position
+                switch ($userexit->position_id) {
+                    case '1':
+                    case '2':
+                    case '6':
+                    case '17':
+                        return redirect('oficer/index');
+                    case '22':
+                        return redirect('admin/index');
+                    default:
+                        return redirect('oficer/index');
+                }
+
+            } else {
+                $this->session->set_flashdata('mass', $this->lang->line("blocked_menu"));
+                return redirect("welcome/employee_login");
+            }
+
+        } else {
+            $this->session->set_flashdata('mass', "Your Phone number or password is invalid please try again");
+            return redirect("welcome/employee_login");
+        }
+
+    } else {
+        $this->employee_login();
+    }
+}
+
+
+public function update_profile() {
+    $empl_id = $this->session->userdata('empl_id');
+
+    $this->load->model('queries');
+    $data['employee'] = $this->queries->get_employee_by_id($empl_id);
+		    //  echo "<pre>";
+		    //   print_r($data['employee']);	
+		    //   echo "</pre>";
+		    //        exit();
+    $this->load->view('admin/update_profile', $data);
+}
+
+public function save_updated_profile() {
+    $this->form_validation->set_rules('empl_name', 'Full Name', 'required');
+    $this->form_validation->set_rules('empl_email', 'Email', 'required|valid_email');
+    $this->form_validation->set_rules('empl_no', 'Phone Number', 'required');
+    $this->form_validation->set_rules('empl_sex', 'Gender', 'required');
+
+    // Only validate password if it's being changed
+    if ($this->input->post('password')) {
+        $this->form_validation->set_rules('password', 'Password', 'min_length[6]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'matches[password]');
+    }
+
+    $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+    if ($this->form_validation->run()) {
+        $empl_id = $this->session->userdata('empl_id');
+
+        $data = [
+            'empl_name'   => $this->input->post('empl_name', TRUE),
+            'empl_email'  => $this->input->post('empl_email', TRUE),
+            'empl_no'     => $this->input->post('empl_no', TRUE),
+            'empl_sex'    => $this->input->post('empl_sex', TRUE),
+            'must_update' => 0 // ✅ Clear the update flag
+        ];
+
+        if ($this->input->post('password')) {
+            $data['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+        }
+
+        $this->load->model('queries');
+        $updated = $this->queries->update_employee($empl_id, $data);
+
+        if ($updated) {
+            $this->session->set_flashdata('massage', 'Your profile was successfully updated.');
+
+            // Redirect to admin dashboard
+            return redirect('admin/index');
+        } else {
+            $this->session->set_flashdata('mass', 'Failed to update profile. Please try again.');
+        }
+    }
+
+    // Reload form if validation fails or update fails
+    $empl_id = $this->session->userdata('empl_id');
+    $this->load->model('queries');
+    $data['employee'] = $this->queries->get_employee_by_id($empl_id);
+
+    $this->load->view('welcome/update_profile', $data);
+}
+
+
+
 	
 	
 
